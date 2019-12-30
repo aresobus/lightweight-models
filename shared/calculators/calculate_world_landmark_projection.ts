@@ -15,8 +15,8 @@
  * =============================================================================
  */
 
-import {Keypoint} from './interfaces/common_interfaces';
-import {Rect} from './interfaces/shape_interfaces';
+import { Keypoint } from "./interfaces/common_interfaces";
+import { Rect } from "./interfaces/shape_interfaces";
 
 /**
  * Projects world landmarks from the rectangle to original coordinates.
@@ -33,7 +33,9 @@ import {Rect} from './interfaces/shape_interfaces';
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/landmark_projection_calculator.cc
 export function calculateWorldLandmarkProjection(
-    worldLandmarks: Keypoint[], inputRect: Rect): Keypoint[] {
+  worldLandmarks: Keypoint[],
+  inputRect: Rect
+): Keypoint[] {
   const outputLandmarks = [];
   for (const worldLandmark of worldLandmarks) {
     const x = worldLandmark.x;
@@ -42,7 +44,7 @@ export function calculateWorldLandmarkProjection(
     const newX = Math.cos(angle) * x - Math.sin(angle) * y;
     const newY = Math.sin(angle) * x + Math.cos(angle) * y;
 
-    const newLandmark = {...worldLandmark};
+    const newLandmark = { ...worldLandmark };
 
     newLandmark.x = newX;
     newLandmark.y = newY;
