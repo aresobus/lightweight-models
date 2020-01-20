@@ -14,8 +14,8 @@
  * limitations under the License.
  * =============================================================================
  */
-import {ImageSize} from './interfaces/common_interfaces';
-import {Rect} from './interfaces/shape_interfaces';
+import { ImageSize } from "./interfaces/common_interfaces";
+import { Rect } from "./interfaces/shape_interfaces";
 
 /**
  * Estimate object scale to allow filter work similarly on nearer or futher

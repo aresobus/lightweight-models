@@ -1,198 +1,113 @@
-# KNN Classifier
 
-This package provides a utility for creating a classifier using the
-[K-Nearest Neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)
-algorithm.
 
-This package is different from the other packages in this repository in that it
-doesn't provide a model with weights, but rather a utility for constructing a
-KNN model using activations from another model or any other tensors you can
-associate with a class/label.
+---
 
-You can see example code [here](https://github.com/tensorflow/tfjs-models/tree/master/knn-classifier/demo).
+# KNN Classifier for TensorFlow.js
 
-## Usage example
+The KNN (K-Nearest Neighbors) Classifier package provides a flexible utility for creating a classifier using the K-Nearest Neighbors algorithm, leveraging TensorFlow.js. Unlike typical model packages that come with pre-trained weights, this utility allows you to build a KNN model using activations from any TensorFlow.js model or other tensors associated with class labels.
 
-##### via Script Tag
+Explore the example code and live demos [here](https://github.com/tensorflow/tfjs-models/tree/master/knn-classifier/demo).
+
+## Installation
+
+You can use the KNN Classifier directly in your web applications either via script tags or through NPM with a module bundler like WebPack or Rollup.
+
+### Via Script Tag
+
+Embed directly in your HTML:
 
 ```html
-<html>
-  <head>
-    <!-- Load TensorFlow.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <!-- Load MobileNet -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
-    <!-- Load KNN Classifier -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier"></script>
- </head>
-
-  <body>
-    <img id='class0' src='/images/class0.jpg '/>
-    <img id='class1' src='/images/class1.jpg '/>
-    <img id='test' src='/images/test.jpg '/>
-  </body>
-  <!-- Place your code in the script tag below. You can also use an external .js file -->
-  <script>
-
-    const init = async function() {
-      // Create the classifier.
-      const classifier = knnClassifier.create();
-
-      // Load mobilenet.
-      const mobilenetModule = await mobilenet.load();
-
-      // Add MobileNet activations to the model repeatedly for all classes.
-      const img0 = tf.browser.fromPixels(document.getElementById('class0'));
-      const logits0 = mobilenetModule.infer(img0, true);
-      classifier.addExample(logits0, 0);
-
-      const img1 = tf.browser.fromPixels(document.getElementById('class1'));
-      const logits1 = mobilenetModule.infer(img1, true);
-      classifier.addExample(logits1, 1);
-
-      // Make a prediction.
-      const x = tf.browser.fromPixels(document.getElementById('test'));
-      const xlogits = mobilenetModule.infer(x, true);
-      console.log('Predictions:');
-      const result = await classifier.predictClass(xlogits);
-      console.log(result);
-    }
-
-    init();
-
-  </script>
-</html>
+<!-- Load TensorFlow.js -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<!-- Load KNN Classifier -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier"></script>
 ```
 
-###### via NPM
+### Via NPM
 
-```js
-const tf = require('@tensorflow/tfjs');
-const mobilenetModule = require('@tensorflow-models/mobilenet');
-const knnClassifier = require('@tensorflow-models/knn-classifier');
+Install the package and its peer dependencies:
 
-// Create the classifier.
+```bash
+npm install @tensorflow/tfjs @tensorflow-models/knn-classifier
+```
+
+And then import into your JavaScript project:
+
+```javascript
+import * as knnClassifier from '@tensorflow-models/knn-classifier';
+import * as tf from '@tensorflow/tfjs';
+```
+
+## Usage Example
+
+### Setup Classifier and Add Examples
+
+First, create a classifier and then add examples using tensors from images or other data sources. Here's an example using MobileNet for feature extraction:
+
+```javascript
 const classifier = knnClassifier.create();
+const mobilenetModule = await mobilenet.load();
 
-// Load mobilenet.
-const mobilenet = await mobilenetModule.load();
-
-// Add MobileNet activations to the model repeatedly for all classes.
-const img0 = tf.browser.fromPixels(document.getElementById('class0'));
-const logits0 = mobilenet.infer(img0, true);
-classifier.addExample(logits0, 0);
-
-const img1 = tf.browser.fromPixels(document.getElementById('class1'));
-const logits1 = mobilenet.infer(img1, true);
-classifier.addExample(logits1, 1);
-
-// Make a prediction.
-const x = tf.browser.fromPixels(document.getElementById('test'));
-const xlogits = mobilenet.infer(x, true);
-console.log('Predictions:');
-console.log(classifier.predictClass(xlogits));
+// Assume imgElement is an image element.
+const activation = mobilenetModule.infer(imgElement, 'conv_preds');
+classifier.addExample(activation, 'class 1');
 ```
 
-## API
+### Classify an Image
 
-#### Creating a classifier
-`knnClassifier` is the module name, which is automatically included when you use
-the <script src> method.
+Once your classifier is trained with examples, you can classify new images:
 
-```ts
-classifier = knnClassifier.create()
+```javascript
+const xlogits = mobilenetModule.infer(imgElement, 'conv_preds');
+const result = await classifier.predictClass(xlogits);
+console.log(result);
 ```
 
-Returns a `KNNImageClassifier`.
+## API Reference
 
-#### Adding examples
+### `create()`
 
-```ts
-classifier.addExample(
-  example: tf.Tensor,
-  label: number|string
-): void;
-```
+Create a new instance of the KNN classifier.
 
-Args:
-- **example:** An example to add to the dataset, usually an activation from
-  another model.
-- **label:** The label (class name) of the example.
+**Returns:** An instance of KNNImageClassifier.
 
-#### Making a prediction
+### `addExample(example, label)`
 
-```ts
-classifier.predictClass(
-  input: tf.Tensor,
-  k = 3
-): Promise<{label: string, classIndex: number, confidences: {[classId: number]: number}}>;
-```
+Add an example to the classifier.
 
-Args:
-- **input:** An example to make a prediction on, usually an activation from
-  another model.
-- **k:** The K value to use in K-nearest neighbors. The algorithm will first
-  find the K nearest examples from those it was previously shown, and then choose
-  the class that appears the most as the final prediction for the input example.
-  Defaults to 3. If examples < k, k = examples.
+**Parameters:**
+- `example`: A `tf.Tensor` representing the example input.
+- `label`: The label corresponding to the example.
 
-Returns an object where:
- - `label`: the label (class name) with the most confidence.
- - `classIndex`: the 0-based index of the class (for backwards compatibility).
- - `confidences`: maps each label to their confidence score.
+### `predictClass(input, k?)`
 
-#### Misc
+Make a prediction based on the input tensor.
 
-##### Clear all examples for a class.
+**Parameters:**
+- `input`: The input tensor for classification.
+- `k`: Optional. The number of nearest neighbors to consider for the classification.
 
-```ts
-classifier.clearClass(label: number|string)
-```
+**Returns:** A promise that resolves to an object containing the predicted class and confidence scores.
 
-Args:
-- **label:** The label to clear all examples for.
+### `clearClass(label)`
 
-##### Clear all examples from all classes
+Remove examples under a specific class label.
 
-```ts
-classifier.clearAllClasses()
-```
+**Parameters:**
+- `label`: The class label to clear.
 
-##### Get the example count for each class
+### `getNumClasses()`
 
-```ts
-classifier.getClassExampleCount(): {[label: string]: number}
-```
+Get the number of classes in the classifier.
 
-Returns an object that maps label name to example count for that label.
+**Returns:** The number of classes.
 
-##### Get the full dataset, useful for saving state.
+### `dispose()`
 
-```ts
-classifier.getClassifierDataset(): {[label: string]: Tensor2D}
-```
+Dispose of all resources held by the classifier.
 
-##### Set the full dataset, useful for restoring state.
+## Additional Features
 
-```ts
-classifier.setClassifierDataset(dataset: {[label: string]: Tensor2D})
-```
+- **Save and Load Classifier State:** You can save the state of the classifier (including all examples added) and load it later. This is useful for persisting the classifier state between sessions.
 
-Args:
-- **dataset:** The label dataset matrices map. Can be retrieved from
-  getClassifierDataset. Useful for restoring state.
-
-##### Get the total number of classes
-
-```ts
-classifier.getNumClasses(): number
-```
-
-##### Dispose the classifier and all internal state
-
-Clears up WebGL memory. Useful if you no longer need the classifier in your
-application.
-
-```ts
-classifier.dispose()
-```
+- **Integration with Other Models:** The KNN Classifier can be used with any model that outputs a tensor, allowing for flexible integrations across different use cases.

@@ -15,8 +15,8 @@
  * =============================================================================
  */
 
-import {arrayToMatrix4x4, Matrix4x4} from './calculate_inverse_matrix';
-import {Rect} from './interfaces/shape_interfaces';
+import { arrayToMatrix4x4, Matrix4x4 } from "./calculate_inverse_matrix";
+import { Rect } from "./interfaces/shape_interfaces";
 
 /**
  * Generates a 4x4 projective transform matrix M, so that for any point in the
@@ -31,8 +31,11 @@ import {Rect} from './interfaces/shape_interfaces';
 // Ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/tensor/image_to_tensor_utils.h
 export function getRotatedSubRectToRectTransformMatrix(
-    subRect: Rect, rectWidth: number, rectHeight: number,
-    flipHorizontally: boolean): Matrix4x4 {
+  subRect: Rect,
+  rectWidth: number,
+  rectHeight: number,
+  flipHorizontally: boolean
+): Matrix4x4 {
   // The resulting matrix is multiplication of below commented out matrices:
   //   postScaleMatrix
   //     * translateMatrix

@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/knn-classifier",
+  "name": "@aresobus/tensorflow-models-knn-classifier",
   "version": "1.2.5",
-  "description": "KNN Classifier for TensorFlow.js",
+  "description": "KNN Classifier for TensorFlow.js maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/knn-classifier.min.js",
   "jsdelivr": "dist/knn-classifier.min.js",
@@ -10,8 +10,10 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "@tensorflow/tfjs-backend-cpu": "^4.18.0",
     "@tensorflow/tfjs-core": "^4.18.0"
@@ -37,9 +39,8 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "build-npm": "yarn build && rollup -c",
-    "publish-local": "yarn build && rollup -c && yalc push",
+    "publish-local": "yarn build && rollup -c and yalc push",
     "lint": "tslint -p . -t verbose",
     "test": "ts-node --skip-ignore --project tsconfig.test.json run_tests.ts"
-  },
-  "license": "Apache-2.0"
+  }
 }
