@@ -1,3 +1,4 @@
+```markdown
 # Semantic Segmentation in the Browser: DeepLab v3 Model
 
 This package contains a standalone implementation of the DeepLab inference pipeline, as well as a [demo](./demo), for running semantic segmentation using TensorFlow.js.
@@ -6,13 +7,13 @@ This package contains a standalone implementation of the DeepLab inference pipel
 
 ## Usage
 
-In the first step of semantic segmentation, an image is fed through a pre-trained model [based](https://github.com/tensorflow/models/blob/master/research/deeplab/g3doc/model_zoo.md) on MobileNet-v2. Three types of pre-trained weights are available, trained on [Pascal](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html), [Cityscapes](https://www.cityscapes-dataset.com) and [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) datasets.
+In the first step of semantic segmentation, an image is fed through a pre-trained model [based](https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/config.ts) on MobileNet-v2. Three types of pre-trained weights are available, trained on [Pascal](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html), [Cityscapes](https://www.cityscapes-dataset.com), and [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) datasets.
 
-To get started, pick the model name from `pascal`, `cityscapes` and `ade20k`, and decide whether you want your model quantized to 1 or 2 bytes (set the `quantizationBytes` option to 4 if you want to disable quantization). Then, initialize the model as follows:
+To get started, pick the model name from `pascal`, `cityscapes`, and `ade20k`, and decide whether you want your model quantized to 1 or 2 bytes (set the `quantizationBytes` option to 4 if you want to disable quantization). Then, initialize the model as follows:
 
 ```typescript
 const tf = require('@tensorflow-models/tfjs');
-const deeplab = require('@tensorflow-models/deeplab');
+const deeplab = require('@aresobus/tensorflow-models-deeplab');
 const loadModel = async () => {
   const modelName = 'pascal';   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
   const quantizationBytes = 2;  // either 1, 2 or 4
@@ -29,14 +30,14 @@ loadModel()
             console.log(`The predicted classes are ${JSON.stringify(legend)}`));
 ```
 
-By default, calling `load` initalizes the PASCAL variant of the model quantized to 2 bytes.
+By default, calling `load` initializes the PASCAL variant of the model quantized to 2 bytes.
 
 If you would rather load custom weights, you can pass the URL in the config instead:
 
 ```typescript
-const deeplab = require('@tensorflow-models/deeplab');
+const deeplab = require('@aresobus/tensorflow-models-deeplab');
 const loadModel = async () => {
-  const url = 'https://tfhub.dev/tensorflow/tfjs-model/deeplab/pascal/1/default/1/model.json?tfjs-format=file';
+  const url = 'https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/model.json';
   return await deeplab.load({modelUrl: url});
 };
 loadModel().then(() => console.log(`Loaded the model successfully!`));
@@ -44,13 +45,13 @@ loadModel().then(() => console.log(`Loaded the model successfully!`));
 
 This will initialize and return the `SemanticSegmentation` model.
 
-You can set the `base` attribute in the argument to `pascal`, `cityscapes` or `ade20k` to use the corresponding colormap and labelling scheme. Otherwise, you would have to provide those yourself during segmentation.
+You can set the `base` attribute in the argument to `pascal`, `cityscapes`, or `ade20k` to use the corresponding colormap and labeling scheme. Otherwise, you would have to provide those yourself during segmentation.
 
-If you require more careful control over the initialization and behavior of the model (e.g. you want to use your own labelling scheme and colormap), use the `SemanticSegmentation` class, passing a pre-loaded `GraphModel` in the constructor:
+If you require more careful control over the initialization and behavior of the model (e.g. you want to use your labeling scheme and colormap), use the `SemanticSegmentation` class, passing a pre-loaded `GraphModel` in the constructor:
 
 ```typescript
 const tfconv = require('@tensorflow/tfjs-converter');
-const deeplab = require('@tensorflow-models/deeplab');
+const deeplab = require('@aresobus/tensorflow-models-deeplab');
 const loadModel = async () => {
   const base = 'pascal';        // set to your preferred model, out of `pascal`,
                                 // `cityscapes` and `ade20k`
@@ -65,10 +66,10 @@ const loadModel = async () => {
 loadModel().then(() => console.log(`Loaded the model successfully!`));
 ```
 
-Use `getColormap(base)` and `getLabels(base)` utility function to fetch the default colormap and labelling scheme.
+Use `getColormap(base)` and `getLabels(base)` utility function to fetch the default colormap and labeling scheme.
 
 ```typescript
-import {getLabels, getColormap} from '@tensorflow-models/deeplab';
+import {getLabels, getColormap} from '@aresobus/tensorflow-models-deeplab';
 const model = 'ade20k';
 const colormap = getColormap(model);
 const labels = getLabels(model);
@@ -78,11 +79,11 @@ const labels = getLabels(model);
 
 The `segment` method of the `SemanticSegmentation` object covers most use cases.
 
-Each model recognises a different set of object classes in an image:
+Each model recognizes a different set of object classes in an image:
 
-- [PASCAL](./src/config.ts#L142)
-- [CityScapes](./src/config.ts#L149)
-- [ADE20K](./src/config.ts#L155)
+- [PASCAL](./src/deeplab/config.ts#L142)
+- [CityScapes](./src/deeplab/config.ts#L149)
+- [ADE20K](./src/deeplab/config.ts#L155)
 
 #### `model.segment(image, config?)` inputs
 
@@ -102,7 +103,7 @@ Each model recognises a different set of object classes in an image:
 
   The array of names corresponding to labels
 
-  By [default](./src/index.ts#L81), `colormap` and `labels` are set according to the `base` model attribute passed during initialization.
+  By [default](./src/deeplab/index.ts#L81), `colormap` and `labels` are set according to the `base` model attribute passed during initialization.
 
 #### `model.segment(image, config?)` outputs
 
@@ -144,6 +145,8 @@ To segment an arbitrary image and generate a two-dimensional tensor with class l
 
   The image to segment
 
+
+
 #### `model.predict(image)` output
 
 - **rawSegmentationMap** :: `tf.Tensor2D`
@@ -160,7 +163,7 @@ const getSemanticSegmentationMap = (image) => {
 
 ### Translating a Segmentation Map into the Color-Labelled Image
 
-To transform the segmentation map into a coloured image, use the `toSegmentationImage` method.
+To transform the segmentation map into a colored image, use the `toSegmentationImage` method.
 
 #### `toSegmentationImage(colormap, labels, segmentationMap, canvas?)` inputs
 
@@ -208,7 +211,7 @@ Please see the demo [documentation](./demo/README.md).
 
 ## Technical Details
 
-This model is based on the TensorFlow [implementation](https://github.com/tensorflow/models/tree/master/research/deeplab) of DeepLab v3. You might want to inspect the [conversion script](./scripts/convert_deeplab.sh), or download original pre-trained weights [here](https://github.com/tensorflow/models/blob/master/research/deeplab/g3doc/model_zoo.md). To convert the weights locally, run the script as follows, replacing `dist` with the target directory:
+This model is based on the TensorFlow [implementation](https://github.com/aresobus/lightweight-models/tree/main/src/deeplab) of DeepLab v3. You might want to inspect the [conversion script](./scripts/convert_deeplab.sh), or download original pre-trained weights [here](https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/model.json). To convert the weights locally, run the script as follows, replacing `dist` with the target directory:
 
 ```bash
 ./scripts/convert_deeplab.sh --target_dir ./scripts/dist
@@ -219,3 +222,5 @@ Run the usage helper to learn more about the options:
 ```bash
 ./scripts/convert_deeplab.sh -h
 ```
+```
+

@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/deeplab",
+  "name": "@aresobus/tensorflow-models-deeplab",
   "version": "0.2.1",
-  "description": "Semantic Segmentation in the Browser: DeepLab v3 Model",
+  "description": "Semantic Segmentation in the Browser: DeepLab v3 Model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/deeplab.esm.js",
   "module": "dist/deeplab.esm.js",
@@ -10,8 +10,9 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "peerDependencies": {
     "@tensorflow/tfjs-converter": "^3.0.0",
     "@tensorflow/tfjs-core": "^3.0.0"
