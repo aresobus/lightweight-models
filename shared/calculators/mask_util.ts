@@ -14,9 +14,9 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-function toNumber(value: number|SVGAnimatedLength) {
+function toNumber(value: number | SVGAnimatedLength) {
   return value instanceof SVGAnimatedLength ? value.baseVal.value : value;
 }
 
@@ -30,9 +30,14 @@ function toNumber(value: number|SVGAnimatedLength) {
  * @returns Converted HTMLCanvasElement.
  */
 export async function toHTMLCanvasElementLossy(
-    image: ImageData|tf.Tensor2D|tf.Tensor3D|SVGImageElement|
-    OffscreenCanvas): Promise<HTMLCanvasElement> {
-  const canvas = document.createElement('canvas');
+  image:
+    | ImageData
+    | tf.Tensor2D
+    | tf.Tensor3D
+    | SVGImageElement
+    | OffscreenCanvas
+): Promise<HTMLCanvasElement> {
+  const canvas = document.createElement("canvas");
 
   if (image instanceof tf.Tensor) {
     await tf.browser.toPixels(image, canvas);
@@ -40,7 +45,7 @@ export async function toHTMLCanvasElementLossy(
     canvas.width = toNumber(image.width);
     canvas.height = toNumber(image.height);
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (image instanceof ImageData) {
       ctx.putImageData(image, 0, 0);
     } else {
@@ -60,14 +65,15 @@ export async function toHTMLCanvasElementLossy(
  *
  * @returns Converted ImageData.
  */
-export async function toImageDataLossy(image: CanvasImageSource|
-                                       tf.Tensor3D): Promise<ImageData> {
+export async function toImageDataLossy(
+  image: CanvasImageSource | tf.Tensor3D
+): Promise<ImageData> {
   if (image instanceof tf.Tensor) {
     const [height, width] = image.shape.slice(0, 2);
     return new ImageData(await tf.browser.toPixels(image), width, height);
   } else {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
     canvas.width = toNumber(image.width);
     canvas.height = toNumber(image.height);
@@ -86,19 +92,21 @@ export async function toImageDataLossy(image: CanvasImageSource|
  *
  * @returns Converted Tensor.
  */
-export async function toTensorLossy(image: CanvasImageSource|
-                                    ImageData): Promise<tf.Tensor3D> {
+export async function toTensorLossy(
+  image: CanvasImageSource | ImageData
+): Promise<tf.Tensor3D> {
   const pixelsInput =
-      (image instanceof SVGImageElement || image instanceof OffscreenCanvas) ?
-      await toHTMLCanvasElementLossy(image) :
-      image;
+    image instanceof SVGImageElement || image instanceof OffscreenCanvas
+      ? await toHTMLCanvasElementLossy(image)
+      : image;
   return tf.browser.fromPixels(pixelsInput, 4);
 }
 
 export function assertMaskValue(maskValue: number) {
   if (maskValue < 0 || maskValue >= 256) {
     throw new Error(
-        `Mask value must be in range [0, 255] but got ${maskValue}`);
+      `Mask value must be in range [0, 255] but got ${maskValue}`
+    );
   }
   if (!Number.isInteger(maskValue)) {
     throw new Error(`Mask value must be an integer but got ${maskValue}`);
