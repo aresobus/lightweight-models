@@ -4,8 +4,8 @@ This repository hosts a set of pre-trained models that have been ported to Tenso
 
 The models are hosted on NPM and unpkg so they can be used in any project right out of the box. They can be directly used or incorporated into a transfer learning setting with TensorFlow.js.
 
-
 For detailed information about the APIs for each model, please refer to the README files located in each of the respective directories. In general, we try to simplify the usage so the API can be used by non-machine learning experts.
+
 
 If you are interested in contributing a model, please file a GitHub issue to discuss and gauge interest. We aim to add models that complement the existing set of models and can serve as building blocks in other applications.
 
