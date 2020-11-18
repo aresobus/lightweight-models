@@ -15,11 +15,11 @@
  * =============================================================================
  */
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-import {BaseModel} from './base_model';
+import { BaseModel } from "./base_model";
 
-const imageNetMean = [-123.15, -115.90, -103.06];
+const imageNetMean = [-123.15, -115.9, -103.06];
 
 export class ResNet extends BaseModel {
   preprocessInput(input: tf.Tensor3D): tf.Tensor3D {
@@ -36,7 +36,7 @@ export class ResNet extends BaseModel {
       partHeatmaps,
       segmentation,
       partOffsets,
-  ] = results;
+    ] = results;
     return {
       offsets,
       segmentation,
@@ -45,7 +45,7 @@ export class ResNet extends BaseModel {
       heatmap,
       displacementFwd,
       displacementBwd,
-      partOffsets
+      partOffsets,
     };
   }
 }
