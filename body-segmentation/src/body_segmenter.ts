@@ -14,11 +14,11 @@
  * limitations under the License.
  * =============================================================================
  */
-import {BodyPixSegmentationConfig} from './body_pix/types';
-import {MediaPipeSelfieSegmentationMediaPipeSegmentationConfig} from './selfie_segmentation_mediapipe/types';
-import {MediaPipeSelfieSegmentationTfjsSegmentationConfig} from './selfie_segmentation_tfjs/types';
-import {Segmentation} from './shared/calculators/interfaces/common_interfaces';
-import {BodySegmenterInput} from './types';
+import { BodyPixSegmentationConfig } from "./body_pix/types";
+import { MediaPipeSelfieSegmentationMediaPipeSegmentationConfig } from "./selfie_segmentation_mediapipe/types";
+import { MediaPipeSelfieSegmentationTfjsSegmentationConfig } from "./selfie_segmentation_tfjs/types";
+import { Segmentation } from "./shared/calculators/interfaces/common_interfaces";
+import { BodySegmenterInput } from "./types";
 
 /**
  * User-facing interface for all body segmenters.
@@ -32,11 +32,12 @@ export interface BodySegmenter {
    * @param segmentationConfig common config for `segmentPeople`.
    */
   segmentPeople(
-      input: BodySegmenterInput,
-      segmentationConfig?:
-          MediaPipeSelfieSegmentationMediaPipeSegmentationConfig|
-      MediaPipeSelfieSegmentationTfjsSegmentationConfig|
-      BodyPixSegmentationConfig): Promise<Segmentation[]>;
+    input: BodySegmenterInput,
+    segmentationConfig?:
+      | MediaPipeSelfieSegmentationMediaPipeSegmentationConfig
+      | MediaPipeSelfieSegmentationTfjsSegmentationConfig
+      | BodyPixSegmentationConfig
+  ): Promise<Segmentation[]>;
 
   /**
    * Dispose the underlying models from memory.

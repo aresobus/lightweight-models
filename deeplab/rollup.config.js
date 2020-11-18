@@ -15,15 +15,15 @@
  * =============================================================================
  */
 
-import resolve from 'rollup-plugin-node-resolve';
-import {terser} from 'rollup-plugin-terser';
-import typescript from 'rollup-plugin-typescript2';
+import resolve from "rollup-plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
+import typescript from "rollup-plugin-typescript2";
 
 const settings = {
-  name: 'deeplab',
+  name: "deeplab",
   preamble: `/**
     * @license
-    * Copyright ${(new Date).getFullYear()} Google LLC. All Rights Reserved.
+    * Copyright ${new Date().getFullYear()} Google LLC. All Rights Reserved.
     * Licensed under the Apache License, Version 2.0 (the "License");
     * you may not use this file except in compliance with the License.
     * You may obtain a copy of the License at
@@ -36,29 +36,29 @@ const settings = {
     * See the License for the specific language governing permissions and
     * limitations under the License.
     * =============================================================================
-    */`
+    */`,
 };
 
 function minify() {
   return terser({
     output: {
-      preamble: settings['preamble'],
+      preamble: settings["preamble"],
     },
     ecma: 8,
     module: true,
     compress: true,
-    mangle: {reserved: ['tf']},
+    mangle: { reserved: ["tf"] },
   });
 }
 
-function config({plugins = [], output = {}}) {
+function config({ plugins = [], output = {} }) {
   return {
-    input: 'src/index.ts',
+    input: "src/index.ts",
     plugins: [
       typescript({
         tsconfigOverride: {
           compilerOptions: {
-            module: 'ES2015',
+            module: "ES2015",
           },
         },
       }),
@@ -66,41 +66,38 @@ function config({plugins = [], output = {}}) {
       ...plugins,
     ],
     output: {
-      banner: settings['preamble'],
+      banner: settings["preamble"],
       globals: {
-        '@tensorflow/tfjs-core': 'tf',
-        '@tensorflow/tfjs-converter': 'tf',
+        "@tensorflow/tfjs-core": "tf",
+        "@tensorflow/tfjs-converter": "tf",
       },
       ...output,
     },
-    external: [
-      '@tensorflow/tfjs-core',
-      '@tensorflow/tfjs-converter',
-    ],
+    external: ["@tensorflow/tfjs-core", "@tensorflow/tfjs-converter"],
   };
 }
 
 export default [
   config({
     output: {
-      format: 'umd',
-      name: settings['name'],
-      file: `dist/${settings['name']}.js`,
+      format: "umd",
+      name: settings["name"],
+      file: `dist/${settings["name"]}.js`,
     },
   }),
   config({
     plugins: [minify()],
     output: {
-      format: 'umd',
-      name: settings['name'],
-      file: `dist/${settings['name']}.min.js`,
+      format: "umd",
+      name: settings["name"],
+      file: `dist/${settings["name"]}.min.js`,
     },
   }),
   config({
     plugins: [minify()],
     output: {
-      format: 'esm',
-      file: `dist/${settings['name']}.esm.js`,
+      format: "esm",
+      file: `dist/${settings["name"]}.esm.js`,
     },
   }),
 ];

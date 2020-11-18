@@ -15,14 +15,17 @@
  * =============================================================================
  */
 
-import {load as loadBodyPixSegmenter} from './body_pix/segmenter';
-import {BodyPixModelConfig} from './body_pix/types';
-import {BodySegmenter} from './body_segmenter';
-import {load as loadMediaPipeSelfieSegmentationMediaPipeSegmenter} from './selfie_segmentation_mediapipe/segmenter';
-import {MediaPipeSelfieSegmentationMediaPipeModelConfig, MediaPipeSelfieSegmentationModelConfig} from './selfie_segmentation_mediapipe/types';
-import {load as loadMediaPipeSelfieSegmentationTfjsSegmenter} from './selfie_segmentation_tfjs/segmenter';
-import {MediaPipeSelfieSegmentationTfjsModelConfig} from './selfie_segmentation_tfjs/types';
-import {SupportedModels} from './types';
+import { load as loadBodyPixSegmenter } from "./body_pix/segmenter";
+import { BodyPixModelConfig } from "./body_pix/types";
+import { BodySegmenter } from "./body_segmenter";
+import { load as loadMediaPipeSelfieSegmentationMediaPipeSegmenter } from "./selfie_segmentation_mediapipe/segmenter";
+import {
+  MediaPipeSelfieSegmentationMediaPipeModelConfig,
+  MediaPipeSelfieSegmentationModelConfig,
+} from "./selfie_segmentation_mediapipe/types";
+import { load as loadMediaPipeSelfieSegmentationTfjsSegmenter } from "./selfie_segmentation_tfjs/segmenter";
+import { MediaPipeSelfieSegmentationTfjsModelConfig } from "./selfie_segmentation_tfjs/types";
+import { SupportedModels } from "./types";
 
 /**
  * Create a body segmenter instance.
@@ -31,28 +34,33 @@ import {SupportedModels} from './types';
  * @param modelConfig The configuration for the pipeline to load.
  */
 export async function createSegmenter(
-    model: SupportedModels,
-    modelConfig?: MediaPipeSelfieSegmentationMediaPipeModelConfig|
-    MediaPipeSelfieSegmentationTfjsModelConfig|
-    BodyPixModelConfig): Promise<BodySegmenter> {
+  model: SupportedModels,
+  modelConfig?:
+    | MediaPipeSelfieSegmentationMediaPipeModelConfig
+    | MediaPipeSelfieSegmentationTfjsModelConfig
+    | BodyPixModelConfig
+): Promise<BodySegmenter> {
   switch (model) {
     case SupportedModels.MediaPipeSelfieSegmentation: {
       const config = modelConfig as MediaPipeSelfieSegmentationModelConfig;
       let runtime;
       if (config != null) {
-        if (config.runtime === 'tfjs') {
+        if (config.runtime === "tfjs") {
           return loadMediaPipeSelfieSegmentationTfjsSegmenter(
-              config as MediaPipeSelfieSegmentationTfjsModelConfig);
+            config as MediaPipeSelfieSegmentationTfjsModelConfig
+          );
         }
-        if (config.runtime === 'mediapipe') {
+        if (config.runtime === "mediapipe") {
           return loadMediaPipeSelfieSegmentationMediaPipeSegmenter(
-              config as MediaPipeSelfieSegmentationMediaPipeModelConfig);
+            config as MediaPipeSelfieSegmentationMediaPipeModelConfig
+          );
         }
         runtime = config.runtime;
       }
       throw new Error(
-          `Expect modelConfig.runtime to be either 'tfjs' ` +
-          `or 'mediapipe', but got ${runtime}`);
+        `Expect modelConfig.runtime to be either 'tfjs' ` +
+          `or 'mediapipe', but got ${runtime}`
+      );
     }
     case SupportedModels.BodyPix: {
       const config = modelConfig as BodyPixModelConfig;
