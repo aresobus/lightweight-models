@@ -1,40 +1,30 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 
-import '@tensorflow/tfjs-backend-webgl';
-import '@tensorflow/tfjs-backend-webgpu';
+import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/aresobus-backend-webgpu";
 
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
 
-tfjsWasm.setWasmPaths(
-    `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${
-        tfjsWasm.version_wasm}/dist/`);
+aresobusWasm.setWasmPaths(
+  `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/`
+);
 
-import * as faceDetection from '@tensorflow-models/face-detection';
+import * as faceDetection from "@aresobus-models/face-detection";
 
-import {Camera} from './camera';
-import {setupDatGui} from './option_panel';
-import {STATE, createDetector} from './shared/params';
-import {setupStats} from './shared/stats_panel';
-import {setBackendAndEnvFlags} from './shared/util';
+import { Camera } from "./camera";
+import { setupDatGui } from "./option_panel";
+import { STATE, createDetector } from "./shared/params";
+import { setupStats } from "./shared/stats_panel";
+import { setBackendAndEnvFlags } from "./shared/util";
 
 let detector, camera, stats;
-let startInferenceTime, numInferences = 0;
-let inferenceTimeSum = 0, lastPanelUpdate = 0;
+let startInferenceTime,
+  numInferences = 0;
+let inferenceTimeSum = 0,
+  lastPanelUpdate = 0;
 let rafId;
 
 async function checkGuiUpdate() {
@@ -85,7 +75,9 @@ function endEstimateFaceStats() {
     inferenceTimeSum = 0;
     numInferences = 0;
     stats.customFpsPanel.update(
-        1000.0 / averageInferenceTime, 120 /* maxValue */);
+      1000.0 / averageInferenceTime,
+      120 /* maxValue */
+    );
     lastPanelUpdate = endInferenceTime;
   }
 }
@@ -110,8 +102,9 @@ async function renderResult() {
     // Detectors can throw errors, for example when using custom URLs that
     // contain a model that doesn't provide the expected output.
     try {
-      faces =
-          await detector.estimateFaces(camera.video, {flipHorizontal: false});
+      faces = await detector.estimateFaces(camera.video, {
+        flipHorizontal: false,
+      });
     } catch (error) {
       detector.dispose();
       detector = null;
@@ -128,7 +121,10 @@ async function renderResult() {
   // which shouldn't be rendered.
   if (faces && faces.length > 0 && !STATE.isModelChanged) {
     camera.drawResults(
-        faces, STATE.modelConfig.boundingBox, STATE.modelConfig.keypoints);
+      faces,
+      STATE.modelConfig.boundingBox,
+      STATE.modelConfig.keypoints
+    );
   }
 }
 
@@ -140,7 +136,7 @@ async function renderPrediction() {
   }
 
   rafId = requestAnimationFrame(renderPrediction);
-};
+}
 
 async function app() {
   // Gui content will change depending on which model is in the query string.
@@ -157,6 +153,6 @@ async function app() {
   detector = await createDetector();
 
   renderPrediction();
-};
+}
 
 app();

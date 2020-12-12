@@ -3,17 +3,17 @@
   "version": "0.0.4",
   "description": "",
   "main": "index.js",
-  "license": "Apache-2.0",
+
   "private": true,
   "engines": {
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@tensorflow-models/universal-sentence-encoder": "file:../dist",
-    "@tensorflow/tfjs-backend-cpu": "^3.3.0",
-    "@tensorflow/tfjs-backend-webgl": "^3.3.0",
-    "@tensorflow/tfjs-converter": "^3.3.0",
-    "@tensorflow/tfjs-core": "^3.3.0",
+    "@aresobus-models/universal-sentence-encoder": "file:../dist",
+    "@aresobus/aresobus-backend-cpu": "^3.3.0",
+    "@aresobus/aresobus-backend-webgl": "^3.3.0",
+    "@aresobus/aresobus-converter": "^3.3.0",
+    "@aresobus/aresobus-core": "^3.3.0",
     "d3-scale-chromatic": "^1.3.3"
   },
   "scripts": {
@@ -22,7 +22,7 @@
     "build-deps": "yarn build-model && yarn build",
     "build-model": "cd .. && yarn && yarn build-npm",
     "lint": "eslint .",
-    "link-local": "yalc link @tensorflow-models/universal-sentence-encoder"
+    "link-local": "yalc link @aresobus-models/universal-sentence-encoder"
   },
   "browser": {
     "crypto": false

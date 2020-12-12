@@ -1,29 +1,17 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as tf from "@aresobus/aresobus-core";
 
-import * as tf from '@tensorflow/tfjs-core';
+import { COCO_KEYPOINTS } from "../../constants";
+import { Keypoint } from "../../shared/calculators/interfaces/common_interfaces";
+import { Pose } from "../../types";
+import { getPointsConfidenceGPU } from "../ops/get_points_confidence";
+import { PoseNetOutputStride } from "../types";
 
-import {COCO_KEYPOINTS} from '../../constants';
-import {Keypoint} from '../../shared/calculators/interfaces/common_interfaces';
-import {Pose} from '../../types';
-import {getPointsConfidenceGPU} from '../ops/get_points_confidence';
-import {PoseNetOutputStride} from '../types';
-
-import {argmax2d, getOffsetPoints, getOffsetPointsGPU, getPointsConfidence} from './decode_single_pose_util';
+import {
+  argmax2d,
+  getOffsetPoints,
+  getOffsetPointsGPU,
+  getPointsConfidence,
+} from "./decode_single_pose_util";
 
 /**
  * Detects a single pose and finds its parts from part scores and offset
@@ -57,25 +45,34 @@ import {argmax2d, getOffsetPoints, getOffsetPointsGPU, getPointsConfidence} from
  * and position.
  */
 export async function decodeSinglePose(
-    heatmapScores: tf.Tensor3D, offsets: tf.Tensor3D,
-    outputStride: PoseNetOutputStride): Promise<Pose> {
+  heatmapScores: tf.Tensor3D,
+  offsets: tf.Tensor3D,
+  outputStride: PoseNetOutputStride
+): Promise<Pose> {
   let totalScore = 0.0;
 
   const heatmapValues = argmax2d(heatmapScores);
 
-  const allTensorBuffers = await Promise.all(
-      [heatmapScores.buffer(), offsets.buffer(), heatmapValues.buffer()]);
+  const allTensorBuffers = await Promise.all([
+    heatmapScores.buffer(),
+    offsets.buffer(),
+    heatmapValues.buffer(),
+  ]);
 
   const scoresBuffer = allTensorBuffers[0];
   const offsetsBuffer = allTensorBuffers[1];
   const heatmapValuesBuffer = allTensorBuffers[2];
 
-  const offsetPoints =
-      getOffsetPoints(heatmapValuesBuffer, outputStride, offsetsBuffer);
+  const offsetPoints = getOffsetPoints(
+    heatmapValuesBuffer,
+    outputStride,
+    offsetsBuffer
+  );
   const offsetPointsBuffer = await offsetPoints.buffer();
 
-  const keypointConfidence =
-      Array.from(getPointsConfidence(scoresBuffer, heatmapValuesBuffer));
+  const keypointConfidence = Array.from(
+    getPointsConfidence(scoresBuffer, heatmapValuesBuffer)
+  );
 
   const keypoints = keypointConfidence.map((score, keypointId): Keypoint => {
     totalScore += score;
@@ -83,13 +80,13 @@ export async function decodeSinglePose(
       y: offsetPointsBuffer.get(keypointId, 0),
       x: offsetPointsBuffer.get(keypointId, 1),
       score,
-      name: COCO_KEYPOINTS[keypointId]
+      name: COCO_KEYPOINTS[keypointId],
     };
   });
   heatmapValues.dispose();
   offsetPoints.dispose();
 
-  return {keypoints, score: totalScore / keypoints.length};
+  return { keypoints, score: totalScore / keypoints.length };
 }
 
 /**
@@ -97,12 +94,16 @@ export async function decodeSinglePose(
  * vectors with GPU.
  */
 export async function decodeSinglePoseGPU(
-    heatmapScores: tf.Tensor3D, offsets: tf.Tensor3D,
-    outputStride: PoseNetOutputStride): Promise<tf.Tensor[]> {
+  heatmapScores: tf.Tensor3D,
+  offsets: tf.Tensor3D,
+  outputStride: PoseNetOutputStride
+): Promise<tf.Tensor[]> {
   const heatmapValues = argmax2d(heatmapScores);
   const offsetPoints = getOffsetPointsGPU(heatmapValues, outputStride, offsets);
 
-  const keypointConfidence =
-      getPointsConfidenceGPU(heatmapScores, heatmapValues as tf.Tensor);
+  const keypointConfidence = getPointsConfidenceGPU(
+    heatmapScores,
+    heatmapValues as tf.Tensor
+  );
   return [offsetPoints, keypointConfidence];
 }

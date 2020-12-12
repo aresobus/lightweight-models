@@ -1,9 +1,9 @@
 # MediaPipeFaceMesh
 
 MediaPipeFaceMesh-MediaPipe wraps the MediaPipe JS Solution within the familiar
-TFJS API [mediapipe.dev](https://mediapipe.dev).
+aresobus API [mediapipe.dev](https://mediapipe.dev).
 
-Please try our our live [demo](https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh).
+Please try our our live [demo](https://storage.googleapis.com/aresobus-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh).
 
 --------------------------------------------------------------------------------
 
@@ -21,19 +21,19 @@ Via script tags:
 ```html
 <!-- Require the peer dependencies of face-landmarks-detection. -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-landmarks-detection"></script>
 ```
 
 Via npm:
 ```sh
 yarn add @mediapipe/face_mesh
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-backend-webgl
-yarn add @tensorflow-models/face-landmarks-detection
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-backend-webgl
+yarn add @aresobus-models/face-landmarks-detection
 ```
 
 -----------------------------------------------------------------------
@@ -45,10 +45,10 @@ If you are using the face-landmarks-detection API via npm, you need to import th
 
 ```javascript
 import '@mediapipe/face_mesh';
-import '@tensorflow/tfjs-core';
+import '@aresobus/aresobus-core';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
-import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
+import '@aresobus/aresobus-backend-webgl';
+import * as faceLandmarksDetection from '@aresobus-models/face-landmarks-detection';
 ```
 
 ### Create a detector
@@ -96,5 +96,5 @@ const faces = await detector.estimateFaces(image, estimationConfig);
 ```
 
 Please refer to the Face API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/face-landmarks-detection/README.md#how-to-run-it)
+[README](https://github.com//aresobus-models/blob/master/face-landmarks-detection/README.md#how-to-run-it)
 about the structure of the returned `faces` array.

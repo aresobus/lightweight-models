@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/tensorflow-models-speech-commands",
+  "name": "@aresobus/-models-speech-commands",
   "version": "0.5.4",
-  "description": "Speech-command recognizer in TensorFlow.js maintained by Oleksandr Lebedyev",
+  "description": "Speech-command recognizer in  maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/speech-commands.min.js",
   "jsdelivr": "dist/speech-commands.min.js",
@@ -13,17 +13,17 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
-    "@tensorflow/tfjs-core": "^4.13.0",
-    "@tensorflow/tfjs-data": "^4.13.0",
-    "@tensorflow/tfjs-layers": "^4.13.0"
+    "@aresobus/aresobus-core": "^4.13.0",
+    "@aresobus/aresobus-data": "^4.13.0",
+    "@aresobus/aresobus-layers": "^4.13.0"
   },
   "devDependencies": {
-    "@tensorflow/tfjs-core": "^4.13.0",
-    "@tensorflow/tfjs-data": "^4.13.0",
-    "@tensorflow/tfjs-layers": "^4.13.0",
-    "@tensorflow/tfjs-node": "^4.13.0",
+    "@aresobus/aresobus-core": "^4.13.0",
+    "@aresobus/aresobus-data": "^4.13.0",
+    "@aresobus/aresobus-layers": "^4.13.0",
+    "@aresobus/aresobus-node": "^4.13.0",
     "@types/jasmine": "~2.8.8",
     "@types/rimraf": "^2.0.2",
     "@types/tempfile": "^2.0.0",

@@ -1,40 +1,34 @@
-/**
- * @license
- * Copyright 2019 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as tf from "@aresobus/aresobus-core";
+import * as tf_webgl from "@aresobus/aresobus-backend-webgl";
 
-import * as tf from '@tensorflow/tfjs-core';
-import * as tf_webgl from '@tensorflow/tfjs-backend-webgl';
-
-import {NUM_KEYPOINTS} from '../keypoints';
-import {Padding, Pose} from '../types';
-import {getScale} from './util';
+import { NUM_KEYPOINTS } from "../keypoints";
+import { Padding, Pose } from "../types";
+import { getScale } from "./util";
 
 export function decodeMultipleMasksWebGl(
-    segmentation: tf.Tensor2D, longOffsets: tf.Tensor3D,
-    posesAboveScore: Pose[], height: number, width: number, stride: number,
-    [inHeight, inWidth]: [number, number], padding: Padding,
-    refineSteps: number, minKptScore: number,
-    maxNumPeople: number): tf.TensorInfo {
+  segmentation: tf.Tensor2D,
+  longOffsets: tf.Tensor3D,
+  posesAboveScore: Pose[],
+  height: number,
+  width: number,
+  stride: number,
+  [inHeight, inWidth]: [number, number],
+  padding: Padding,
+  refineSteps: number,
+  minKptScore: number,
+  maxNumPeople: number
+): tf.TensorInfo {
   // The height/width of the image/canvas itself.
   const [origHeight, origWidth] = segmentation.shape;
   // The height/width of the output of the model.
   const [outHeight, outWidth] = longOffsets.shape.slice(0, 2);
 
-  const shapedLongOffsets: tf.Tensor4D =
-      tf.reshape(longOffsets, [outHeight, outWidth, 2, NUM_KEYPOINTS]);
+  const shapedLongOffsets: tf.Tensor4D = tf.reshape(longOffsets, [
+    outHeight,
+    outWidth,
+    2,
+    NUM_KEYPOINTS,
+  ]);
 
   // Make pose tensor of shape [MAX_NUM_PEOPLE, NUM_KEYPOINTS, 3] where
   // the last 3 coordinates correspond to the score, h and w coordinate of that
@@ -52,15 +46,18 @@ export function decodeMultipleMasksWebGl(
     }
   }
 
-  const [scaleX, scaleY] =
-      getScale([height, width], [inHeight, inWidth], padding);
+  const [scaleX, scaleY] = getScale(
+    [height, width],
+    [inHeight, inWidth],
+    padding
+  );
 
   const posesTensor = tf.tensor(poseVals, [maxNumPeople, NUM_KEYPOINTS, 3]);
 
-  const {top: padT, left: padL} = padding;
+  const { top: padT, left: padL } = padding;
 
   const program: tf_webgl.GPGPUProgram = {
-    variableNames: ['segmentation', 'longOffsets', 'poses'],
+    variableNames: ["segmentation", "longOffsets", "poses"],
     outputShape: [origHeight, origWidth],
     userCode: `
     int convertToPositionInOutput(int pos, int pad, float scale, int stride) {
@@ -153,9 +150,12 @@ export function decodeMultipleMasksWebGl(
         int nearestPose = findNearestPose(coords[0], coords[1]);
         setOutput(float(nearestPose));
       }
-  `
+  `,
   };
   const webglBackend = tf.backend() as tf_webgl.MathBackendWebGL;
-  return webglBackend.compileAndRun(
-      program, [segmentation, shapedLongOffsets, posesTensor]);
+  return webglBackend.compileAndRun(program, [
+    segmentation,
+    shapedLongOffsets,
+    posesTensor,
+  ]);
 }

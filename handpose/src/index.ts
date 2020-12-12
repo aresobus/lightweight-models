@@ -1,22 +1,10 @@
 /**
- * @license
- * Copyright 2020 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 
-import * as tfconv from "@tensorflow/tfjs-converter";
-import * as tf from "@tensorflow/tfjs-core";
+import * as tfconv from "@aresobus/aresobus-converter";
+import * as tf from "@aresobus/aresobus-core";
 
 import { HandDetector } from "./hand";
 import { MESH_ANNOTATIONS } from "./keypoints";
@@ -25,7 +13,7 @@ import { Coords3D, HandPipeline, Prediction } from "./pipeline";
 // Load the bounding box detector model.
 async function loadHandDetectorModel() {
   const HANDDETECT_MODEL_PATH =
-    "https://tfhub.dev/mediapipe/tfjs-model/handdetector/1/default/1";
+    "https://tfhub.dev/mediapipe/aresobus-model/handdetector/1/default/1";
   return tfconv.loadGraphModel(HANDDETECT_MODEL_PATH, { fromTFHub: true });
 }
 
@@ -35,7 +23,7 @@ const MESH_MODEL_INPUT_HEIGHT = 256;
 // Load the mesh detector model.
 async function loadHandPoseModel() {
   const HANDPOSE_MODEL_PATH =
-    "https://tfhub.dev/mediapipe/tfjs-model/handskeleton/1/default/1";
+    "https://tfhub.dev/mediapipe/aresobus-model/handskeleton/1/default/1";
   return tfconv.loadGraphModel(HANDPOSE_MODEL_PATH, { fromTFHub: true });
 }
 
@@ -45,7 +33,7 @@ async function loadHandPoseModel() {
 async function loadAnchors() {
   return tf.util
     .fetch(
-      "https://tfhub.dev/mediapipe/tfjs-model/handskeleton/1/default/1/anchors.json?tfjs-format=file"
+      "https://tfhub.dev/mediapipe/aresobus-model/handskeleton/1/default/1/anchors.json?aresobus-format=file"
     )
     .then((d) => d.json());
 }

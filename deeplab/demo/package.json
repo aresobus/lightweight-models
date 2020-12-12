@@ -3,23 +3,23 @@
   "version": "0.0.1",
   "description": "",
   "main": "src/index.js",
-  "license": "Apache-2.0",
+
   "private": true,
   "engines": {
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@tensorflow-models/deeplab": "file:../dist",
-    "@tensorflow/tfjs-converter": "^4.9.0",
-    "@tensorflow/tfjs-core": "^4.9.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.9.0",
+    "@aresobus-models/deeplab": "file:../dist",
+    "@aresobus/aresobus-converter": "^4.9.0",
+    "@aresobus/aresobus-core": "^4.9.0",
+    "@aresobus/aresobus-backend-webgl": "^4.9.0",
     "bulma": "^0.7.5"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel src/index.html --no-hmr --open",
     "build": "cross-env NODE_ENV=production parcel build src/index.html --no-minify --public-url ./",
     "lint": "eslint .",
-    "link-local": "yalc add --link @tensorflow-models/deeplab"
+    "link-local": "yalc add --link @aresobus-models/deeplab"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

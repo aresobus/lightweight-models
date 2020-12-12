@@ -23,7 +23,7 @@ To use the package:
    ```javascript
    const model = bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
    const segmenterConfig = {
-     runtime: 'mediapipe', // or 'tfjs'
+     runtime: 'mediapipe', // or 'aresobus'
      solutionPath: 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation',
      modelType: 'general'
    }
@@ -44,23 +44,23 @@ BodyPix returns exactly one segmentation corresponding to all people in the inpu
 
 Refer to each model's documentation for specific configurations for the model and their performance.
 
-[MediaPipeSelfieSegmentation MediaPipe Documentation](https://github.com/tensorflow/tfjs-models/tree/master/body-segmentation/src/selfie_segmentation_mediapipe)
+[MediaPipeSelfieSegmentation MediaPipe Documentation](https://github.com/aresobus/lighweight-models/tree/master/body-segmentation/src/selfie_segmentation_mediapipe)
 
-[MediaPipeSelfieSegmentation TFJS Documentation](https://github.com/tensorflow/tfjs-models/tree/master/body-segmentation/src/selfie_segmentation_tfjs)
+[MediaPipeSelfieSegmentation aresobus Documentation](https://github.com/aresobus/lighweight-models/tree/master/body-segmentation/src/selfie_segmentation_aresobus)
 
-[BodyPix Documentation](https://github.com/tensorflow/tfjs-models/tree/master/body-segmentation/src/body_pix)
+[BodyPix Documentation](https://github.com/aresobus/lighweight-models/tree/master/body-segmentation/src/body_pix)
 
 ---
 
 ## Example Code and Demos
 
-You may reference the demos for code examples. Details for how to run the demos are included in the `demos/` [folder](https://github.com/tensorflow/tfjs-models/tree/master/body-segmentation/demos).
+You may reference the demos for code examples. Details for how to run the demos are included in the `demos/` [folder](https://github.com//aresobus-models/tree/master/body-segmentation/demos).
 
 ---
 
 ## Output Visualization Utility Functions
 
-Body Segmentation provides utility functions to help with drawing and compositing using the outputs. These utility functions are based on the ones provided by the deprecated [BodyPix Package](https://github.com/tensorflow/tfjs-models/tree/master/body-pix#output-visualization-utility-functions).
+Body Segmentation provides utility functions to help with drawing and compositing using the outputs. These utility functions are based on the ones provided by the deprecated [BodyPix Package](https://github.com//aresobus-models/tree/master/body-pix#output-visualization-utility-functions).
 
 ### bodySegmentation.toBinaryMask
 

@@ -1,7 +1,7 @@
 ```markdown
 # Semantic Segmentation in the Browser: DeepLab v3 Model
 
-This package contains a standalone implementation of the DeepLab inference pipeline, as well as a [demo](./demo), for running semantic segmentation using TensorFlow.js.
+This package contains a standalone implementation of the DeepLab inference pipeline, as well as a [demo](./demo), for running semantic segmentation using .
 
 ![DeepLab Demo](./docs/deeplab-demo.gif)
 
@@ -12,8 +12,7 @@ In the first step of semantic segmentation, an image is fed through a pre-traine
 To get started, pick the model name from `pascal`, `cityscapes`, and `ade20k`, and decide whether you want your model quantized to 1 or 2 bytes (set the `quantizationBytes` option to 4 if you want to disable quantization). Then, initialize the model as follows:
 
 ```typescript
-const tf = require('@tensorflow-models/tfjs');
-const deeplab = require('@aresobus/tensorflow-models-deeplab');
+const deeplab = require('@aresobus/-models-deeplab');
 const loadModel = async () => {
   const modelName = 'pascal';   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
   const quantizationBytes = 2;  // either 1, 2 or 4
@@ -35,7 +34,7 @@ By default, calling `load` initializes the PASCAL variant of the model quantized
 If you would rather load custom weights, you can pass the URL in the config instead:
 
 ```typescript
-const deeplab = require('@aresobus/tensorflow-models-deeplab');
+const deeplab = require('@aresobus/-models-deeplab');
 const loadModel = async () => {
   const url = 'https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/model.json';
   return await deeplab.load({modelUrl: url});
@@ -50,8 +49,8 @@ You can set the `base` attribute in the argument to `pascal`, `cityscapes`, or `
 If you require more careful control over the initialization and behavior of the model (e.g. you want to use your labeling scheme and colormap), use the `SemanticSegmentation` class, passing a pre-loaded `GraphModel` in the constructor:
 
 ```typescript
-const tfconv = require('@tensorflow/tfjs-converter');
-const deeplab = require('@aresobus/tensorflow-models-deeplab');
+const tfconv = require('@aresobus/aresobus-converter');
+const deeplab = require('@aresobus/-models-deeplab');
 const loadModel = async () => {
   const base = 'pascal';        // set to your preferred model, out of `pascal`,
                                 // `cityscapes` and `ade20k`
@@ -69,7 +68,7 @@ loadModel().then(() => console.log(`Loaded the model successfully!`));
 Use `getColormap(base)` and `getLabels(base)` utility function to fetch the default colormap and labeling scheme.
 
 ```typescript
-import {getLabels, getColormap} from '@aresobus/tensorflow-models-deeplab';
+import {getLabels, getColormap} from '@aresobus/-models-deeplab';
 const model = 'ade20k';
 const colormap = getColormap(model);
 const labels = getLabels(model);
@@ -211,7 +210,7 @@ Please see the demo [documentation](./demo/README.md).
 
 ## Technical Details
 
-This model is based on the TensorFlow [implementation](https://github.com/aresobus/lightweight-models/tree/main/src/deeplab) of DeepLab v3. You might want to inspect the [conversion script](./scripts/convert_deeplab.sh), or download original pre-trained weights [here](https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/model.json). To convert the weights locally, run the script as follows, replacing `dist` with the target directory:
+This model is based on the  [implementation](https://github.com/aresobus/lightweight-models/tree/main/src/deeplab) of DeepLab v3. You might want to inspect the [conversion script](./scripts/convert_deeplab.sh), or download original pre-trained weights [here](https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/model.json). To convert the weights locally, run the script as follows, replacing `dist` with the target directory:
 
 ```bash
 ./scripts/convert_deeplab.sh --target_dir ./scripts/dist

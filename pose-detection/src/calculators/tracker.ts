@@ -1,25 +1,8 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import { Pose } from "../types";
 
-import {Pose} from '../types';
-
-import {Track} from './interfaces/common_interfaces';
-import {TrackerConfig} from './interfaces/config_interfaces';
-import {validateTrackerConfig} from './tracker_utils';
+import { Track } from "./interfaces/common_interfaces";
+import { TrackerConfig } from "./interfaces/config_interfaces";
+import { validateTrackerConfig } from "./tracker_utils";
 
 /**
  * A stateful tracker for associating detections between frames. This is an
@@ -37,7 +20,7 @@ export abstract class Tracker {
     validateTrackerConfig(config);
     this.tracks = [];
     this.maxTracks = config.maxTracks;
-    this.maxAge = config.maxAge * 1000;  // Convert msec to usec.
+    this.maxAge = config.maxAge * 1000; // Convert msec to usec.
     this.minSimilarity = config.minSimilarity;
     this.nextID = 1;
   }
@@ -77,7 +60,7 @@ export abstract class Tracker {
    * Returns a Set of active track IDs.
    */
   getTrackIDs(): Set<number> {
-    return new Set(this.tracks.map(track => track.id));
+    return new Set(this.tracks.map((track) => track.id));
   }
 
   /**
@@ -85,7 +68,7 @@ export abstract class Tracker {
    * @param timestamp The current timestamp in microseconds.
    */
   filterOldTracks(timestamp: number): void {
-    this.tracks = this.tracks.filter(track => {
+    this.tracks = this.tracks.filter((track) => {
       return timestamp - track.lastTimestamp <= this.maxAge;
     });
   }
@@ -127,8 +110,9 @@ export abstract class Tracker {
         // Link the detection with the highest scoring track.
         let linkedTrack = this.tracks[maxTrackIndex];
         linkedTrack = Object.assign(
-            linkedTrack,
-            this.createTrack(poses[detectionIndex], timestamp, linkedTrack.id));
+          linkedTrack,
+          this.createTrack(poses[detectionIndex], timestamp, linkedTrack.id)
+        );
         poses[detectionIndex].id = linkedTrack.id;
         const index = unmatchedTrackIndices.indexOf(maxTrackIndex);
         unmatchedTrackIndices.splice(index, 1);
@@ -174,10 +158,10 @@ export abstract class Tracker {
     const track: Track = {
       id: trackID || this.nextTrackID(),
       lastTimestamp: timestamp,
-      keypoints: [...pose.keypoints].map(keypoint => ({...keypoint}))
+      keypoints: [...pose.keypoints].map((keypoint) => ({ ...keypoint })),
     };
     if (pose.box !== undefined) {
-      track.box = {...pose.box};
+      track.box = { ...pose.box };
     }
     return track;
   }
@@ -195,7 +179,7 @@ export abstract class Tracker {
    * Removes specific tracks, based on their ids.
    */
   remove(...ids: number[]): void {
-    this.tracks = this.tracks.filter(track => !ids.includes(track.id));
+    this.tracks = this.tracks.filter((track) => !ids.includes(track.id));
   }
 
   /**

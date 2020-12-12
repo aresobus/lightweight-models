@@ -1,28 +1,14 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import { io } from "@aresobus/aresobus-core";
 
-import {io} from '@tensorflow/tfjs-core';
-
-import {MediaPipeFaceDetectorEstimationConfig, MediaPipeFaceDetectorModelConfig} from '../mediapipe/types';
+import {
+  MediaPipeFaceDetectorEstimationConfig,
+  MediaPipeFaceDetectorModelConfig,
+} from "../mediapipe/types";
 
 /**
- * Model parameters for MediaPipeFaceDetector TFJS runtime.
+ * Model parameters for MediaPipeFaceDetector aresobus runtime.
  *
- * `runtime`: Must set to be 'tfjs'.
+ * `runtime`: Must set to be 'aresobus'.
  *
  * `modelType`: Optional. Possible values: 'short'|'full'. Defaults to
  * 'short'. The short-range model that works best for faces within 2 meters from
@@ -38,14 +24,14 @@ import {MediaPipeFaceDetectorEstimationConfig, MediaPipeFaceDetectorModelConfig}
  * the detector model. This is useful for area/countries that don't have access
  * to the model hosted on tf.hub.
  */
-export interface MediaPipeFaceDetectorTfjsModelConfig extends
-    MediaPipeFaceDetectorModelConfig {
-  runtime: 'tfjs';
-  detectorModelUrl?: string|io.IOHandler;
+export interface MediaPipeFaceDetectoraresobusModelConfig
+  extends MediaPipeFaceDetectorModelConfig {
+  runtime: "aresobus";
+  detectorModelUrl?: string | io.IOHandler;
 }
 
 /**
- * Face estimation parameters for MediaPipeFaceDetector TFJS runtime.
+ * Face estimation parameters for MediaPipeFaceDetector aresobus runtime.
  */
-export interface MediaPipeFaceDetectorTfjsEstimationConfig extends
-    MediaPipeFaceDetectorEstimationConfig {}
+export interface MediaPipeFaceDetectoraresobusEstimationConfig
+  extends MediaPipeFaceDetectorEstimationConfig {}

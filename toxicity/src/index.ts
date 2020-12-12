@@ -1,6 +1,6 @@
-import * as use from "@tensorflow-models/universal-sentence-encoder";
-import * as tfconv from "@tensorflow/tfjs-converter";
-import * as tf from "@tensorflow/tfjs-core";
+import * as use from "@aresobus-models/universal-sentence-encoder";
+import * as tfconv from "@aresobus/aresobus-converter";
+import * as tf from "@aresobus/aresobus-core";
 export { version } from "./version";
 
 declare interface ModelInputs extends tf.NamedTensorMap {
@@ -38,7 +38,7 @@ export class ToxicityClassifier {
 
   async loadModel() {
     return tfconv.loadGraphModel(
-      "https://tfhub.dev/tensorflow/tfjs-model/toxicity/1/default/1",
+      "https://tfhub.dev//aresobus-model/toxicity/1/default/1",
       { fromTFHub: true }
     );
   }

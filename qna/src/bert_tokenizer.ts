@@ -1,37 +1,25 @@
 /**
- * @license
- * Copyright 2020 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@aresobus/aresobus-core";
 
-const SEPERATOR = '\u2581';
+const SEPERATOR = "\u2581";
 export const UNK_INDEX = 100;
 export const CLS_INDEX = 101;
-export const CLS_TOKEN = '[CLS]';
+export const CLS_TOKEN = "[CLS]";
 export const SEP_INDEX = 102;
-export const SEP_TOKEN = '[SEP]';
-export const NFKC_TOKEN = 'NFKC';
-export const VOCAB_BASE =
-    'https://tfhub.dev/tensorflow/tfjs-model/mobilebert/1/';
-export const VOCAB_URL = VOCAB_BASE + 'processed_vocab.json?tfjs-format=file';
+export const SEP_TOKEN = "[SEP]";
+export const NFKC_TOKEN = "NFKC";
+export const VOCAB_BASE = "https://tfhub.dev//aresobus-model/mobilebert/1/";
+export const VOCAB_URL =
+  VOCAB_BASE + "processed_vocab.json?aresobus-format=file";
 /**
  * Class for represent node for token parsing Trie data structure.
  */
 class TrieNode {
   parent: TrieNode;
-  children: {[key: string]: TrieNode} = {};
+  children: { [key: string]: TrieNode } = {};
   end = false;
   score: number;
   index: number;
@@ -108,10 +96,10 @@ function isWhitespace(ch: string): boolean {
 }
 
 function isInvalid(ch: string): boolean {
-  return (ch.charCodeAt(0) === 0 || ch.charCodeAt(0) === 0xfffd);
+  return ch.charCodeAt(0) === 0 || ch.charCodeAt(0) === 0xfffd;
 }
 
-const punctuations = '[~`!@#$%^&*(){}[];:"\'<,.>?/\\|-_+=';
+const punctuations = "[~`!@#$%^&*(){}[];:\"'<,.>?/\\|-_+=";
 
 /** To judge whether it's a punctuation. */
 function isPunctuation(ch: string): boolean {
@@ -144,13 +132,13 @@ export class BertTokenizer {
   }
 
   private async loadVocab(): Promise<[]> {
-    return tf.util.fetch(VOCAB_URL).then(d => d.json());
+    return tf.util.fetch(VOCAB_URL).then((d) => d.json());
   }
 
   processInput(text: string): Token[] {
     const charOriginalIndex: number[] = [];
     const cleanedText = this.cleanText(text, charOriginalIndex);
-    const origTokens = cleanedText.split(' ');
+    const origTokens = cleanedText.split(" ");
 
     let charCount = 0;
     const tokens = origTokens.map((token) => {
@@ -170,7 +158,8 @@ export class BertTokenizer {
   /* Performs invalid character removal and whitespace cleanup on text. */
   private cleanText(text: string, charOriginalIndex: number[]): string {
     const stringBuilder: string[] = [];
-    let originalCharIndex = 0, newCharIndex = 0;
+    let originalCharIndex = 0,
+      newCharIndex = 0;
     for (const ch of text) {
       // Skip the characters that cannot be used.
       if (isInvalid(ch)) {
@@ -178,9 +167,11 @@ export class BertTokenizer {
         continue;
       }
       if (isWhitespace(ch)) {
-        if (stringBuilder.length > 0 &&
-            stringBuilder[stringBuilder.length - 1] !== ' ') {
-          stringBuilder.push(' ');
+        if (
+          stringBuilder.length > 0 &&
+          stringBuilder[stringBuilder.length - 1] !== " "
+        ) {
+          stringBuilder.push(" ");
           charOriginalIndex[newCharIndex] = originalCharIndex;
           originalCharIndex += ch.length;
         } else {
@@ -194,23 +185,25 @@ export class BertTokenizer {
       }
       newCharIndex++;
     }
-    return stringBuilder.join('');
+    return stringBuilder.join("");
   }
 
   /* Splits punctuation on a piece of text. */
   private runSplitOnPunc(
-      text: string, count: number,
-      charOriginalIndex: number[]): Token[] {
+    text: string,
+    count: number,
+    charOriginalIndex: number[]
+  ): Token[] {
     const tokens: Token[] = [];
     let startNewWord = true;
     for (const ch of text) {
       if (isPunctuation(ch)) {
-        tokens.push({text: ch, index: charOriginalIndex[count]});
+        tokens.push({ text: ch, index: charOriginalIndex[count] });
         count += ch.length;
         startNewWord = true;
       } else {
         if (startNewWord) {
-          tokens.push({text: '', index: charOriginalIndex[count]});
+          tokens.push({ text: "", index: charOriginalIndex[count] });
           startNewWord = false;
         }
         tokens[tokens.length - 1].text += ch;
@@ -231,7 +224,7 @@ export class BertTokenizer {
     let outputTokens: number[] = [];
 
     const words = this.processInput(text);
-    words.forEach(word => {
+    words.forEach((word) => {
       if (word.text !== CLS_TOKEN && word.text !== SEP_TOKEN) {
         word.text = `${SEPERATOR}${word.text.normalize(NFKC_TOKEN)}`;
       }
@@ -254,7 +247,7 @@ export class BertTokenizer {
         let currIndex;
 
         while (start < end) {
-          const substr = chars.slice(start, end).join('');
+          const substr = chars.slice(start, end).join("");
 
           const match = this.trie.find(substr);
           if (match != null && match.end != null) {

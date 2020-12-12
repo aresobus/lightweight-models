@@ -50,7 +50,7 @@ yarn
 
 Link the local handpose to the demo:
 ```sh
-yarn yalc link @tensorflow-models/handpose
+yarn yalc link @aresobus-models/handpose
 ```
 
 Start the dev demo server:

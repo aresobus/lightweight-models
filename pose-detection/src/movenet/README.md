@@ -8,7 +8,7 @@ intended for latency-critical applications, and Thunder is intended for
 applications that require high accuracy. Both models run faster than real time
 (30+ FPS) on most modern desktops and laptops, which proves crucial for live
 fitness, health, and wellness applications. Please try it out using the live
-[demo](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=movenet).
+[demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=movenet).
 
 --------------------------------------------------------------------------------
 
@@ -24,32 +24,32 @@ Via script tags:
 
 ```html
 <!-- Require the peer dependencies of pose-detection. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
-<!-- Alternatively you can use the WASM backend: <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
+<!-- Alternatively you can use the WASM backend: <script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm/dist/tf-backend-wasm.js"></script> -->
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @tensorflow-models/pose-detection
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
+yarn add @aresobus-models/pose-detection
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
 ```
 
 Install one of the backends:
 WebGL:
 ```sh
-yarn add @tensorflow/tfjs-backend-webgl
+yarn add @aresobus/aresobus-backend-webgl
 ```
 
 WASM:
 ```sh
-yarn add @tensorflow/tfjs-backend-wasm
+yarn add @aresobus/aresobus-backend-wasm
 ```
 
 -------------------------------------------------------------------------------
@@ -61,11 +61,11 @@ If you are using the Pose API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as poseDetection from '@aresobus-models/pose-detection';
+import * as tf from '@aresobus/aresobus-core';
 // Register one of the TF.js backends.
-import '@tensorflow/tfjs-backend-webgl';
-// import '@tensorflow/tfjs-backend-wasm';
+import '@aresobus/aresobus-backend-webgl';
+// import '@aresobus/aresobus-backend-wasm';
 ```
 
 ### Create a detector
@@ -94,9 +94,9 @@ Pass in `poseDetection.SupportedModels.MoveNet` from the
   *modelType* from tf.hub. This argument is useful for area/countries that
   don't have access to the model hosted on tf.hub. It also accepts
   `io.IOHandler` which can be used with
-  [tfjs-react-native](https://github.com/tensorflow/tfjs/tree/master/tfjs-react-native)
+  [aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
   to load model from app bundle directory using
-  [bundleResourceIO](https://github.com/tensorflow/tfjs/blob/master/tfjs-react-native/src/bundle_resource_io.ts#L169).
+  [bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/src/bundle_resource_io.ts#L169).
 
 * *minPoseScore* (optional): The minimum confidence score a pose needs to have
   to be considered a valid pose detection.
@@ -116,7 +116,7 @@ Pass in `poseDetection.SupportedModels.MoveNet` from the
   uniquely identifies a person. Only used with multi-pose models.
 
   For more information about tracking, see the documentation
-  [here](https://github.com/tensorflow/tfjs-models/blob/master/pose-detection/src/calculators/tracker.md).
+  [here](https://github.com//aresobus-models/blob/master/pose-detection/src/calculators/tracker.md).
 
 * *trackerType* (optional): A `TrackerType` indicating which type of tracker to
   use. Defaults to bounding box tracking.
@@ -135,7 +135,7 @@ const detector = await poseDetection.createDetector(poseDetection.SupportedModel
 
 The following code snippet demonstrates how to load the
 **MoveNet.MultiPose.Lightning** model with bounding box
-[tracking](https://github.com/tensorflow/tfjs-models/blob/master/pose-detection/src/calculators/tracker.md)
+[tracking](https://github.com//aresobus-models/blob/master/pose-detection/src/calculators/tracker.md)
 enabled:
 
 ```javascript
@@ -161,7 +161,7 @@ const poses = await detector.estimatePoses(image);
 ```
 
 Please refer to the Pose API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/pose-detection/README.md#pose-estimation)
+[README](https://github.com//aresobus-models/blob/master/pose-detection/README.md#pose-estimation)
 for the basic structure of the returned `poses`. When running the multi-pose
 MoveNet model the `box` field in a returned `Pose` will be set with a bounding
 box around the detected person. When tracking is enabled, the `id` field of a
@@ -185,6 +185,6 @@ impact inference speed and the accuracy of detections is similar to that of
 SinglePose Lightning.
 
 To see the model’s FPS on your device, try our
-[demo](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=movenet).
+[demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=movenet).
 You can switch the model type and backends live in the demo UI to see what works
 best for your device.

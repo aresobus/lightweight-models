@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/tensorflow-models-posenet",
+  "name": "@aresobus/-models-posenet",
   "version": "2.2.2",
-  "description": "Pretrained PoseNet model in TensorFlow.js maintained by Oleksandr Lebedyev",
+  "description": "Pretrained PoseNet model in  maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/posenet.esm.js",
   "module": "dist/posenet.esm.js",
@@ -13,15 +13,15 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0"
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0"
   },
   "devDependencies": {
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
     "@types/jasmine": "~3.3.15",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-runtime": "~6.23.0",

@@ -1,17 +1,5 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 let segmentationModel;
@@ -27,7 +15,7 @@ let masked;
 const src_images = [image1, mask1];
 const WIDTH = 192;
 const HEIGHT = 256;
-const IMAGE_PREFIX = 'im';
+const IMAGE_PREFIX = "im";
 
 /**
  * Changes the input image.
@@ -36,17 +24,17 @@ const IMAGE_PREFIX = 'im';
  */
 function changeImage(file, image_id) {
   const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = document.createElement('img');
-    img.src = e.target.result
+  reader.onload = function (e) {
+    const img = document.createElement("img");
+    img.src = e.target.result;
 
-    const imgContainer = document.createElement('div');
-    imgContainer.classList.add('img-container');
+    const imgContainer = document.createElement("div");
+    imgContainer.classList.add("img-container");
     imgContainer.appendChild(img);
 
-    const uploadedImg = document.getElementById('uploaded-img');
+    const uploadedImg = document.getElementById("uploaded-img");
     // clean result before
-    uploadedImg.innerHTML = '';
+    uploadedImg.innerHTML = "";
     // append new image
     uploadedImg.appendChild(imgContainer);
 
@@ -61,22 +49,30 @@ function changeImage(file, image_id) {
       zoomOnTouch: false,
       zoomOnWheel: false,
       viewMode: 1,
-      dragMode: 'none',
+      dragMode: "none",
       crop(event) {
-        const resizeCanvas = document.getElementById('resize');
-        const context = resizeCanvas.getContext('2d');
+        const resizeCanvas = document.getElementById("resize");
+        const context = resizeCanvas.getContext("2d");
         context.clearRect(0, 0, WIDTH, HEIGHT);
         context.drawImage(
-            img, event.detail.x, event.detail.y, event.detail.width,
-            event.detail.height, 0, 0, WIDTH, HEIGHT);
+          img,
+          event.detail.x,
+          event.detail.y,
+          event.detail.width,
+          event.detail.height,
+          0,
+          0,
+          WIDTH,
+          HEIGHT
+        );
 
         const changeImg = document.getElementById(image_id);
         changeImg.src = resizeCanvas.toDataURL();
         changeImg.width = WIDTH;
         changeImg.height = HEIGHT;
-        changeImg.onload = function() {
+        changeImg.onload = function () {
           predict();
-        }
+        };
       },
     });
   };
@@ -90,15 +86,14 @@ function changeImage(file, image_id) {
  */
 function loadImage(filename, element_id) {
   let _img = document.getElementById(element_id);
-  let newImg = new Image;
-  newImg.onload = function() {
+  let newImg = new Image();
+  newImg.onload = function () {
     _img.src = this.src;
     predict();
   };
 
-  newImg.src = 'images/' + filename;
+  newImg.src = "images/" + filename;
 }
-
 
 /**
  * Loads an image to the HTML canvas element.
@@ -106,13 +101,13 @@ function loadImage(filename, element_id) {
  * @param {string} element_id - the target element id.
  */
 function loadImageToCanvas(filename, element_id) {
-  let _mask = document.getElementById(element_id).getContext('2d');
-  let _img = new Image;
-  _img.onload = function() {
+  let _mask = document.getElementById(element_id).getContext("2d");
+  let _img = new Image();
+  _img.onload = function () {
     _mask.drawImage(_img, 0, 0, _img.width, _img.height, 0, 0, WIDTH, HEIGHT);
   };
 
-  _img.src = 'images/' + filename;
+  _img.src = "images/" + filename;
 }
 
 /**
@@ -120,16 +115,16 @@ function loadImageToCanvas(filename, element_id) {
  * @param {number} preset_id - preset id.
  */
 function loadPreset(preset_id) {
-  const uploadedImg = document.getElementById('uploaded-img');
+  const uploadedImg = document.getElementById("uploaded-img");
   // clean result before
-  uploadedImg.innerHTML = '';
+  uploadedImg.innerHTML = "";
 
-  const deleteUploadButton = document.getElementById('delete-upload');
-  if (deleteUploadButton.style.visibility === 'visible') {
+  const deleteUploadButton = document.getElementById("delete-upload");
+  if (deleteUploadButton.style.visibility === "visible") {
     deleteUploadButton.click();
   }
 
-  loadImage(IMAGE_PREFIX + preset_id + '.jpg', 'im1');
+  loadImage(IMAGE_PREFIX + preset_id + ".jpg", "im1");
 }
 
 /**
@@ -137,16 +132,20 @@ function loadPreset(preset_id) {
  */
 function predict() {
   // Tests if the model is loaded.
-  if (segmentationModel == null || segmenter == null ||
-      estimationModel == null || estimator == null) {
-    alert('Model is not available!');
+  if (
+    segmentationModel == null ||
+    segmenter == null ||
+    estimationModel == null ||
+    estimator == null
+  ) {
+    alert("Model is not available!");
     return;
   }
 
   // Tests if an image is missing.
   for (let src_image in src_images) {
     if (src_image.height === 0 || src_image.width === 0) {
-      alert('You need to upload an image!');
+      alert("You need to upload an image!");
       return;
     }
   }
@@ -154,26 +153,29 @@ function predict() {
   capturer = null;
   capturerInitialTheta = null;
 
-  predictButton.textContent = 'Running...';
+  predictButton.textContent = "Running...";
   predictButton.disabled = true;
 
   // Sets timeout = 0 to force reload the UI.
-  setTimeout(function() {
+  setTimeout(function () {
     const start = Date.now();
-    const ctx = resultCanvas.getContext('2d');
+    const ctx = resultCanvas.getContext("2d");
     ctx.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
 
     const getPortraitDepth = async () => {
       const segmentation = await segmenter.segmentPeople(image1);
 
       // Convert the segmentation into a mask to darken the background.
-      const foregroundColor = {r: 0, g: 0, b: 0, a: 0};
-      const backgroundColor = {r: 0, g: 0, b: 0, a: 255};
+      const foregroundColor = { r: 0, g: 0, b: 0, a: 0 };
+      const backgroundColor = { r: 0, g: 0, b: 0, a: 255 };
       const backgroundDarkeningMask = await bodySegmentation.toBinaryMask(
-          segmentation, foregroundColor, backgroundColor);
-      segmentation.map(
-          singleSegmentation => singleSegmentation.mask.toTensor().then(
-              tensor => tensor.dispose()));
+        segmentation,
+        foregroundColor,
+        backgroundColor
+      );
+      segmentation.map((singleSegmentation) =>
+        singleSegmentation.mask.toTensor().then((tensor) => tensor.dispose())
+      );
 
       const opacity = 1.0;
       const maskBlurAmount = 0;
@@ -183,37 +185,52 @@ function predict() {
       // and maskBlurAmount set to 3, this will darken the background and blur
       // the darkened background's edge.
       await bodySegmentation.drawMask(
-          masked, image1, backgroundDarkeningMask, opacity, maskBlurAmount,
-          flipHorizontal);
+        masked,
+        image1,
+        backgroundDarkeningMask,
+        opacity,
+        maskBlurAmount,
+        flipHorizontal
+      );
 
-      const result = await estimator.estimateDepth(
-          image1, {minDepth: config.minDepth, maxDepth: config.maxDepth});
+      const result = await estimator.estimateDepth(image1, {
+        minDepth: config.minDepth,
+        maxDepth: config.maxDepth,
+      });
       const depthMap = await result.toTensor();
 
       tf.tidy(() => {
-        const depthMap3D = tf.expandDims(depthMap, axis = 2);
-        const transformNormalize =
-            transformValueRange(0, 1, 0, 255 * 255 * 255);
+        const depthMap3D = tf.expandDims(depthMap, (axis = 2));
+        const transformNormalize = transformValueRange(
+          0,
+          1,
+          0,
+          255 * 255 * 255
+        );
         let depth_rescale = tf.add(
-            tf.mul(depthMap3D, transformNormalize.scale),
-            transformNormalize.offset);
+          tf.mul(depthMap3D, transformNormalize.scale),
+          transformNormalize.offset
+        );
 
         let depth_r = tf.floorDiv(depth_rescale, 255.0 * 255.0);
-        let depth_remain =
-            tf.floorDiv(tf.mod(depth_rescale, 255.0 * 255.0), 1.0);
+        let depth_remain = tf.floorDiv(
+          tf.mod(depth_rescale, 255.0 * 255.0),
+          1.0
+        );
         let depth_g = tf.floorDiv(depth_remain, 255);
         let depth_b = tf.floorDiv(tf.mod(depth_remain, 255), 1.0);
 
-        let depth_rgb = tf.concat([depth_r, depth_g, depth_b], axis = 2);
+        let depth_rgb = tf.concat([depth_r, depth_g, depth_b], (axis = 2));
 
         // Renders the result on a canvas.
         const transformBack = transformValueRange(0, 255, 0, 1);
 
         // Converts back to 0-1.
         const rgbFinal = tf.clipByValue(
-            tf.add(
-                tf.mul(depth_rgb, transformBack.scale), transformBack.offset),
-            0, 1);
+          tf.add(tf.mul(depth_rgb, transformBack.scale), transformBack.offset),
+          0,
+          1
+        );
 
         tf.browser.toPixels(rgbFinal, resultCanvas);
       });
@@ -223,7 +240,7 @@ function predict() {
       const end = Date.now();
       const time = end - start;
       perf.textContent = `E2E latency: ${time}ms`;
-      predictButton.textContent = 'Measure Latency';
+      predictButton.textContent = "Measure Latency";
       predictButton.disabled = false;
 
       setTimeout(() => {
@@ -247,73 +264,75 @@ function transformValueRange(fromMin, fromMax, toMin, toMax) {
   const ToRange = toMax - toMin;
   const scale = ToRange / fromRange;
   const offset = toMin - fromMin * scale;
-  return {scale, offset};
+  return { scale, offset };
 }
 
 function isMobile() {
-  return /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/
-      .test(navigator.userAgent);
+  return /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+    navigator.userAgent
+  );
 }
 /**
  * Sets up the page.
  */
 async function setupPage() {
-  predictButton = document.getElementById('predict');
-  resultCanvas = document.getElementById('result');
-  image1 = document.getElementById('im1');
-  masked = document.getElementById('masked');
+  predictButton = document.getElementById("predict");
+  resultCanvas = document.getElementById("result");
+  image1 = document.getElementById("im1");
+  masked = document.getElementById("masked");
 
-  perf = document.getElementById('perf');
+  perf = document.getElementById("perf");
 
   if (isMobile()) {
-    const elements = document.getElementsByClassName('desktop');
-    elements.forEach(element => element.style.visibility = 'hidden');
+    const elements = document.getElementsByClassName("desktop");
+    elements.forEach((element) => (element.style.visibility = "hidden"));
   }
 
   try {
     segmentationModel =
-        bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
+      bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
   } catch (e) {
-    predictButton.textContent = 'Error in loading segmentation model.';
+    predictButton.textContent = "Error in loading segmentation model.";
   }
-  segmenter = await bodySegmentation.createSegmenter(
-      segmentationModel, {runtime: 'tfjs'});
+  segmenter = await bodySegmentation.createSegmenter(segmentationModel, {
+    runtime: "aresobus",
+  });
 
   try {
     estimationModel = depthEstimation.SupportedModels.ARPortraitDepth;
   } catch (e) {
-    predictButton.textContent = 'Error in loading estimation model.';
+    predictButton.textContent = "Error in loading estimation model.";
   }
   estimator = await depthEstimation.createEstimator(estimationModel);
   predict();
 
-  predictButton.textContent = 'Measure Latency';
+  predictButton.textContent = "Measure Latency";
   predictButton.disabled = false;
 
   // Set up the upload image area.
-  const uploadedImage = document.getElementById('uploaded-img');
-  const deleteUploadButton = document.getElementById('delete-upload');
-  const rightSide = document.getElementById('right-side');
-  const dropzoneForm = document.getElementById('dropzone');
+  const uploadedImage = document.getElementById("uploaded-img");
+  const deleteUploadButton = document.getElementById("delete-upload");
+  const rightSide = document.getElementById("right-side");
+  const dropzoneForm = document.getElementById("dropzone");
   let dropzone;
-  new Dropzone('#dropzone', {
-    transformFile: function(file, done) {
+  new Dropzone("#dropzone", {
+    transformFile: function (file, done) {
       dropzone = this;
 
       rightSide.removeChild(dropzoneForm);
-      changeImage(file, 'im1');
+      changeImage(file, "im1");
       setTimeout(() => {
-        deleteUploadButton.style.visibility = 'visible';
+        deleteUploadButton.style.visibility = "visible";
       }, 500);
-    }
+    },
   });
 
   // Allow removal of the uploaded image.
-  deleteUploadButton.addEventListener('click', function() {
-    uploadedImage.innerHTML = '';
+  deleteUploadButton.addEventListener("click", function () {
+    uploadedImage.innerHTML = "";
     rightSide.insertBefore(dropzoneForm, uploadedImage);
     dropzone.removeAllFiles(true);
-    deleteUploadButton.style.visibility = 'hidden';
+    deleteUploadButton.style.visibility = "hidden";
   });
 
   initGL();

@@ -1,21 +1,9 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
-import {GUI} from 'https://cdn.jsdelivr.net/npm/lil-gui@0.16.1/dist/lil-gui.esm.min.js';
-import * as THREE from 'three';
+import { GUI } from "https://cdn.jsdelivr.net/npm/lil-gui@0.16.1/dist/lil-gui.esm.min.js";
+import * as THREE from "three";
 
 let depthData;
 let camera, scene, renderer;
@@ -24,14 +12,16 @@ let mesh;
 let backgroundMesh;
 let INVALID_DEPTH_THRES = 0.1;
 let INVALID_DEPTH = 10000;
-let RENDERER_WIDTH = 192, RENDERER_HEIGHT = 256;
+let RENDERER_WIDTH = 192,
+  RENDERER_HEIGHT = 256;
 
 const geometry = new THREE.BufferGeometry();
 
-let IMAGE_WIDTH = 192, IMAGE_HEIGHT = 256;
+let IMAGE_WIDTH = 192,
+  IMAGE_HEIGHT = 256;
 const vertices = [];
 
-setTimeout(function() {
+setTimeout(function () {
   init();
   animate();
 }, 1000);
@@ -65,14 +55,20 @@ function getIndices(depthData) {
       let dDepth = getDepth(depthData, (i + 1) * IMAGE_WIDTH + j + 1);
       // generate two faces (triangles) per iteration
 
-      if (aDepth != INVALID_DEPTH && bDepth != INVALID_DEPTH &&
-          dDepth != INVALID_DEPTH) {
-        indices.push(a, b, d);  // face one
+      if (
+        aDepth != INVALID_DEPTH &&
+        bDepth != INVALID_DEPTH &&
+        dDepth != INVALID_DEPTH
+      ) {
+        indices.push(a, b, d); // face one
       }
 
-      if (bDepth != INVALID_DEPTH && cDepth != INVALID_DEPTH &&
-          dDepth != INVALID_DEPTH) {
-        indices.push(b, c, d);  // face two
+      if (
+        bDepth != INVALID_DEPTH &&
+        cDepth != INVALID_DEPTH &&
+        dDepth != INVALID_DEPTH
+      ) {
+        indices.push(b, c, d); // face two
       }
     }
   }
@@ -81,10 +77,10 @@ function getIndices(depthData) {
 }
 
 updateDepthCallback = () => {
-  depthData = document.getElementById('result')
-                  .getContext('2d')
-                  .getImageData(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT)
-                  .data;
+  depthData = document
+    .getElementById("result")
+    .getContext("2d")
+    .getImageData(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT).data;
 
   for (let i = 0; i <= IMAGE_HEIGHT; ++i) {
     const y = i - IMAGE_HEIGHT * 0.5;
@@ -102,7 +98,9 @@ updateDepthCallback = () => {
   //
   geometry.setIndex(indices);
   geometry.setAttribute(
-      'position', new THREE.Float32BufferAttribute(vertices, 3));
+    "position",
+    new THREE.Float32BufferAttribute(vertices, 3)
+  );
 
   depthMaterial.uniforms.iChannel0.value.needsUpdate = true;
   depthMaterial.uniforms.iChannel1.value.needsUpdate = true;
@@ -113,7 +111,7 @@ updateDepthCallback = () => {
 
 function startRecording(format) {
   if (!config.autoAnimation) {
-    alert('autoAnimation must be turned on!');
+    alert("autoAnimation must be turned on!");
     return;
   }
   if (capturer) {
@@ -121,24 +119,28 @@ function startRecording(format) {
   }
   capturer = new CCapture({
     format,
-    name: 'portrait',
+    name: "portrait",
     verbose: false,
-    workersPath: './js/',
+    workersPath: "./js/",
   });
 
   capturer.start();
   capturerInitialTheta = Date.now() * config.cameraSpeed;
 }
 
-document.getElementById('download-anim-gif').onclick = () =>
-    startRecording('gif');
-document.getElementById('download-anim-webm').onclick = () =>
-    startRecording('webm');
+document.getElementById("download-anim-gif").onclick = () =>
+  startRecording("gif");
+document.getElementById("download-anim-webm").onclick = () =>
+  startRecording("webm");
 
 function init() {
   const FOV = 27;
   camera = new THREE.PerspectiveCamera(
-      FOV, RENDERER_WIDTH / RENDERER_HEIGHT, 0.001, 3500);
+    FOV,
+    RENDERER_WIDTH / RENDERER_HEIGHT,
+    0.001,
+    3500
+  );
   camera.position.z = 7;
 
   scene = new THREE.Scene();
@@ -148,14 +150,15 @@ function init() {
   const colors = [];
   const uvs = [];
 
-  let depth_texture =
-      new THREE.CanvasTexture(document.getElementById('result'));
-  let image_texture = new THREE.CanvasTexture(document.getElementById('im1'));
+  let depth_texture = new THREE.CanvasTexture(
+    document.getElementById("result")
+  );
+  let image_texture = new THREE.CanvasTexture(document.getElementById("im1"));
 
-  depthData = document.getElementById('result')
-                  .getContext('2d')
-                  .getImageData(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT)
-                  .data;
+  depthData = document
+    .getElementById("result")
+    .getContext("2d")
+    .getImageData(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT).data;
 
   for (let i = 0; i <= IMAGE_HEIGHT; ++i) {
     const y = i - IMAGE_HEIGHT * 0.5;
@@ -166,12 +169,14 @@ function init() {
       let depth = getDepth(depthData, vid);
 
       vertices.push(
-          x * config.imageScale, -y * config.imageScale,
-          depth * config.depthScale);
+        x * config.imageScale,
+        -y * config.imageScale,
+        depth * config.depthScale
+      );
       normals.push(0, 0, 1);
 
-      const r = (x / IMAGE_WIDTH) + 0.5;
-      const g = (y / IMAGE_HEIGHT) + 0.5;
+      const r = x / IMAGE_WIDTH + 0.5;
+      const g = y / IMAGE_HEIGHT + 0.5;
       colors.push(r, g, 1);
 
       uvs.push(j / IMAGE_WIDTH, 1.0 - i / IMAGE_HEIGHT);
@@ -183,23 +188,29 @@ function init() {
   //
   geometry.setIndex(indices);
   geometry.setAttribute(
-      'position', new THREE.Float32BufferAttribute(vertices, 3));
-  geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
-  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    "position",
+    new THREE.Float32BufferAttribute(vertices, 3)
+  );
+  geometry.setAttribute("normal", new THREE.Float32BufferAttribute(normals, 3));
+  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
 
   camera.aspect = RENDERER_WIDTH / RENDERER_HEIGHT;
   camera.updateProjectionMatrix();
 
   let uniforms = {
-    iChannel0: {type: 't', value: depth_texture},
-    iChannel1: {type: 't', value: image_texture},
-    iResolution:
-        {type: 'v3', value: new THREE.Vector3(IMAGE_WIDTH, IMAGE_HEIGHT, 0)},
-    iChannelResolution0:
-        {type: 'v3', value: new THREE.Vector3(512.0 * 2, 512.0 * 2, 0.0)},
-    iMouse: {type: 'v4', value: new THREE.Vector4()},
-    uTextureProjectionMatrix: {type: 'm4', value: camera.projectionMatrix}
+    iChannel0: { type: "t", value: depth_texture },
+    iChannel1: { type: "t", value: image_texture },
+    iResolution: {
+      type: "v3",
+      value: new THREE.Vector3(IMAGE_WIDTH, IMAGE_HEIGHT, 0),
+    },
+    iChannelResolution0: {
+      type: "v3",
+      value: new THREE.Vector3(512.0 * 2, 512.0 * 2, 0.0),
+    },
+    iMouse: { type: "v4", value: new THREE.Vector4() },
+    uTextureProjectionMatrix: { type: "m4", value: camera.projectionMatrix },
   };
 
   depthMaterial = new THREE.ShaderMaterial({
@@ -215,7 +226,11 @@ function init() {
 
   const PLANE_SIZE = 0.025;
   let planeGeometry = new THREE.PlaneGeometry(
-      IMAGE_WIDTH * PLANE_SIZE, IMAGE_HEIGHT * PLANE_SIZE, 10, 10);
+    IMAGE_WIDTH * PLANE_SIZE,
+    IMAGE_HEIGHT * PLANE_SIZE,
+    10,
+    10
+  );
 
   mesh = new THREE.Mesh(geometry, depthMaterial);
   backgroundMesh = new THREE.Mesh(planeGeometry, depthMaterial);
@@ -223,33 +238,33 @@ function init() {
   scene.add(backgroundMesh);
 
   renderer =
-      // Ensure buffer is preserved for CCapture.js.
-      new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
+    // Ensure buffer is preserved for CCapture.js.
+    new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(RENDERER_WIDTH, RENDERER_HEIGHT);
 
-  let container = document.getElementById('GL2');
+  let container = document.getElementById("GL2");
   container.appendChild(renderer.domElement);
 
   const gui = new GUI();
 
-  let vis = gui.addFolder('Visualization');
-  vis.add(depthMaterial, 'wireframe');
-  const minDepthController = vis.add(config, 'minDepth', 0, 1);
+  let vis = gui.addFolder("Visualization");
+  vis.add(depthMaterial, "wireframe");
+  const minDepthController = vis.add(config, "minDepth", 0, 1);
   minDepthController.onChange(predict);
-  const maxDepthController = vis.add(config, 'maxDepth', 0, 1);
+  const maxDepthController = vis.add(config, "maxDepth", 0, 1);
   maxDepthController.onChange(predict);
   vis.closed = false;
 
-  let bkg = gui.addFolder('background');
-  bkg.addColor(config, 'backgroundColor');
-  bkg.add(config, 'showBackgroundPic');
+  let bkg = gui.addFolder("background");
+  bkg.addColor(config, "backgroundColor");
+  bkg.add(config, "showBackgroundPic");
 
-  let cam = gui.addFolder('camera');
-  cam.add(config, 'autoAnimation');
-  cam.add(config, 'cameraSpeed', 0, 0.01);
-  cam.add(config, 'cameraRadius', 0, 1);
-  cam.add(config, 'cameraZ', -20, 20);
+  let cam = gui.addFolder("camera");
+  cam.add(config, "autoAnimation");
+  cam.add(config, "cameraSpeed", 0, 0.01);
+  cam.add(config, "cameraRadius", 0, 1);
+  cam.add(config, "cameraZ", -20, 20);
 
   gui.close();
 }
@@ -264,30 +279,44 @@ function render() {
   scene.background = new THREE.Color(config.backgroundColor);
   backgroundMesh.position.set(0, 0, config.backgroundDepth);
   backgroundMesh.scale.set(
-      config.backgroundScale, config.backgroundScale, config.backgroundScale);
+    config.backgroundScale,
+    config.backgroundScale,
+    config.backgroundScale
+  );
   backgroundMesh.visible = config.showBackgroundPic;
 
   if (config.autoAnimation) {
     const _cameraRotationSpeed = config.cameraSpeed;
     const _cameraRotationRadius = config.cameraRadius;
     let theta = Date.now() * _cameraRotationSpeed;
-    let cachedCameraPosition =
-        new THREE.Vector3(config.cameraX, config.cameraY, config.cameraZ);
-    let dirA = (new THREE.Vector3(1, 1, 0)).multiplyScalar(Math.cos(theta));
-    let dirB = (new THREE.Vector3(0, 1, 1)).multiplyScalar(Math.sin(theta));
+    let cachedCameraPosition = new THREE.Vector3(
+      config.cameraX,
+      config.cameraY,
+      config.cameraZ
+    );
+    let dirA = new THREE.Vector3(1, 1, 0).multiplyScalar(Math.cos(theta));
+    let dirB = new THREE.Vector3(0, 1, 1).multiplyScalar(Math.sin(theta));
     let dir = dirA.add(dirB).multiplyScalar(_cameraRotationRadius);
     let newPosition = cachedCameraPosition.add(dir);
     camera.position.set(newPosition.x, newPosition.y, newPosition.z);
     camera.lookAt(
-        config.cameraLookAtX, config.cameraLookAtY, config.cameraLookAtZ);
+      config.cameraLookAtX,
+      config.cameraLookAtY,
+      config.cameraLookAtZ
+    );
 
     if (capturer != null) {
-      const capturerCanvas = document.createElement('canvas');
+      const capturerCanvas = document.createElement("canvas");
       capturerCanvas.width = RENDERER_WIDTH;
       capturerCanvas.height = RENDERER_HEIGHT;
-      const capturerContext = capturerCanvas.getContext('2d');
+      const capturerContext = capturerCanvas.getContext("2d");
       capturerContext.drawImage(
-          renderer.domElement, 0, 0, RENDERER_WIDTH, RENDERER_HEIGHT);
+        renderer.domElement,
+        0,
+        0,
+        RENDERER_WIDTH,
+        RENDERER_HEIGHT
+      );
       capturer.capture(capturerCanvas);
       if (theta >= capturerInitialTheta + 2 * Math.PI) {
         capturer.save();

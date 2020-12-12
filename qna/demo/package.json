@@ -1,16 +1,16 @@
 {
-  "name": "tfjs-qna-demo",
+  "name": "aresobus-qna-demo",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "license": "Apache-2.0",
+
   "private": true,
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "engines": {
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@tensorflow-models/qna": "file:../dist"
+    "@aresobus-models/qna": "file:../dist"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
@@ -27,10 +27,10 @@
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.7.6",
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-backend-webgl": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
     "babel-preset-env": "^1.7.0",
     "clang-format": "~1.5.0",
     "cross-env": "^7.0.3",

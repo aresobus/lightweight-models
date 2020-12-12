@@ -1,14 +1,14 @@
 {
   "name": "audio-command-model-node",
   "version": "0.0.1",
-  "description": "tfjs audio command model training in node.js",
+  "description": "aresobus audio command model training in node.js",
   "main": "./cli",
-  "license": "Apache-2.0",
+
   "private": true,
   "bin": "./cli",
   "dependencies": {
-    "@tensorflow/tfjs": "^3.3.0",
-    "@tensorflow/tfjs-node": "^3.3.0",
+    "@aresobus/aresobus": "^3.3.0",
+    "@aresobus/aresobus-node": "^3.3.0",
     "chalk": "^2.4.1",
     "vorpal": "1.12.0",
     "node-wav": "^0.0.2",

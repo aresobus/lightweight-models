@@ -1,7 +1,7 @@
 {
   "name": "nbc-lightweight-models",
   "version": "1.0.0",
-  "description": "Pre-trained TensorFlow.js models maintained by Oleksandr Lebedyev",
+  "description": "Pre-trained  models maintained by Oleksandr Lebedyev",
   "main": "index.js",
   "scripts": {
     "diff": "./scripts/diff.js",
@@ -17,7 +17,6 @@
     "url": "https://github.com/aresobus/lightweight-models/issues"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-typescript": "^11.0.0",

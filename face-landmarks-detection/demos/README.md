@@ -16,13 +16,13 @@ This demo uses your camera to get live stream and tracks your face in real-time.
 You can try out different runtimes to see the difference. It
 works on laptops, iPhones and android phones.
 
-[MediaPipeFaceMesh model entry](https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh)
+[MediaPipeFaceMesh model entry](https://storage.googleapis.com/aresobus-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh)
 
 ## Upload a Video Demo
 This demo allows you to upload a video (in .mp4 format) to run with the model.
 Once the video is processed, it automatically downloads the video with face landmarks detection.
 
-[MediaPipeFaceMesh model entry](https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection-upload-video/index.html?model=mediapipe_face_mesh)
+[MediaPipeFaceMesh model entry](https://storage.googleapis.com/aresobus-models/demos/face-landmarks-detection-upload-video/index.html?model=mediapipe_face_mesh)
 
 ## How to Run a Demo
 If you want to run any of the demos locally, follow these steps:

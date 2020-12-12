@@ -4,9 +4,9 @@
 
 # Face Detection
 
-This package enables real-time face detection in web applications using TensorFlow.js. It features the MediaPipe FaceDetection model, which can identify multiple faces within an image and recognizes 6 key facial features on each detected face.
+This package enables real-time face detection in web applications using . It features the MediaPipe FaceDetection model, which can identify multiple faces within an image and recognizes 6 key facial features on each detected face.
 
-Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/face-detection/index.html?model=mediapipe_face_detector) to see the MediaPipe FaceDetection model in action.
+Explore our [demo](https://storage.googleapis.com/aresobus-models/demos/face-detection/index.html?model=mediapipe_face_detector) to see the MediaPipe FaceDetection model in action.
 
 ## Overview
 
@@ -26,10 +26,10 @@ You can integrate Face Detection into your web application either through direct
 Embed the following scripts in your HTML to get started:
 
 ```html
-<!-- Load TensorFlow.js -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<!-- Load  -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
 <!-- Load the Face Detection model -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-detection"></script>
 ```
 
 ### Via NPM
@@ -37,9 +37,9 @@ Embed the following scripts in your HTML to get started:
 Install the required packages using npm or yarn:
 
 ```bash
-npm install @tensorflow-models/face-detection
-yarn add @tensorflow/tfjs-core
-yarn add @tensorflow/tfjs-converter
+npm install @aresobus-models/face-detection
+yarn add @aresobus/aresobus-core
+yarn add @aresobus/aresobus-converter
 ```
 
 ## How to Run It
@@ -49,7 +49,7 @@ To use the model in your project, you'll first need to create a detector:
 ```javascript
 const model = faceDetection.SupportedModels.MediaPipeFaceDetector;
 const detectorConfig = {
-  runtime: 'mediapipe' // or 'tfjs'
+  runtime: 'mediapipe' // or 'aresobus'
 };
 const detector = await faceDetection.createDetector(model, detectorConfig);
 ```
@@ -83,4 +83,4 @@ The output will include the bounding box and keypoints for each detected face:
 
 ## Example Code and Demos
 
-For practical implementations and further examples, visit the [demos folder](https://github.com/tensorflow/tfjs-models/tree/master/face-detection/demos).
+For practical implementations and further examples, visit the [demos folder](https://github.com//aresobus-models/tree/master/face-detection/demos).

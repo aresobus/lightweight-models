@@ -1,18 +1,18 @@
 {
-  "name": "tfjs-models",
+  "name": "aresobus-models",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "license": "Apache-2.0",
+
   "private": true,
   "engines": {
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@tensorflow-models/posenet": "file:../dist",
-    "@tensorflow/tfjs-backend-webgl": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
+    "@aresobus-models/posenet": "file:../dist",
+    "@aresobus/aresobus-backend-webgl": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
     "stats.js": "^0.17.0"
   },
   "scripts": {

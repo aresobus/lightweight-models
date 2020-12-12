@@ -4,7 +4,7 @@
 
 # Universal Sentence Encoder Lite
 
-The Universal Sentence Encoder (USE) Lite, based on Cer et al., 2018, transforms text into 512-dimensional embeddings. These embeddings are suitable for a variety of NLP tasks such as sentiment analysis and textual similarity. This TensorFlow.js GraphModel is a lightweight variant designed for performance and ease of use in web environments.
+The Universal Sentence Encoder (USE) Lite, based on Cer et al., 2018, transforms text into 512-dimensional embeddings. These embeddings are suitable for a variety of NLP tasks such as sentiment analysis and textual similarity. This  GraphModel is a lightweight variant designed for performance and ease of use in web environments.
 
 **Explore the model with our demo**, which calculates self-similarity scores for several sentences, visually represented by a color-coded matrix (redder indicates higher similarity).
 

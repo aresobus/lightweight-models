@@ -1,14 +1,14 @@
 # MediaPipeHands
 
 MediaPipeHands-MediaPipe wraps the MediaPipe JS Solution within the familiar
-TFJS API [mediapipe.dev](https://mediapipe.dev).
+aresobus API [mediapipe.dev](https://mediapipe.dev).
 
 Two models are offered.
 
 * lite - our smallest model that is less accurate but smaller in model size and minimal memory footprint.
 * full - A middle ground between performance and accuracy.
 
-Please try our our live [demo](https://storage.googleapis.com/tfjs-models/demos/hand-pose-detection/index.html?model=mediapipe_hands).
+Please try our our live [demo](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands).
 
 --------------------------------------------------------------------------------
 
@@ -27,19 +27,19 @@ Via script tags:
 ```html
 <!-- Require the peer dependencies of hand-pose-detection. -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/hand-pose-detection"></script>
 ```
 
 Via npm:
 ```sh
 yarn add @mediapipe/hands
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-backend-webgl
-yarn add @tensorflow-models/hand-pose-detection
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-backend-webgl
+yarn add @aresobus-models/hand-pose-detection
 ```
 
 -----------------------------------------------------------------------
@@ -50,10 +50,10 @@ If you are using the hand-pose-detection API via npm, you need to import the lib
 ### Import the libraries
 
 ```javascript
-import * as handPoseDetection from '@tensorflow-models/hand-pose-detection';
-import '@tensorflow/tfjs-core';
+import * as handPoseDetection from '@aresobus-models/hand-pose-detection';
+import '@aresobus/aresobus-core';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
+import '@aresobus/aresobus-backend-webgl';
 import '@mediapipe/hands';
 ```
 

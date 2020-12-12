@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Demo for body segmentation api",
   "main": "index.js",
-  "license": "Apache-2.0",
+
   "private": true,
   "engines": {
     "node": ">=8.9.0"
@@ -11,11 +11,11 @@
   "dependencies": {
     "@mediapipe/pose": "~0.4.0",
     "@mediapipe/selfie_segmentation": "~0.1.0",
-    "@tensorflow-models/body-segmentation": "file:../../dist",
-    "@tensorflow-models/pose-detection": "file:../../../pose-detection/dist",
-    "@tensorflow/tfjs-backend-wasm": "^4.18.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
+    "@aresobus-models/body-segmentation": "file:../../dist",
+    "@aresobus-models/pose-detection": "file:../../../pose-detection/dist",
+    "@aresobus/aresobus-backend-wasm": "^4.18.0",
+    "@aresobus/aresobus-backend-webgl": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
     "scatter-gl": "0.0.8"
   },
   "scripts": {
@@ -23,8 +23,8 @@
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
     "build-dep": "cd ../../ && yarn && yarn build && cd ../pose-detection && yarn && yarn build",
-    "link-core": "yalc link @tensorflow/tfjs-core",
-    "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl"
+    "link-core": "yalc link @aresobus/aresobus-core",
+    "link-webgl": "yalc link @aresobus/aresobus-backend-webgl"
   },
   "browser": {
     "crypto": false

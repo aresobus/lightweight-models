@@ -1,5 +1,5 @@
 {
-  "name": "@aresobus/tensorflow-models-qna",
+  "name": "@aresobus/-models-qna",
   "version": "1.0.1",
   "description": "Question and Answer model (Mobile BERT) maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
@@ -13,17 +13,17 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0"
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.1.0",
     "@rollup/plugin-typescript": "3.1.1",
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
     "@types/jasmine": "^3.6.3",
     "babel-core": "~6.26.3",
     "babel-plugin-transform-runtime": "~6.23.0",

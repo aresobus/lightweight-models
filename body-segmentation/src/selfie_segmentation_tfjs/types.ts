@@ -1,30 +1,13 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import { io } from "@tensorflow/tfjs-core";
+import { io } from "@aresobus/aresobus-core";
 import {
   MediaPipeSelfieSegmentationModelConfig,
   MediaPipeSelfieSegmentationSegmentationConfig,
 } from "../selfie_segmentation_mediapipe/types";
 
 /**
- * Model parameters for MediaPipeSelfieSegmentation TFJS runtime.
+ * Model parameters for MediaPipeSelfieSegmentation aresobus runtime.
  *
- * `runtime`: Must set to be 'tfjs'.
+ * `runtime`: Must set to be 'aresobus'.
  *
  * `modelType`: Optional. Possible values: 'general'|'landscape'. Defaults to
  * 'general'.  The landscape model is similar to the general model, but operates
@@ -36,14 +19,14 @@ import {
  * access to the model hosted on tf.hub.
  *
  */
-export interface MediaPipeSelfieSegmentationTfjsModelConfig
+export interface MediaPipeSelfieSegmentationaresobusModelConfig
   extends MediaPipeSelfieSegmentationModelConfig {
-  runtime: "tfjs";
+  runtime: "aresobus";
   modelUrl?: string | io.IOHandler;
 }
 
 /**
- * Body segmentation parameters for MediaPipeSelfieSegmentation TFJS runtime.
+ * Body segmentation parameters for MediaPipeSelfieSegmentation aresobus runtime.
  */
-export interface MediaPipeSelfieSegmentationTfjsSegmentationConfig
+export interface MediaPipeSelfieSegmentationaresobusSegmentationConfig
   extends MediaPipeSelfieSegmentationSegmentationConfig {}

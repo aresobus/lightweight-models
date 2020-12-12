@@ -2,7 +2,7 @@
 
 This portrait depth model estimates per-pixel depth (the distance to the camera center) for a single portrait image, which can be further used for creative applications. (See [DepthLab](https://augmentedperception.github.io/depthlab/) for potential applications). Note that the model runs locally on the user’s device and no data is uploaded to the server.
 
-For example, the following demo transforms a single 2D RGB image into a 3D Portrait: [3D Photo Demo](https://storage.googleapis.com/tfjs-models/demos/3dphoto).
+For example, the following demo transforms a single 2D RGB image into a 3D Portrait: [3D Photo Demo](https://storage.googleapis.com/aresobus-models/demos/3dphoto).
 
 --------------------------------------------------------------------------------
 
@@ -19,23 +19,23 @@ Via script tags:
 
 ```html
 <!-- Require the peer dependencies of depth-estimation. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <!-- WebGL is the recommended backend. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/depth-estimation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/depth-estimation"></script>
 ```
 
 Via npm:
 ```sh
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
-yarn add @tensorflow/tfjs-backend-webgl
-yarn add @tensorflow-models/body-segmentation
-yarn add @tensorflow-models/depth-estimation
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
+yarn add @aresobus/aresobus-backend-webgl
+yarn add @aresobus-models/body-segmentation
+yarn add @aresobus-models/depth-estimation
 ```
 
 -----------------------------------------------------------------------
@@ -46,12 +46,12 @@ If you are using the depth-estimation API via npm, you need to import the librar
 ### Import the libraries
 
 ```javascript
-import '@tensorflow/tfjs-core';
-import '@tensorflow/tfjs-converter';
+import '@aresobus/aresobus-core';
+import '@aresobus/aresobus-converter';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
-import '@tensorflow-models/body-segmentation';
-import * as depthEstimation from '@tensorflow-models/depth-estimation';
+import '@aresobus/aresobus-backend-webgl';
+import '@aresobus-models/body-segmentation';
+import * as depthEstimation from '@aresobus-models/depth-estimation';
 ```
 
 ### Create an estimator
@@ -64,15 +64,15 @@ Pass in `depthEstimation.SupportedModels.ARPortraitDepth` from the
 
 *   *segmentationModelUrl*: An optional string that specifies custom url of
 the segmenter model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[tfjs-react-native](https://github.com/tensorflow/tfjs/tree/master/tfjs-react-native)
+[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
 to load model from app bundle directory using
-[bundleResourceIO](https://github.com/tensorflow/tfjs/blob/master/tfjs-react-native/
+[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/
 
 *   *depthModelUrl*: An optional string that specifies custom url of
 the estimator model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[tfjs-react-native](https://github.com/tensorflow/tfjs/tree/master/tfjs-react-native)
+[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
 to load model from app bundle directory using
-[bundleResourceIO](https://github.com/tensorflow/tfjs/blob/master/tfjs-react-native/
+[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/
 
 ```javascript
 const model = depthEstimation.SupportedModels.ARPortraitDepth;
@@ -107,5 +107,5 @@ const depthMap = await estimator.estimateDepth(image, estimationConfig);
 ```
 
 Please refer to the Depth Estimation API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/depth-estimation/README.md#how-to-run-it)
+[README](https://github.com//aresobus-models/blob/master/depth-estimation/README.md#how-to-run-it)
 about the structure of the returned `depthMap`.

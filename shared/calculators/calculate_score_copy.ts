@@ -1,21 +1,4 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import {Keypoint} from './interfaces/common_interfaces';
+import { Keypoint } from "./interfaces/common_interfaces";
 
 /**
  * A calculator to copy score between landmarks.
@@ -32,12 +15,14 @@ import {Keypoint} from './interfaces/common_interfaces';
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/visibility_copy_calculator.cc
 export function calculateScoreCopy(
-    landmarksFrom: Keypoint[], landmarksTo: Keypoint[],
-    copyScore = true): Keypoint[] {
+  landmarksFrom: Keypoint[],
+  landmarksTo: Keypoint[],
+  copyScore = true
+): Keypoint[] {
   const outputLandmarks = [];
   for (let i = 0; i < landmarksFrom.length; i++) {
     // Create output landmark and copy all fields from the `to` landmarks
-    const newLandmark = {...landmarksTo[i]};
+    const newLandmark = { ...landmarksTo[i] };
 
     // Copy score from the `from` landmark.
     if (copyScore) {

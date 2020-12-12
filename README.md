@@ -2,11 +2,11 @@
 
 ---
 
-# Pre-trained TensorFlow.js Models by Oleksandr Lebedyev
+# Pre-trained  Models by Oleksandr Lebedyev
 
-This repository hosts a collection of pre-trained models that have been adapted for TensorFlow.js.
+This repository hosts a collection of pre-trained models that have been adapted for .
 
-These models are available on NPM and unpkg, making them easily usable in any project. They can be utilized directly or integrated into transfer learning scenarios with TensorFlow.js.
+These models are available on NPM and unpkg, making them easily usable in any project. They can be utilized directly or integrated into transfer learning scenarios with .
 
 For comprehensive information about the APIs for each model, please refer to the README files in their respective directories. We strive to simplify the usage so that the API can be accessible to non-machine learning experts.
 
@@ -28,7 +28,7 @@ Here's an overview of the models currently provided, along with links to live de
   <tr>
     <td rowspan="12"><b>Images</b></td>
     <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/mobilenet">MobileNet</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-models/demos/mobilenet/index.html">Live</a></td>
+    <td><a href="https://storage.googleapis.com/aresobus-models/demos/mobilenet/index.html">Live</a></td>
     <td rowspan="2">Classify images with labels from the ImageNet database.</td>
     <td rowspan="2"><code>npm install @aresobus/mobilenet</code></td>
   </tr>
@@ -38,8 +38,8 @@ Here's an overview of the models currently provided, along with links to live de
   <!-- Hand -->
   <tr>
     <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/hand-pose-detection">Hand Pose Detection</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-models/demos/hand-pose-detection/index.html?model=mediapipe_hands">Live</a></td>
-    <td rowspan="2">Real-time hand pose detection in the browser using TensorFlow.js.</td>
+    <td><a href="https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands">Live</a></td>
+    <td rowspan="2">Real-time hand pose detection in the browser using .</td>
     <td rowspan="2"><code>npm install @aresobus/hand-pose-detection</code></td>
   </tr>
   <tr>
@@ -48,7 +48,7 @@ Here's an overview of the models currently provided, along with links to live de
   <!-- Pose -->
   <tr>
     <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/pose-detection">Pose Detection</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=movenet">Live</a></td>
+    <td><a href="https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=movenet">Live</a></td>
     <td rowspan="2">An API for real-time human pose detection in the browser.</td>
     <td rowspan="2"><code>npm install @aresobus/pose-detection</code></td>
   </tr>
@@ -58,7 +58,7 @@ Here's an overview of the models currently provided, along with links to live de
   <!-- Face Landmark Detection -->
   <tr>
     <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/face-landmarks-detection">Face Landmark Detection</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh">Live</a></td>
+    <td><a href="https://storage.googleapis.com/aresobus-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh">Live</a></td>
     <td rowspan="2">Real-time 3D facial landmarks detection to infer the approximate surface geometry of a human face.</td>
     <td rowspan="2"><code>npm install @aresobus/face-landmarks-detection</code></td>
   </tr>
@@ -70,21 +70,21 @@ Here's an overview of the models currently provided, along with links to live de
   <!-- Speech Commands -->
   <tr>
     <td><b><a href="https://github.com/aresobus/lightweight-models/tree/main/speech-commands">Speech Commands</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-speech-model-test/2019-01-03a/dist/index.html">Live</a></td>
+    <td><a href="https://storage.googleapis.com/aresobus-speech-model-test/2019-01-03a/dist/index.html">Live</a></td>
     <td>Recognize spoken commands using a pre-trained speech model.</td>
     <td><code>npm install @aresobus/speech-commands</code></td>
   </tr>
   <!-- Text Toxicity -->
   <tr>
     <td><b><a href="https://github.com/aresobus/lightweight-models/tree/main/toxicity">Text Toxicity</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-models/demos/toxicity/index.html">Live</a></td>
+    <td><a href="https://storage.googleapis.com/aresobus-models/demos/toxicity/index.html">Live</a></td>
     <td>Detect toxic content in text strings.</td>
     <td><code>npm install @aresobus/toxicity</code></td>
   </tr>
   <!-- Portrait Depth -->
   <tr>
     <td><b><a href="https://github.com/aresobus/lightweight-models/tree/main/depth-estimation">Portrait Depth</a></b></td>
-    <td><a href="https://storage.googleapis.com/tfjs-models/demos/3dphoto/index.html">Live</a></td>
+    <td><a href="https://storage.googleapis.com/aresobus-models/demos/3dphoto/index.html">Live</a></td>
     <td>Estimate depth in portrait images for 3D photo effects.</td>
     <td><code>npm install @aresobus/depth-estimation</code></td>
   </tr>

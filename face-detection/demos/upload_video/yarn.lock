@@ -1022,60 +1022,60 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@tensorflow-models/face-detection@file:../../dist":
+"@-models/face-detection@file:../../dist":
   version "0.0.0"
 
-"@tensorflow/tfjs-backend-cpu@3.21.0":
+"@/tfjs-backend-cpu@3.21.0":
   version "3.21.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.21.0.tgz#ee0274bf14627d08b81c4e229230da66dc9c3d92"
+  resolved "https://registry.yarnpkg.com/@/tfjs-backend-cpu/-/tfjs-backend-cpu-3.21.0.tgz#ee0274bf14627d08b81c4e229230da66dc9c3d92"
   integrity sha512-88S21UAdzyK0CsLUrH17GPTD+26E85OP9CqmLZslaWjWUmBkeTQ5Zqyp6iK+gELnLxPx6q7JsNEeFuPv4254lQ==
   dependencies:
     "@types/seedrandom" "^2.4.28"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-backend-cpu@4.0.0":
+"@/tfjs-backend-cpu@4.0.0":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-4.0.0.tgz#ed957eedca558d5b0ce9caa129f180b88039501b"
+  resolved "https://registry.yarnpkg.com/@/tfjs-backend-cpu/-/tfjs-backend-cpu-4.0.0.tgz#ed957eedca558d5b0ce9caa129f180b88039501b"
   integrity sha512-Y9ok6VBMir1MVbkcK+h34hF4ZzHZKOrdjAOeE5eFbSuegJHY/AXWcZEU589VTnEE4AU+SUdjjfp6yvAtU17GAA==
   dependencies:
     "@types/seedrandom" "^2.4.28"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-backend-wasm@^4.0.0":
+"@/tfjs-backend-wasm@^4.0.0":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-wasm/-/tfjs-backend-wasm-4.0.0.tgz#195c976335487767fe95763d5790d3af7d28d15c"
+  resolved "https://registry.yarnpkg.com/@/tfjs-backend-wasm/-/tfjs-backend-wasm-4.0.0.tgz#195c976335487767fe95763d5790d3af7d28d15c"
   integrity sha512-Z5gqdmqywauB2ZrWFduvFc82aMMTBFN7EtWEhGAGRXVcVH2L4nIXx0bs/5aUBA0Qs9B7hiy83b+NquWrDdBeGQ==
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "4.0.0"
+    "@/tfjs-backend-cpu" "4.0.0"
     "@types/emscripten" "~0.0.34"
 
-"@tensorflow/tfjs-backend-webgl@^4.0.0":
+"@/tfjs-backend-webgl@^4.0.0":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-4.0.0.tgz#df21ff8786e17035744d6425286a506c57068004"
+  resolved "https://registry.yarnpkg.com/@/tfjs-backend-webgl/-/tfjs-backend-webgl-4.0.0.tgz#df21ff8786e17035744d6425286a506c57068004"
   integrity sha512-JfTtmdwlnJbV4CRxXLJr5MM0Yzj6WfMXAwM/bjTuDKQsyYdNzq75E72A4B0c+XwSIZb7MnVyUmRkZYeGTCqwtg==
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "4.0.0"
+    "@/tfjs-backend-cpu" "4.0.0"
     "@types/offscreencanvas" "~2019.3.0"
     "@types/seedrandom" "^2.4.28"
     "@types/webgl-ext" "0.0.30"
     "@types/webgl2" "0.0.6"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-backend-webgpu@^0.0.1-alpha.14":
+"@/tfjs-backend-webgpu@^0.0.1-alpha.14":
   version "0.0.1-alpha.14"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-webgpu/-/tfjs-backend-webgpu-0.0.1-alpha.14.tgz#03595cc4c121b20b52b220fb16c2f50737de3c16"
+  resolved "https://registry.yarnpkg.com/@/tfjs-backend-webgpu/-/tfjs-backend-webgpu-0.0.1-alpha.14.tgz#03595cc4c121b20b52b220fb16c2f50737de3c16"
   integrity sha512-4TLkuVY9i/o3LBBQomEkxWOgdUG2++BrPNDX6Nwjk7p4AuJbgdoALGn5Ab4uotSukIe88binMMxffMMfMIVtGw==
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "3.21.0"
+    "@/tfjs-backend-cpu" "3.21.0"
 
-"@tensorflow/tfjs-converter@^4.0.0":
+"@/tfjs-converter@^4.0.0":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-converter/-/tfjs-converter-4.0.0.tgz#c3182f8e7b1a246e294951ce6df2e36ebb324a2d"
+  resolved "https://registry.yarnpkg.com/@/tfjs-converter/-/tfjs-converter-4.0.0.tgz#c3182f8e7b1a246e294951ce6df2e36ebb324a2d"
   integrity sha512-VU53ZB9blQyF1geB0xbloedYI6d52yQ0U56uPSS9AcjexrAShnN7VIjfNtCFYeLDmVe3M/frkAuIZmWAv66iMw==
 
-"@tensorflow/tfjs-core@^4.0.0":
+"@/tfjs-core@^4.0.0":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-core/-/tfjs-core-4.0.0.tgz#80a8a45afb74c81ecb906100008125a3702b9140"
+  resolved "https://registry.yarnpkg.com/@/tfjs-core/-/tfjs-core-4.0.0.tgz#80a8a45afb74c81ecb906100008125a3702b9140"
   integrity sha512-RrTgHPT8Xo6vsBvaRkee1YOoH3lv0lEtS3ISGRcHsUy8mkT8ZIMNou4zaJuIBQ7bVPXOeOFFeTbjDvWVtYypxQ==
   dependencies:
     "@types/long" "^4.0.1"

@@ -1,6 +1,6 @@
 # MediaPipe SelfieSegmentation
 
-MediaPipe SelfieSegmentation-TFJS uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
+MediaPipe SelfieSegmentation-aresobus uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
 
 Two variants of the model are offered.
 
@@ -16,30 +16,30 @@ Two variants of the model are offered.
 
 ## Installation
 
-To use MediaPipe SelfieSegmentation, you need to first select a runtime (TensorFlow.js or MediaPipe).
-This guide is for TensorFlow.js
+To use MediaPipe SelfieSegmentation, you need to first select a runtime ( or MediaPipe).
+This guide is for
 runtime. The guide for MediaPipe runtime can be found
-[here](https://github.com/tensorflow/tfjs-models/tree/master/body-segmentation/src/selfie_segmentation_mediapipe).
+[here](https://github.com//aresobus-models/tree/master/body-segmentation/src/selfie_segmentation_mediapipe).
 
 Via script tags:
 
 ```html
 <!-- Require the peer dependencies of body-segmentation. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @tensorflow-models/body-segmentation
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
-yarn add @tensorflow/tfjs-backend-webgl
+yarn add @aresobus-models/body-segmentation
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
+yarn add @aresobus/aresobus-backend-webgl
 ```
 
 -----------------------------------------------------------------------
@@ -50,10 +50,10 @@ If you are using the Body Segmentation API via npm, you need to import the libra
 ### Import the libraries
 
 ```javascript
-import * as bodySegmentation from '@tensorflow-models/body-segmentation';
-import * as tf from '@tensorflow/tfjs-core';
+import * as bodySegmentation from '@aresobus-models/body-segmentation';
+import * as tf from '@aresobus/aresobus-core';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
+import '@aresobus/aresobus-backend-webgl';
 ```
 ### Create a detector
 
@@ -61,23 +61,23 @@ Pass in `bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation` from the
 `bodySegmentation.SupportedModel` enum list along with a `segmenterConfig` to the
 `createSegmenter` method to load and initialize the model.
 
-`segmenterConfig` is an object that defines MediaPipeSelfieSegmentation specific configurations for `MediaPipeSelfieSegmentationTfjsModelConfig`:
+`segmenterConfig` is an object that defines MediaPipeSelfieSegmentation specific configurations for `MediaPipeSelfieSegmentationaresobusModelConfig`:
 
-*   *runtime*: Must set to be 'tfjs'.
+*   *runtime*: Must set to be 'aresobus'.
 
 *   *modelType*: specify which variant to load from `MediaPipeSelfieSegmentationModelType` (i.e.,
     'general', 'landscape'). If unset, the default is 'general'.
 
 *   *modelUrl*: An optional string that specifies custom url of
 the segmentation model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[tfjs-react-native](https://github.com/tensorflow/tfjs/tree/master/tfjs-react-native)
+[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
 to load model from app bundle directory using
-[bundleResourceIO](https://github.com/tensorflow/tfjs/blob/master/tfjs-react-native/src/bundle_resource_io.ts#L169).
+[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/src/bundle_resource_io.ts#L169).
 
 ```javascript
 const model = bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
 const segmenterConfig = {
-  runtime: 'tfjs',
+  runtime: 'aresobus',
 };
 segmenter = await bodySegmentation.createSegmenter(model, segmenterConfig);
 ```
@@ -89,7 +89,7 @@ accepts both image and video in many formats, including:
 `HTMLVideoElement`, `HTMLImageElement`, `HTMLCanvasElement`, `ImageData`, `Tensor3D`. If you want more
 options, you can pass in a second `segmentationConfig` parameter.
 
-`segmentationConfig` is an object that defines MediaPipe SelfieSegmentation specific configurations for `MediaPipeSelfieSegmentationTfjsSegmentationConfig`:
+`segmentationConfig` is an object that defines MediaPipe SelfieSegmentation specific configurations for `MediaPipeSelfieSegmentationaresobusSegmentationConfig`:
 
 *   *flipHorizontal*: Optional. Defaults to false. When image data comes from camera, the result has to flip horizontally.
 
@@ -105,5 +105,5 @@ The returned `people` array contains a single element only, where all the people
 The only label returned by the maskValueToLabel function by the model is 'person'.
 
 Please refer to the Body Segmentation API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/body-segmentation/README.md#how-to-run-it)
+[README](https://github.com//aresobus-models/blob/master/body-segmentation/README.md#how-to-run-it)
 about the structure of the returned `people` array.

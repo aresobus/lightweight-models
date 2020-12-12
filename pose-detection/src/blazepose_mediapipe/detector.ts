@@ -1,29 +1,20 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import * as pose from '@mediapipe/pose';
-import * as tf from '@tensorflow/tfjs-core';
-import {BLAZEPOSE_KEYPOINTS} from '../constants';
-import {PoseDetector} from '../pose_detector';
-import {Mask} from '../shared/calculators/interfaces/common_interfaces';
-import {assertMaskValue, toImageDataLossy, toTensorLossy} from '../shared/calculators/mask_util';
-import {Pose, PoseDetectorInput} from '../types';
+import * as pose from "@mediapipe/pose";
+import * as tf from "@aresobus/aresobus-core";
+import { BLAZEPOSE_KEYPOINTS } from "../constants";
+import { PoseDetector } from "../pose_detector";
+import { Mask } from "../shared/calculators/interfaces/common_interfaces";
+import {
+  assertMaskValue,
+  toImageDataLossy,
+  toTensorLossy,
+} from "../shared/calculators/mask_util";
+import { Pose, PoseDetectorInput } from "../types";
 
-import {validateModelConfig} from './detector_utils';
-import {BlazePoseMediaPipeEstimationConfig, BlazePoseMediaPipeModelConfig} from './types';
+import { validateModelConfig } from "./detector_utils";
+import {
+  BlazePoseMediaPipeEstimationConfig,
+  BlazePoseMediaPipeModelConfig,
+} from "./types";
 
 class BlazePoseMediaPipeMask implements Mask {
   constructor(private mask: pose.GpuBuffer) {}
@@ -41,13 +32,13 @@ class BlazePoseMediaPipeMask implements Mask {
   }
 
   getUnderlyingType() {
-    return 'canvasimagesource' as const ;
+    return "canvasimagesource" as const;
   }
 }
 
 function maskValueToLabel(maskValue: number) {
   assertMaskValue(maskValue);
-  return 'person';
+  return "person";
 }
 /**
  * MediaPipe detector class.
@@ -68,21 +59,21 @@ class BlazePoseMediaPipeDetector implements PoseDetector {
     this.poseSolution = new pose.Pose({
       locateFile: (path, base) => {
         if (config.solutionPath) {
-          const solutionPath = config.solutionPath.replace(/\/+$/, '');
+          const solutionPath = config.solutionPath.replace(/\/+$/, "");
           return `${solutionPath}/${path}`;
         }
         return `${base}/${path}`;
-      }
+      },
     });
-    let modelComplexity: 0|1|2;
+    let modelComplexity: 0 | 1 | 2;
     switch (config.modelType) {
-      case 'lite':
+      case "lite":
         modelComplexity = 0;
         break;
-      case 'heavy':
+      case "heavy":
         modelComplexity = 2;
         break;
-      case 'full':
+      case "full":
       default:
         modelComplexity = 1;
         break;
@@ -101,11 +92,13 @@ class BlazePoseMediaPipeDetector implements PoseDetector {
         this.poses = [];
       } else {
         const pose = this.translateOutput(
-            results.poseLandmarks, results.poseWorldLandmarks);
+          results.poseLandmarks,
+          results.poseWorldLandmarks
+        );
         if (results.segmentationMask) {
           pose.segmentation = {
             maskValueToLabel,
-            mask: new BlazePoseMediaPipeMask(results.segmentationMask)
+            mask: new BlazePoseMediaPipeMask(results.segmentationMask),
           };
         }
         this.poses = [pose];
@@ -114,25 +107,27 @@ class BlazePoseMediaPipeDetector implements PoseDetector {
   }
 
   private translateOutput(
-      pose: pose.NormalizedLandmarkList, pose3D?: pose.LandmarkList): Pose {
+    pose: pose.NormalizedLandmarkList,
+    pose3D?: pose.LandmarkList
+  ): Pose {
     const output: Pose = {
       keypoints: pose.map((landmark, i) => ({
-                            x: landmark.x * this.width,
-                            y: landmark.y * this.height,
-                            z: landmark.z,
-                            score: landmark.visibility,
-                            name: BLAZEPOSE_KEYPOINTS[i]
-                          }))
+        x: landmark.x * this.width,
+        y: landmark.y * this.height,
+        z: landmark.z,
+        score: landmark.visibility,
+        name: BLAZEPOSE_KEYPOINTS[i],
+      })),
     };
 
     if (pose3D != null) {
       output.keypoints3D = pose3D.map((landmark, i) => ({
-                                        x: landmark.x,
-                                        y: landmark.y,
-                                        z: landmark.z,
-                                        score: landmark.visibility,
-                                        name: BLAZEPOSE_KEYPOINTS[i]
-                                      }));
+        x: landmark.x,
+        y: landmark.y,
+        z: landmark.z,
+        score: landmark.visibility,
+        name: BLAZEPOSE_KEYPOINTS[i],
+      }));
     }
 
     return output;
@@ -167,22 +162,33 @@ class BlazePoseMediaPipeDetector implements PoseDetector {
    * @return An array of `Pose`s.
    */
   async estimatePoses(
-      image: PoseDetectorInput,
-      estimationConfig: BlazePoseMediaPipeEstimationConfig,
-      timestamp?: number): Promise<Pose[]> {
-    if (estimationConfig && estimationConfig.flipHorizontal &&
-        (estimationConfig.flipHorizontal !== this.selfieMode)) {
+    image: PoseDetectorInput,
+    estimationConfig: BlazePoseMediaPipeEstimationConfig,
+    timestamp?: number
+  ): Promise<Pose[]> {
+    if (
+      estimationConfig &&
+      estimationConfig.flipHorizontal &&
+      estimationConfig.flipHorizontal !== this.selfieMode
+    ) {
       this.selfieMode = estimationConfig.flipHorizontal;
       this.poseSolution.setOptions({
         selfieMode: this.selfieMode,
       });
     }
     // Cast to GL TexImageSource types.
-    image = image instanceof tf.Tensor ?
-        new ImageData(
-            await tf.browser.toPixels(image), image.shape[1], image.shape[0]) :
-        image;
-    await this.poseSolution.send({image: image as pose.InputImage}, timestamp);
+    image =
+      image instanceof tf.Tensor
+        ? new ImageData(
+            await tf.browser.toPixels(image),
+            image.shape[1],
+            image.shape[0]
+          )
+        : image;
+    await this.poseSolution.send(
+      { image: image as pose.InputImage },
+      timestamp
+    );
     return this.poses;
   }
 
@@ -206,8 +212,9 @@ class BlazePoseMediaPipeDetector implements PoseDetector {
  * the BlazePose loading process. Please find more details of each parameters
  * in the documentation of the `BlazePoseMediaPipeModelConfig` interface.
  */
-export async function load(modelConfig: BlazePoseMediaPipeModelConfig):
-    Promise<PoseDetector> {
+export async function load(
+  modelConfig: BlazePoseMediaPipeModelConfig
+): Promise<PoseDetector> {
   const config = validateModelConfig(modelConfig);
   const result = new BlazePoseMediaPipeDetector(config);
   await result.initialize();

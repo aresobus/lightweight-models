@@ -1,24 +1,12 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 
-import * as faceLandmarksDetection from '@tensorflow-models/face-landmarks-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as faceLandmarksDetection from "@aresobus-models/face-landmarks-detection";
+import * as tf from "@aresobus/aresobus-core";
 
-import * as params from './params';
+import * as params from "./params";
 
 /**
  * Records each flag's default value under the runtime environment and is a
@@ -30,29 +18,33 @@ const stringValueMap = {};
 
 export async function setupModelFolder(gui, urlParams) {
   // The model folder contains options for model selection.
-  const modelFolder = gui.addFolder('Model');
+  const modelFolder = gui.addFolder("Model");
 
-  const model = urlParams.get('model');
+  const model = urlParams.get("model");
 
   switch (model) {
-    case 'mediapipe_face_mesh':
+    case "mediapipe_face_mesh":
       params.STATE.model =
-          faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
+        faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
       break;
     default:
-      alert(`${urlParams.get('model')} is not a supported model. `
-	    + 'Redirecting to mediapipe_face_mesh');
+      alert(
+        `${urlParams.get("model")} is not a supported model. ` +
+          "Redirecting to mediapipe_face_mesh"
+      );
       const url = new URL(window.location.href);
-      url.searchParams.set('model', 'mediapipe_face_mesh');
+      url.searchParams.set("model", "mediapipe_face_mesh");
       window.location.href = url;
       break;
   }
 
   const modelController = modelFolder.add(
-      params.STATE, 'model',
-      Object.values(faceLandmarksDetection.SupportedModels));
+    params.STATE,
+    "model",
+    Object.values(faceLandmarksDetection.SupportedModels)
+  );
 
-  modelController.onChange(_ => {
+  modelController.onChange((_) => {
     params.STATE.isModelChanged = true;
     showModelConfigs(modelFolder);
     showBackendConfigs(backendFolder);
@@ -62,7 +54,7 @@ export async function setupModelFolder(gui, urlParams) {
 
   modelFolder.open();
 
-  const backendFolder = gui.addFolder('Backend');
+  const backendFolder = gui.addFolder("Backend");
 
   showBackendConfigs(backendFolder);
 
@@ -76,16 +68,19 @@ async function showBackendConfigs(folderController) {
   const fixedSelectionCount = 0;
   while (folderController.__controllers.length > fixedSelectionCount) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
   const backends = params.MODEL_BACKEND_MAP[params.STATE.model];
   // The first element of the array is the default backend for the model.
   params.STATE.backend = backends[0];
-  const backendController =
-      folderController.add(params.STATE, 'backend', backends);
-  backendController.name('runtime-backend');
-  backendController.onChange(async backend => {
+  const backendController = folderController.add(
+    params.STATE,
+    "backend",
+    backends
+  );
+  backendController.name("runtime-backend");
+  backendController.onChange(async (backend) => {
     params.STATE.isBackendChanged = true;
     await showFlagSettings(folderController, backend);
   });
@@ -99,8 +94,8 @@ function showModelConfigs(folderController) {
   const fixedSelectionCount = 1;
   while (folderController.__controllers.length > fixedSelectionCount) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
 
   switch (params.STATE.model) {
@@ -115,30 +110,36 @@ function showModelConfigs(folderController) {
 // The MediaPipeFaceMesh model config folder contains options for
 // MediaPipeFaceMesh config settings.
 function addMediaPipeFaceMeshControllers(modelConfigFolder) {
-  params.STATE.modelConfig = {...params.MEDIAPIPE_FACE_CONFIG};
+  params.STATE.modelConfig = { ...params.MEDIAPIPE_FACE_CONFIG };
 
-  const boundingBoxController =
-      modelConfigFolder.add(params.STATE.modelConfig, 'boundingBox');
-  boundingBoxController.onChange(_ => {
+  const boundingBoxController = modelConfigFolder.add(
+    params.STATE.modelConfig,
+    "boundingBox"
+  );
+  boundingBoxController.onChange((_) => {
     params.STATE.isModelChanged = true;
   });
 
-  const triangulateMeshController =
-      modelConfigFolder.add(params.STATE.modelConfig, 'triangulateMesh');
-  triangulateMeshController.onChange(_ => {
+  const triangulateMeshController = modelConfigFolder.add(
+    params.STATE.modelConfig,
+    "triangulateMesh"
+  );
+  triangulateMeshController.onChange((_) => {
     params.STATE.isModelChanged = true;
   });
 
-  const refineLandmarksController =
-      modelConfigFolder.add(params.STATE.modelConfig, 'refineLandmarks');
-  refineLandmarksController.onChange(_ => {
+  const refineLandmarksController = modelConfigFolder.add(
+    params.STATE.modelConfig,
+    "refineLandmarks"
+  );
+  refineLandmarksController.onChange((_) => {
     params.STATE.isModelChanged = true;
   });
 
-  const maxFacesController =
-      modelConfigFolder.add(params.STATE.modelConfig, 'maxFaces', 1, 10)
-          .step(1);
-  maxFacesController.onChange(_ => {
+  const maxFacesController = modelConfigFolder
+    .add(params.STATE.modelConfig, "maxFaces", 1, 10)
+    .step(1);
+  maxFacesController.onChange((_) => {
     // Set isModelChanged to true, so that we don't render any result during
     // changing models.
     params.STATE.isModelChanged = true;
@@ -153,8 +154,11 @@ async function initDefaultValueMap() {
   TUNABLE_FLAG_DEFAULT_VALUE_MAP = {};
   params.STATE.flags = {};
   for (const backend in params.BACKEND_FLAGS_MAP) {
-    for (let index = 0; index < params.BACKEND_FLAGS_MAP[backend].length;
-         index++) {
+    for (
+      let index = 0;
+      index < params.BACKEND_FLAGS_MAP[backend].length;
+      index++
+    ) {
       const flag = params.BACKEND_FLAGS_MAP[backend][index];
       TUNABLE_FLAG_DEFAULT_VALUE_MAP[flag] = await tf.env().getAsync(flag);
     }
@@ -181,21 +185,21 @@ async function initDefaultValueMap() {
  */
 function getTunableRange(flag) {
   const defaultValue = TUNABLE_FLAG_DEFAULT_VALUE_MAP[flag];
-  if (flag === 'WEBGL_FORCE_F16_TEXTURES') {
+  if (flag === "WEBGL_FORCE_F16_TEXTURES") {
     return [false, true];
-  } else if (flag === 'WEBGL_VERSION') {
+  } else if (flag === "WEBGL_VERSION") {
     const tunableRange = [];
     for (let value = 1; value <= defaultValue; value++) {
       tunableRange.push(value);
     }
     return tunableRange;
-  } else if (flag === 'WEBGL_FLUSH_THRESHOLD') {
+  } else if (flag === "WEBGL_FLUSH_THRESHOLD") {
     const tunableRange = [-1];
     for (let value = 0; value <= 2; value += 0.25) {
       tunableRange.push(value);
     }
     return tunableRange;
-  } else if (typeof defaultValue === 'boolean') {
+  } else if (typeof defaultValue === "boolean") {
     return defaultValue ? [false, true] : [false];
   } else if (params.TUNABLE_FLAG_VALUE_RANGE_MAP[flag] != null) {
     return params.TUNABLE_FLAG_VALUE_RANGE_MAP[flag];
@@ -223,19 +227,23 @@ function showBackendFlagSettings(folderController, backendName) {
     // Heuristically consider a flag with at least two options as tunable.
     if (flagValueRange.length < 2) {
       console.warn(
-          `The ${flag} is considered as untunable, ` +
-          `because its value range is [${flagValueRange}].`);
+        `The ${flag} is considered as untunable, ` +
+          `because its value range is [${flagValueRange}].`
+      );
       continue;
     }
 
     let flagController;
-    if (typeof flagValueRange[0] === 'boolean') {
+    if (typeof flagValueRange[0] === "boolean") {
       // Show checkbox for boolean flags.
       flagController = folderController.add(params.STATE.flags, flag);
     } else {
       // Show dropdown for other types of flags.
-      flagController =
-          folderController.add(params.STATE.flags, flag, flagValueRange);
+      flagController = folderController.add(
+        params.STATE.flags,
+        flag,
+        flagValueRange
+      );
 
       // Because dat.gui always casts dropdown option values to string, we need
       // `stringValueMap` and `onFinishChange()` to recover the value type.
@@ -247,7 +255,7 @@ function showBackendFlagSettings(folderController, backendName) {
           stringValueMap[flag][stringValue] = realValue;
         }
       }
-      flagController.onFinishChange(stringValue => {
+      flagController.onFinishChange((stringValue) => {
         params.STATE.flags[flag] = stringValueMap[flag][stringValue];
       });
     }
@@ -276,8 +284,8 @@ async function showFlagSettings(folderController, backendName) {
   const fixedSelectionCount = 1;
   while (folderController.__controllers.length > fixedSelectionCount) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
 
   // Show flag settings for the new backend.

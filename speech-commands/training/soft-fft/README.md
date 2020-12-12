@@ -1,11 +1,11 @@
-# Training a TensorFlow.js model for Speech Commands Using node.js
+# Training a  model for Speech Commands Using node.js
 
 ## Preparing data for training
 
 Before you can train your model that uses spectrogram from the browser's
-WebAudio as input features, you need to download the speech-commands [data set v0.01](https://storage.cloud.google.com/download.tensorflow.org/data/speech_commands_v0.01.tar.gz) or [data set v0.02](https://storage.cloud.google.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz).
+WebAudio as input features, you need to download the speech-commands [data set v0.01](https://storage.cloud.google.com/download..org/data/speech_commands_v0.01.tar.gz) or [data set v0.02](https://storage.cloud.google.com/download..org/data/speech_commands_v0.02.tar.gz).
 
-## Training the TensorFlow.js Model
+## Training the  Model
 
 The node.js training package comes with a command line tool that will assist your training. Here are the steps:
 1. Prepare the node modules dependecies:
@@ -42,31 +42,31 @@ Following are command supported by the CLI:
 local@piyu~$ create up down left right
 
 _________________________________________________________________
-Layer (type)                 Output shape              Param #   
+Layer (type)                 Output shape              Param #
 =================================================================
-conv2d_Conv2D1 (Conv2D)      [null,95,39,8]            72        
+conv2d_Conv2D1 (Conv2D)      [null,95,39,8]            72
 _________________________________________________________________
-max_pooling2d_MaxPooling2D1  [null,47,19,8]            0         
+max_pooling2d_MaxPooling2D1  [null,47,19,8]            0
 _________________________________________________________________
-conv2d_Conv2D2 (Conv2D)      [null,44,18,32]           2080      
+conv2d_Conv2D2 (Conv2D)      [null,44,18,32]           2080
 _________________________________________________________________
-max_pooling2d_MaxPooling2D2  [null,22,9,32]            0         
+max_pooling2d_MaxPooling2D2  [null,22,9,32]            0
 _________________________________________________________________
-conv2d_Conv2D3 (Conv2D)      [null,19,8,32]            8224      
+conv2d_Conv2D3 (Conv2D)      [null,19,8,32]            8224
 _________________________________________________________________
-max_pooling2d_MaxPooling2D3  [null,9,4,32]             0         
+max_pooling2d_MaxPooling2D3  [null,9,4,32]             0
 _________________________________________________________________
-conv2d_Conv2D4 (Conv2D)      [null,6,3,32]             8224      
+conv2d_Conv2D4 (Conv2D)      [null,6,3,32]             8224
 _________________________________________________________________
-max_pooling2d_MaxPooling2D4  [null,5,1,32]             0         
+max_pooling2d_MaxPooling2D4  [null,5,1,32]             0
 _________________________________________________________________
-flatten_Flatten1 (Flatten)   [null,160]                0         
+flatten_Flatten1 (Flatten)   [null,160]                0
 _________________________________________________________________
-dense_Dense1 (Dense)         [null,2000]               322000    
+dense_Dense1 (Dense)         [null,2000]               322000
 _________________________________________________________________
-dropout_Dropout1 (Dropout)   [null,2000]               0         
+dropout_Dropout1 (Dropout)   [null,2000]               0
 _________________________________________________________________
-dense_Dense2 (Dense)         [null,4]                  8004      
+dense_Dense2 (Dense)         [null,4]                  8004
 =================================================================
 Total params: 348604
 Trainable params: 348604
@@ -74,7 +74,7 @@ Non-trainable params: 0
 
 ```
 
-4. Load the dataset. 
+4. Load the dataset.
 You can use 'load_dataset all' command to load data for all labels that is configure for the previously created model. The root directory is where you untar the dataset file to. Each label should have corresponding directory in that root directory.
 
 ```none
@@ -114,7 +114,7 @@ local@piyu~$ train 5
 
 ```
 
-7 Save the trained model. 
+7 Save the trained model.
 
 ```none
 local@piyu~$ save_model /tmp/audio_model

@@ -1,36 +1,24 @@
 /**
- * @license
- * Copyright 2023 Google LLC.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 
-import '@tensorflow/tfjs-backend-webgl';
-import * as tfwebgpu from '@tensorflow/tfjs-backend-webgpu';
+import "@aresobus/aresobus-backend-webgl";
+import * as tfwebgpu from "@aresobus/aresobus-backend-webgpu";
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@aresobus/aresobus-core";
 
 function getDevice(canvas) {
   const device = tf.backend().device;
   if (!tf.backend() instanceof tfwebgpu.WebGPUBackend) {
-    throw new Error('This is only supported in WebGPU backend!');
+    throw new Error("This is only supported in WebGPU backend!");
   }
-  const swapChain = canvas.getContext('webgpu');
+  const swapChain = canvas.getContext("webgpu");
 
   swapChain.configure({
     device,
     format: navigator.gpu.getPreferredCanvasFormat(),
-    alphaMode: 'opaque',
+    alphaMode: "opaque",
   });
   return [device, swapChain];
 }
@@ -62,13 +50,13 @@ export class RendererWebGPU {
     this.scoreThreshold = 0;
     this.pipelineCache = {};
     if (importVideo == false) {
-      this.drawImageContext = document.createElement('canvas').getContext('2d');
+      this.drawImageContext = document.createElement("canvas").getContext("2d");
     }
   }
 
   createBuffer(usage, size, array = null) {
     const mappedAtCreation = array ? true : false;
-    const buffer = this.device.createBuffer({size, usage, mappedAtCreation});
+    const buffer = this.device.createBuffer({ size, usage, mappedAtCreation });
     if (array instanceof Float32Array) {
       new Float32Array(buffer.getMappedRange()).set(array);
       buffer.unmap();
@@ -136,9 +124,12 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
 
   initDrawPose(keypointsTensor, scoresTensor) {
     // Only 2d tensor whose last dimension is 2 is supported.
-    if (keypointsTensor == null || keypointsTensor.shape.length !== 2 ||
-        keypointsTensor.shape[1] !== 2) {
-      throw new Error('Tensor is null or tensor shape is not supported!');
+    if (
+      keypointsTensor == null ||
+      keypointsTensor.shape.length !== 2 ||
+      keypointsTensor.shape[1] !== 2
+    ) {
+      throw new Error("Tensor is null or tensor shape is not supported!");
     }
 
     // pose-detection supports 17 body parts:
@@ -148,19 +139,23 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
     // 'right_knee', 'left_ankle', 'right_ankle'. This demo draws the first
     // five.
     const poseIndexArray = new Uint32Array([
-      4, 2, 2, 0,  0,  1,  1,  3,  10, 8,  8, 6,  6,  5,  5,  7,
-      7, 9, 6, 12, 12, 14, 14, 16, 12, 11, 5, 11, 11, 13, 13, 15
+      4, 2, 2, 0, 0, 1, 1, 3, 10, 8, 8, 6, 6, 5, 5, 7, 7, 9, 6, 12, 12, 14, 14,
+      16, 12, 11, 5, 11, 11, 13, 13, 15,
     ]);
     this.poseIndexCount = poseIndexArray.length;
 
     if (this.indexBuffer == null) {
       this.indexBuffer = this.createBuffer(
-          GPUBufferUsage.INDEX, poseIndexArray.byteLength, poseIndexArray);
+        GPUBufferUsage.INDEX,
+        poseIndexArray.byteLength,
+        poseIndexArray
+      );
     }
     if (this.uniformBuffer == null) {
       this.uniformBuffer = this.createBuffer(
-          GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-          this.canvasInfo.length * 4);
+        GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+        this.canvasInfo.length * 4
+      );
     }
 
     if (this.scoreThreshold in this.pipelineCache) {
@@ -185,11 +180,11 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
         buffer: scoresTensor.dataToGPU().buffer,
         offset: 0,
         size: byteSizeFromShape(scoresTensor.shape),
-      }
+      },
     ];
     return this.device.createBindGroup({
       layout: this.posePipeline.getBindGroupLayout(0),
-      entries: bindings.map((b, i) => ({binding: i, resource: b})),
+      entries: bindings.map((b, i) => ({ binding: i, resource: b })),
     });
   }
 
@@ -199,21 +194,27 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
 
     const uniformData = new Float32Array(this.canvasInfo);
     this.device.queue.writeBuffer(
-        this.uniformBuffer, 0, uniformData.buffer, uniformData.byteOffset,
-        uniformData.byteLength);
+      this.uniformBuffer,
+      0,
+      uniformData.buffer,
+      uniformData.byteOffset,
+      uniformData.byteLength
+    );
 
     const renderPassDescriptor = {
-      colorAttachments: [{
-        view: textureView,
-        loadValue: {r: 0.5, g: 0.5, b: 0.5, a: 1.0},
-        loadOp: 'load',
-        storeOp: 'store',
-      }]
+      colorAttachments: [
+        {
+          view: textureView,
+          loadValue: { r: 0.5, g: 0.5, b: 0.5, a: 1.0 },
+          loadOp: "load",
+          storeOp: "store",
+        },
+      ],
     };
     const commandEncoder = this.device.createCommandEncoder();
     const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
     passEncoder.setPipeline(this.posePipeline);
-    passEncoder.setIndexBuffer(this.indexBuffer, 'uint32');
+    passEncoder.setIndexBuffer(this.indexBuffer, "uint32");
     passEncoder.setBindGroup(0, poseBindGroup);
     passEncoder.drawIndexed(this.poseIndexCount);
     passEncoder.end();
@@ -223,35 +224,35 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
   createPosePipeline() {
     const [vertexShaderCode, fragmentShaderCode] = this.getPoseShader();
     return this.device.createRenderPipeline({
-      layout: 'auto',
+      layout: "auto",
       vertex: {
-        module: this.device.createShaderModule({code: vertexShaderCode}),
-        entryPoint: 'main',
+        module: this.device.createShaderModule({ code: vertexShaderCode }),
+        entryPoint: "main",
       },
       fragment: {
-        module: this.device.createShaderModule({code: fragmentShaderCode}),
-        entryPoint: 'main',
+        module: this.device.createShaderModule({ code: fragmentShaderCode }),
+        entryPoint: "main",
         targets: [
           {
             format: navigator.gpu.getPreferredCanvasFormat(),
             blend: {
               color: {
-                srcFactor: 'src-alpha',
-                dstFactor: 'one-minus-src-alpha',
-                operation: 'add',
+                srcFactor: "src-alpha",
+                dstFactor: "one-minus-src-alpha",
+                operation: "add",
               },
               alpha: {
-                srcFactor: 'one',
-                dstFactor: 'one-minus-src-alpha',
-                operation: 'add',
+                srcFactor: "one",
+                dstFactor: "one-minus-src-alpha",
+                operation: "add",
               },
             },
           },
         ],
       },
       primitive: {
-        topology: 'line-list',
-      }
+        topology: "line-list",
+      },
     });
   }
 
@@ -269,16 +270,16 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
   return pos[VertexIndex];
 }
       `;
-    const textureType =
-        this.importVideo ? 'texture_external' : 'texture_2d<f32>';
+    const textureType = this.importVideo
+      ? "texture_external"
+      : "texture_2d<f32>";
     const fragmentShaderCode = `
 @group(0) @binding(0) var s : sampler;
 @group(0) @binding(1) var t : ${textureType};
 
 @fragment fn main(@builtin(position) FragCoord : vec4<f32>)
                          -> @location(0) vec4<f32> {
-    var coord = FragCoord.xy / vec2<f32>(${this.canvasInfo[4]}, ${
-        this.canvasInfo[5]});
+    var coord = FragCoord.xy / vec2<f32>(${this.canvasInfo[4]}, ${this.canvasInfo[5]});
     // Flip horizontally.
     coord.x = 1.0 - coord.x;
     return textureSampleBaseClampToEdge(t, s, coord);
@@ -293,12 +294,14 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
     const textureView = this.swapChain.getCurrentTexture().createView();
 
     const renderPassDescriptor = {
-      colorAttachments: [{
-        view: textureView,
-        loadValue: {r: 0.5, g: 0.5, b: 0.5, a: 1.0},
-        loadOp: 'clear',
-        storeOp: 'store',
-      }]
+      colorAttachments: [
+        {
+          view: textureView,
+          loadValue: { r: 0.5, g: 0.5, b: 0.5, a: 1.0 },
+          loadOp: "clear",
+          storeOp: "store",
+        },
+      ],
     };
 
     const passEncoder = commandEncoder.beginRenderPass(renderPassDescriptor);
@@ -311,27 +314,27 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
 
   createTexturePipeline() {
     const [vertexShaderCode, fragmentShaderCode] =
-        this.getExternalTextureShader();
+      this.getExternalTextureShader();
     this.texturePipeline = this.device.createRenderPipeline({
-      layout: 'auto',
+      layout: "auto",
       vertex: {
         module: this.device.createShaderModule({
           code: vertexShaderCode,
         }),
-        entryPoint: 'main',
+        entryPoint: "main",
       },
       fragment: {
         module: this.device.createShaderModule({
           code: fragmentShaderCode,
         }),
-        entryPoint: 'main',
+        entryPoint: "main",
         targets: [
           {
-            format: 'bgra8unorm',
+            format: "bgra8unorm",
           },
         ],
       },
-      primitive: {topology: 'triangle-list'},
+      primitive: { topology: "triangle-list" },
     });
   }
 
@@ -357,16 +360,21 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
       this.drawImageContext.drawImage(video, 0, 0, width, height);
       const pixels = this.drawImageContext.canvas;
 
-      const format = 'rgba8unorm';
-      const usage = GPUTextureUsage.COPY_DST |
-          GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.TEXTURE_BINDING;
+      const format = "rgba8unorm";
+      const usage =
+        GPUTextureUsage.COPY_DST |
+        GPUTextureUsage.RENDER_ATTACHMENT |
+        GPUTextureUsage.TEXTURE_BINDING;
       externalTexture = this.device.createTexture({
         size: [width, height],
         format,
         usage,
       });
       this.device.queue.copyExternalImageToTexture(
-          {source: pixels}, {texture: externalTexture}, [width, height]);
+        { source: pixels },
+        { texture: externalTexture },
+        [width, height]
+      );
     }
 
     const bindGroup = this.device.createBindGroup({
@@ -378,8 +386,9 @@ fn main(@location(0) score: f32) -> @location(0) vec4<f32> {
         },
         {
           binding: 1,
-          resource: this.importVideo ? externalTexture :
-                                       externalTexture.createView(),
+          resource: this.importVideo
+            ? externalTexture
+            : externalTexture.createView(),
         },
       ],
     });

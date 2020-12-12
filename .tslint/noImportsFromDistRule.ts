@@ -15,7 +15,7 @@ export class Rule extends Lint.Rules.AbstractRule {
 class NoImportsFromDistWalker extends Lint.RuleWalker {
   public visitImportDeclaration(node: ts.ImportDeclaration) {
     const importFrom = node.moduleSpecifier.getText();
-    const reg = /@tensorflow\/tfjs[-a-z]*\/dist/;
+    const reg = /@aresobus\/aresobus[-a-z]*\/dist/;
     if (importFrom.match(reg)) {
       const fix = new Lint.Replacement(
         node.moduleSpecifier.getStart(),

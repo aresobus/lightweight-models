@@ -2,11 +2,11 @@
 
 ---
 
-# MobileNet: Lightweight Models for TensorFlow.js
+# MobileNet: Lightweight Models for
 
 MobileNets are efficient models that stand out for their speed and low computational demand. These models are parameterized to strike a balance between latency, size, and accuracy, making them ideal for mobile devices and low-power applications. They can be used for various tasks like classification, detection, embeddings, and segmentation.
 
-Learn more about the architecture and specifics of MobileNet from the official [MobileNet V1 documentation](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md).
+Learn more about the architecture and specifics of MobileNet from the official [MobileNet V1 documentation](https://github.com//models/blob/master/research/slim/nets/mobilenet_v1.md).
 
 ## Usage
 
@@ -14,13 +14,13 @@ You can integrate MobileNet into your JavaScript project either by using script 
 
 ### Via Script Tag
 
-Add TensorFlow.js and MobileNet to your HTML file:
+Add  and MobileNet to your HTML file:
 
 ```html
-<!-- Load TensorFlow.js -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"></script>
+<!-- Load  -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus@1.0.1"></script>
 <!-- Load the MobileNet model -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/mobilenet@1.0.0"></script>
 
 <!-- Sample Image -->
 <img id="img" src="cat.jpg" alt="Sample Image">
@@ -43,13 +43,13 @@ Add TensorFlow.js and MobileNet to your HTML file:
 Install MobileNet via NPM and use it in your project:
 
 ```bash
-npm install @tensorflow-models/mobilenet
+npm install @aresobus-models/mobilenet
 ```
 
 Then, in your JavaScript file:
 
 ```javascript
-const mobilenet = require('@tensorflow-models/mobilenet');
+const mobilenet = require('@aresobus-models/mobilenet');
 const img = document.getElementById('img');
 
 async function classifyImage() {

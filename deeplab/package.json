@@ -1,5 +1,5 @@
 {
-  "name": "@aresobus/tensorflow-models-deeplab",
+  "name": "@aresobus/-models-deeplab",
   "version": "0.2.1",
   "description": "Semantic Segmentation in the Browser: DeepLab v3 Model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
@@ -14,13 +14,13 @@
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "peerDependencies": {
-    "@tensorflow/tfjs-converter": "^3.0.0",
-    "@tensorflow/tfjs-core": "^3.0.0"
+    "@aresobus/aresobus-converter": "^3.0.0",
+    "@aresobus/aresobus-core": "^3.0.0"
   },
   "devDependencies": {
-    "@tensorflow/tfjs-converter": "^3.0.0",
-    "@tensorflow/tfjs-core": "^3.0.0",
-    "@tensorflow/tfjs-backend-cpu": "^3.0.0",
+    "@aresobus/aresobus-converter": "^3.0.0",
+    "@aresobus/aresobus-core": "^3.0.0",
+    "@aresobus/aresobus-backend-cpu": "^3.0.0",
     "@types/jasmine": "~3.3.15",
     "clang-format": "^1.2.4",
     "jasmine": "^3.2.0",
@@ -42,6 +42,6 @@
     "build-npm": "yarn build && rollup -c",
     "lint": "tslint -p . -t verbose"
   },
-  "license": "Apache-2.0",
+
   "dependencies": {}
 }

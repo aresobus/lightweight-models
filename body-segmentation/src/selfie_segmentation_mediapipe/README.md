@@ -1,7 +1,7 @@
 # MediaPipe SelfieSegmentation
 
 MediaPipe SelfieSegmentation-MediaPipe wraps the MediaPipe JS Solution within the familiar
-TFJS API [mediapipe.dev](https://mediapipe.dev).
+aresobus API [mediapipe.dev](https://mediapipe.dev).
 
 Two variants of the model are offered.
 
@@ -24,19 +24,19 @@ Via script tags:
 ```html
 <!-- Require the peer dependencies. -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-segmentation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
 ```
 
 Via npm:
 ```sh
 yarn add @mediapipe/selfie_segmentation
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-backend-webgl
-yarn add @tensorflow-models/body-segmentation
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-backend-webgl
+yarn add @aresobus-models/body-segmentation
 ```
 
 -----------------------------------------------------------------------
@@ -47,10 +47,10 @@ If you are using the Body Segmentation API via npm, you need to import the libra
 ### Import the libraries
 
 ```javascript
-import * as bodySegmentation from '@tensorflow-models/body-segmentation';
-import '@tensorflow/tfjs-core';
+import * as bodySegmentation from '@aresobus-models/body-segmentation';
+import '@aresobus/aresobus-core';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
+import '@aresobus/aresobus-backend-webgl';
 import '@mediapipe/selfie_segmentation';
 ```
 
@@ -105,5 +105,4 @@ The returned `people` array contains a single element only, where all the people
 The only label returned by the maskValueToLabel function is 'person'.
 
 Please refer to the Body Segmentation API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/body-segmentation/README.md#how-to-run-it)
 about the structure of the returned `people` array.

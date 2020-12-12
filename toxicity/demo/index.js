@@ -1,4 +1,4 @@
-import * as toxicity from "@tensorflow-models/toxicity";
+import * as toxicity from "@aresobus-models/toxicity";
 
 const samples = [
   {

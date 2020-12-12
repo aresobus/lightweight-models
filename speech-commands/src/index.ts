@@ -1,27 +1,14 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as tf from "@aresobus/aresobus-core";
 
-import * as tf from '@tensorflow/tfjs-core';
-
-import {BrowserFftSpeechCommandRecognizer} from './browser_fft_recognizer';
-import {playRawAudio} from './browser_fft_utils';
-import {concatenateFloat32Arrays} from './generic_utils';
-import {FFT_TYPE, SpeechCommandRecognizer, SpeechCommandRecognizerMetadata} from './types';
-import { normalizeFloat32Array, normalize } from './browser_fft_utils';
+import { BrowserFftSpeechCommandRecognizer } from "./browser_fft_recognizer";
+import { playRawAudio } from "./browser_fft_utils";
+import { concatenateFloat32Arrays } from "./generic_utils";
+import {
+  FFT_TYPE,
+  SpeechCommandRecognizer,
+  SpeechCommandRecognizerMetadata,
+} from "./types";
+import { normalizeFloat32Array, normalize } from "./browser_fft_utils";
 
 /**
  * Create an instance of speech-command recognizer.
@@ -50,28 +37,37 @@ import { normalizeFloat32Array, normalize } from './browser_fft_utils';
  * @throws Error on invalid value of `fftType`.
  */
 export function create(
-    fftType: FFT_TYPE, vocabulary?: string,
-    customModelArtifactsOrURL?: tf.io.ModelArtifacts|string,
-    customMetadataOrURL?: SpeechCommandRecognizerMetadata|
-    string): SpeechCommandRecognizer {
+  fftType: FFT_TYPE,
+  vocabulary?: string,
+  customModelArtifactsOrURL?: tf.io.ModelArtifacts | string,
+  customMetadataOrURL?: SpeechCommandRecognizerMetadata | string
+): SpeechCommandRecognizer {
   tf.util.assert(
-      customModelArtifactsOrURL == null && customMetadataOrURL == null ||
-          customModelArtifactsOrURL != null && customMetadataOrURL != null,
-      () => `customModelURL and customMetadataURL must be both provided or ` +
-          `both not provided.`);
+    (customModelArtifactsOrURL == null && customMetadataOrURL == null) ||
+      (customModelArtifactsOrURL != null && customMetadataOrURL != null),
+    () =>
+      `customModelURL and customMetadataURL must be both provided or ` +
+      `both not provided.`
+  );
   if (customModelArtifactsOrURL != null) {
     tf.util.assert(
-        vocabulary == null,
-        () => `vocabulary name must be null or undefined when modelURL ` +
-            `is provided.`);
+      vocabulary == null,
+      () =>
+        `vocabulary name must be null or undefined when modelURL ` +
+        `is provided.`
+    );
   }
 
-  if (fftType === 'BROWSER_FFT') {
+  if (fftType === "BROWSER_FFT") {
     return new BrowserFftSpeechCommandRecognizer(
-        vocabulary, customModelArtifactsOrURL, customMetadataOrURL);
-  } else if (fftType === 'SOFT_FFT') {
+      vocabulary,
+      customModelArtifactsOrURL,
+      customMetadataOrURL
+    );
+  } else if (fftType === "SOFT_FFT") {
     throw new Error(
-        'SOFT_FFT SpeechCommandRecognizer has not been implemented yet.');
+      "SOFT_FFT SpeechCommandRecognizer has not been implemented yet."
+    );
   } else {
     throw new Error(`Invalid fftType: '${fftType}'`);
   }
@@ -81,11 +77,35 @@ const utils = {
   concatenateFloat32Arrays,
   normalizeFloat32Array,
   normalize,
-  playRawAudio
+  playRawAudio,
 };
 
-export {BACKGROUND_NOISE_TAG, Dataset, GetDataConfig as GetSpectrogramsAsTensorsConfig, getMaxIntensityFrameIndex, spectrogram2IntensityCurve, SpectrogramAndTargetsTfDataset} from './dataset';
-export {AudioDataAugmentationOptions, Example, FFT_TYPE, RawAudioData, RecognizerParams, SpectrogramData, SpeechCommandRecognizer, SpeechCommandRecognizerMetadata, SpeechCommandRecognizerResult, StreamingRecognitionConfig, TransferLearnConfig, TransferSpeechCommandRecognizer} from './types';
-export {deleteSavedTransferModel, listSavedTransferModels, UNKNOWN_TAG} from './browser_fft_recognizer';
-export {utils};
-export {version} from './version';
+export {
+  BACKGROUND_NOISE_TAG,
+  Dataset,
+  GetDataConfig as GetSpectrogramsAsTensorsConfig,
+  getMaxIntensityFrameIndex,
+  spectrogram2IntensityCurve,
+  SpectrogramAndTargetsTfDataset,
+} from "./dataset";
+export {
+  AudioDataAugmentationOptions,
+  Example,
+  FFT_TYPE,
+  RawAudioData,
+  RecognizerParams,
+  SpectrogramData,
+  SpeechCommandRecognizer,
+  SpeechCommandRecognizerMetadata,
+  SpeechCommandRecognizerResult,
+  StreamingRecognitionConfig,
+  TransferLearnConfig,
+  TransferSpeechCommandRecognizer,
+} from "./types";
+export {
+  deleteSavedTransferModel,
+  listSavedTransferModels,
+  UNKNOWN_TAG,
+} from "./browser_fft_recognizer";
+export { utils };
+export { version } from "./version";

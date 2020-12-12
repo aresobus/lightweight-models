@@ -48,11 +48,11 @@ but has the potential to be deleted in the future if no detections are
 associated with it.
 
 To build your own tracker, subclass `Tracker` in
-[tracker.ts](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/calculators/tracker.ts).
+[tracker.ts](https://github.com//aresobus-models/tree/master/pose-detection/src/calculators/tracker.ts).
 To see other implemented trackers, check out
-[keypoint_tracker.ts](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/calculators/keypoint_tracker.ts)
+[keypoint_tracker.ts](https://github.com//aresobus-models/tree/master/pose-detection/src/calculators/keypoint_tracker.ts)
 and
-[bounding_box_tracker.ts](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/calculators/bounding_box_tracker.ts).
+[bounding_box_tracker.ts](https://github.com//aresobus-models/tree/master/pose-detection/src/calculators/bounding_box_tracker.ts).
 
 Learn more about how to configure a tracker in
-[config_interfaces.ts](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/calculators/interfaces/config_interfaces.ts).
+[config_interfaces.ts](https://github.com//aresobus-models/tree/master/pose-detection/src/calculators/interfaces/config_interfaces.ts).

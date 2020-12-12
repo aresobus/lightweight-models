@@ -1,34 +1,21 @@
-/**
- * @license
- * Copyright 2019 Google Inc. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import { Keypoint, Pose, TensorBuffer3D } from "../types";
 
-import {Keypoint, Pose, TensorBuffer3D} from '../types';
-
-import {buildPartWithScoreQueue} from './build_part_with_score_queue';
-import {decodePose} from './decode_pose';
-import {getImageCoords, squaredDistance} from './util';
+import { buildPartWithScoreQueue } from "./build_part_with_score_queue";
+import { decodePose } from "./decode_pose";
+import { getImageCoords, squaredDistance } from "./util";
 
 function withinNmsRadiusOfCorrespondingPoint(
-    poses: Pose[], squaredNmsRadius: number, {x, y}: {x: number, y: number},
-    keypointId: number): boolean {
-  return poses.some(({keypoints}) => {
+  poses: Pose[],
+  squaredNmsRadius: number,
+  { x, y }: { x: number; y: number },
+  keypointId: number
+): boolean {
+  return poses.some(({ keypoints }) => {
     const correspondingKeypoint = keypoints[keypointId].position;
-    return squaredDistance(
-               y, x, correspondingKeypoint.y, correspondingKeypoint.x) <=
-        squaredNmsRadius;
+    return (
+      squaredDistance(y, x, correspondingKeypoint.y, correspondingKeypoint.x) <=
+      squaredNmsRadius
+    );
   });
 }
 
@@ -37,18 +24,28 @@ function withinNmsRadiusOfCorrespondingPoint(
  * instance.
  */
 function getInstanceScore(
-    existingPoses: Pose[], squaredNmsRadius: number,
-    instanceKeypoints: Keypoint[]): number {
+  existingPoses: Pose[],
+  squaredNmsRadius: number,
+  instanceKeypoints: Keypoint[]
+): number {
   let notOverlappedKeypointScores = instanceKeypoints.reduce(
-      (result, {position, score}, keypointId): number => {
-        if (!withinNmsRadiusOfCorrespondingPoint(
-                existingPoses, squaredNmsRadius, position, keypointId)) {
-          result += score;
-        }
-        return result;
-      }, 0.0);
+    (result, { position, score }, keypointId): number => {
+      if (
+        !withinNmsRadiusOfCorrespondingPoint(
+          existingPoses,
+          squaredNmsRadius,
+          position,
+          keypointId
+        )
+      ) {
+        result += score;
+      }
+      return result;
+    },
+    0.0
+  );
 
-  return notOverlappedKeypointScores /= instanceKeypoints.length;
+  return (notOverlappedKeypointScores /= instanceKeypoints.length);
 }
 
 // A point (y, x) is considered as root part candidate if its score is a
@@ -112,14 +109,22 @@ const kLocalMaximumRadius = 1;
  * the corresponding keypoint scores.
  */
 export function decodeMultiplePoses(
-    scoresBuffer: TensorBuffer3D, offsetsBuffer: TensorBuffer3D,
-    displacementsFwdBuffer: TensorBuffer3D,
-    displacementsBwdBuffer: TensorBuffer3D, outputStride: number,
-    maxPoseDetections: number, scoreThreshold = 0.5, nmsRadius = 20): Pose[] {
+  scoresBuffer: TensorBuffer3D,
+  offsetsBuffer: TensorBuffer3D,
+  displacementsFwdBuffer: TensorBuffer3D,
+  displacementsBwdBuffer: TensorBuffer3D,
+  outputStride: number,
+  maxPoseDetections: number,
+  scoreThreshold = 0.5,
+  nmsRadius = 20
+): Pose[] {
   const poses: Pose[] = [];
 
   const queue = buildPartWithScoreQueue(
-      scoreThreshold, kLocalMaximumRadius, scoresBuffer);
+    scoreThreshold,
+    kLocalMaximumRadius,
+    scoresBuffer
+  );
 
   const squaredNmsRadius = nmsRadius * nmsRadius;
 
@@ -132,21 +137,35 @@ export function decodeMultiplePoses(
     // Part-based non-maximum suppression: We reject a root candidate if it
     // is within a disk of `nmsRadius` pixels from the corresponding part of
     // a previously detected instance.
-    const rootImageCoords =
-        getImageCoords(root.part, outputStride, offsetsBuffer);
-    if (withinNmsRadiusOfCorrespondingPoint(
-            poses, squaredNmsRadius, rootImageCoords, root.part.id)) {
+    const rootImageCoords = getImageCoords(
+      root.part,
+      outputStride,
+      offsetsBuffer
+    );
+    if (
+      withinNmsRadiusOfCorrespondingPoint(
+        poses,
+        squaredNmsRadius,
+        rootImageCoords,
+        root.part.id
+      )
+    ) {
       continue;
     }
 
     // Start a new detection instance at the position of the root.
     const keypoints = decodePose(
-        root, scoresBuffer, offsetsBuffer, outputStride, displacementsFwdBuffer,
-        displacementsBwdBuffer);
+      root,
+      scoresBuffer,
+      offsetsBuffer,
+      outputStride,
+      displacementsFwdBuffer,
+      displacementsBwdBuffer
+    );
 
     const score = getInstanceScore(poses, squaredNmsRadius, keypoints);
 
-    poses.push({keypoints, score});
+    poses.push({ keypoints, score });
   }
 
   return poses;

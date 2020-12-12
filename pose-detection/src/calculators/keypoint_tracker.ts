@@ -1,27 +1,10 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import { Keypoint } from "../shared/calculators/interfaces/common_interfaces";
 
-import {Keypoint} from '../shared/calculators/interfaces/common_interfaces';
+import { Pose } from "../types";
 
-import {Pose} from '../types';
-
-import {Track} from './interfaces/common_interfaces';
-import {TrackerConfig} from './interfaces/config_interfaces';
-import {Tracker} from './tracker';
+import { Track } from "./interfaces/common_interfaces";
+import { TrackerConfig } from "./interfaces/config_interfaces";
+import { Tracker } from "./tracker";
 
 /**
  * KeypointTracker, which tracks poses based on keypoint similarity. This
@@ -36,7 +19,7 @@ export class KeypointTracker extends Tracker {
   constructor(config: TrackerConfig) {
     super(config);
     this.keypointThreshold =
-        config.keypointTrackerParams.keypointConfidenceThreshold;
+      config.keypointTrackerParams.keypointConfidenceThreshold;
     this.keypointFalloff = config.keypointTrackerParams.keypointFalloff;
     this.minNumKeyoints = config.keypointTrackerParams.minNumberOfKeypoints;
   }
@@ -89,15 +72,18 @@ export class KeypointTracker extends Tracker {
     for (let i = 0; i < pose.keypoints.length; ++i) {
       const poseKpt = pose.keypoints[i];
       const trackKpt = track.keypoints[i];
-      if (poseKpt.score < this.keypointThreshold ||
-          trackKpt.score < this.keypointThreshold) {
+      if (
+        poseKpt.score < this.keypointThreshold ||
+        trackKpt.score < this.keypointThreshold
+      ) {
         continue;
       }
       numValidKeypoints += 1;
-      const dSquared = Math.pow(poseKpt.x - trackKpt.x, 2) +
-          Math.pow(poseKpt.y - trackKpt.y, 2);
+      const dSquared =
+        Math.pow(poseKpt.x - trackKpt.x, 2) +
+        Math.pow(poseKpt.y - trackKpt.y, 2);
       const x = 2 * this.keypointFalloff[i];
-      oksTotal += Math.exp(-1 * dSquared / (2 * boxArea * x ** 2));
+      oksTotal += Math.exp((-1 * dSquared) / (2 * boxArea * x ** 2));
     }
     if (numValidKeypoints < this.minNumKeyoints) {
       return 0.0;
@@ -111,12 +97,13 @@ export class KeypointTracker extends Tracker {
    * @returns The area of the object.
    */
   private area(keypoints: Keypoint[]): number {
-    const validKeypoint =
-        keypoints.filter(kpt => kpt.score > this.keypointThreshold);
-    const minX = Math.min(1.0, ...validKeypoint.map(kpt => kpt.x));
-    const maxX = Math.max(0.0, ...validKeypoint.map(kpt => kpt.x));
-    const minY = Math.min(1.0, ...validKeypoint.map(kpt => kpt.y));
-    const maxY = Math.max(0.0, ...validKeypoint.map(kpt => kpt.y));
+    const validKeypoint = keypoints.filter(
+      (kpt) => kpt.score > this.keypointThreshold
+    );
+    const minX = Math.min(1.0, ...validKeypoint.map((kpt) => kpt.x));
+    const maxX = Math.max(0.0, ...validKeypoint.map((kpt) => kpt.x));
+    const minY = Math.min(1.0, ...validKeypoint.map((kpt) => kpt.y));
+    const maxY = Math.max(0.0, ...validKeypoint.map((kpt) => kpt.y));
     return (maxX - minX) * (maxY - minY);
   }
 }

@@ -5,9 +5,9 @@
 
 The Speech Command Recognizer is a JavaScript-based tool that enables the recognition of spoken commands composed of simple, isolated English words from a predefined small vocabulary. This vocabulary includes digits from "zero" to "nine", directional commands like "up", "down", "left", "right", common words such as "go", "stop", "yes", "no", and categories for "unknown word" and "background noise".
 
-Leveraging the [WebAudio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), this module is fully operable within web browsers and is built on [TensorFlow.js](https://js.tensorflow.org). It supports real-time inference as well as transfer learning, utilizing WebGL for GPU acceleration.
+Leveraging the [WebAudio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), this module is fully operable within web browsers and is built on [](https://js..org). It supports real-time inference as well as transfer learning, utilizing WebGL for GPU acceleration.
 
-The model is trained using the [TensorFlow Speech Commands Dataset](https://www.tensorflow.org/datasets/catalog/speech_commands), detailed further in Warden's 2018 paper: ["Speech commands: A dataset for limited-vocabulary speech recognition"](https://arxiv.org/pdf/1804.03209.pdf).
+The model is trained using the [ Speech Commands Dataset](https://www..org/datasets/catalog/speech_commands), detailed further in Warden's 2018 paper: ["Speech commands: A dataset for limited-vocabulary speech recognition"](https://arxiv.org/pdf/1804.03209.pdf).
 
 ## API Usage
 
@@ -36,7 +36,7 @@ setTimeout(() => recognizer.stopListening(), 10000);
 
 ### Offline Recognition
 
-For offline recognition, provide a pre-constructed TensorFlow.js [Tensor](https://js.tensorflow.org/api/latest/#tensor) or a `Float32Array` representing the audio's spectrogram:
+For offline recognition, provide a pre-constructed  [Tensor](https://js..org/api/latest/#tensor) or a `Float32Array` representing the audio's spectrogram:
 
 ```javascript
 const x = tf.tensor4d(mySpectrogramData, [1].concat(recognizer.modelInputShape().slice(1)));
@@ -68,7 +68,7 @@ await transferRecognizer.train({ epochs: 25 });
 
 ### Live Demo
 
-Experience our live demo [here](https://storage.googleapis.com/tfjs-speech-model-test/2019-01-03a/dist/index.html), showcasing the recognizer's capabilities in real-time.
+Experience our live demo [here](https://storage.googleapis.com/aresobus-speech-model-test/2019-01-03a/dist/index.html), showcasing the recognizer's capabilities in real-time.
 
 ## Running the Demo from Source
 

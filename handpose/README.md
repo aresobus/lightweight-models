@@ -4,9 +4,9 @@
 
 # MediaPipe Handpose
 
-The MediaPipe Handpose model is a state-of-the-art machine learning model that allows for the detection of hand landmarks in real-time on the browser using TensorFlow.js. This model utilizes a two-stage pipeline, which includes a palm detection model that returns a hand bounding box and a hand-skeleton finger tracking model that predicts 21 3D hand keypoints.
+The MediaPipe Handpose model is a state-of-the-art machine learning model that allows for the detection of hand landmarks in real-time on the browser using . This model utilizes a two-stage pipeline, which includes a palm detection model that returns a hand bounding box and a hand-skeleton finger tracking model that predicts 21 3D hand keypoints.
 
-[![MediaPipe Handpose Demo](demo/demo.gif)](https://storage.googleapis.com/tfjs-models/demos/handtrack/index.html)
+[![MediaPipe Handpose Demo](demo/demo.gif)](https://storage.googleapis.com/aresobus-models/demos/handtrack/index.html)
 
 For an in-depth discussion of how the hand tracking pipeline works, refer to the Google AI [blog post](https://ai.googleblog.com/2019/08/on-device-real-time-hand-tracking-with.html).
 
@@ -26,20 +26,20 @@ Install MediaPipe Handpose using either script tags or npm:
 
 ```html
 <!-- Load the required libraries -->
-<script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0"></script>
-<script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0"></script>
-<script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0"></script>
-<script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6"></script>
+<script src="https://unpkg.com/@aresobus/aresobus-core@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/aresobus-converter@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/aresobus-backend-webgl@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus-models/handpose@0.0.6"></script>
 ```
 
 ### Via NPM
 
 ```sh
-# Install TensorFlow.js dependencies
-yarn add @tensorflow/tfjs-core @tensorflow/tfjs-converter @tensorflow/tfjs-backend-webgl
+# Install  dependencies
+yarn add @aresobus/aresobus-core @aresobus/aresobus-converter @aresobus/aresobus-backend-webgl
 
 # Install the handpose model
-yarn add @tensorflow-models/handpose
+yarn add @aresobus-models/handpose
 ```
 
 ## Usage
@@ -49,7 +49,7 @@ yarn add @tensorflow-models/handpose
 You can load the model using:
 
 ```javascript
-const handpose = require('@tensorflow-models/handpose');
+const handpose = require('@aresobus-models/handpose');
 await handpose.load();
 ```
 

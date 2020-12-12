@@ -2,11 +2,11 @@
 
 ---
 
-# KNN Classifier for TensorFlow.js
+# KNN Classifier for
 
-The KNN (K-Nearest Neighbors) Classifier package provides a flexible utility for creating a classifier using the K-Nearest Neighbors algorithm, leveraging TensorFlow.js. Unlike typical model packages that come with pre-trained weights, this utility allows you to build a KNN model using activations from any TensorFlow.js model or other tensors associated with class labels.
+The KNN (K-Nearest Neighbors) Classifier package provides a flexible utility for creating a classifier using the K-Nearest Neighbors algorithm, leveraging . Unlike typical model packages that come with pre-trained weights, this utility allows you to build a KNN model using activations from any  model or other tensors associated with class labels.
 
-Explore the example code and live demos [here](https://github.com/tensorflow/tfjs-models/tree/master/knn-classifier/demo).
+Explore the example code and live demos [here](https://github.com//aresobus-models/tree/master/knn-classifier/demo).
 
 ## Installation
 
@@ -17,10 +17,10 @@ You can use the KNN Classifier directly in your web applications either via scri
 Embed directly in your HTML:
 
 ```html
-<!-- Load TensorFlow.js -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<!-- Load  -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
 <!-- Load KNN Classifier -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/knn-classifier"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/knn-classifier"></script>
 ```
 
 ### Via NPM
@@ -28,14 +28,14 @@ Embed directly in your HTML:
 Install the package and its peer dependencies:
 
 ```bash
-npm install @tensorflow/tfjs @tensorflow-models/knn-classifier
+npm install @aresobus/aresobus @aresobus-models/knn-classifier
 ```
 
 And then import into your JavaScript project:
 
 ```javascript
-import * as knnClassifier from '@tensorflow-models/knn-classifier';
-import * as tf from '@tensorflow/tfjs';
+import * as knnClassifier from '@aresobus-models/knn-classifier';
+import * as tf from '@aresobus/aresobus';
 ```
 
 ## Usage Example

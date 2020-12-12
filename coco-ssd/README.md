@@ -3,11 +3,11 @@
 
 Object detection model that aims to localize and identify multiple objects in a single image.
 
-This model is a TensorFlow.js port of the COCO-SSD model. For more information about Tensorflow object detection API, check out this readme in [aresobus/lightweight-models](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/README.md).
+This model is a  port of the COCO-SSD model. For more information about  object detection API, check out this readme in [aresobus/lightweight-models](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/README.md).
 
 This model detects objects defined in the COCO dataset, which is a large-scale object detection, segmentation, and captioning dataset. You can find more information [here](http://cocodataset.org/#home). The model is capable of detecting [80 classes of objects](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/classes.ts). (SSD stands for Single Shot MultiBox Detection).
 
-This TensorFlow.js model does not require you to know about machine learning.
+This  model does not require you to know about machine learning.
 It can take input as any browser-based image elements (`<img>`, `<video>`, `<canvas>`
 elements, for example) and returns an array of bounding boxes with class name and confidence level.
 
@@ -18,10 +18,10 @@ There are two main ways to get this model in your JavaScript project: via script
 ### via Script Tag
 
 ```html
-<!-- Load TensorFlow.js. This is required to use coco-ssd model. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
+<!-- Load . This is required to use coco-ssd model. -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"> </script>
 <!-- Load the coco-ssd model. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/tensorflow-models-coco-ssd"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/-models-coco-ssd"> </script>
 
 <!-- Replace this with your image. Make sure CORS settings allow reading the image! -->
 <img id="img" src="cat.jpg"/>
@@ -49,9 +49,9 @@ deployment, not an example on how to use coco-ssd in the node env.
 
 ```js
 // Note: Require the cpu and webgl backend and add them to package.json as peer dependencies.
-require('@tensorflow/tfjs-backend-cpu');
-require('@tensorflow/tfjs-backend-webgl');
-const cocoSsd = require('@aresobus/tensorflow-models-coco-ssd');
+require('@aresobus/aresobus-backend-cpu');
+require('@aresobus/aresobus-backend-webgl');
+const cocoSsd = require('@aresobus/-models-coco-ssd');
 
 (async () => {
   const img = document.getElementById('img');
@@ -67,7 +67,7 @@ const cocoSsd = require('@aresobus/tensorflow-models-coco-ssd');
 })();
 ```
 
-You can also take a look at the [demo app](https://tensorflow-js-object-detection.glitch.me/).
+You can also take a look at the [demo app](https://-js-object-detection.glitch.me/).
 
 ## API
 
@@ -131,7 +131,7 @@ Returns an array of classes and probabilities that
 
 ### Technical details for advanced users
 
-This model is based on the TensorFlow object detection API. You can download the original models from [here](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/g3doc/tf2_detection_zoo.md). We applied the following optimizations to improve the performance for browser execution:
+This model is based on the  object detection API. You can download the original models from [here](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/g3doc/tf2_detection_zoo.md). We applied the following optimizations to improve the performance for browser execution:
 
   1. Removed the post process graph from the original model.
   2. Used single class NonMaxSuppression instead of original multiple classes NonMaxSuppression for faster speed with similar accuracy.
@@ -141,7 +141,7 @@ Here is the converter command for removing the post process graph.
 
 ```sh
 tensorflowjs_converter --input_format=tf_frozen_model \
-                       --output_format=tfjs_graph_model \
+                       --output_format=aresobus_graph_model \
                        --output_node_names='Postprocessor/ExpandDims_1,Postprocessor/Slice' \
                        ./frozen_inference_graph.pb \
                        ./web_model

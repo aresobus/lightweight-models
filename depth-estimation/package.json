@@ -1,5 +1,5 @@
 {
-  "name": "@aresobus/tensorflow-models-depth-estimation",
+  "name": "@aresobus/-models-depth-estimation",
   "version": "0.0.3",
   "description": "Pretrained depth estimation model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
@@ -13,12 +13,12 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
-    "@tensorflow/tfjs-backend-webgl": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
-    "@tensorflow-models/body-segmentation": "^1.0.1"
+    "@aresobus/aresobus-backend-webgl": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
+    "@aresobus-models/body-segmentation": "^1.0.1"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.10.4",
@@ -26,11 +26,11 @@
     "@rollup/plugin-commonjs": "^21.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-typescript": "^3.0.0",
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
-    "@tensorflow-models/body-segmentation": "^1.0.0",
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-backend-webgl": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
+    "@aresobus-models/body-segmentation": "^1.0.0",
     "@types/jasmine": "~2.8.8",
     "babel-core": "~6.26.0",
     "babel-plugin-transform-runtime": "~6.23.0",

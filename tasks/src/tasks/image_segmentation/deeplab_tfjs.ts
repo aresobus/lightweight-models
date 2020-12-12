@@ -1,76 +1,69 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as deeplab from "@aresobus/deeplab";
 
-import * as deeplab from '@tensorflow-models/deeplab';
+import { TaskModelLoader } from "../../task_model";
+import {
+  ensurearesobusBackend,
+  Runtime,
+  Task,
+  aresobusModelCommonLoadingOption,
+} from "../common";
 
-import {TaskModelLoader} from '../../task_model';
-import {ensureTFJSBackend, Runtime, Task, TFJSModelCommonLoadingOption} from '../common';
-
-import {ImageSegmentationResult, ImageSegmenter, Legend} from './common';
+import { ImageSegmentationResult, ImageSegmenter, Legend } from "./common";
 
 // The global namespace type.
 type DeeplabNS = typeof deeplab;
 
 /** Loading options. */
-export interface DeeplabTFJSLoadingOptions extends TFJSModelCommonLoadingOption,
-                                                   deeplab.ModelConfig {
-  /** The backend to use to run TFJS models. Default to 'webgl'. */
-  backend: 'cpu'|'webgl';
+export interface DeeplabaresobusLoadingOptions
+  extends aresobusModelCommonLoadingOption,
+    deeplab.ModelConfig {
+  /** The backend to use to run aresobus models. Default to 'webgl'. */
+  backend: "cpu" | "webgl";
 }
 
 /** Inference options. */
-export interface DeeplabTFJSInferenceOptions extends deeplab.PredictionConfig {}
+export interface DeeplabaresobusInferenceOptions
+  extends deeplab.PredictionConfig {}
 
-/** Loader for deeplab TFJS model. */
-export class DeeplapTFJSLoader extends
-    TaskModelLoader<DeeplabNS, DeeplabTFJSLoadingOptions, DeeplabTFJS> {
+/** Loader for deeplab aresobus model. */
+export class DeeplaparesobusLoader extends TaskModelLoader<
+  DeeplabNS,
+  DeeplabaresobusLoadingOptions,
+  Deeplabaresobus
+> {
   readonly metadata = {
-    name: 'TFJS Deeplab',
-    description: 'Run deeplab image segmentation model with TFJS',
+    name: "aresobus Deeplab",
+    description: "Run deeplab image segmentation model with aresobus",
     resourceUrls: {
-      'github': 'https://github.com/tensorflow/tfjs-models/tree/master/deeplab',
+      github:
+        "https://github.com/aresobus/lightweight-models/tree/master/deeplab",
     },
-    runtime: Runtime.TFJS,
-    version: '0.2.1',
+    runtime: Runtime.aresobus,
+    version: "0.2.1",
     supportedTasks: [Task.IMAGE_SEGMENTATION],
   };
-  readonly packageUrls =
-      [[`https://cdn.jsdelivr.net/npm/@tensorflow-models/deeplab@${
-          this.metadata.version}`]];
-  readonly sourceModelGlobalNamespace = 'deeplab';
+  readonly sourceModelGlobalNamespace = "deeplab";
 
   protected async transformSourceModel(
-      sourceModelGlobal: DeeplabNS,
-      loadingOptions?: DeeplabTFJSLoadingOptions): Promise<DeeplabTFJS> {
-    const options: DeeplabTFJSLoadingOptions = {...loadingOptions} ||
-        {backend: 'webgl'};
+    sourceModelGlobal: DeeplabNS,
+    loadingOptions?: DeeplabaresobusLoadingOptions
+  ): Promise<Deeplabaresobus> {
+    const options: DeeplabaresobusLoadingOptions = { ...loadingOptions } || {
+      backend: "webgl",
+    };
     if (options.base == null) {
-      options.base = 'pascal';
+      options.base = "pascal";
     }
     if (options.quantizationBytes == null) {
       options.quantizationBytes = 2;
     }
     const deeplabModel = await sourceModelGlobal.load(options);
-    return new DeeplabTFJS(deeplabModel, options);
+    return new Deeplabaresobus(deeplabModel, options);
   }
 }
 
 /**
- * Pre-trained TFJS depelab model.
+ * Pre-trained JS depelab model.
  *
  * Usage:
  *
@@ -80,7 +73,7 @@ export class DeeplapTFJSLoader extends
  * // By default, it uses base='pascal' and quantizationBytes=2 with webgl
  * // backend. You can change them in the options parameter of the `load`
  * // function (see below for docs).
- * const model = await tfTask.ImageSegmentation.Deeplab.TFJS.load();
+ * const model = await tfTask.ImageSegmentation.Deeplab.aresobus.load();
  *
  * // Run inference on an image with options (optional).
  * const img = document.querySelector('img');
@@ -94,28 +87,29 @@ export class DeeplapTFJSLoader extends
  * Refer to `tfTask.ImageSegmenter` for the `predict` and `cleanUp` method.
  *
  * @docextratypes [
- *   {description: 'Options for `load`', symbol: 'DeeplabTFJSLoadingOptions'},
+ *   {description: 'Options for `load`', symbol: 'DeeplabaresobusLoadingOptions'},
  *   {description: 'Options for `predict`', symbol:
- * 'DeeplabTFJSInferenceOptions'}
+ * 'DeeplabaresobusInferenceOptions'}
  * ]
  *
  * @doc {heading: 'Image Segmentation', subheading: 'Models'}
  */
-export class DeeplabTFJS extends ImageSegmenter<DeeplabTFJSInferenceOptions> {
+export class Deeplabaresobus extends ImageSegmenter<DeeplabaresobusInferenceOptions> {
   constructor(
-      private deeplabModel?: deeplab.SemanticSegmentation,
-      private loadingOptions?: DeeplabTFJSLoadingOptions) {
+    private deeplabModel?: deeplab.SemanticSegmentation,
+    private loadingOptions?: DeeplabaresobusLoadingOptions
+  ) {
     super();
   }
 
   async predict(
-      img: ImageData|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement,
-      infereceOptions?: DeeplabTFJSInferenceOptions):
-      Promise<ImageSegmentationResult> {
+    img: ImageData | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
+    infereceOptions?: DeeplabaresobusInferenceOptions
+  ): Promise<ImageSegmentationResult> {
     if (!this.deeplabModel) {
-      throw new Error('source model is not loaded');
+      throw new Error("source model is not loaded");
     }
-    await ensureTFJSBackend(this.loadingOptions);
+    await ensurearesobusBackend(this.loadingOptions);
     const deeplabResult = await this.deeplabModel.segment(img, infereceOptions);
     const legend: Legend = {};
     for (const name of Object.keys(deeplabResult.legend)) {
@@ -136,10 +130,10 @@ export class DeeplabTFJS extends ImageSegmenter<DeeplabTFJSInferenceOptions> {
 
   cleanUp() {
     if (!this.deeplabModel) {
-      throw new Error('source model is not loaded');
+      throw new Error("source model is not loaded");
     }
     this.deeplabModel.dispose();
   }
 }
 
-export const deeplabTfjsLoader = new DeeplapTFJSLoader();
+export const deeplabaresobusLoader = new DeeplaparesobusLoader();

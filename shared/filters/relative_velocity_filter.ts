@@ -1,23 +1,10 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import {MICRO_SECONDS_TO_SECOND, SECOND_TO_MICRO_SECONDS} from '../calculators/constants';
-import {WindowElement} from '../calculators/interfaces/common_interfaces';
-import {VelocityFilterConfig} from '../calculators/interfaces/config_interfaces';
-import {LowPassFilter} from './low_pass_filter';
+import {
+  MICRO_SECONDS_TO_SECOND,
+  SECOND_TO_MICRO_SECONDS,
+} from "../calculators/constants";
+import { WindowElement } from "../calculators/interfaces/common_interfaces";
+import { VelocityFilterConfig } from "../calculators/interfaces/config_interfaces";
+import { LowPassFilter } from "./low_pass_filter";
 
 /**
  * This filter keeps track (on a window of specified size) of value changes
@@ -75,7 +62,7 @@ export class RelativeVelocityFilter {
       // TODO(lina128): Change to kForceCurrentScale or at least add an option
       // that can be tweaked with parameter.
       const distance =
-          value * valueScale - this.lastValue * this.lastValueScale;
+        value * valueScale - this.lastValue * this.lastValueScale;
       const duration = $microSeconds - this.lastTimestamp;
 
       let cumulativeDistance = distance;
@@ -86,7 +73,7 @@ export class RelativeVelocityFilter {
       // a good duration per window element.
       const assumedMaxDuration = SECOND_TO_MICRO_SECONDS / 30;
       const maxCumulativeDuration =
-          (1 + this.window.length) * assumedMaxDuration;
+        (1 + this.window.length) * assumedMaxDuration;
       for (const el of this.window) {
         if (cumulativeDuration + el.duration > maxCumulativeDuration) {
           // This helps in cases when durations are large and outdated
@@ -98,9 +85,9 @@ export class RelativeVelocityFilter {
       }
 
       const velocity =
-          cumulativeDistance / (cumulativeDuration * MICRO_SECONDS_TO_SECOND);
+        cumulativeDistance / (cumulativeDuration * MICRO_SECONDS_TO_SECOND);
       alpha = 1 - 1 / (1 + this.config.velocityScale * Math.abs(velocity));
-      this.window.unshift({distance, duration});
+      this.window.unshift({ distance, duration });
       if (this.window.length > this.config.windowSize) {
         this.window.pop();
       }

@@ -1,6 +1,6 @@
 # BlazePose
 
-BlazePose TFJS uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
+BlazePose aresobus uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
 
 Three models are offered.
 
@@ -8,8 +8,8 @@ Three models are offered.
 * heavy - our largest model intended for high accuracy, regardless of size.
 * full - A middle ground between performance and accuracy.
 
-Please try it out using the live [demo](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=blazepose).
-In the runtime-backend dropdown, choose 'tfjs-webgl'.
+Please try it out using the live [demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=blazepose).
+In the runtime-backend dropdown, choose 'aresobus-webgl'.
 
 --------------------------------------------------------------------------------
 
@@ -23,31 +23,31 @@ In the runtime-backend dropdown, choose 'tfjs-webgl'.
 
 ## Installation
 
-To use BlazePose, you need to first select a runtime (TensorFlow.js or MediaPipe).
+To use BlazePose, you need to first select a runtime ( or MediaPipe).
 To understand the advantages of each runtime, check the performance
-and bundle size section for further details. This guide is for TensorFlow.js
+and bundle size section for further details. This guide is for
 runtime. The guide for MediaPipe runtime can be found
-[here](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection/src/blazepose_mediapipe).
+[here](https://github.com//aresobus-models/tree/master/pose-detection/src/blazepose_mediapipe).
 
 Via script tags:
 
 ```html
 <!-- Require the peer dependencies of pose-detection. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @tensorflow-models/pose-detection
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
-yarn add @tensorflow/tfjs-backend-webgl
+yarn add @aresobus-models/pose-detection
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
+yarn add @aresobus/aresobus-backend-webgl
 ```
 
 -----------------------------------------------------------------------
@@ -58,10 +58,10 @@ If you are using the Pose API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as poseDetection from '@aresobus-models/pose-detection';
+import * as tf from '@aresobus/aresobus-core';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
+import '@aresobus/aresobus-backend-webgl';
 ```
 ### Create a detector
 
@@ -69,9 +69,9 @@ Pass in `poseDetection.SupportedModels.BlazePose` from the
 `posedetection.SupportedModels` enum list along with a `detectorConfig` to the
 `createDetector` method to load and initialize the model.
 
-`detectorConfig` is an object that defines BlazePose specific configurations for `BlazePoseTfjsModelConfig`:
+`detectorConfig` is an object that defines BlazePose specific configurations for `BlazePosearesobusModelConfig`:
 
-*   *runtime*: Must set to be 'tfjs'.
+*   *runtime*: Must set to be 'aresobus'.
 
 *   *enableSmoothing*: Defaults to true. If your input is a static image, set it to false. This flag is used to indicate whether to use temporal filter to smooth the predicted keypoints.
 
@@ -80,19 +80,19 @@ Pass in `poseDetection.SupportedModels.BlazePose` from the
 
 *   *detectorModelUrl*: An optional string that specifies custom url of
 the detector model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[tfjs-react-native](https://github.com/tensorflow/tfjs/tree/master/tfjs-react-native)
+[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
 to load model from app bundle directory using
-[bundleResourceIO](https://github.com/tensorflow/tfjs/blob/master/tfjs-react-native/src/bundle_resource_io.ts#L169).
+[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/src/bundle_resource_io.ts#L169).
 *   *landmarkModelUrl* An optional string that specifies custom url of
 the landmark model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[tfjs-react-native](https://github.com/tensorflow/tfjs/tree/master/tfjs-react-native)
+[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
 to load model from app bundle directory using
-[bundleResourceIO](https://github.com/tensorflow/tfjs/blob/master/tfjs-react-native/src/bundle_resource_io.ts#L169).
+[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/src/bundle_resource_io.ts#L169).
 
 ```javascript
 const model = poseDetection.SupportedModels.BlazePose;
 const detectorConfig = {
-  runtime: 'tfjs',
+  runtime: 'aresobus',
   enableSmoothing: true,
   modelType: 'full'
 };
@@ -106,7 +106,7 @@ accepts both image and video in many formats, including: `tf.Tensor3D`,
 `HTMLVideoElement`, `HTMLImageElement`, `HTMLCanvasElement`. If you want more
 options, you can pass in a second `estimationConfig` parameter.
 
-`estimationConfig` is an object that defines BlazePose specific configurations for `BlazePoseTfjsEstimationConfig`:
+`estimationConfig` is an object that defines BlazePose specific configurations for `BlazePosearesobusEstimationConfig`:
 
 *   *flipHorizontal*: Optional. Defaults to false. When image data comes from camera, the result has to flip horizontally.
 
@@ -124,7 +124,7 @@ const poses = await detector.estimatePoses(image, estimationConfig, timestamp);
 ```
 
 Please refer to the Pose API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/pose-detection/README.md#pose-estimation)
+[README](https://github.com//aresobus-models/blob/master/pose-detection/README.md#pose-estimation)
 about the structure of the returned `poses`.
 
 ## Performance
@@ -136,17 +136,17 @@ with lower-end or no GPUs.
 |  |MacBook Pro 15" 2019<br>Intel core i9.<br>AMD Radeon Pro Vega 20 Graphics.<br> (FPS)| iPhone12<br>(FPS) | Pixel5 <br> (FPS)|Desktop <br> Intel i9-10900K. <br> Nvidia GTX 1070 GPU. <br> (FPS)|
 | --- | --- | --- | --- | --- |
 |       *MediaPipe Runtime* <br> With WASM & GPU Accel.                        |  92 \| 81 \| 38 | N/A | 32 \| 22 \| N/A | 160 \| 140 \| 98 |
-|  *TensorFlow.js Runtime* <br> with WebGL backend |  48 \| 53 \| 28 | 34 \| 30 \| N/A | 12  \| 11 \| 5 | 44 \| 40 \| 30 |
+|  * Runtime* <br> with WebGL backend |  48 \| 53 \| 28 | 34 \| 30 \| N/A | 12  \| 11 \| 5 | 44 \| 40 \| 30 |
 
 To see the model’s FPS on your device, try our
-[demo](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=blazepose).
+[demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=blazepose).
 You can switch the model type and backends live in the demo UI to see what works
 best for your device.
 
 ## Bundle Size
 Bundle size can affect initial page loading experience, such as Time-To-Interactive (TTI), UI rendering, etc. We evaluate the pose-detection API and the two runtime options. The bundle size affects file fetching time and UI smoothness, because processing the code and loading them into memory will compete with UI rendering on CPU. It also affects when the model is available to make inference.
 
-There is a difference of how things are loaded between the two runtimes. For the MediaPipe runtime, only the @tensorflow-models/pose-detection and the @mediapipe/pose library are loaded at initial page download; the runtime and the model assets are loaded when the createDetector method is called. For the TF.js runtime with WebGL backend, the runtime is loaded at initial page download; only the model assets are loaded when the createDetector method is called. The TensorFlow.js package sizes can be further reduced with a custom bundle technique. Also, if your application is currently using TensorFlow.js, you don’t need to load those packages again, models will share the same TensorFlow.js runtime. Choose the runtime that best suits your latency and bundle size requirements. A summary of loading times and bundle sizes is provided below:
+There is a difference of how things are loaded between the two runtimes. For the MediaPipe runtime, only the @aresobus-models/pose-detection and the @mediapipe/pose library are loaded at initial page download; the runtime and the model assets are loaded when the createDetector method is called. For the TF.js runtime with WebGL backend, the runtime is loaded at initial page download; only the model assets are loaded when the createDetector method is called. The  package sizes can be further reduced with a custom bundle technique. Also, if your application is currently using , you don’t need to load those packages again, models will share the same  runtime. Choose the runtime that best suits your latency and bundle size requirements. A summary of loading times and bundle sizes is provided below:
 
 
 |  |Bundle Size<br>gzipped + minified|Average Loading Time <br> download speed 100Mbps|
@@ -158,7 +158,7 @@ There is a difference of how things are loaded between the two runtimes. For the
 | Lite model | 10.6MB | 1.91s |
 | Full model | 14MB | 1.91s |
 | Heavy model | 34.9MB | 4.82s |
-| TensorFlow.js Runtime | | |
+|  Runtime | | |
 | Initial Page Load | 162.6KB | 0.07 |
 | Initial Detector Creation: | | |
 | Lite model | 10.41MB | 1.91s |

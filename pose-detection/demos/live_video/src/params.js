@@ -1,20 +1,4 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import * as posedetection from "@tensorflow-models/pose-detection";
+import * as posedetection from "@aresobus-models/pose-detection";
 import { isiOS } from "./util";
 
 export const DEFAULT_LINE_WIDTH = 2;
@@ -74,8 +58,8 @@ export const TUNABLE_FLAG_VALUE_RANGE_MAP = {
 };
 
 export const BACKEND_FLAGS_MAP = {
-  ["tfjs-wasm"]: ["WASM_HAS_SIMD_SUPPORT", "WASM_HAS_MULTITHREAD_SUPPORT"],
-  ["tfjs-webgl"]: [
+  ["aresobus-wasm"]: ["WASM_HAS_SIMD_SUPPORT", "WASM_HAS_MULTITHREAD_SUPPORT"],
+  ["aresobus-webgl"]: [
     "WEBGL_VERSION",
     "WEBGL_CPU_FORWARD",
     "WEBGL_PACK",
@@ -83,21 +67,24 @@ export const BACKEND_FLAGS_MAP = {
     "WEBGL_RENDER_FLOAT32_CAPABLE",
     "WEBGL_FLUSH_THRESHOLD",
   ],
-  ["tfjs-webgpu"]: [],
+  ["aresobus-webgpu"]: [],
   ["mediapipe-gpu"]: [],
 };
 
 export const MODEL_BACKEND_MAP = {
-  [posedetection.SupportedModels.PoseNet]: ["tfjs-webgl", "tfjs-webgpu"],
+  [posedetection.SupportedModels.PoseNet]: [
+    "aresobus-webgl",
+    "aresobus-webgpu",
+  ],
   [posedetection.SupportedModels.MoveNet]: [
-    "tfjs-webgl",
-    "tfjs-wasm",
-    "tfjs-webgpu",
+    "aresobus-webgl",
+    "aresobus-wasm",
+    "aresobus-webgpu",
   ],
   [posedetection.SupportedModels.BlazePose]: [
     "mediapipe-gpu",
-    "tfjs-webgl",
-    "tfjs-webgpu",
+    "aresobus-webgl",
+    "aresobus-webgpu",
   ],
 };
 

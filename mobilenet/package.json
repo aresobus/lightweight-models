@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/tensorflow-models-mobilenet",
+  "name": "@aresobus/-models-mobilenet",
   "version": "2.1.0",
-  "description": "Pretrained MobileNet in TensorFlow.js maintained by Oleksandr Lebedyev",
+  "description": "Pretrained MobileNet in  maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/mobilenet.min.js",
   "jsdelivr": "dist/mobilenet.min.js",
@@ -13,15 +13,15 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0"
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0"
   },
   "devDependencies": {
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
-    "@tensorflow/tfjs-converter": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
     "@types/jasmine": "~2.5.53",
     "@rollup/plugin-typescript": "^3.0.0",
     "babel-core": "^6.26.0",

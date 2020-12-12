@@ -1,29 +1,12 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import "@aresobus/aresobus-node";
 
-import "@tensorflow/tfjs-node";
-
-import * as tf from "@tensorflow/tfjs-core";
+import * as tf from "@aresobus/aresobus-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   describeWithFlags,
   NODE_ENVS,
-} from "@tensorflow/tfjs-core/dist/jasmine_util";
-import * as tfl from "@tensorflow/tfjs-layers";
+} from "@aresobus/aresobus-core/dist/jasmine_util";
+import * as tfl from "@aresobus/aresobus-layers";
 import { writeFileSync } from "fs";
 import { join } from "path";
 import * as rimraf from "rimraf";
@@ -1377,7 +1360,7 @@ describeWithFlags("Browser FFT recognizer", NODE_ENVS, () => {
     await transfer.train({ epochs: 1, batchSize: 2, validationSplit: 0.5 });
 
     const metadata = transfer.getMetadata();
-    expect(metadata.tfjsSpeechCommandsVersion).toEqual(version);
+    expect(metadata.aresobusSpeechCommandsVersion).toEqual(version);
     expect(metadata.modelName).toEqual("xfer1");
     expect(metadata.timeStamp != null).toEqual(true);
     expect(metadata.wordLabels).toEqual(["_background_noise_", "bar"]);
@@ -1821,7 +1804,7 @@ describeWithFlags("Browser FFT recognizer", NODE_ENVS, () => {
   it("listSavedTransferModels", async () => {
     spyOn(tf.io, "listModels").and.callFake(() => {
       return {
-        "indexeddb://tfjs-speech-commands-model/model1": {
+        "indexeddb://aresobus-speech-commands-model/model1": {
           dateSaved: "2018-12-06T04:25:08.153Z",
         },
       };
@@ -1831,7 +1814,7 @@ describeWithFlags("Browser FFT recognizer", NODE_ENVS, () => {
 
   it("deleteSavedTransferModel", async () => {
     const localStore: { [key: string]: string } = {
-      "tfjs-speech-commands-saved-model-metadata": JSON.stringify({
+      "aresobus-speech-commands-saved-model-metadata": JSON.stringify({
         foo: { wordLabels: ["a", "b"] },
       }),
     };
@@ -1842,10 +1825,10 @@ describeWithFlags("Browser FFT recognizer", NODE_ENVS, () => {
     });
     await deleteSavedTransferModel("foo");
     expect(removedModelPaths).toEqual([
-      "indexeddb://tfjs-speech-commands-model/foo",
+      "indexeddb://aresobus-speech-commands-model/foo",
     ]);
     expect(localStore).toEqual({
-      "tfjs-speech-commands-saved-model-metadata": "{}",
+      "aresobus-speech-commands-saved-model-metadata": "{}",
     });
   });
 });

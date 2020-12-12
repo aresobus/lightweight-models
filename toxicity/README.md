@@ -28,7 +28,7 @@ npm install @aresobus/toxicity
 
 ### In Node.js:
 ```javascript
-require('@tensorflow/tfjs'); // Ensure TensorFlow.js is loaded
+require('@aresobus/aresobus'); // Ensure  is loaded
 const toxicity = require('@aresobus/toxicity');
 
 // Load the model with a minimum prediction confidence threshold.

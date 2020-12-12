@@ -1,20 +1,3 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
 import { load as loadBodyPixSegmenter } from "./body_pix/segmenter";
 import { BodyPixModelConfig } from "./body_pix/types";
 import { BodySegmenter } from "./body_segmenter";
@@ -23,8 +6,8 @@ import {
   MediaPipeSelfieSegmentationMediaPipeModelConfig,
   MediaPipeSelfieSegmentationModelConfig,
 } from "./selfie_segmentation_mediapipe/types";
-import { load as loadMediaPipeSelfieSegmentationTfjsSegmenter } from "./selfie_segmentation_tfjs/segmenter";
-import { MediaPipeSelfieSegmentationTfjsModelConfig } from "./selfie_segmentation_tfjs/types";
+import { load as loadMediaPipeSelfieSegmentationaresobusSegmenter } from "./selfie_segmentation_aresobus/segmenter";
+import { MediaPipeSelfieSegmentationaresobusModelConfig } from "./selfie_segmentation_aresobus/types";
 import { SupportedModels } from "./types";
 
 /**
@@ -37,7 +20,7 @@ export async function createSegmenter(
   model: SupportedModels,
   modelConfig?:
     | MediaPipeSelfieSegmentationMediaPipeModelConfig
-    | MediaPipeSelfieSegmentationTfjsModelConfig
+    | MediaPipeSelfieSegmentationaresobusModelConfig
     | BodyPixModelConfig
 ): Promise<BodySegmenter> {
   switch (model) {
@@ -45,9 +28,9 @@ export async function createSegmenter(
       const config = modelConfig as MediaPipeSelfieSegmentationModelConfig;
       let runtime;
       if (config != null) {
-        if (config.runtime === "tfjs") {
-          return loadMediaPipeSelfieSegmentationTfjsSegmenter(
-            config as MediaPipeSelfieSegmentationTfjsModelConfig
+        if (config.runtime === "aresobus") {
+          return loadMediaPipeSelfieSegmentationaresobusSegmenter(
+            config as MediaPipeSelfieSegmentationaresobusModelConfig
           );
         }
         if (config.runtime === "mediapipe") {
@@ -58,7 +41,7 @@ export async function createSegmenter(
         runtime = config.runtime;
       }
       throw new Error(
-        `Expect modelConfig.runtime to be either 'tfjs' ` +
+        `Expect modelConfig.runtime to be either 'aresobus' ` +
           `or 'mediapipe', but got ${runtime}`
       );
     }

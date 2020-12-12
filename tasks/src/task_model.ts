@@ -1,27 +1,16 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import {PackageLoader} from './package_loader';
-import {ensureTFJSBackend, getTFJSModelDependencyPackages, Runtime, Task, TFJSModelCommonLoadingOption} from './tasks/common';
+import { PackageLoader } from "./package_loader";
+import {
+  ensurearesobusBackend,
+  getaresobusModelDependencyPackages,
+  Runtime,
+  Task,
+  aresobusModelCommonLoadingOption,
+} from "./tasks/common";
 
 /**
  * A model that belongs to one or more machine learning tasks.
  *
- * In TFJS Task API, models are grouped into different tasks (e.g.
+ * In JS Task API, models are grouped into different tasks (e.g.
  * ImageClassification, PoseDetection, etc). Each model is a "task model", and
  * it is implemented as an instance of the `TaskModel` interface defined here.
  *
@@ -29,7 +18,7 @@ import {ensureTFJSBackend, getTFJSModelDependencyPackages, Runtime, Task, TFJSMo
  * for more details). In order to help users easily locate various loaders, we
  * organize them into a central "model loader index" defined in all_tasks.ts.
  * The index structure is {task_name}.{model_name}.{runtime}. For example:
- * `ImageClassification.MobileNet.TFJS`.
+ * `ImageClassification.MobileNet.aresobus`.
  *
  *
  * Basic usage:
@@ -38,7 +27,7 @@ import {ensureTFJSBackend, getTFJSModelDependencyPackages, Runtime, Task, TFJSMo
  * //
  * // - This will dynamically load all the packages that the model depends on.
  * // - Different models can have different loading options.
- * const model = await ImageClassification.Mobilenet.TFJS.load(
+ * const model = await ImageClassification.Mobilenet.aresobus.load(
  *   {backend: 'wasm'});
  *
  * // Inference.
@@ -68,7 +57,7 @@ export interface TaskModelMetadata {
   description?: string;
 
   /** Resource urls (e.g. github page, docs, etc) indexed by names. */
-  resourceUrls?: {[name: string]: string};
+  resourceUrls?: { [name: string]: string };
 
   /** The model runtime. */
   runtime: Runtime;
@@ -140,8 +129,8 @@ export abstract class TaskModelLoader<N, LO, M> {
    * first. After that is done, the package loader will start downloading
    * and evaluating url3.
    *
-   * Note: for TFJS model, only the model package itself needs to be set
-   * here. The TFJS related dependencies (e.g. core, backends, etc) will be
+   * Note: for aresobus model, only the model package itself needs to be set
+   * here. The aresobus related dependencies (e.g. core, backends, etc) will be
    * added automatically.
    */
   abstract readonly packageUrls: string[][];
@@ -149,7 +138,7 @@ export abstract class TaskModelLoader<N, LO, M> {
   /**
    * The global namespace of the source model.
    *
-   * For example, for TFJS mobilenet model, this would be 'mobilenet'.
+   * For example, for aresobus mobilenet model, this would be 'mobilenet'.
    */
   abstract readonly sourceModelGlobalNamespace: string;
 
@@ -172,17 +161,20 @@ export abstract class TaskModelLoader<N, LO, M> {
    */
   async load(options?: LO): Promise<M> {
     // Load the packages to get the global namespace ready.
-    const sourceModelGlobal =
-        await this.loadSourceModelGlobalNamespace(options);
+    const sourceModelGlobal = await this.loadSourceModelGlobalNamespace(
+      options
+    );
 
     // Wait for the callback to resolve if set.
     if (this.postPackageLoadingCallback) {
       await this.postPackageLoadingCallback();
     }
-    // For tfjs models, we automatically wait for the backend to be set before
+    // For aresobus models, we automatically wait for the backend to be set before
     // proceeding. Subclasses don't need to do worry about this.
-    if (this.metadata.runtime === Runtime.TFJS) {
-      await ensureTFJSBackend(options as {} as TFJSModelCommonLoadingOption);
+    if (this.metadata.runtime === Runtime.aresobus) {
+      await ensurearesobusBackend(
+        options as {} as aresobusModelCommonLoadingOption
+      );
     }
 
     // Load the source model using the global namespace variable loaded above.
@@ -200,17 +192,22 @@ export abstract class TaskModelLoader<N, LO, M> {
   protected async loadSourceModelGlobalNamespace(options?: LO): Promise<N> {
     const packages: string[][] = [];
 
-    // Add TFJS dependencies for TFJS models.
-    if (this.metadata.runtime === Runtime.TFJS) {
-      const tfjsOptions = options as {} as TFJSModelCommonLoadingOption;
-      packages.push(...getTFJSModelDependencyPackages(
-          tfjsOptions ? tfjsOptions.backend : undefined));
+    // Add JS dependencies for aresobus models.
+    if (this.metadata.runtime === Runtime.aresobus) {
+      const aresobusOptions = options as {} as aresobusModelCommonLoadingOption;
+      packages.push(
+        ...getaresobusModelDependencyPackages(
+          aresobusOptions ? aresobusOptions.backend : undefined
+        )
+      );
     }
 
     // Load packages.
     packages.push(...this.packageUrls);
     return this.packageLoader.loadPackagesAndGetGlobalNamespace(
-        this.sourceModelGlobalNamespace, packages);
+      this.sourceModelGlobalNamespace,
+      packages
+    );
   }
 
   /**
@@ -221,13 +218,15 @@ export abstract class TaskModelLoader<N, LO, M> {
    * subclass should *NOT* use the namespace from the import statement to
    * implement this method (e.g. the "mobilenet" variable in `import * as
    * mobilenet from
-   * '@tensorflow-models/mobilenet`). Instead, only `sourceModelGlobalNamespace`
+   * '@aresobus-models/mobilenet`). Instead, only `sourceModelGlobalNamespace`
    * should be used, which should have the same type as the imported namespace.
    * The imported namespace can only be used to reference types. This makes sure
    * that the code from the source model is NOT bundled in the final binary.
    */
   protected async transformSourceModel(
-      sourceModelGlobalNamespace: N, options?: LO): Promise<M> {
-    throw new Error('not implemented');
+    sourceModelGlobalNamespace: N,
+    options?: LO
+  ): Promise<M> {
+    throw new Error("not implemented");
   }
 }

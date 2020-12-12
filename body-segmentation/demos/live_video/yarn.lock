@@ -990,42 +990,42 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@tensorflow-models/body-segmentation@file:../../dist":
+"@aresobus-models/body-segmentation@file:../../dist":
   version "0.0.0"
 
-"@tensorflow-models/pose-detection@file:../../../pose-detection/dist":
+"@aresobus-models/pose-detection@file:../../../pose-detection/dist":
   version "0.0.0"
 
-"@tensorflow/tfjs-backend-cpu@4.9.0":
+"@aresobus/aresobus-backend-cpu@4.9.0":
   version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-4.9.0.tgz#76ce8f4e83814293b662404f16d70f65926195a2"
+  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-backend-cpu/-/aresobus-backend-cpu-4.9.0.tgz#76ce8f4e83814293b662404f16d70f65926195a2"
   integrity sha512-AHIfI3iD1fyQgQKeoQmtkI3exPWRfOo+W0Ws/bxOdapTXcAYWGg0179t52j8XPDwsl8WopfaTINNgYNG6FnP3Q==
   dependencies:
     "@types/seedrandom" "^2.4.28"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-backend-wasm@^4.9.0":
+"@aresobus/aresobus-backend-wasm@^4.9.0":
   version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-wasm/-/tfjs-backend-wasm-4.9.0.tgz#1e1fec3406b312efc814f8238c5c25052e01650e"
+  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-backend-wasm/-/aresobus-backend-wasm-4.9.0.tgz#1e1fec3406b312efc814f8238c5c25052e01650e"
   integrity sha512-HsRr9qyu/1pdpkmSoF+1QMtpuE61QOVpH55j6HGNcN+DGuF8TSh80imzZa9JC+A7DXyQdHBKCbUqytuisBQDaA==
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "4.9.0"
+    "@aresobus/aresobus-backend-cpu" "4.9.0"
     "@types/emscripten" "~0.0.34"
 
-"@tensorflow/tfjs-backend-webgl@^4.9.0":
+"@aresobus/aresobus-backend-webgl@^4.9.0":
   version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-backend-webgl/-/tfjs-backend-webgl-4.9.0.tgz#272812af5c61d02af3b541ed543c3484f5eb8618"
+  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-backend-webgl/-/aresobus-backend-webgl-4.9.0.tgz#272812af5c61d02af3b541ed543c3484f5eb8618"
   integrity sha512-lSEOjR9zi6vb1V9yhrby8jWt6SS+wWBXRa3sDE5GCbpcHMWHv41wZktB2WQyIXDqJQcw1lRZBDoYneibMqr2uQ==
   dependencies:
-    "@tensorflow/tfjs-backend-cpu" "4.9.0"
+    "@aresobus/aresobus-backend-cpu" "4.9.0"
     "@types/offscreencanvas" "~2019.3.0"
     "@types/seedrandom" "^2.4.28"
     "@types/webgl-ext" "0.0.30"
     seedrandom "^3.0.5"
 
-"@tensorflow/tfjs-converter@^4.9.0":
+"@aresobus/aresobus-converter@^4.9.0":
   version "4.9.0"
-  resolved "https://registry.yarnpkg.com/@tensorflow/tfjs-converter/-/tfjs-converter-4.9.0.tgz#7958f563043b3c54f757f47d2b5b08e963f466ad"
+  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-converter/-/aresobus-converter-4.9.0.tgz#7958f563043b3c54f757f47d2b5b08e963f466ad"
   integrity sha512-mRlzdG3jVsxMkFfHFgDNY10HMoh+vtfPPIghtY+Fc4U/ZnBUFvSfZqwEFyXfOJAewn4fY4BX8+6RE4a0kRXqGA==
 
 "@types/emscripten@~0.0.34":

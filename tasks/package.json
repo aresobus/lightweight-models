@@ -1,18 +1,18 @@
 {
-  "name": "@aresobus/tensorflow-models-tasks",
-  "version": "0.0.1-alpha.8",
-  "description": "Tensorflow.js tasks API",
-  "main": "dist/tfjs-tasks.min.js",
-  "jsnext:main": "dist/tfjs-tasks.esm.js",
-  "jsdelivr": "dist/tfjs-tasks.min.js",
-  "unpkg": "dist/tfjs-tasks.min.js",
+  "name": "@aresobus/-models-tasks",
+  "version": "1.0.1",
+  "description": " tasks API",
+  "main": "dist/aresobus-tasks.min.js",
+  "jsnext:main": "dist/aresobus-tasks.esm.js",
+  "jsdelivr": "dist/aresobus-tasks.min.js",
+  "unpkg": "dist/aresobus-tasks.min.js",
   "types": "dist/index.d.ts",
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aresobus/tensorflow-models"
+    "url": "https://github.com/aresobus/-models"
   },
-  "license": "Apache-2.0",
+
   "engines": {
     "yarn": ">= 1.3.2"
   },
@@ -25,9 +25,9 @@
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@rollup/plugin-typescript": "^3.0.0",
-    "@tensorflow/tfjs-converter": "^4.13.0",
-    "@tensorflow/tfjs-core": "^4.13.0",
-    "@tensorflow/tfjs-tflite": "0.0.1-alpha.3",
+    "@aresobus/aresobus-converter": "^4.13.0",
+    "@aresobus/aresobus-core": "^4.13.0",
+    "@aresobus/aresobus-tflite": "0.0.1-alpha.3",
     "@aresobus/mobilenet": "link:../mobilenet",
     "@aresobus/coco-ssd": "link:../coco-ssd",
     "@aresobus/deeplab": "link:../deeplab",

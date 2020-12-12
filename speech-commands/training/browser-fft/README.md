@@ -1,7 +1,7 @@
-# Training a TensorFlow.js model for Speech Commands Using Browser FFT
+# Training a  model for Speech Commands Using Browser FFT
 
 This directory contains two example notebooks. They demonstrate how to train
-custom TensorFlow.js audio models and deploy them for inference. The models
+custom  audio models and deploy them for inference. The models
 trained this way expect inputs to be spectrograms in a format consistent with
 [WebAudio's `getFloatFrequencyData`](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/getFloatFrequencyData).
 Therefore they can be deployed to the browser using the speech-commands library
@@ -13,7 +13,7 @@ Specifically,
   contains steps to preprocess a directory with audio examples stored as .wav
   files and the steps in which a tf.keras model can be trained on the
   preprocessed data. It then demonstrates how the trained tf.keras model can be
-  converted to a TensorFlow.js `LayersModel` that can be loaded with the
+  converted to a  `LayersModel` that can be loaded with the
   speech-command library's `create()` API. In addition, the notebook also shows
   the steps to convert the trained tf.keras model to a TFLite model for
   inference on mobile devices.

@@ -1,33 +1,16 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import "@tensorflow/tfjs-backend-webgl";
+import "@aresobus/aresobus-backend-webgl";
 
 import * as mpPose from "@mediapipe/pose";
 import * as mpSelfieSegmentation from "@mediapipe/selfie_segmentation";
-import * as tfjsWasm from "@tensorflow/tfjs-backend-wasm";
-import * as tf from "@tensorflow/tfjs-core";
+import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
+import * as tf from "@aresobus/aresobus-core";
 
-tfjsWasm.setWasmPaths(
-  `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`
+aresobusWasm.setWasmPaths(
+  `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
-import * as bodySegmentation from "@tensorflow-models/body-segmentation";
-import * as poseDetection from "@tensorflow-models/pose-detection";
+import * as bodySegmentation from "@aresobus-models/body-segmentation";
+import * as poseDetection from "@aresobus-models/pose-detection";
 
 import { Camera } from "./camera";
 import { setupDatGui } from "./option_panel";
@@ -64,7 +47,7 @@ async function createSegmenter() {
           enableSegmentation: true,
           smoothSegmentation: true,
         });
-      } else if (runtime === "tfjs") {
+      } else if (runtime === "aresobus") {
         return poseDetection.createDetector(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
@@ -89,7 +72,7 @@ async function createSegmenter() {
           modelType: STATE.modelConfig.type,
           solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@${mpSelfieSegmentation.VERSION}`,
         });
-      } else if (runtime === "tfjs") {
+      } else if (runtime === "aresobus") {
         return bodySegmentation.createSegmenter(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
@@ -222,7 +205,7 @@ async function renderResult() {
     if (fpsDisplayMode === "model") {
       // Ensure GPU is done for timing purposes.
       const [backend] = STATE.backend.split("-");
-      if (backend === "tfjs") {
+      if (backend === "aresobus") {
         for (const value of segmentation) {
           const mask = value.mask;
           const tensor = await mask.toTensor();

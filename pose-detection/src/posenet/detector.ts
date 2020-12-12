@@ -1,38 +1,45 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as tfconv from "@aresobus/aresobus-converter";
+import * as tf from "@aresobus/aresobus-core";
 
-import * as tfconv from '@tensorflow/tfjs-converter';
-import * as tf from '@tensorflow/tfjs-core';
+import { PoseDetector } from "../pose_detector";
+import { convertImageToTensor } from "../shared/calculators/convert_image_to_tensor";
+import { getImageSize } from "../shared/calculators/image_utils";
+import {
+  ImageSize,
+  Padding,
+} from "../shared/calculators/interfaces/common_interfaces";
+import { shiftImageValue } from "../shared/calculators/shift_image_value";
+import { InputResolution, Pose, PoseDetectorInput } from "../types";
 
-import {PoseDetector} from '../pose_detector';
-import {convertImageToTensor} from '../shared/calculators/convert_image_to_tensor';
-import {getImageSize} from '../shared/calculators/image_utils';
-import {ImageSize, Padding} from '../shared/calculators/interfaces/common_interfaces';
-import {shiftImageValue} from '../shared/calculators/shift_image_value';
-import {InputResolution, Pose, PoseDetectorInput} from '../types';
-
-import {decodeMultiplePoses} from './calculators/decode_multiple_poses';
-import {decodeSinglePose, decodeSinglePoseGPU} from './calculators/decode_single_pose';
-import {flipPosesHorizontal} from './calculators/flip_poses';
-import {scalePoses} from './calculators/scale_poses';
-import {MOBILENET_V1_CONFIG, RESNET_MEAN, SINGLE_PERSON_ESTIMATION_CONFIG} from './constants';
-import {assertValidOutputStride, assertValidResolution, validateEstimationConfig, validateModelConfig} from './detector_utils';
-import {getValidInputResolutionDimensions, mobileNetCheckpoint, resNet50Checkpoint} from './load_utils';
-import {PoseNetArchitecture, PoseNetEstimationConfig, PosenetModelConfig, PoseNetOutputStride} from './types';
+import { decodeMultiplePoses } from "./calculators/decode_multiple_poses";
+import {
+  decodeSinglePose,
+  decodeSinglePoseGPU,
+} from "./calculators/decode_single_pose";
+import { flipPosesHorizontal } from "./calculators/flip_poses";
+import { scalePoses } from "./calculators/scale_poses";
+import {
+  MOBILENET_V1_CONFIG,
+  RESNET_MEAN,
+  SINGLE_PERSON_ESTIMATION_CONFIG,
+} from "./constants";
+import {
+  assertValidOutputStride,
+  assertValidResolution,
+  validateEstimationConfig,
+  validateModelConfig,
+} from "./detector_utils";
+import {
+  getValidInputResolutionDimensions,
+  mobileNetCheckpoint,
+  resNet50Checkpoint,
+} from "./load_utils";
+import {
+  PoseNetArchitecture,
+  PoseNetEstimationConfig,
+  PosenetModelConfig,
+  PoseNetOutputStride,
+} from "./types";
 
 /**
  * PoseNet detector class.
@@ -45,18 +52,27 @@ class PosenetDetector implements PoseDetector {
   private maxPoses: number;
 
   constructor(
-      private readonly posenetModel: tfconv.GraphModel,
-      config: PosenetModelConfig) {
+    private readonly posenetModel: tfconv.GraphModel,
+    config: PosenetModelConfig
+  ) {
     // validate params.
-    const inputShape =
-        this.posenetModel.inputs[0].shape as [number, number, number, number];
+    const inputShape = this.posenetModel.inputs[0].shape as [
+      number,
+      number,
+      number,
+      number
+    ];
     tf.util.assert(
-        (inputShape[1] === -1) && (inputShape[2] === -1),
-        () => `Input shape [${inputShape[1]}, ${inputShape[2]}] ` +
-            `must both be equal to or -1`);
+      inputShape[1] === -1 && inputShape[2] === -1,
+      () =>
+        `Input shape [${inputShape[1]}, ${inputShape[2]}] ` +
+        `must both be equal to or -1`
+    );
 
     const validInputResolution = getValidInputResolutionDimensions(
-        config.inputResolution, config.outputStride);
+      config.inputResolution,
+      config.outputStride
+    );
 
     assertValidOutputStride(config.outputStride);
     assertValidResolution(validInputResolution, config.outputStride);
@@ -90,12 +106,12 @@ class PosenetDetector implements PoseDetector {
    * @return An array of `Pose`s.
    */
   async estimatePoses(
-      image: PoseDetectorInput,
-      estimationConfig:
-          PoseNetEstimationConfig = SINGLE_PERSON_ESTIMATION_CONFIG):
-      Promise<Pose[]> {
-    return this.estimatePosesGPU(image, estimationConfig, false) as
-        Promise<Pose[]>;
+    image: PoseDetectorInput,
+    estimationConfig: PoseNetEstimationConfig = SINGLE_PERSON_ESTIMATION_CONFIG
+  ): Promise<Pose[]> {
+    return this.estimatePosesGPU(image, estimationConfig, false) as Promise<
+      Pose[]
+    >;
   }
 
   /**
@@ -127,10 +143,10 @@ class PosenetDetector implements PoseDetector {
    *     array of `Keypoint`s. Otherwise an array of tensor, and canvas info.
    */
   async estimatePosesGPU(
-      image: PoseDetectorInput,
-      estimationConfig:
-          PoseNetEstimationConfig = SINGLE_PERSON_ESTIMATION_CONFIG,
-      useGpuRenderer = false): Promise<Pose[]|[tf.Tensor[], number[]]> {
+    image: PoseDetectorInput,
+    estimationConfig: PoseNetEstimationConfig = SINGLE_PERSON_ESTIMATION_CONFIG,
+    useGpuRenderer = false
+  ): Promise<Pose[] | [tf.Tensor[], number[]]> {
     const config = validateEstimationConfig(estimationConfig);
 
     if (image == null) {
@@ -139,21 +155,23 @@ class PosenetDetector implements PoseDetector {
 
     this.maxPoses = config.maxPoses;
 
-    const {imageTensor, padding} = convertImageToTensor(image, {
+    const { imageTensor, padding } = convertImageToTensor(image, {
       outputTensorSize: this.inputResolution,
       keepAspectRatio: true,
-      borderMode: 'replicate'
+      borderMode: "replicate",
     });
 
-    const imageValueShifted = this.architecture === 'ResNet50' ?
-        tf.add(imageTensor, RESNET_MEAN) :
-        shiftImageValue(imageTensor, [-1, 1]);
+    const imageValueShifted =
+      this.architecture === "ResNet50"
+        ? tf.add(imageTensor, RESNET_MEAN)
+        : shiftImageValue(imageTensor, [-1, 1]);
 
-    const results =
-        this.posenetModel.predict(imageValueShifted) as tf.Tensor4D[];
+    const results = this.posenetModel.predict(
+      imageValueShifted
+    ) as tf.Tensor4D[];
 
     let offsets, heatmap, displacementFwd, displacementBwd;
-    if (this.architecture === 'ResNet50') {
+    if (this.architecture === "ResNet50") {
       offsets = tf.squeeze(results[2], [0]);
       heatmap = tf.squeeze(results[3], [0]);
       displacementFwd = tf.squeeze(results[0], [0]);
@@ -171,22 +189,33 @@ class PosenetDetector implements PoseDetector {
     if (this.maxPoses === 1) {
       if (useGpuRenderer) {
         const [pose, score] = await decodeSinglePoseGPU(
-            heatmapScores, offsets as tf.Tensor3D, this.outputStride);
+          heatmapScores,
+          offsets as tf.Tensor3D,
+          this.outputStride
+        );
         poses = [pose, score];
-
       } else {
         const pose = await decodeSinglePose(
-            heatmapScores, offsets as tf.Tensor3D, this.outputStride);
+          heatmapScores,
+          offsets as tf.Tensor3D,
+          this.outputStride
+        );
         poses = [pose];
       }
     } else {
       if (useGpuRenderer) {
-        throw new Error('GPU renderer only supports single pose!');
+        throw new Error("GPU renderer only supports single pose!");
       }
       poses = await decodeMultiplePoses(
-          heatmapScores, offsets as tf.Tensor3D, displacementFwd as tf.Tensor3D,
-          displacementBwd as tf.Tensor3D, this.outputStride, this.maxPoses,
-          config.scoreThreshold, config.nmsRadius);
+        heatmapScores,
+        offsets as tf.Tensor3D,
+        displacementFwd as tf.Tensor3D,
+        displacementBwd as tf.Tensor3D,
+        this.outputStride,
+        this.maxPoses,
+        config.scoreThreshold,
+        config.nmsRadius
+      );
     }
 
     let canvasInfo;
@@ -194,16 +223,22 @@ class PosenetDetector implements PoseDetector {
     if (useGpuRenderer) {
       // TODO: handle flipPosesHorizontal in GPU.
       if (config.flipHorizontal === true) {
-        throw new Error('flipHorizontal is not supported!');
+        throw new Error("flipHorizontal is not supported!");
       }
 
       canvasInfo = this.getCanvasInfo(
-          getImageSize(image), this.inputResolution, padding);
-
+        getImageSize(image),
+        this.inputResolution,
+        padding
+      );
     } else {
       const imageSize = getImageSize(image);
-      scaledPoses =
-          scalePoses(poses as Pose[], imageSize, this.inputResolution, padding);
+      scaledPoses = scalePoses(
+        poses as Pose[],
+        imageSize,
+        this.inputResolution,
+        padding
+      );
 
       if (config.flipHorizontal) {
         scaledPoses = flipPosesHorizontal(scaledPoses, imageSize);
@@ -223,19 +258,26 @@ class PosenetDetector implements PoseDetector {
   }
 
   getCanvasInfo(
-      imageSize: ImageSize, inputResolution: InputResolution,
-      padding: Padding): number[] {
-    const {height, width} = imageSize;
+    imageSize: ImageSize,
+    inputResolution: InputResolution,
+    padding: Padding
+  ): number[] {
+    const { height, width } = imageSize;
     const scaleY =
-        height / (inputResolution.height * (1 - padding.top - padding.bottom));
+      height / (inputResolution.height * (1 - padding.top - padding.bottom));
     const scaleX =
-        width / (inputResolution.width * (1 - padding.left - padding.right));
+      width / (inputResolution.width * (1 - padding.left - padding.right));
 
     const offsetY = -padding.top * inputResolution.height;
     const offsetX = -padding.left * inputResolution.width;
 
     return [
-      offsetX, offsetY, scaleX, scaleY, imageSize.width, imageSize.height
+      offsetX,
+      offsetY,
+      scaleX,
+      scaleY,
+      imageSize.width,
+      imageSize.height,
     ];
   }
 
@@ -261,13 +303,15 @@ class PosenetDetector implements PoseDetector {
  * for defining your customized config.
  */
 export async function load(
-    modelConfig: PosenetModelConfig =
-        MOBILENET_V1_CONFIG): Promise<PoseDetector> {
+  modelConfig: PosenetModelConfig = MOBILENET_V1_CONFIG
+): Promise<PoseDetector> {
   const config = validateModelConfig(modelConfig);
-  if (config.architecture === 'ResNet50') {
+  if (config.architecture === "ResNet50") {
     // Load ResNet50 model.
-    const defaultUrl =
-        resNet50Checkpoint(config.outputStride, config.quantBytes);
+    const defaultUrl = resNet50Checkpoint(
+      config.outputStride,
+      config.quantBytes
+    );
     const model = await tfconv.loadGraphModel(config.modelUrl || defaultUrl);
 
     return new PosenetDetector(model, config);
@@ -275,7 +319,10 @@ export async function load(
 
   // Load MobileNetV1 model.
   const defaultUrl = mobileNetCheckpoint(
-      config.outputStride, config.multiplier, config.quantBytes);
+    config.outputStride,
+    config.multiplier,
+    config.quantBytes
+  );
   const model = await tfconv.loadGraphModel(config.modelUrl || defaultUrl);
 
   return new PosenetDetector(model, config);

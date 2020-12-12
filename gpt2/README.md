@@ -2,13 +2,13 @@
 
 ---
 
-# GPT-2 for TensorFlow.js
+# GPT-2 for
 
-Run OpenAI's GPT-2 text generation model directly in the browser with TensorFlow.js. This implementation leverages TensorFlow.js to bring the power of an advanced natural language processing model to the client-side, enabling real-time text generation and interaction.
+Run OpenAI's GPT-2 text generation model directly in the browser with . This implementation leverages  to bring the power of an advanced natural language processing model to the client-side, enabling real-time text generation and interaction.
 
 ## Overview
 
-GPT-2, developed by OpenAI, is a state-of-the-art language processing AI model known for its ability to generate coherent and contextually relevant text based on a given prompt. This version of GPT-2 is optimized for running in web browsers using TensorFlow.js, making it accessible without the need for server-side computation.
+GPT-2, developed by OpenAI, is a state-of-the-art language processing AI model known for its ability to generate coherent and contextually relevant text based on a given prompt. This version of GPT-2 is optimized for running in web browsers using , making it accessible without the need for server-side computation.
 
 ## Features
 
@@ -22,13 +22,13 @@ You can integrate GPT-2 into your web application either through direct script t
 
 ### Via Script Tags
 
-Include TensorFlow.js and the GPT-2 model in your HTML file:
+Include  and the GPT-2 model in your HTML file:
 
 ```html
-<!-- Load TensorFlow.js -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<!-- Load  -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
 <!-- Load the GPT-2 model -->
-<script src="https://cdn.jsdelivr.net/npm/@tfjs-models/gpt2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/gpt2"></script>
 ```
 
 ### Via NPM
@@ -36,13 +36,13 @@ Include TensorFlow.js and the GPT-2 model in your HTML file:
 Install the required packages using npm or yarn:
 
 ```bash
-npm install @tensorflow/tfjs @tfjs-models/gpt2
+npm install @aresobus/aresobus @aresobus-models/gpt2
 ```
 
 Or
 
 ```bash
-yarn add @tensorflow/tfjs @tfjs-models/gpt2
+yarn add @aresobus/aresobus @aresobus-models/gpt2
 ```
 
 ## Usage
@@ -50,8 +50,8 @@ yarn add @tensorflow/tfjs @tfjs-models/gpt2
 Here's how you can initialize and use GPT-2 in your project:
 
 ```javascript
-const tf = require('@tensorflow/tfjs');
-const gpt2 = require('@tfjs-models/gpt2');
+const tf = require('@aresobus/aresobus');
+const gpt2 = require('@aresobus-models/gpt2');
 
 async function generateText(prompt) {
   const model = await gpt2.load(); // Load the model
@@ -59,12 +59,12 @@ async function generateText(prompt) {
   console.log(generatedText);
 }
 
-generateText("Explore the benefits of using TensorFlow.js: ");
+generateText("Explore the benefits of using : ");
 ```
 
 ## Model Details
 
-GPT-2 for TensorFlow.js comes with multiple model sizes to balance between performance and resource usage:
+GPT-2 for  comes with multiple model sizes to balance between performance and resource usage:
 
 - **DistilGPT-2**: A smaller, faster version that retains most of the original model's capabilities.
 - **GPT-2 774M**: A larger model that provides more detailed and extensive text generation.
@@ -77,8 +77,8 @@ GPT-2 for TensorFlow.js comes with multiple model sizes to balance between perfo
 
 ## Contributions
 
-Contributions to this project are welcome! You can help improve the GPT-2 TensorFlow.js implementation by submitting pull requests or opening issues on our [GitHub repository](https://github.com/tensorflow/tfjs-models).
+Contributions to this project are welcome! You can help improve the GPT-2  implementation by submitting pull requests or opening issues on our [GitHub repository](https://github.com//aresobus-models).
 
-For detailed API documentation and more examples, please visit our [official documentation](https://github.com/tensorflow/tfjs-models/tree/master/gpt2).
+For detailed API documentation and more examples, please visit our [official documentation](https://github.com//aresobus-models/tree/master/gpt2).
 
 ---

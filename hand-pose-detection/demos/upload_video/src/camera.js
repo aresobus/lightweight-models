@@ -1,20 +1,4 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import * as params from './shared/params';
+import * as params from "./shared/params";
 
 const fingerLookupIndices = {
   thumb: [0, 1, 2, 3, 4],
@@ -26,19 +10,24 @@ const fingerLookupIndices = {
 
 export class Context {
   constructor() {
-    this.video = document.getElementById('video');
-    this.canvas = document.getElementById('output');
-    this.source = document.getElementById('currentVID');
-    this.ctx = this.canvas.getContext('2d');
+    this.video = document.getElementById("video");
+    this.canvas = document.getElementById("output");
+    this.source = document.getElementById("currentVID");
+    this.ctx = this.canvas.getContext("2d");
     const stream = this.canvas.captureStream();
-    const options = {mimeType: 'video/webm; codecs=vp9'};
+    const options = { mimeType: "video/webm; codecs=vp9" };
     this.mediaRecorder = new MediaRecorder(stream, options);
     this.mediaRecorder.ondataavailable = this.handleDataAvailable;
   }
 
   drawCtx() {
     this.ctx.drawImage(
-        this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
+      this.video,
+      0,
+      0,
+      this.video.videoWidth,
+      this.video.videoHeight
+    );
   }
 
   clearCtx() {
@@ -49,7 +38,7 @@ export class Context {
    * Draw the keypoints on the video.
    * @param hands A list of hands to render.
    */
-   drawResults(hands) {
+  drawResults(hands) {
     for (const hand of hands) {
       this.drawResult(hand);
     }
@@ -60,7 +49,7 @@ export class Context {
    * @param hand A hand with keypoints to render.
    * @param ctxt Scatter GL context to render 3D keypoints to.
    */
-   drawResult(hand) {
+  drawResult(hand) {
     if (hand.keypoints != null) {
       this.drawKeypoints(hand.keypoints, hand.handedness);
     }
@@ -71,10 +60,10 @@ export class Context {
    * @param keypoints A list of keypoints.
    * @param handedness Label of hand (either Left or Right).
    */
-    drawKeypoints(keypoints, handedness) {
+  drawKeypoints(keypoints, handedness) {
     const keypointsArray = keypoints;
-    this.ctx.fillStyle = handedness === 'Left' ? 'Red' : 'Blue';
-    this.ctx.strokeStyle = 'White';
+    this.ctx.fillStyle = handedness === "Left" ? "Red" : "Blue";
+    this.ctx.strokeStyle = "White";
     this.ctx.lineWidth = params.DEFAULT_LINE_WIDTH;
 
     for (let i = 0; i < keypointsArray.length; i++) {
@@ -86,7 +75,7 @@ export class Context {
     const fingers = Object.keys(fingerLookupIndices);
     for (let i = 0; i < fingers.length; i++) {
       const finger = fingers[i];
-      const points = fingerLookupIndices[finger].map(idx => keypoints[idx]);
+      const points = fingerLookupIndices[finger].map((idx) => keypoints[idx]);
       this.drawPath(points, false);
     }
   }
@@ -124,13 +113,13 @@ export class Context {
       const recordedChunks = [event.data];
 
       // Download.
-      const blob = new Blob(recordedChunks, {type: 'video/webm'});
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       document.body.appendChild(a);
-      a.style = 'display: none';
+      a.style = "display: none";
       a.href = url;
-      a.download = 'hands.webm';
+      a.download = "hands.webm";
       a.click();
       window.URL.revokeObjectURL(url);
     }

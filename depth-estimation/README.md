@@ -3,7 +3,7 @@
 ```markdown
 # Depth Estimation
 
-This package provides models for running depth estimation in TensorFlow.js.
+This package provides models for running depth estimation in .
 
 Currently, we provide 1 model option:
 
@@ -14,7 +14,7 @@ This AR portrait depth model estimates per-pixel depth (the distance to the came
 applications).
 
 For example, the following demo transforms a single 2D RGB image into a 3D Portrait:
-[3D Photo Demo](https://storage.googleapis.com/tfjs-models/demos/3dphoto/index.html)
+[3D Photo Demo](https://storage.googleapis.com/aresobus-models/demos/3dphoto/index.html)
 
 -------------------------------------------------------------------------------
 

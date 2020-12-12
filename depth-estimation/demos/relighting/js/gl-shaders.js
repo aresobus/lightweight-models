@@ -1,17 +1,5 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 
@@ -143,7 +131,7 @@ vec3 RenderMotionLights(in vec2 uv) {
     const float debug_depth = 0.5;
   vec3 center = vec3(normalized_touch, debug_depth);
   center.z = kLightDepth;//abs(cos(0.0005 * iTime));
-  
+
   vec2 normalized_uv = NormalizeCoord(uv, aspect_ratio);
   vec3 pos = vec3(normalized_uv, depth);
   float intensity = 0.0;
@@ -152,20 +140,20 @@ vec3 RenderMotionLights(in vec2 uv) {
   vec2 sample_st = normalized_uv;
   float dist = mix(distance(pos.xy, center.xy),
                    distance(pos.zz, center.zz), kDepthWeight);
-  
+
   for (float i = 0.0; i < kRayMarchingSteps; ++i) {
     vec2 sample_uv = ReverseNormalizeCoord(sample_st, aspect_ratio);
     float k = mix(-1.0, 1.0, center.z);
     float sample_depth = GetDepth(sample_uv);
     float deviation = sample_depth * 2.0 - 1.0;
     intensity += (k * deviation + 1.0 + center.z - sample_depth) * sample_energy * kMaxIntensity;
-    
+
     sample_energy *= kEnergyDecayFactor;
     vec2 sample_scatter = GetScatterFactorOverTime(sample_st);
     sample_st += light_direction * sample_scatter / float(kRayMarchingSteps);
   }
   intensity /= float(kRayMarchingSteps);
-    
+
   // Result from the first pass
   vec3 col = GetColor(uv);
 
@@ -173,10 +161,10 @@ vec3 RenderMotionLights(in vec2 uv) {
 
   col += kGlobalBrightness * abs(0.5 - intensity * kSunlightColor) * (pow(col, vec3(1.5 - intensity * kSunlightColor)) - col);
   col = clamp(col, 0.0, 1.0);
-  col *= GetFoveationFactor(uv);    
+  col *= GetFoveationFactor(uv);
   col = smoothstep(0.0, 0.7, col + 0.05);
   col = pow(col, vec3(1.0 / 1.8));
-  
+
   // Perceptual light radius propotional to percentage in the screen space.
   float light_radius = 2.0 * atan(kLightRadius, 2.0 * (1.0 - center.z));
 
@@ -241,11 +229,11 @@ vec3 RenderMotionLights(in vec2 uv) {
     const float debug_depth = 0.5;
   vec3 center = vec3(normalized_touch, debug_depth);
   center.z = -0.5;
-  
+
   vec2 normalizedUv = NormalizeCoord(uv, aspect_ratio);
   vec3 samplePos = vec3(normalizedUv, depth);
-  
-  vec2 sampleUv = normalizedUv;  
+
+  vec2 sampleUv = normalizedUv;
   float intensitySum = 0.0;
   vec3 relightsSum = vec3(0.0);
 
@@ -258,7 +246,7 @@ vec3 RenderMotionLights(in vec2 uv) {
 
    for (int i = 0; i < kMaxNumDirectionalLights; ++i) {
     _PointLightPositions[i] =  _PointLightPositions[i] * 0.3 + vec3(0.25, 0.25, 0.25);
-    
+
    }
 
   vec3[] _PointLightColors = vec3[] (
@@ -282,7 +270,7 @@ vec3 RenderMotionLights(in vec2 uv) {
 
     float uvDist = distance(sampleUv, lightUv);
     float depthDist = distance(samplePos.zz, lightPos.zz);
-  
+
     float dist = mix(uvDist, depthDist, kDepthWeight);
 
     vec2 sampleUv = normalizedUv;
@@ -321,7 +309,7 @@ vec3 RenderMotionLights(in vec2 uv) {
       relightsSum += intensity * lightColor;
 
   }
-    
+
   // Result from the first pass
   vec3 col = GetColor(uv);
   vec3 result = col;
@@ -329,7 +317,7 @@ vec3 RenderMotionLights(in vec2 uv) {
 
   result += 3.0 * abs(0.5 - relightsSum) *
           (pow(result, vec3(1.5 - relightsSum)) - result);
-  
+
    // Renders the light sources.
   vec3 outerColor = vec3(0.0);
   vec3 innerSingle = vec3(0.0);

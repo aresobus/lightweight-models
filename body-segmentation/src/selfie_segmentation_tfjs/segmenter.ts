@@ -1,23 +1,6 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import * as tfconv from "@tensorflow/tfjs-converter";
-import * as tf from "@tensorflow/tfjs-core";
-import { Tensor3D } from "@tensorflow/tfjs-core";
+import * as tfconv from "@aresobus/aresobus-converter";
+import * as tf from "@aresobus/aresobus-core";
+import { Tensor3D } from "@aresobus/aresobus-core";
 
 import { BodySegmenter } from "../body_segmenter";
 import { MediaPipeSelfieSegmentationModelType } from "../selfie_segmentation_mediapipe/types";
@@ -41,11 +24,11 @@ import {
   validateSegmentationConfig,
 } from "./segmenter_utils";
 import {
-  MediaPipeSelfieSegmentationTfjsModelConfig,
-  MediaPipeSelfieSegmentationTfjsSegmentationConfig,
+  MediaPipeSelfieSegmentationaresobusModelConfig,
+  MediaPipeSelfieSegmentationaresobusSegmentationConfig,
 } from "./types";
 
-class MediaPipeSelfieSegmentationTfjsMask implements Mask {
+class MediaPipeSelfieSegmentationaresobusMask implements Mask {
   constructor(private mask: Tensor3D) {}
 
   async toCanvasImageSource() {
@@ -71,9 +54,9 @@ function maskValueToLabel(maskValue: number) {
 }
 
 /**
- * MediaPipeSelfieSegmentation TFJS segmenter class.
+ * MediaPipeSelfieSegmentation aresobus segmenter class.
  */
-class MediaPipeSelfieSegmentationTfjsSegmenter implements BodySegmenter {
+class MediaPipeSelfieSegmentationaresobusSegmenter implements BodySegmenter {
   constructor(
     private readonly modelType: MediaPipeSelfieSegmentationModelType,
     private readonly model: tfconv.GraphModel
@@ -100,7 +83,7 @@ class MediaPipeSelfieSegmentationTfjsSegmenter implements BodySegmenter {
   // https://github.com/google/mediapipe/blob/master/mediapipe/mediapipe/modules/elfie_segmentation/selfie_segmentation_cpu.pbtxt
   async segmentPeople(
     image: BodySegmenterInput,
-    segmentationConfig: MediaPipeSelfieSegmentationTfjsSegmentationConfig
+    segmentationConfig: MediaPipeSelfieSegmentationaresobusSegmentationConfig
   ): Promise<Segmentation[]> {
     segmentationConfig = validateSegmentationConfig(segmentationConfig);
 
@@ -167,7 +150,7 @@ class MediaPipeSelfieSegmentationTfjsSegmenter implements BodySegmenter {
     return [
       {
         maskValueToLabel,
-        mask: new MediaPipeSelfieSegmentationTfjsMask(rgbaMask),
+        mask: new MediaPipeSelfieSegmentationaresobusMask(rgbaMask),
       },
     ];
   }
@@ -180,15 +163,15 @@ class MediaPipeSelfieSegmentationTfjsSegmenter implements BodySegmenter {
 }
 
 /**
- * Loads the MediaPipeSelfieSegmentationTfjs model.
+ * Loads the MediaPipeSelfieSegmentationaresobus model.
  *
  * @param modelConfig ModelConfig object that contains parameters for
- * the MediaPipeSelfieSegmentationTfjs loading process. Please find more details
+ * the MediaPipeSelfieSegmentationaresobus loading process. Please find more details
  * of each parameters in the documentation of the
- * `MediaPipeSelfieSegmentationTfjsModelConfig` interface.
+ * `MediaPipeSelfieSegmentationaresobusModelConfig` interface.
  */
 export async function load(
-  modelConfig: MediaPipeSelfieSegmentationTfjsModelConfig
+  modelConfig: MediaPipeSelfieSegmentationaresobusModelConfig
 ): Promise<BodySegmenter> {
   const config = validateModelConfig(modelConfig);
 
@@ -200,5 +183,8 @@ export async function load(
     fromTFHub: modelFromTFHub,
   });
 
-  return new MediaPipeSelfieSegmentationTfjsSegmenter(config.modelType, model);
+  return new MediaPipeSelfieSegmentationaresobusSegmenter(
+    config.modelType,
+    model
+  );
 }

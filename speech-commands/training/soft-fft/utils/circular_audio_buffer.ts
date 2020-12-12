@@ -1,20 +1,4 @@
 /**
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
-/**
  * Save Float32Array in arbitrarily sized chunks.
  * Load Float32Array in arbitrarily sized chunks.
  * Determine if there's enough data to grab a certain amount.
@@ -38,8 +22,9 @@ export class CircularAudioBuffer {
     const remaining = this.buffer.length - this.currentIndex;
     if (this.currentIndex + newBuffer.length > this.buffer.length) {
       console.error(
-          `Not enough space to write ${newBuffer.length}` +
-          ` to this circular buffer with ${remaining} left.`);
+        `Not enough space to write ${newBuffer.length}` +
+          ` to this circular buffer with ${remaining} left.`
+      );
       return;
     }
     this.buffer.set(newBuffer, this.currentIndex);
@@ -68,7 +53,8 @@ export class CircularAudioBuffer {
     // Do we have enough data to read back?
     if (this.currentIndex < length) {
       console.error(
-          `This circular buffer doesn't have ${length} entries in it.`);
+        `This circular buffer doesn't have ${length} entries in it.`
+      );
       return undefined;
     }
     if (length === 0) {
@@ -95,7 +81,8 @@ export class CircularAudioBuffer {
     // Do we have enough data to read back?
     if (this.currentIndex < length) {
       console.error(
-          `This circular buffer doesn't have ${length} entries in it.`);
+        `This circular buffer doesn't have ${length} entries in it.`
+      );
       return undefined;
     }
     return this.buffer.slice(0, length);

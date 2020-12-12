@@ -1,25 +1,11 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import {RelativeVelocityFilter} from './relative_velocity_filter';
+import { RelativeVelocityFilter } from "./relative_velocity_filter";
 
-describe('Relative velocity filter ', () => {
-  it('Smoke.', () => {
-    const filter =
-        new RelativeVelocityFilter({windowSize: 1, velocityScale: 1});
+describe("Relative velocity filter ", () => {
+  it("Smoke.", () => {
+    const filter = new RelativeVelocityFilter({
+      windowSize: 1,
+      velocityScale: 1,
+    });
 
     const timestamp1 = 1;
 
@@ -29,14 +15,18 @@ describe('Relative velocity filter ', () => {
     expect(filter.apply(2000, timestamp1, 0.5)).toBe(2000);
   });
 
-  it('Same value scale different velocity scales legacy.', () => {
+  it("Same value scale different velocity scales legacy.", () => {
     // More sensitive filter.
-    const filter1 =
-        new RelativeVelocityFilter({windowSize: 5, velocityScale: 45});
+    const filter1 = new RelativeVelocityFilter({
+      windowSize: 5,
+      velocityScale: 45,
+    });
 
     // Less sensitive filter.
-    const filter2 =
-        new RelativeVelocityFilter({windowSize: 5, velocityScale: 0.1});
+    const filter2 = new RelativeVelocityFilter({
+      windowSize: 5,
+      velocityScale: 0.1,
+    });
 
     let result1;
     let result2;
@@ -79,12 +69,16 @@ describe('Relative velocity filter ', () => {
     expect(result1).toBeLessThan(result2);
   });
 
-  it('Different constant value scales same velocity scale legacy.', () => {
+  it("Different constant value scales same velocity scale legacy.", () => {
     const sameVelocityScale = 1;
-    const filter1 = new RelativeVelocityFilter(
-        {windowSize: 3, velocityScale: sameVelocityScale});
-    const filter2 = new RelativeVelocityFilter(
-        {windowSize: 3, velocityScale: sameVelocityScale});
+    const filter1 = new RelativeVelocityFilter({
+      windowSize: 3,
+      velocityScale: sameVelocityScale,
+    });
+    const filter2 = new RelativeVelocityFilter({
+      windowSize: 3,
+      velocityScale: sameVelocityScale,
+    });
 
     let result1;
     let result2;
@@ -116,13 +110,21 @@ describe('Relative velocity filter ', () => {
     expect(result1).toBeLessThan(result2);
   });
 
-  it('Translation invariance.', () => {
+  it("Translation invariance.", () => {
     const originalDataPoints = [
-      {value: 1, scale: 0.5}, {value: 10, scale: 5}, {value: 20, scale: 10},
-      {value: 30, scale: 15}, {value: 40, scale: 0.5}, {value: 50, scale: 0.5},
-      {value: 60, scale: 5}, {value: 70, scale: 10}, {value: 80, scale: 15},
-      {value: 90, scale: 5}, {value: 70, scale: 10}, {value: 50, scale: 15},
-      {value: 80, scale: 15}
+      { value: 1, scale: 0.5 },
+      { value: 10, scale: 5 },
+      { value: 20, scale: 10 },
+      { value: 30, scale: 15 },
+      { value: 40, scale: 0.5 },
+      { value: 50, scale: 0.5 },
+      { value: 60, scale: 5 },
+      { value: 70, scale: 10 },
+      { value: 80, scale: 15 },
+      { value: 90, scale: 5 },
+      { value: 70, scale: 10 },
+      { value: 50, scale: 15 },
+      { value: 80, scale: 15 },
     ];
 
     // The amount by which the input values are uniformly translated.
@@ -138,14 +140,20 @@ describe('Relative velocity filter ', () => {
     // Perform the translation.
     const translatedDataPoints = [];
     for (const dp of originalDataPoints) {
-      translatedDataPoints.push(
-          {value: dp.value + valueOffset, scale: dp.scale});
+      translatedDataPoints.push({
+        value: dp.value + valueOffset,
+        scale: dp.scale,
+      });
     }
 
-    const originalPointsFilter =
-        new RelativeVelocityFilter({windowSize, velocityScale});
-    const translatedPointsFilter =
-        new RelativeVelocityFilter({windowSize, velocityScale});
+    const originalPointsFilter = new RelativeVelocityFilter({
+      windowSize,
+      velocityScale,
+    });
+    const translatedPointsFilter = new RelativeVelocityFilter({
+      windowSize,
+      velocityScale,
+    });
 
     // The minimal difference which is considered a divergence.
     const divergenceGap = 0.001;
@@ -168,26 +176,37 @@ describe('Relative velocity filter ', () => {
     let timesDiverged = 0;
     let timesLargelyDiverged = 0;
     let timestamp = 0;
-    for (let iteration = 0; iteration < originalDataPoints.length;
-         ++iteration, timestamp += timeDelta) {
+    for (
+      let iteration = 0;
+      iteration < originalDataPoints.length;
+      ++iteration, timestamp += timeDelta
+    ) {
       const originalDataPoint = originalDataPoints[iteration];
       const filteredOriginalValue = originalPointsFilter.apply(
-          originalDataPoint.value, timestamp, originalDataPoint.scale);
+        originalDataPoint.value,
+        timestamp,
+        originalDataPoint.scale
+      );
       const translatedDataPoint = translatedDataPoints[iteration];
       const actualFilteredTranslatedValue = translatedPointsFilter.apply(
-          translatedDataPoint.value, timestamp, translatedDataPoint.scale);
+        translatedDataPoint.value,
+        timestamp,
+        translatedDataPoint.scale
+      );
 
       const expectedFilteredTranslatedValue =
-          filteredOriginalValue + valueOffset;
+        filteredOriginalValue + valueOffset;
 
       const difference = Math.abs(
-          actualFilteredTranslatedValue - expectedFilteredTranslatedValue);
+        actualFilteredTranslatedValue - expectedFilteredTranslatedValue
+      );
 
       if (iteration === 0) {
         // On the first iteration, the unfiltered values are returned.
         expect(filteredOriginalValue).toEqual(originalDataPoint.value);
-        expect(actualFilteredTranslatedValue)
-            .toEqual(translatedDataPoint.value);
+        expect(actualFilteredTranslatedValue).toEqual(
+          translatedDataPoint.value
+        );
         expect(difference).toEqual(0);
       } else {
         if (difference >= divergenceGap) {

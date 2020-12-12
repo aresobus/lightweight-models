@@ -1,17 +1,5 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
 
@@ -72,21 +60,25 @@ class FullscreenQuad {
     this.squareVerticesBuffer_ = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.squareVerticesBuffer_);
     gl.bufferData(
-        gl.ARRAY_BUFFER, Float32Array.from([-1, -1, 1, -1, -1, 1, 1, 1]),
-        gl.STATIC_DRAW);
+      gl.ARRAY_BUFFER,
+      Float32Array.from([-1, -1, 1, -1, -1, 1, 1, 1]),
+      gl.STATIC_DRAW
+    );
 
     this.textureVerticesBuffer_ = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, this.textureVerticesBuffer_);
     gl.bufferData(
-        gl.ARRAY_BUFFER, Float32Array.from([0, 0, 1, 0, 0, 1, 1, 1]),
-        gl.STATIC_DRAW);
+      gl.ARRAY_BUFFER,
+      Float32Array.from([0, 0, 1, 0, 0, 1, 1, 1]),
+      gl.STATIC_DRAW
+    );
 
     this.gl_ = gl;
   }
 
   // Draws a quad covering the entire bound framebuffer.
   draw() {
-    this.gl_.enableVertexAttribArray(0);  // vertex
+    this.gl_.enableVertexAttribArray(0); // vertex
     this.gl_.bindBuffer(this.gl_.ARRAY_BUFFER, this.squareVerticesBuffer_);
     this.gl_.vertexAttribPointer(0, 2, this.gl_.FLOAT, false, 0, 0);
 
@@ -107,10 +99,18 @@ class GlShaderProcessor {
   }
   startProcessFrame(width, height) {
     const gl = this.gl;
-    if (!this.frame || width !== this.frame.width ||
-        height !== this.frame.height) {
-      this.frame =
-          createTextureFrameBuffer(gl, gl.LINEAR, width, height, this.frame);
+    if (
+      !this.frame ||
+      width !== this.frame.width ||
+      height !== this.frame.height
+    ) {
+      this.frame = createTextureFrameBuffer(
+        gl,
+        gl.LINEAR,
+        width,
+        height,
+        this.frame
+      );
     }
     gl.viewport(0, 0, width, height);
     gl.scissor(0, 0, width, height);
@@ -120,7 +120,7 @@ class GlShaderProcessor {
     const gl = this.gl;
     const loc = this.program.getUniformLocation(name);
 
-    if (typeof vec === 'number') {
+    if (typeof vec === "number") {
       vec = [vec];
     }
     if (vec.length === 1) {
@@ -158,26 +158,31 @@ class GlShaderProcessor {
 class MaskStep {
   constructor(gl) {
     this.proc = new GlShaderProcessor(
-        gl,
-        STATE.shaderType === 'Point lights' ? POINT_LIGHTS_SHADER :
-                                              SUNBEAM_SHADER);
+      gl,
+      STATE.shaderType === "Point lights" ? POINT_LIGHTS_SHADER : SUNBEAM_SHADER
+    );
   }
   process(frame, mask, lightCoordinates) {
     this.proc.startProcessFrame(frame.width, frame.height);
-    this.proc.setUniform('iResolution', [frame.width, frame.height]);
-    this.proc.setUniform('iTime', [performance.now() / 1000]);
-    this.proc.setUniform('iMouse', lightCoordinates);
+    this.proc.setUniform("iResolution", [frame.width, frame.height]);
+    this.proc.setUniform("iTime", [performance.now() / 1000]);
+    this.proc.setUniform("iMouse", lightCoordinates);
 
     for (const uniform of shaderUniforms) {
-      if (uniform[uniform.length - 1] === 'both' ||
-          uniform[uniform.length - 1] === STATE.shaderType) {
+      if (
+        uniform[uniform.length - 1] === "both" ||
+        uniform[uniform.length - 1] === STATE.shaderType
+      ) {
         const name = uniform[0];
         // Prepend k to match shader naming convention for uniforms.
-        this.proc.setUniform('k' + name, STATE[name]);
+        this.proc.setUniform("k" + name, STATE[name]);
       }
     }
 
-    this.proc.bindTextures([['frame', frame], ['mask', mask]]);
+    this.proc.bindTextures([
+      ["frame", frame],
+      ["mask", mask],
+    ]);
     return this.proc.finalizeProcessFrame();
   }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/tensorflow-models-knn-classifier",
+  "name": "@aresobus/-models-knn-classifier",
   "version": "1.2.5",
-  "description": "KNN Classifier for TensorFlow.js maintained by Oleksandr Lebedyev",
+  "description": "KNN Classifier for  maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/knn-classifier.min.js",
   "jsdelivr": "dist/knn-classifier.min.js",
@@ -13,16 +13,16 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0"
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.1.0",
     "@rollup/plugin-typescript": "3.1.1",
-    "@tensorflow/tfjs-backend-cpu": "^4.18.0",
-    "@tensorflow/tfjs-core": "^4.18.0",
+    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/aresobus-core": "^4.18.0",
     "@types/jasmine": "^3.6.3",
     "babel-core": "~6.26.0",
     "babel-plugin-transform-runtime": "~6.23.0",

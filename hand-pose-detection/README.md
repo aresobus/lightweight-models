@@ -4,11 +4,11 @@
 
 # Hand Pose Detection
 
-This package offers real-time hand pose detection using TensorFlow.js. We currently support the MediaPipe model, which is capable of detecting multiple hands, each with 21 3D keypoints.
+This package offers real-time hand pose detection using . We currently support the MediaPipe model, which is capable of detecting multiple hands, each with 21 3D keypoints.
 
 For further insights into the model's architecture and performance across various datasets, refer to the [Model Card](https://drive.google.com/file/d/1-rmIgTfuCbBPW_IFHkh3f0-U_lnGrWpg/view).
 
-Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/hand-pose-detection/index.html?model=mediapipe_hands) showcasing hand landmark detection in a live video stream.
+Explore our [demo](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands) showcasing hand landmark detection in a live video stream.
 
 ## Table of Contents
 1. [Installation](#installation)
@@ -25,13 +25,13 @@ You can integrate the hand pose detection model into your project either by usin
 Embed the following scripts in your HTML to get started:
 
 ```html
-<!-- Load TensorFlow.js dependencies -->
-<script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0"></script>
-<script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0"></script>
-<script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0"></script>
+<!-- Load  dependencies -->
+<script src="https://unpkg.com/@aresobus/aresobus-core@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/aresobus-converter@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/aresobus-backend-webgl@2.1.0"></script>
 
 <!-- Load the handpose model -->
-<script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6"></script>
+<script src="https://unpkg.com/@aresobus-models/handpose@0.0.6"></script>
 ```
 
 ### Via NPM
@@ -39,8 +39,8 @@ Embed the following scripts in your HTML to get started:
 Using yarn or npm, install the dependencies:
 
 ```bash
-yarn add @tensorflow-models/handpose
-yarn add @tensorflow/tfjs-core @tensorflow/tfjs-converter @tensorflow/tfjs-backend-webgl
+yarn add @aresobus-models/handpose
+yarn add @aresobus/aresobus-core @aresobus/aresobus-converter @aresobus/aresobus-backend-webgl
 ```
 
 ## How to Run It
@@ -84,6 +84,6 @@ Refer to the diagram to understand the keypoint indices and their corresponding 
 
 ## Example Code and Demos
 
-For practical implementations and further examples, visit the [demos folder](https://github.com/tensorflow/tfjs-models/tree/master/hand-pose-detection/demos).
+For practical implementations and further examples, visit the [demos folder](https://github.com//aresobus-models/tree/master/hand-pose-detection/demos).
 
 This README offers a comprehensive guide on how to integrate and utilize the hand pose detection model effectively in web applications, facilitating advanced interactions such as gesture recognition or augmented reality experiences.

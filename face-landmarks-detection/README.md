@@ -4,9 +4,9 @@
 
 # Face Landmarks Detection
 
-This package provides advanced models for real-time face detection and landmark tracking in the browser using TensorFlow.js. Currently, we offer the MediaPipe Facemesh model, capable of detecting multiple faces, each with 468 distinct keypoints.
+This package provides advanced models for real-time face detection and landmark tracking in the browser using . Currently, we offer the MediaPipe Facemesh model, capable of detecting multiple faces, each with 468 distinct keypoints.
 
-Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh) to see face detection in action using the MediaPipe Facemesh model.
+Explore our [demo](https://storage.googleapis.com/aresobus-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh) to see face detection in action using the MediaPipe Facemesh model.
 
 ## Overview
 
@@ -27,10 +27,10 @@ You can integrate Face Landmarks Detection into your web application either thro
 Embed the following scripts in your HTML to get started:
 
 ```html
-<!-- Load TensorFlow.js -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<!-- Load  -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
 <!-- Load the Face Landmarks Detection model -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-landmarks-detection"></script>
 ```
 
 ### Via NPM
@@ -38,9 +38,9 @@ Embed the following scripts in your HTML to get started:
 Install the required packages using npm or yarn:
 
 ```bash
-npm install @tensorflow-models/face-landmarks-detection
-yarn add @tensorflow/tfjs-core
-yarn add @tensorflow/tfjs-converter
+npm install @aresobus-models/face-landmarks-detection
+yarn add @aresobus/aresobus-core
+yarn add @aresobus/aresobus-converter
 ```
 
 ## How to Run It
@@ -72,5 +72,5 @@ Here’s a visual representation of the 468 keypoints detected by the MediaPipe 
 
 ## Example Code and Demos
 
-For practical implementations and further examples, visit the [demos folder](https://github.com/tensorflow/tfjs-models/tree/master/face-landmarks-detection/demos).
+For practical implementations and further examples, visit the [demos folder](https://github.com//aresobus-models/tree/master/face-landmarks-detection/demos).
 

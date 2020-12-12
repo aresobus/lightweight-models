@@ -1,18 +1,4 @@
-#!/usr/bin/env bash
-# =============================================================================
-# Copyright 2019 Google Inc. All Rights Reserved.
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-# https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# =============================================================================
+
 
 # Make sure that we run Python 3.6, not 3.7
 PYTHON_VERSION=$(python -V 2>&1 | sed 's/.* \([0-9]\).\([0-9]\).*/\1\2/')
@@ -169,7 +155,7 @@ mkdir -p $FROZEN_MODELS_DIR
 mkdir -p $TARGET_DIR
 cd $TARGET_DIR
 
-URL_PREFIX="http://download.tensorflow.org/models"
+URL_PREFIX="http://download..org/models"
 MODELS=(
   "deeplabv3_mnv2_dm05_pascal_trainaug_2018_10_01"
   "deeplabv3_mnv2_cityscapes_train_2018_02_05"
@@ -189,7 +175,7 @@ if elementIn "$USE_VENV" "${TRUE[@]}"; then
   fi
 fi
 
-notify "=" "Converting the model to tfjs..."
+notify "=" "Converting the model to aresobus..."
 
 for MODEL_URL in "${MODELS[@]}"; do
   if [[ $MODEL_URL == *"pascal"* ]]; then

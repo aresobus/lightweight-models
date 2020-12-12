@@ -1,22 +1,9 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import {Keypoint, KeypointsFilter} from '../calculators/interfaces/common_interfaces';
-import {VelocityFilterConfig} from '../calculators/interfaces/config_interfaces';
-import {RelativeVelocityFilter} from './relative_velocity_filter';
+import {
+  Keypoint,
+  KeypointsFilter,
+} from "../calculators/interfaces/common_interfaces";
+import { VelocityFilterConfig } from "../calculators/interfaces/config_interfaces";
+import { RelativeVelocityFilter } from "./relative_velocity_filter";
 
 /**
  * A stateful filter that smoothes landmark values overtime.
@@ -34,8 +21,11 @@ export class KeypointsVelocityFilter implements KeypointsFilter {
 
   constructor(private readonly config: VelocityFilterConfig) {}
 
-  apply(keypoints: Keypoint[], microSeconds: number, objectScale: number):
-      Keypoint[] {
+  apply(
+    keypoints: Keypoint[],
+    microSeconds: number,
+    objectScale: number
+  ): Keypoint[] {
     if (keypoints == null) {
       this.reset();
       return null;
@@ -63,8 +53,11 @@ export class KeypointsVelocityFilter implements KeypointsFilter {
       };
 
       if (keypoint.z != null) {
-        outKeypoint.z =
-            this.zFilters[i].apply(keypoint.z, microSeconds, valueScale);
+        outKeypoint.z = this.zFilters[i].apply(
+          keypoint.z,
+          microSeconds,
+          valueScale
+        );
       }
 
       return outKeypoint;
@@ -81,12 +74,15 @@ export class KeypointsVelocityFilter implements KeypointsFilter {
   // check the size.
   private initializeFiltersIfEmpty(keypoints: Keypoint[]) {
     if (this.xFilters == null || this.xFilters.length !== keypoints.length) {
-      this.xFilters =
-          keypoints.map(_ => new RelativeVelocityFilter(this.config));
-      this.yFilters =
-          keypoints.map(_ => new RelativeVelocityFilter(this.config));
-      this.zFilters =
-          keypoints.map(_ => new RelativeVelocityFilter(this.config));
+      this.xFilters = keypoints.map(
+        (_) => new RelativeVelocityFilter(this.config)
+      );
+      this.yFilters = keypoints.map(
+        (_) => new RelativeVelocityFilter(this.config)
+      );
+      this.zFilters = keypoints.map(
+        (_) => new RelativeVelocityFilter(this.config)
+      );
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@aresobus/tensorflow-models-pose-detection",
+  "name": "@aresobus/-models-pose-detection",
   "version": "2.1.0",
   "description": "Pretrained pose detection model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
@@ -13,14 +13,14 @@
     "url": "https://github.com/aresobus/lightweight-models"
   },
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
-  "license": "Apache-2.0",
+
   "peerDependencies": {
     "@mediapipe/pose": "~0.5.0",
-    "@tensorflow/tfjs-backend-wasm": "^4.10.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.10.0",
-    "@tensorflow/tfjs-backend-webgpu": "^4.10.0",
-    "@tensorflow/tfjs-converter": "^4.10.0",
-    "@tensorflow/tfjs-core": "^4.10.0"
+    "@aresobus/aresobus-backend-wasm": "^4.10.0",
+    "@aresobus/aresobus-backend-webgl": "^4.10.0",
+    "@aresobus/aresobus-backend-webgpu": "^4.10.0",
+    "@aresobus/aresobus-converter": "^4.10.0",
+    "@aresobus/aresobus-core": "^4.10.0"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.10.4",
@@ -28,12 +28,12 @@
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-typescript": "^3.0.0",
-    "@tensorflow/tfjs-backend-cpu": "^4.10.0",
-    "@tensorflow/tfjs-backend-wasm": "^4.10.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.10.0",
-    "@tensorflow/tfjs-backend-webgpu": "^4.10.0",
-    "@tensorflow/tfjs-converter": "^4.10.0",
-    "@tensorflow/tfjs-core": "^4.10.0",
+    "@aresobus/aresobus-backend-cpu": "^4.10.0",
+    "@aresobus/aresobus-backend-wasm": "^4.10.0",
+    "@aresobus/aresobus-backend-webgl": "^4.10.0",
+    "@aresobus/aresobus-backend-webgpu": "^4.10.0",
+    "@aresobus/aresobus-converter": "^4.10.0",
+    "@aresobus/aresobus-core": "^4.10.0",
     "@types/jasmine": "^3.6.3",
     "@types/offscreencanvas": "2019.7.0",
     "babel-core": "~6.26.0",
@@ -69,8 +69,8 @@
     "build-npm": "yarn build && yarn bundle",
     "lint": "tslint -p . -t verbose",
     "publish-demo": "./scripts/publish-demo.sh",
-    "link-core": "yalc link @tensorflow/tfjs-core",
-    "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl"
+    "link-core": "yalc link @aresobus/aresobus-core",
+    "link-webgl": "yalc link @aresobus/aresobus-backend-webgl"
   },
   "dependencies": {
     "rimraf": "^3.0.2"

@@ -1,25 +1,11 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import { COCO_KEYPOINTS } from "../constants";
+import {
+  ImageSize,
+  Keypoint,
+} from "../shared/calculators/interfaces/common_interfaces";
+import { BoundingBox } from "../shared/calculators/interfaces/shape_interfaces";
 
-import {COCO_KEYPOINTS} from '../constants';
-import {ImageSize, Keypoint} from '../shared/calculators/interfaces/common_interfaces';
-import {BoundingBox} from '../shared/calculators/interfaces/shape_interfaces';
-
-import {MIN_CROP_KEYPOINT_SCORE} from './constants';
+import { MIN_CROP_KEYPOINT_SCORE } from "./constants";
 
 /**
  * Determines whether the torso of a person is visible.
@@ -30,17 +16,19 @@ import {MIN_CROP_KEYPOINT_SCORE} from './constants';
  * @return A boolean indicating whether the torso is visible.
  */
 export function torsoVisible(
-    keypoints: Keypoint[],
-    keypointIndexByName: {[index: string]: number}): boolean {
+  keypoints: Keypoint[],
+  keypointIndexByName: { [index: string]: number }
+): boolean {
   return (
-      (keypoints[keypointIndexByName['left_hip']].score >
-           MIN_CROP_KEYPOINT_SCORE ||
-       keypoints[keypointIndexByName['right_hip']].score >
-           MIN_CROP_KEYPOINT_SCORE) &&
-      (keypoints[keypointIndexByName['left_shoulder']].score >
-           MIN_CROP_KEYPOINT_SCORE ||
-       keypoints[keypointIndexByName['right_shoulder']].score >
-           MIN_CROP_KEYPOINT_SCORE));
+    (keypoints[keypointIndexByName["left_hip"]].score >
+      MIN_CROP_KEYPOINT_SCORE ||
+      keypoints[keypointIndexByName["right_hip"]].score >
+        MIN_CROP_KEYPOINT_SCORE) &&
+    (keypoints[keypointIndexByName["left_shoulder"]].score >
+      MIN_CROP_KEYPOINT_SCORE ||
+      keypoints[keypointIndexByName["right_shoulder"]].score >
+        MIN_CROP_KEYPOINT_SCORE)
+  );
 }
 
 /**
@@ -59,11 +47,18 @@ export function torsoVisible(
  *     image: [maxTorsoYrange, maxTorsoXrange, maxBodyYrange, maxBodyXrange].
  */
 function determineTorsoAndBodyRange(
-    keypoints: Keypoint[], keypointIndexByName: {[index: string]: number},
-    targetKeypoints: {[index: string]: number[]}, centerY: number,
-    centerX: number): number[] {
-  const torsoJoints =
-      ['left_shoulder', 'right_shoulder', 'left_hip', 'right_hip'];
+  keypoints: Keypoint[],
+  keypointIndexByName: { [index: string]: number },
+  targetKeypoints: { [index: string]: number[] },
+  centerY: number,
+  centerX: number
+): number[] {
+  const torsoJoints = [
+    "left_shoulder",
+    "right_shoulder",
+    "left_hip",
+    "right_hip",
+  ];
   let maxTorsoYrange = 0.0;
   let maxTorsoXrange = 0.0;
   for (let i = 0; i < torsoJoints.length; i++) {
@@ -113,37 +108,51 @@ function determineTorsoAndBodyRange(
  * @return A `BoundingBox` that contains the new crop region.
  */
 export function determineNextCropRegion(
-    currentCropRegion: BoundingBox, keypoints: Keypoint[],
-    keypointIndexByName: {[index: string]: number},
-    imageSize: ImageSize): BoundingBox {
-  const targetKeypoints: {[index: string]: number[]} = {};
+  currentCropRegion: BoundingBox,
+  keypoints: Keypoint[],
+  keypointIndexByName: { [index: string]: number },
+  imageSize: ImageSize
+): BoundingBox {
+  const targetKeypoints: { [index: string]: number[] } = {};
 
   for (const key of COCO_KEYPOINTS) {
     targetKeypoints[key] = [
       keypoints[keypointIndexByName[key]].y * imageSize.height,
-      keypoints[keypointIndexByName[key]].x * imageSize.width
+      keypoints[keypointIndexByName[key]].x * imageSize.width,
     ];
   }
 
   if (torsoVisible(keypoints, keypointIndexByName)) {
     const centerY =
-        (targetKeypoints['left_hip'][0] + targetKeypoints['right_hip'][0]) / 2;
+      (targetKeypoints["left_hip"][0] + targetKeypoints["right_hip"][0]) / 2;
     const centerX =
-        (targetKeypoints['left_hip'][1] + targetKeypoints['right_hip'][1]) / 2;
+      (targetKeypoints["left_hip"][1] + targetKeypoints["right_hip"][1]) / 2;
 
     const [maxTorsoYrange, maxTorsoXrange, maxBodyYrange, maxBodyXrange] =
-        determineTorsoAndBodyRange(
-            keypoints, keypointIndexByName, targetKeypoints, centerY, centerX);
+      determineTorsoAndBodyRange(
+        keypoints,
+        keypointIndexByName,
+        targetKeypoints,
+        centerY,
+        centerX
+      );
 
     let cropLengthHalf = Math.max(
-        maxTorsoXrange * 1.9, maxTorsoYrange * 1.9, maxBodyYrange * 1.2,
-        maxBodyXrange * 1.2);
+      maxTorsoXrange * 1.9,
+      maxTorsoYrange * 1.9,
+      maxBodyYrange * 1.2,
+      maxBodyXrange * 1.2
+    );
 
     cropLengthHalf = Math.min(
-        cropLengthHalf,
-        Math.max(
-            centerX, imageSize.width - centerX, centerY,
-            imageSize.height - centerY));
+      cropLengthHalf,
+      Math.max(
+        centerX,
+        imageSize.width - centerX,
+        centerY,
+        imageSize.height - centerY
+      )
+    );
 
     const cropCorner = [centerY - cropLengthHalf, centerX - cropLengthHalf];
 
@@ -156,10 +165,12 @@ export function determineNextCropRegion(
         xMin: cropCorner[1] / imageSize.width,
         yMax: (cropCorner[0] + cropLength) / imageSize.height,
         xMax: (cropCorner[1] + cropLength) / imageSize.width,
-        height: (cropCorner[0] + cropLength) / imageSize.height -
-            cropCorner[0] / imageSize.height,
-        width: (cropCorner[1] + cropLength) / imageSize.width -
-            cropCorner[1] / imageSize.width
+        height:
+          (cropCorner[0] + cropLength) / imageSize.height -
+          cropCorner[0] / imageSize.height,
+        width:
+          (cropCorner[1] + cropLength) / imageSize.width -
+          cropCorner[1] / imageSize.width,
       };
     }
   } else {
@@ -185,7 +196,9 @@ export function determineNextCropRegion(
  * @return A `BoundingBox` that contains the initial crop region.
  */
 export function initCropRegion(
-    firstFrame: boolean, imageSize: ImageSize): BoundingBox {
+  firstFrame: boolean,
+  imageSize: ImageSize
+): BoundingBox {
   let boxHeight: number, boxWidth: number, yMin: number, xMin: number;
   if (firstFrame) {
     // If it is the first frame, perform a best guess by making the square
@@ -223,6 +236,6 @@ export function initCropRegion(
     yMax: yMin + boxHeight,
     xMax: xMin + boxWidth,
     height: boxHeight,
-    width: boxWidth
+    width: boxWidth,
   };
 }

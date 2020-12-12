@@ -1,31 +1,22 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import {DEFAULT_DETECTOR_MODEL_URL_FULL_SPARSE, DEFAULT_DETECTOR_MODEL_URL_SHORT, DEFAULT_FACE_DETECTOR_ESTIMATION_CONFIG, DEFAULT_FACE_DETECTOR_MODEL_CONFIG} from './constants';
-import {MediaPipeFaceDetectorTfjsEstimationConfig, MediaPipeFaceDetectorTfjsModelConfig} from './types';
+import {
+  DEFAULT_DETECTOR_MODEL_URL_FULL_SPARSE,
+  DEFAULT_DETECTOR_MODEL_URL_SHORT,
+  DEFAULT_FACE_DETECTOR_ESTIMATION_CONFIG,
+  DEFAULT_FACE_DETECTOR_MODEL_CONFIG,
+} from "./constants";
+import {
+  MediaPipeFaceDetectoraresobusEstimationConfig,
+  MediaPipeFaceDetectoraresobusModelConfig,
+} from "./types";
 
 export function validateModelConfig(
-    modelConfig: MediaPipeFaceDetectorTfjsModelConfig):
-    MediaPipeFaceDetectorTfjsModelConfig {
+  modelConfig: MediaPipeFaceDetectoraresobusModelConfig
+): MediaPipeFaceDetectoraresobusModelConfig {
   if (modelConfig == null) {
-    return {...DEFAULT_FACE_DETECTOR_MODEL_CONFIG};
+    return { ...DEFAULT_FACE_DETECTOR_MODEL_CONFIG };
   }
 
-  const config: MediaPipeFaceDetectorTfjsModelConfig = {...modelConfig};
+  const config: MediaPipeFaceDetectoraresobusModelConfig = { ...modelConfig };
 
   if (config.modelType == null) {
     config.modelType = DEFAULT_FACE_DETECTOR_MODEL_CONFIG.modelType;
@@ -37,10 +28,10 @@ export function validateModelConfig(
 
   if (config.detectorModelUrl == null) {
     switch (config.modelType) {
-      case 'full':
+      case "full":
         config.detectorModelUrl = DEFAULT_DETECTOR_MODEL_URL_FULL_SPARSE;
         break;
-      case 'short':
+      case "short":
       default:
         config.detectorModelUrl = DEFAULT_DETECTOR_MODEL_URL_SHORT;
         break;
@@ -51,17 +42,17 @@ export function validateModelConfig(
 }
 
 export function validateEstimationConfig(
-    estimationConfig: MediaPipeFaceDetectorTfjsEstimationConfig):
-    MediaPipeFaceDetectorTfjsEstimationConfig {
+  estimationConfig: MediaPipeFaceDetectoraresobusEstimationConfig
+): MediaPipeFaceDetectoraresobusEstimationConfig {
   if (estimationConfig == null) {
-    return {...DEFAULT_FACE_DETECTOR_ESTIMATION_CONFIG};
+    return { ...DEFAULT_FACE_DETECTOR_ESTIMATION_CONFIG };
   }
 
-  const config = {...estimationConfig};
+  const config = { ...estimationConfig };
 
   if (config.flipHorizontal == null) {
     config.flipHorizontal =
-        DEFAULT_FACE_DETECTOR_ESTIMATION_CONFIG.flipHorizontal;
+      DEFAULT_FACE_DETECTOR_ESTIMATION_CONFIG.flipHorizontal;
   }
 
   return config;

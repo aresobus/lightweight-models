@@ -936,7 +936,7 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@tensorflow-models/speech-commands@file:../dist":
+"@-models/speech-commands@file:../dist":
   version "0.0.0"
 
 "@types/q@^1.5.1":

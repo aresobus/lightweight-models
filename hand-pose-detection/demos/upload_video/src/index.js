@@ -1,60 +1,45 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import "@aresobus/aresobus-backend-webgl";
+import * as mpHands from "@mediapipe/hands";
 
-import '@tensorflow/tfjs-backend-webgl';
-import * as mpHands from '@mediapipe/hands';
+import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
 
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+aresobusWasm.setWasmPaths(
+  `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/`
+);
 
-tfjsWasm.setWasmPaths(
-    `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${
-        tfjsWasm.version_wasm}/dist/`);
+import * as handdetection from "@aresobus-models/hand-pose-detection";
+import * as tf from "@aresobus/aresobus-core";
 
-import * as handdetection from '@tensorflow-models/hand-pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
-
-import {setupStats} from './shared/stats_panel';
-import {Context} from './camera';
-import {setupDatGui} from './option_panel';
-import {STATE} from './shared/params';
-import {setBackendAndEnvFlags} from './shared/util';
+import { setupStats } from "./shared/stats_panel";
+import { Context } from "./camera";
+import { setupDatGui } from "./option_panel";
+import { STATE } from "./shared/params";
+import { setBackendAndEnvFlags } from "./shared/util";
 
 let detector, camera, stats;
-let startInferenceTime, numInferences = 0;
-let inferenceTimeSum = 0, lastPanelUpdate = 0;
+let startInferenceTime,
+  numInferences = 0;
+let inferenceTimeSum = 0,
+  lastPanelUpdate = 0;
 let rafId;
-const statusElement = document.getElementById('status');
+const statusElement = document.getElementById("status");
 
 async function createDetector() {
   switch (STATE.model) {
     case handdetection.SupportedModels.MediaPipeHands:
-      const runtime = STATE.backend.split('-')[0];
-      if (runtime === 'mediapipe') {
+      const runtime = STATE.backend.split("-")[0];
+      if (runtime === "mediapipe") {
         return handdetection.createDetector(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
           maxHands: STATE.modelConfig.maxNumHands,
-          solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${mpHands.VERSION}`
+          solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/hands@${mpHands.VERSION}`,
         });
-      } else if (runtime === 'tfjs') {
+      } else if (runtime === "aresobus") {
         return handdetection.createDetector(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
-          maxHands: STATE.modelConfig.maxNumHands
+          maxHands: STATE.modelConfig.maxNumHands,
         });
       }
   }
@@ -94,7 +79,9 @@ function endEstimateHandsStats() {
     inferenceTimeSum = 0;
     numInferences = 0;
     stats.customFpsPanel.update(
-        1000.0 / averageInferenceTime, 120 /* maxValue */);
+      1000.0 / averageInferenceTime,
+      120 /* maxValue */
+    );
     lastPanelUpdate = endInferenceTime;
   }
 }
@@ -103,9 +90,9 @@ async function renderResult() {
   // FPS only counts the time it takes to finish estimateHands.
   beginEstimateHandsStats();
 
-  const hands = await detector.estimateHands(
-      camera.video,
-      {flipHorizontal: false});
+  const hands = await detector.estimateHands(camera.video, {
+    flipHorizontal: false,
+  });
 
   endEstimateHandsStats();
 
@@ -123,7 +110,7 @@ async function checkUpdate() {
   await checkGuiUpdate();
 
   requestAnimationFrame(checkUpdate);
-};
+}
 
 async function updateVideo(event) {
   // Clear reference to any previous uploaded video.
@@ -147,7 +134,7 @@ async function updateVideo(event) {
   camera.canvas.width = videoWidth;
   camera.canvas.height = videoHeight;
 
-  statusElement.innerHTML = 'Video is loaded.';
+  statusElement.innerHTML = "Video is loaded.";
 }
 
 async function runFrame() {
@@ -155,7 +142,7 @@ async function runFrame() {
     // video has finished.
     camera.mediaRecorder.stop();
     camera.clearCtx();
-    camera.video.style.visibility = 'visible';
+    camera.video.style.visibility = "visible";
     return;
   }
   await renderResult();
@@ -163,22 +150,23 @@ async function runFrame() {
 }
 
 async function run() {
-  statusElement.innerHTML = 'Warming up model.';
+  statusElement.innerHTML = "Warming up model.";
 
   // Warming up pipeline.
-  const [runtime, $backend] = STATE.backend.split('-');
+  const [runtime, $backend] = STATE.backend.split("-");
 
-  if (runtime === 'tfjs') {
-    const warmUpTensor =
-        tf.fill([camera.video.height, camera.video.width, 3], 0, 'float32');
-    await detector.estimateHands(
-        warmUpTensor,
-        {flipHorizontal: false});
+  if (runtime === "aresobus") {
+    const warmUpTensor = tf.fill(
+      [camera.video.height, camera.video.width, 3],
+      0,
+      "float32"
+    );
+    await detector.estimateHands(warmUpTensor, { flipHorizontal: false });
     warmUpTensor.dispose();
-    statusElement.innerHTML = 'Model is warmed up.';
+    statusElement.innerHTML = "Model is warmed up.";
   }
 
-  camera.video.style.visibility = 'hidden';
+  camera.video.style.visibility = "hidden";
   video.pause();
   video.currentTime = 0;
   video.play();
@@ -196,8 +184,8 @@ async function run() {
 async function app() {
   // Gui content will change depending on which model is in the query string.
   const urlParams = new URLSearchParams(window.location.search);
-  if (!urlParams.has('model')) {
-    alert('Cannot find model in the query string.');
+  if (!urlParams.has("model")) {
+    alert("Cannot find model in the query string.");
     return;
   }
 
@@ -208,13 +196,13 @@ async function app() {
 
   await setBackendAndEnvFlags(STATE.flags, STATE.backend);
 
-  const runButton = document.getElementById('submit');
+  const runButton = document.getElementById("submit");
   runButton.onclick = run;
 
-  const uploadButton = document.getElementById('videofile');
+  const uploadButton = document.getElementById("videofile");
   uploadButton.onchange = updateVideo;
 
   checkUpdate();
-};
+}
 
 app();

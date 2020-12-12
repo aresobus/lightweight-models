@@ -1,8 +1,8 @@
-import "@tensorflow/tfjs-backend-cpu";
-import "@tensorflow/tfjs-backend-webgl";
+import "@aresobus/aresobus-backend-cpu";
+import "@aresobus/aresobus-backend-webgl";
 
-import * as use from "@tensorflow-models/universal-sentence-encoder";
-import * as tf from "@tensorflow/tfjs-core";
+import * as use from "@aresobus/universal-sentence-encoder";
+import * as tf from "@aresobus/aresobus-core";
 import { interpolateReds } from "d3-scale-chromatic";
 
 const sentences = [

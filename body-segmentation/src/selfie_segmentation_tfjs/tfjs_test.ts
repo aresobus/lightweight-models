@@ -1,27 +1,10 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import * as tf from "@tensorflow/tfjs-core";
+import * as tf from "@aresobus/aresobus-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   ALL_ENVS,
   BROWSER_ENVS,
   describeWithFlags,
-} from "@tensorflow/tfjs-core/dist/jasmine_util";
+} from "@aresobus/aresobus-core/dist/jasmine_util";
 
 import * as bodySegmentation from "../index";
 import { toImageDataLossy } from "../shared/calculators/mask_util";
@@ -34,7 +17,7 @@ import {
 // Measured in percent.
 const EPSILON_IOU = 0.98;
 
-describeWithFlags("TFJS MediaPipeSelfieSegmentation ", ALL_ENVS, () => {
+describeWithFlags("aresobus MediaPipeSelfieSegmentation ", ALL_ENVS, () => {
   let timeout: number;
 
   beforeAll(() => {
@@ -54,7 +37,7 @@ describeWithFlags("TFJS MediaPipeSelfieSegmentation ", ALL_ENVS, () => {
     // Note: this makes a network request for model assets.
     const detector = await bodySegmentation.createSegmenter(
       bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,
-      { runtime: "tfjs", modelType }
+      { runtime: "aresobus", modelType }
     );
     const input: tf.Tensor3D = tf.zeros([128, 128, 3]);
 
@@ -81,7 +64,7 @@ describeWithFlags("TFJS MediaPipeSelfieSegmentation ", ALL_ENVS, () => {
 });
 
 describeWithFlags(
-  "TFJS MediaPipeSelfieSegmentation static image ",
+  "aresobus MediaPipeSelfieSegmentation static image ",
   BROWSER_ENVS,
   () => {
     let segmenter: bodySegmentation.BodySegmenter;
@@ -142,7 +125,7 @@ describeWithFlags(
       const model =
         bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
       segmenter = await bodySegmentation.createSegmenter(model, {
-        runtime: "tfjs",
+        runtime: "aresobus",
         modelType: "general",
       });
 
@@ -156,7 +139,7 @@ describeWithFlags(
       const model =
         bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
       segmenter = await bodySegmentation.createSegmenter(model, {
-        runtime: "tfjs",
+        runtime: "aresobus",
         modelType: "landscape",
       });
 

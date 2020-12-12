@@ -1,23 +1,8 @@
-/**
- * Copyright 2019 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-import * as DCT from 'dct';
-import * as KissFFT from 'kissfft-js';
+import * as DCT from "dct";
+import * as KissFFT from "kissfft-js";
 
 const SR = 16000;
-const hannWindowMap: {[key: number]: number[]} = {};
+const hannWindowMap: { [key: number]: number[] } = {};
 let context: AudioContext;
 
 export class AudioUtils {
@@ -96,8 +81,12 @@ export class AudioUtils {
    * @returns mel filterbank map
    */
   createMelFilterbank(
-      fftSize: number, melCount = 40, lowHz = 20, highHz = 4000,
-      sr = SR): Float32Array {
+    fftSize: number,
+    melCount = 40,
+    lowHz = 20,
+    highHz = 4000,
+    sr = SR
+  ): Float32Array {
     const lowMel = this.hzToMel(lowHz);
     const highMel = this.hzToMel(highHz);
 
@@ -108,12 +97,12 @@ export class AudioUtils {
     const melSpan = highMel - lowMel;
     const melSpacing = melSpan / (melCount + 1);
     for (let i = 0; i < melCount + 1; ++i) {
-      mels[i] = lowMel + (melSpacing * (i + 1));
+      mels[i] = lowMel + melSpacing * (i + 1);
     }
 
     // Always exclude DC; emulate HTK.
-    const hzPerSbin = 0.5 * sr / (fftSize - 1);
-    this.startIndex = Math.floor(1.5 + (lowHz / hzPerSbin));
+    const hzPerSbin = (0.5 * sr) / (fftSize - 1);
+    this.startIndex = Math.floor(1.5 + lowHz / hzPerSbin);
     this.endIndex = Math.ceil(highHz / hzPerSbin);
 
     // Maps the input spectrum bin indices to filter bank channels/indices. For
@@ -124,13 +113,13 @@ export class AudioUtils {
     let channel = 0;
     for (let i = 0; i < fftSize; ++i) {
       const melf = this.hzToMel(i * hzPerSbin);
-      if ((i < this.startIndex) || (i > this.endIndex)) {
-        this.bandMapper[i] = -2;  // Indicate an unused Fourier coefficient.
+      if (i < this.startIndex || i > this.endIndex) {
+        this.bandMapper[i] = -2; // Indicate an unused Fourier coefficient.
       } else {
-        while ((mels[channel] < melf) && (channel < melCount)) {
+        while (mels[channel] < melf && channel < melCount) {
           ++channel;
         }
-        this.bandMapper[i] = channel - 1;  // Can be == -1
+        this.bandMapper[i] = channel - 1; // Can be == -1
       }
     }
 
@@ -141,15 +130,16 @@ export class AudioUtils {
     const weights = new Float32Array(fftSize);
     for (let i = 0; i < fftSize; ++i) {
       channel = this.bandMapper[i];
-      if ((i < this.startIndex) || (i > this.endIndex)) {
+      if (i < this.startIndex || i > this.endIndex) {
         weights[i] = 0.0;
       } else {
         if (channel >= 0) {
-          weights[i] = (mels[channel + 1] - this.hzToMel(i * hzPerSbin)) /
-              (mels[channel + 1] - mels[channel]);
+          weights[i] =
+            (mels[channel + 1] - this.hzToMel(i * hzPerSbin)) /
+            (mels[channel + 1] - mels[channel]);
         } else {
           weights[i] =
-              (mels[0] - this.hzToMel(i * hzPerSbin)) / (mels[0] - lowMel);
+            (mels[0] - this.hzToMel(i * hzPerSbin)) / (mels[0] - lowMel);
         }
       }
     }
@@ -162,20 +152,22 @@ export class AudioUtils {
    * array with size |filterbank|.
    */
   applyFilterbank(
-      fftEnergies: Float32Array, filterbank: Float32Array,
-      melCount = 40): Float32Array {
+    fftEnergies: Float32Array,
+    filterbank: Float32Array,
+    melCount = 40
+  ): Float32Array {
     const out = new Float32Array(melCount);
-    for (let i = this.startIndex; i <= this.endIndex;
-         i++) {  // For each FFT bin
+    for (let i = this.startIndex; i <= this.endIndex; i++) {
+      // For each FFT bin
       const specVal = Math.sqrt(fftEnergies[i]);
       const weighted = specVal * filterbank[i];
       let channel = this.bandMapper[i];
       if (channel >= 0) {
-        out[channel] += weighted;  // Right side of triangle, downward slope
+        out[channel] += weighted; // Right side of triangle, downward slope
       }
       channel++;
       if (channel < melCount) {
-        out[channel] += (specVal - weighted);  // Left side of triangle
+        out[channel] += specVal - weighted; // Left side of triangle
       }
     }
     for (let i = 0; i < out.length; ++i) {
@@ -229,10 +221,12 @@ export class AudioUtils {
    * @param targetSr Target sample rate
    * @returns resampled web audio data
    */
-  resampleWebAudio(audioBuffer: AudioBuffer, targetSr: number):
-      Promise<AudioBuffer> {
+  resampleWebAudio(
+    audioBuffer: AudioBuffer,
+    targetSr: number
+  ): Promise<AudioBuffer> {
     const sourceSr = audioBuffer.sampleRate;
-    const lengthRes = audioBuffer.length * targetSr / sourceSr;
+    const lengthRes = (audioBuffer.length * targetSr) / sourceSr;
     const offlineCtx = new OfflineAudioContext(1, lengthRes, targetSr);
 
     return new Promise((resolve, reject) => {

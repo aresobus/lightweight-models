@@ -1,31 +1,28 @@
 /**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+
  * =============================================================================
  */
-import * as bodySegmentation from '@tensorflow-models/body-segmentation';
-import * as tfconv from '@tensorflow/tfjs-converter';
-import * as tf from '@tensorflow/tfjs-core';
+import * as bodySegmentation from "@aresobus-models/body-segmentation";
+import * as tfconv from "@aresobus/aresobus-converter";
+import * as tf from "@aresobus/aresobus-core";
 
-import {DepthEstimator} from '../depth_estimator';
-import {toImageTensor, transformValueRange} from '../shared/calculators/image_utils';
-import {toHTMLCanvasElementLossy} from '../shared/calculators/mask_util';
-import {DepthEstimatorInput, DepthMap} from '../types';
+import { DepthEstimator } from "../depth_estimator";
+import {
+  toImageTensor,
+  transformValueRange,
+} from "../shared/calculators/image_utils";
+import { toHTMLCanvasElementLossy } from "../shared/calculators/mask_util";
+import { DepthEstimatorInput, DepthMap } from "../types";
 
-import {segmentForeground} from './calculators/segment_foreground';
-import {validateEstimationConfig, validateModelConfig} from './estimator_utils';
-import {ARPortraitDepthEstimationConfig, ARPortraitDepthModelConfig} from './types';
+import { segmentForeground } from "./calculators/segment_foreground";
+import {
+  validateEstimationConfig,
+  validateModelConfig,
+} from "./estimator_utils";
+import {
+  ARPortraitDepthEstimationConfig,
+  ARPortraitDepthModelConfig,
+} from "./types";
 
 class ARPortraitDepthMap implements DepthMap {
   constructor(private depthTensor: tf.Tensor2D) {}
@@ -43,7 +40,7 @@ class ARPortraitDepthMap implements DepthMap {
   }
 
   getUnderlyingType() {
-    return 'tensor' as const ;
+    return "tensor" as const;
   }
 }
 
@@ -55,8 +52,9 @@ const PORTRAIT_WIDTH = 192;
  */
 class ARPortraitDepthEstimator implements DepthEstimator {
   constructor(
-      private readonly segmenter: bodySegmentation.BodySegmenter,
-      private readonly estimatorModel: tfconv.GraphModel) {}
+    private readonly segmenter: bodySegmentation.BodySegmenter,
+    private readonly estimatorModel: tfconv.GraphModel
+  ) {}
 
   /**
    * Estimates depth for an image or video frame.
@@ -80,8 +78,9 @@ class ARPortraitDepthEstimator implements DepthEstimator {
    * @return `DepthMap`.
    */
   async estimateDepth(
-      image: DepthEstimatorInput,
-      estimationConfig?: ARPortraitDepthEstimationConfig): Promise<DepthMap> {
+    image: DepthEstimatorInput,
+    estimationConfig?: ARPortraitDepthEstimationConfig
+  ): Promise<DepthMap> {
     const config = validateEstimationConfig(estimationConfig);
 
     if (image == null) {
@@ -90,14 +89,16 @@ class ARPortraitDepthEstimator implements DepthEstimator {
     }
 
     const image3d = tf.tidy(() => {
-      let imageTensor = tf.cast(toImageTensor(image), 'float32');
+      let imageTensor = tf.cast(toImageTensor(image), "float32");
       if (config.flipHorizontal) {
         const batchAxis = 0;
         imageTensor = tf.squeeze(
-            tf.image.flipLeftRight(
-                // tslint:disable-next-line: no-unnecessary-type-assertion
-                tf.expandDims(imageTensor, batchAxis) as tf.Tensor4D),
-            [batchAxis]);
+          tf.image.flipLeftRight(
+            // tslint:disable-next-line: no-unnecessary-type-assertion
+            tf.expandDims(imageTensor, batchAxis) as tf.Tensor4D
+          ),
+          [batchAxis]
+        );
       }
       return imageTensor;
     });
@@ -116,14 +117,16 @@ class ARPortraitDepthEstimator implements DepthEstimator {
 
       // Normalizes the values from [0, 255] to [0, 1], same ranged used
       // during training.
-      const imageNormalized =
-          tf.add(
-              tf.mul(maskedImage, TRANSFORM_INPUT_IMAGE.scale),
-              // tslint:disable-next-line: no-unnecessary-type-assertion
-              TRANSFORM_INPUT_IMAGE.offset) as tf.Tensor3D;
+      const imageNormalized = tf.add(
+        tf.mul(maskedImage, TRANSFORM_INPUT_IMAGE.scale),
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        TRANSFORM_INPUT_IMAGE.offset
+      ) as tf.Tensor3D;
 
-      const imageResized = tf.image.resizeBilinear(
-          imageNormalized, [PORTRAIT_HEIGHT, PORTRAIT_WIDTH]);
+      const imageResized = tf.image.resizeBilinear(imageNormalized, [
+        PORTRAIT_HEIGHT,
+        PORTRAIT_WIDTH,
+      ]);
 
       // Shape after expansion is [1, height, width, 3].
       const batchInput = tf.expandDims(imageResized);
@@ -132,22 +135,28 @@ class ARPortraitDepthEstimator implements DepthEstimator {
       const depth4D = this.estimatorModel.predict(batchInput) as tf.Tensor4D;
 
       // Normalize to user requirements.
-      const depthTransform =
-          transformValueRange(config.minDepth, config.maxDepth, 0, 1);
+      const depthTransform = transformValueRange(
+        config.minDepth,
+        config.maxDepth,
+        0,
+        1
+      );
 
       // depth4D is roughly in [0,2] range, so half the scale factor to put it
       // in [0,1] range.
       const scale = depthTransform.scale / 2;
       const result =
-          // tslint:disable-next-line: no-unnecessary-type-assertion
-          tf.add(tf.mul(depth4D, scale), depthTransform.offset) as tf.Tensor3D;
+        // tslint:disable-next-line: no-unnecessary-type-assertion
+        tf.add(tf.mul(depth4D, scale), depthTransform.offset) as tf.Tensor3D;
 
       // Keep in [0,1] range.
       const resultClipped = tf.clipByValue(result, 0, 1);
 
       // Rescale to original input size.
-      const resultResized =
-          tf.image.resizeBilinear(resultClipped, [height, width]);
+      const resultResized = tf.image.resizeBilinear(resultClipped, [
+        height,
+        width,
+      ]);
 
       // Remove channel dimension.
       // tslint:disable-next-line: no-unnecessary-type-assertion
@@ -179,19 +188,23 @@ class ARPortraitDepthEstimator implements DepthEstimator {
  * parameters in the documentation of the `ARPortraitDepthModelConfig`
  * interface.
  */
-export async function load(modelConfig: ARPortraitDepthModelConfig):
-    Promise<DepthEstimator> {
+export async function load(
+  modelConfig: ARPortraitDepthModelConfig
+): Promise<DepthEstimator> {
   const config = validateModelConfig(modelConfig);
 
-  const depthModelFromTFHub = typeof config.depthModelUrl === 'string' &&
-      (config.depthModelUrl.indexOf('https://tfhub.dev') > -1);
+  const depthModelFromTFHub =
+    typeof config.depthModelUrl === "string" &&
+    config.depthModelUrl.indexOf("https://tfhub.dev") > -1;
 
-  const depthModel = await tfconv.loadGraphModel(
-      config.depthModelUrl, {fromTFHub: depthModelFromTFHub});
+  const depthModel = await tfconv.loadGraphModel(config.depthModelUrl, {
+    fromTFHub: depthModelFromTFHub,
+  });
 
   const segmenter = await bodySegmentation.createSegmenter(
-      bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,
-      {runtime: 'tfjs', modelUrl: config.segmentationModelUrl});
+    bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation,
+    { runtime: "aresobus", modelUrl: config.segmentationModelUrl }
+  );
 
   return new ARPortraitDepthEstimator(segmenter, depthModel);
 }

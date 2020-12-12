@@ -1,14 +1,14 @@
 # MediaPipeHands
 
-MediaPipeHands-TFJS uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
+MediaPipeHands-aresobus uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
 
 Two models are offered.
 
 * lite - our smallest model that is less accurate but smaller in model size and minimal memory footprint.
 * full - A middle ground between performance and accuracy.
 
-Please try it out using the live [demo](https://storage.googleapis.com/tfjs-models/demos/hand-pose-detection/index.html?model=mediapipe_hands).
-In the runtime-backend dropdown, choose 'tfjs-webgl'.
+Please try it out using the live [demo](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands).
+In the runtime-backend dropdown, choose 'aresobus-webgl'.
 
 --------------------------------------------------------------------------------
 
@@ -19,30 +19,30 @@ In the runtime-backend dropdown, choose 'tfjs-webgl'.
 
 ## Installation
 
-To use MediaPipeHands, you need to first select a runtime (TensorFlow.js or MediaPipe).
-This guide is for TensorFlow.js
+To use MediaPipeHands, you need to first select a runtime ( or MediaPipe).
+This guide is for
 runtime. The guide for MediaPipe runtime can be found
-[here](https://github.com/tensorflow/tfjs-models/tree/master/hand-pose-detection/src/mediapipe).
+[here](https://github.com//aresobus-models/tree/master/hand-pose-detection/src/mediapipe).
 
 Via script tags:
 
 ```html
 <!-- Require the peer dependencies of hand-pose-detection. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/hand-pose-detection"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @tensorflow-models/hand-pose-detection
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
-yarn add @tensorflow/tfjs-backend-webgl
+yarn add @aresobus-models/hand-pose-detection
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
+yarn add @aresobus/aresobus-backend-webgl
 ```
 
 -----------------------------------------------------------------------
@@ -53,10 +53,10 @@ If you are using the Hands API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as handPoseDetection from '@tensorflow-models/hand-pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as handPoseDetection from '@aresobus-models/hand-pose-detection';
+import * as tf from '@aresobus/aresobus-core';
 // Register WebGL backend.
-import '@tensorflow/tfjs-backend-webgl';
+import '@aresobus/aresobus-backend-webgl';
 ```
 ### Create a detector
 
@@ -64,9 +64,9 @@ Pass in `handPoseDetection.SupportedModels.MediaPipeHands` from the
 `handPoseDetection.SupportedModel` enum list along with a `detectorConfig` to the
 `createDetector` method to load and initialize the model.
 
-`detectorConfig` is an object that defines MediaPipeHands specific configurations for `MediaPipeHandsTfjseModelConfig`:
+`detectorConfig` is an object that defines MediaPipeHands specific configurations for `MediaPipeHandsaresobuseModelConfig`:
 
-*   *runtime*: Must set to be 'tfjs'.
+*   *runtime*: Must set to be 'aresobus'.
 
 *   *maxHands*: Defaults to 2. The maximum number of hands that will be detected by the model. The number of returned hands can be less than the maximum (for example when no hands are present in the input). It is highly recommended to set this value to the expected max number of hands, otherwise the model will continue to search for the missing hands which can slow down the performance.
 
@@ -81,7 +81,7 @@ the landmark model. This is useful for area/countries that don't have access to 
 ```javascript
 const model = handPoseDetection.SupportedModels.MediaPipeHands;
 const detectorConfig = {
-  runtime: 'tfjs',
+  runtime: 'aresobus',
 };
 detector = await handPoseDetection.createDetector(model, detectorConfig);
 ```
@@ -93,7 +93,7 @@ accepts both image and video in many formats, including: `tf.Tensor3D`,
 `HTMLVideoElement`, `HTMLImageElement`, `HTMLCanvasElement`. If you want more
 options, you can pass in a second `estimationConfig` parameter.
 
-`estimationConfig` is an object that defines MediaPipeHands specific configurations for `MediaPipeHandsTfjsEstimationConfig`:
+`estimationConfig` is an object that defines MediaPipeHands specific configurations for `MediaPipeHandsaresobusEstimationConfig`:
 
 *   *flipHorizontal*: Optional. Defaults to false. When image data comes from camera, the result has to flip horizontally.
 
@@ -110,5 +110,5 @@ const hands = await detector.estimateHands(image, estimationConfig);
 ```
 
 Please refer to the Hands API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/hand-pose-detection/README.md#how-to-run-it)
+[README](https://github.com//aresobus-models/blob/master/hand-pose-detection/README.md#how-to-run-it)
 about the structure of the returned `hands`.

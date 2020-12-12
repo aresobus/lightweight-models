@@ -4,9 +4,9 @@ PoseNet can be used to estimate either a single pose or multiple poses, meaning
 there is a version of the algorithm that can detect only one person in an image/video
 and one version that can detect multiple persons in an image/video.
 
-[Refer to this blog post](https://medium.com/tensorflow/real-time-human-pose-estimation-in-the-browser-with-tensorflow-js-7dd0bc881cd5) for a
-high-level description of PoseNet running on Tensorflow.js. Please try it out using the live
-[demo](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=posenet).
+[Refer to this blog post](https://medium.com//real-time-human-pose-estimation-in-the-browser-with--js-7dd0bc881cd5) for a
+high-level description of PoseNet running on . Please try it out using the live
+[demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=posenet).
 
 --------------------------------------------------------------------------------
 
@@ -21,21 +21,21 @@ Via script tags:
 
 ```html
 <!-- Require the peer dependencies of pose-detection. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @tensorflow-models/pose-detection
-yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
-yarn add @tensorflow/tfjs-backend-webgl
+yarn add @aresobus-models/pose-detection
+yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
+yarn add @aresobus/aresobus-backend-webgl
 ```
 
 -------------------------------------------------------------------------------
@@ -47,10 +47,10 @@ If you are using the Pose API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as poseDetection from '@aresobus-models/pose-detection';
+import * as tf from '@aresobus/aresobus-core';
 // Register one of the TF.js backends.
-import '@tensorflow/tfjs-backend-webgl';
+import '@aresobus/aresobus-backend-webgl';
 ```
 
 ### Create a detector
@@ -143,5 +143,5 @@ const poses = await detector.estimatePoses(image, estimationConfig);
 ```
 
 Please refer to the Pose API
-[README](https://github.com/tensorflow/tfjs-models/blob/master/pose-detection/README.md#pose-estimation)
+[README](https://github.com//aresobus-models/blob/master/pose-detection/README.md#pose-estimation)
 about the structure of the returned `poses`.

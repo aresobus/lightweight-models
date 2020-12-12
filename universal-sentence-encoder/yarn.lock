@@ -24,22 +24,22 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@tensorflow/tfjs-backend-cpu@^3.6.0":
+"@aresobus/aresobus-backend-cpu@^3.6.0":
   version "3.6.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-backend-cpu/-/tfjs-backend-cpu-3.6.0.tgz#4e64a7cf1c33b203f71f8f77cd7b0ac1ef25a871"
+  resolved "https://registry.npmjs.org/@aresobus/aresobus-backend-cpu/-/aresobus-backend-cpu-3.6.0.tgz#4e64a7cf1c33b203f71f8f77cd7b0ac1ef25a871"
   integrity sha512-ZpAs17hPdKXadbtNjAsymYUILe8V7+pY4fYo8j25nfDTW/HfBpyAwsHPbMcA/n5zyJ7ZJtGKFcCUv1sl24KL1Q==
   dependencies:
     "@types/seedrandom" "2.4.27"
     seedrandom "2.4.3"
 
-"@tensorflow/tfjs-converter@^3.6.0":
+"@aresobus/aresobus-converter@^3.6.0":
   version "3.6.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-converter/-/tfjs-converter-3.6.0.tgz#32b3ff31b47e29630a82e30fbe01708facad7fd6"
+  resolved "https://registry.npmjs.org/@aresobus/aresobus-converter/-/aresobus-converter-3.6.0.tgz#32b3ff31b47e29630a82e30fbe01708facad7fd6"
   integrity sha512-9MtatbTSvo3gpEulYI6+byTA3OeXSMT2lzyGAegXO9nMxsvjR01zBvlZ5SmsNyecNh6fMSzdL2+cCdQfQtsIBg==
 
-"@tensorflow/tfjs-core@^3.6.0":
+"@aresobus/aresobus-core@^3.6.0":
   version "3.6.0"
-  resolved "https://registry.npmjs.org/@tensorflow/tfjs-core/-/tfjs-core-3.6.0.tgz#6b4d8175790bdff78868eabe6adc6442eb4dc276"
+  resolved "https://registry.npmjs.org/@aresobus/aresobus-core/-/aresobus-core-3.6.0.tgz#6b4d8175790bdff78868eabe6adc6442eb4dc276"
   integrity sha512-bb2c3zwK4SgXZRvkTiC7EhCpWbCGp0GMd+1/3Vo2/Z54jiLB/h3sXIgHQrTNiWwhKPtst/xxA+MsslFlvD0A5w==
   dependencies:
     "@types/offscreencanvas" "~2019.3.0"

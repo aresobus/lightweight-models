@@ -1,31 +1,18 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import * as faceDetection from '@mediapipe/face_detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as faceDetection from "@mediapipe/face_detection";
+import * as tf from "@aresobus/aresobus-core";
 
-import {MEDIAPIPE_FACE_DETECTOR_KEYPOINTS} from '../constants';
-import {FaceDetector} from '../face_detector';
-import {getBoundingBox} from '../shared/calculators/association_norm_rect';
-import {Keypoint} from '../shared/calculators/interfaces/common_interfaces';
-import {BoundingBox} from '../shared/calculators/interfaces/shape_interfaces';
-import {Face, FaceDetectorInput} from '../types';
+import { MEDIAPIPE_FACE_DETECTOR_KEYPOINTS } from "../constants";
+import { FaceDetector } from "../face_detector";
+import { getBoundingBox } from "../shared/calculators/association_norm_rect";
+import { Keypoint } from "../shared/calculators/interfaces/common_interfaces";
+import { BoundingBox } from "../shared/calculators/interfaces/shape_interfaces";
+import { Face, FaceDetectorInput } from "../types";
 
-import {validateModelConfig} from './detector_utils';
-import {MediaPipeFaceDetectorMediaPipeEstimationConfig, MediaPipeFaceDetectorMediaPipeModelConfig} from './types';
+import { validateModelConfig } from "./detector_utils";
+import {
+  MediaPipeFaceDetectorMediaPipeEstimationConfig,
+  MediaPipeFaceDetectorMediaPipeModelConfig,
+} from "./types";
 
 /**
  * MediaPipe detector class.
@@ -46,35 +33,42 @@ export class MediaPipeFaceDetectorMediaPipe implements FaceDetector {
     this.faceDetectorSolution = new faceDetection.FaceDetection({
       locateFile: (path, base) => {
         if (config.solutionPath) {
-          const solutionPath = config.solutionPath.replace(/\/+$/, '');
+          const solutionPath = config.solutionPath.replace(/\/+$/, "");
           return `${solutionPath}/${path}`;
         }
         return `${base}/${path}`;
-      }
+      },
     });
-    this.faceDetectorSolution.setOptions(
-        {selfieMode: this.selfieMode, model: config.modelType});
-    this.faceDetectorSolution.onResults(results => {
+    this.faceDetectorSolution.setOptions({
+      selfieMode: this.selfieMode,
+      model: config.modelType,
+    });
+    this.faceDetectorSolution.onResults((results) => {
       this.height = results.image.height;
       this.width = results.image.width;
       this.faces = [];
       if (results.detections !== null) {
         for (const detection of results.detections) {
-          this.faces.push(this.normalizedToAbsolute(
-              detection.landmarks, getBoundingBox(detection.boundingBox)));
+          this.faces.push(
+            this.normalizedToAbsolute(
+              detection.landmarks,
+              getBoundingBox(detection.boundingBox)
+            )
+          );
         }
       }
     });
   }
 
   private normalizedToAbsolute(
-      landmarks: faceDetection.NormalizedLandmarkList,
-      boundingBox: BoundingBox): Face {
+    landmarks: faceDetection.NormalizedLandmarkList,
+    boundingBox: BoundingBox
+  ): Face {
     const keypoints = landmarks.map((landmark, i) => {
       const keypoint: Keypoint = {
         x: landmark.x * this.width,
         y: landmark.y * this.height,
-        name: MEDIAPIPE_FACE_DETECTOR_KEYPOINTS[i]
+        name: MEDIAPIPE_FACE_DETECTOR_KEYPOINTS[i],
       };
 
       return keypoint;
@@ -86,10 +80,10 @@ export class MediaPipeFaceDetectorMediaPipe implements FaceDetector {
       xMax: boundingBox.xMax * this.width,
       yMax: boundingBox.yMax * this.height,
       width: boundingBox.width * this.width,
-      height: boundingBox.height * this.height
+      height: boundingBox.height * this.height,
     };
 
-    return {keypoints, box: boundingBoxScaled};
+    return { keypoints, box: boundingBoxScaled };
   }
 
   /**
@@ -113,23 +107,31 @@ export class MediaPipeFaceDetectorMediaPipe implements FaceDetector {
    * @return An array of `Face`s.
    */
   async estimateFaces(
-      input: FaceDetectorInput,
-      estimationConfig?: MediaPipeFaceDetectorMediaPipeEstimationConfig):
-      Promise<Face[]> {
-    if (estimationConfig && estimationConfig.flipHorizontal &&
-        (estimationConfig.flipHorizontal !== this.selfieMode)) {
+    input: FaceDetectorInput,
+    estimationConfig?: MediaPipeFaceDetectorMediaPipeEstimationConfig
+  ): Promise<Face[]> {
+    if (
+      estimationConfig &&
+      estimationConfig.flipHorizontal &&
+      estimationConfig.flipHorizontal !== this.selfieMode
+    ) {
       this.selfieMode = estimationConfig.flipHorizontal;
       this.faceDetectorSolution.setOptions({
         selfieMode: this.selfieMode,
       });
     }
     // Cast to GL TexImageSource types.
-    input = input instanceof tf.Tensor ?
-        new ImageData(
-            await tf.browser.toPixels(input), input.shape[1], input.shape[0]) :
-        input;
-    await this.faceDetectorSolution.send(
-        {image: input as faceDetection.InputImage});
+    input =
+      input instanceof tf.Tensor
+        ? new ImageData(
+            await tf.browser.toPixels(input),
+            input.shape[1],
+            input.shape[0]
+          )
+        : input;
+    await this.faceDetectorSolution.send({
+      image: input as faceDetection.InputImage,
+    });
     return this.faces;
   }
 
@@ -159,8 +161,8 @@ export class MediaPipeFaceDetectorMediaPipe implements FaceDetector {
  * `MediaPipeFaceDetectorMediaPipeModelConfig` interface.
  */
 export async function load(
-    modelConfig: MediaPipeFaceDetectorMediaPipeModelConfig):
-    Promise<FaceDetector> {
+  modelConfig: MediaPipeFaceDetectorMediaPipeModelConfig
+): Promise<FaceDetector> {
   const config = validateModelConfig(modelConfig);
   const detector = new MediaPipeFaceDetectorMediaPipe(config);
   await detector.initialize();

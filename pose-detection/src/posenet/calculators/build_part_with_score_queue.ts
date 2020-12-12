@@ -1,27 +1,16 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import * as tf from '@tensorflow/tfjs-core';
-import {PartWithScore} from '../types';
+import * as tf from "@aresobus/aresobus-core";
+import { PartWithScore } from "../types";
 
-import {MaxHeap} from './max_heap';
+import { MaxHeap } from "./max_heap";
 
 function scoreIsMaximumInLocalWindow(
-    keypointId: number, score: number, heatmapY: number, heatmapX: number,
-    localMaximumRadius: number, scores: tf.TensorBuffer<tf.Rank.R3>): boolean {
+  keypointId: number,
+  score: number,
+  heatmapY: number,
+  heatmapX: number,
+  localMaximumRadius: number,
+  scores: tf.TensorBuffer<tf.Rank.R3>
+): boolean {
   const [height, width] = scores.shape;
 
   let localMaximum = true;
@@ -50,12 +39,16 @@ function scoreIsMaximumInLocalWindow(
  * values above a threshold. We create a single priority queue across all parts.
  */
 export function buildPartWithScoreQueue(
-    scoreThreshold: number, localMaximumRadius: number,
-    scores: tf.TensorBuffer<tf.Rank.R3>): MaxHeap<PartWithScore> {
+  scoreThreshold: number,
+  localMaximumRadius: number,
+  scores: tf.TensorBuffer<tf.Rank.R3>
+): MaxHeap<PartWithScore> {
   const [height, width, numKeypoints] = scores.shape;
 
   const queue = new MaxHeap<PartWithScore>(
-      height * width * numKeypoints, ({score}) => score);
+    height * width * numKeypoints,
+    ({ score }) => score
+  );
 
   for (let heatmapY = 0; heatmapY < height; ++heatmapY) {
     for (let heatmapX = 0; heatmapX < width; ++heatmapX) {
@@ -69,10 +62,20 @@ export function buildPartWithScoreQueue(
         }
 
         // Only consider keypoints whose score is maximum in a local window.
-        if (scoreIsMaximumInLocalWindow(
-                keypointId, score, heatmapY, heatmapX, localMaximumRadius,
-                scores)) {
-          queue.enqueue({score, part: {heatmapY, heatmapX, id: keypointId}});
+        if (
+          scoreIsMaximumInLocalWindow(
+            keypointId,
+            score,
+            heatmapY,
+            heatmapX,
+            localMaximumRadius,
+            scores
+          )
+        ) {
+          queue.enqueue({
+            score,
+            part: { heatmapY, heatmapX, id: keypointId },
+          });
         }
       }
     }

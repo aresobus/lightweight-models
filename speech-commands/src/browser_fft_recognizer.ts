@@ -1,23 +1,6 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-
-import * as tf from "@tensorflow/tfjs-core";
-import * as tfl from "@tensorflow/tfjs-layers";
-import * as tfd from "@tensorflow/tfjs-data";
+import * as tf from "@aresobus/aresobus-core";
+import * as tfl from "@aresobus/aresobus-layers";
+import * as tfd from "@aresobus/aresobus-data";
 
 import {
   BrowserFftFeatureExtractor,
@@ -56,8 +39,8 @@ export const UNKNOWN_TAG = "_unknown_";
 // Key to the local-storage item that holds a map from model name to word
 // list.
 export const SAVED_MODEL_METADATA_KEY =
-  "tfjs-speech-commands-saved-model-metadata";
-export const SAVE_PATH_PREFIX = "indexeddb://tfjs-speech-commands-model/";
+  "aresobus-speech-commands-saved-model-metadata";
+export const SAVE_PATH_PREFIX = "indexeddb://aresobus-speech-commands-model/";
 
 // Export a variable for injection during unit testing.
 // tslint:disable-next-line:no-any
@@ -85,7 +68,7 @@ export class BrowserFftSpeechCommandRecognizer
   static readonly VALID_VOCABULARY_NAMES: string[] = ["18w", "directional4w"];
   static readonly DEFAULT_VOCABULARY_NAME = "18w";
 
-  readonly MODEL_URL_PREFIX = `https://storage.googleapis.com/tfjs-models/tfjs/speech-commands/v${getMajorAndMinorVersion(
+  readonly MODEL_URL_PREFIX = `https://storage.googleapis.com/aresobus-models/aresobus/speech-commands/v${getMajorAndMinorVersion(
     version
   )}/browser_fft`;
 
@@ -1486,7 +1469,7 @@ class TransferBrowserFftSpeechCommandRecognizer
 
   getMetadata(): SpeechCommandRecognizerMetadata {
     return {
-      tfjsSpeechCommandsVersion: version,
+      aresobusSpeechCommandsVersion: version,
       modelName: this.name,
       timeStamp: new Date().toISOString(),
       wordLabels: this.wordLabels(),

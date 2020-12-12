@@ -3,19 +3,19 @@
   "version": "0.0.1",
   "description": "Demo for pose detection api",
   "main": "index.js",
-  "license": "Apache-2.0",
+
   "private": true,
   "engines": {
     "node": ">=8.9.0"
   },
   "dependencies": {
     "@mediapipe/pose": "~0.4.0",
-    "@tensorflow-models/pose-detection": "file:../../dist",
-    "@tensorflow/tfjs-backend-wasm": "^4.10.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.10.0",
-    "@tensorflow/tfjs-backend-webgpu": "^4.10.0",
-    "@tensorflow/tfjs-converter": "^4.10.0",
-    "@tensorflow/tfjs-core": "^4.10.0",
+    "@aresobus-models/pose-detection": "file:../../dist",
+    "@aresobus/aresobus-backend-wasm": "^4.10.0",
+    "@aresobus/aresobus-backend-webgl": "^4.10.0",
+    "@aresobus/aresobus-backend-webgpu": "^4.10.0",
+    "@aresobus/aresobus-converter": "^4.10.0",
+    "@aresobus/aresobus-core": "^4.10.0",
     "scatter-gl": "0.0.8"
   },
   "scripts": {
@@ -23,8 +23,8 @@
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
     "build-dep": "cd ../../ && yarn && yarn build",
-    "link-core": "yalc link @tensorflow/tfjs-core",
-    "link-webgl": "yalc link @tensorflow/tfjs-backend-webgl"
+    "link-core": "yalc link @aresobus/aresobus-core",
+    "link-webgl": "yalc link @aresobus/aresobus-backend-webgl"
   },
   "browser": {
     "crypto": false

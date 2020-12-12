@@ -1,36 +1,29 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as cocoSsd from "@aresobus/coco-ssd";
 
-import * as cocoSsd from '@tensorflow-models/coco-ssd';
+import { TaskModelLoader } from "../../task_model";
+import {
+  ensurearesobusBackend,
+  Runtime,
+  Task,
+  aresobusModelCommonLoadingOption,
+} from "../common";
 
-import {TaskModelLoader} from '../../task_model';
-import {ensureTFJSBackend, Runtime, Task, TFJSModelCommonLoadingOption} from '../common';
-
-import {DetectedObject, ObjectDetectionResult, ObjectDetector} from './common';
+import {
+  DetectedObject,
+  ObjectDetectionResult,
+  ObjectDetector,
+} from "./common";
 
 // The global namespace type.
 type CocoSsdNS = typeof cocoSsd;
 
 /** Loading options. */
-export interface CocoSsdTFJSLoadingOptions extends TFJSModelCommonLoadingOption,
-                                                   cocoSsd.ModelConfig {}
+export interface CocoSsdaresobusLoadingOptions
+  extends aresobusModelCommonLoadingOption,
+    cocoSsd.ModelConfig {}
 
 /** Inference options. */
-export interface CocoSsdTFJSInferenceOptions {
+export interface CocoSsdaresobusInferenceOptions {
   /**
    * The maximum number of bounding boxes of detected objects. There can be
    * multiple objects of the same class, but at different locations. Defaults
@@ -44,35 +37,35 @@ export interface CocoSsdTFJSInferenceOptions {
   minScore?: number;
 }
 
-/** Loader for cocossd TFJS model. */
-export class CocoSsdTFJSLoader extends
-    TaskModelLoader<CocoSsdNS, CocoSsdTFJSLoadingOptions, CocoSsdTFJS> {
+/** Loader for cocossd JS model. */
+export class CocoSsdaresobusLoader extends TaskModelLoader<
+  CocoSsdNS,
+  CocoSsdaresobusLoadingOptions,
+  CocoSsdaresobus
+> {
   readonly metadata = {
-    name: 'TFJS COCO-SSD',
-    description: 'Run COCO-SSD object detection model with TFJS',
+    name: "aresobus COCO-SSD",
+    description: "Run COCO-SSD object detection model with aresobus",
     resourceUrls: {
-      'github':
-          'https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd',
+      github: "https://github.com//aresobus-models/tree/master/coco-ssd",
     },
-    runtime: Runtime.TFJS,
-    version: '2.2.2',
+    runtime: Runtime.aresobus,
+    version: "2.2.2",
     supportedTasks: [Task.OBJECT_DETECTION],
   };
-  readonly packageUrls =
-      [[`https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@${
-          this.metadata.version}`]];
-  readonly sourceModelGlobalNamespace = 'cocoSsd';
+  readonly sourceModelGlobalNamespace = "cocoSsd";
 
   protected async transformSourceModel(
-      sourceModelGlobal: CocoSsdNS,
-      loadingOptions?: CocoSsdTFJSLoadingOptions): Promise<CocoSsdTFJS> {
+    sourceModelGlobal: CocoSsdNS,
+    loadingOptions?: CocoSsdaresobusLoadingOptions
+  ): Promise<CocoSsdaresobus> {
     const cocoSsdModel = await sourceModelGlobal.load(loadingOptions);
-    return new CocoSsdTFJS(cocoSsdModel, loadingOptions);
+    return new CocoSsdaresobus(cocoSsdModel, loadingOptions);
   }
 }
 
 /**
- * Pre-trained TFJS coco-ssd model.
+ * Pre-trained aresobus coco-ssd model.
  *
  * Usage:
  *
@@ -82,7 +75,7 @@ export class CocoSsdTFJSLoader extends
  * // By default, it uses lite_mobilenet_v2 as the base model with webgl
  * // backend. You can change them in the `options` parameter of the `load`
  * // function (see below for docs).
- * const model = await tfTask.ObjectDetection.CocoSsd.TFJS.load();
+ * const model = await tfTask.ObjectDetection.CocoSsd.aresobus.load();
  *
  * // Run detection on an image with options (optional).
  * const img = document.querySelector('img');
@@ -96,32 +89,35 @@ export class CocoSsdTFJSLoader extends
  * Refer to `tfTask.ObjectDetector` for the `predict` and `cleanUp` method.
  *
  * @docextratypes [
- *   {description: 'Options for `load`', symbol: 'CocoSsdTFJSLoadingOptions'},
+ *   {description: 'Options for `load`', symbol: 'CocoSsdaresobusLoadingOptions'},
  *   {description: 'Options for `predict`', symbol:
- * 'CocoSsdTFJSInferenceOptions'}
+ * 'CocoSsdaresobusInferenceOptions'}
  * ]
  *
  * @doc {heading: 'Object Detection', subheading: 'Models'}
  */
-export class CocoSsdTFJS extends ObjectDetector<CocoSsdTFJSInferenceOptions> {
+export class CocoSsdaresobus extends ObjectDetector<CocoSsdaresobusInferenceOptions> {
   constructor(
-      private cocoSsdModel?: cocoSsd.ObjectDetection,
-      private loadingOptions?: CocoSsdTFJSLoadingOptions) {
+    private cocoSsdModel?: cocoSsd.ObjectDetection,
+    private loadingOptions?: CocoSsdaresobusLoadingOptions
+  ) {
     super();
   }
 
   async predict(
-      img: ImageData|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement,
-      infereceOptions?: CocoSsdTFJSInferenceOptions):
-      Promise<ObjectDetectionResult> {
+    img: ImageData | HTMLImageElement | HTMLCanvasElement | HTMLVideoElement,
+    infereceOptions?: CocoSsdaresobusInferenceOptions
+  ): Promise<ObjectDetectionResult> {
     if (!this.cocoSsdModel) {
-      throw new Error('source model is not loaded');
+      throw new Error("source model is not loaded");
     }
-    await ensureTFJSBackend(this.loadingOptions);
+    await ensurearesobusBackend(this.loadingOptions);
     const cocoSsdResults = await this.cocoSsdModel.detect(
-        img, infereceOptions ? infereceOptions.maxNumBoxes : undefined,
-        infereceOptions ? infereceOptions.minScore : undefined);
-    const objects: DetectedObject[] = cocoSsdResults.map(result => {
+      img,
+      infereceOptions ? infereceOptions.maxNumBoxes : undefined,
+      infereceOptions ? infereceOptions.minScore : undefined
+    );
+    const objects: DetectedObject[] = cocoSsdResults.map((result) => {
       return {
         boundingBox: {
           originX: result.bbox[0],
@@ -141,10 +137,10 @@ export class CocoSsdTFJS extends ObjectDetector<CocoSsdTFJSInferenceOptions> {
 
   cleanUp() {
     if (!this.cocoSsdModel) {
-      throw new Error('source model is not loaded');
+      throw new Error("source model is not loaded");
     }
     return this.cocoSsdModel.dispose();
   }
 }
 
-export const cocoSsdTfjsLoader = new CocoSsdTFJSLoader();
+export const cocoSsdaresobusLoader = new CocoSsdaresobusLoader();

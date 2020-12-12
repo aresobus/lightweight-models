@@ -1,38 +1,22 @@
-/**
- * @license
- * Copyright 2021 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-import {Pose} from '../types';
-import {BoundingBoxTracker} from './bounding_box_tracker';
-import {Track} from './interfaces/common_interfaces';
-import {TrackerConfig} from './interfaces/config_interfaces';
+import { Pose } from "../types";
+import { BoundingBoxTracker } from "./bounding_box_tracker";
+import { Track } from "./interfaces/common_interfaces";
+import { TrackerConfig } from "./interfaces/config_interfaces";
 
-describe('Bounding box tracker', () => {
+describe("Bounding box tracker", () => {
   const trackerConfig: TrackerConfig = {
     maxTracks: 4,
-    maxAge: 1000,  // Unit: milliseconds.
+    maxAge: 1000, // Unit: milliseconds.
     minSimilarity: 0.5,
-    boundingBoxTrackerParams: {}
+    boundingBoxTrackerParams: {},
   };
 
-  it('Instantiate tracker', () => {
+  it("Instantiate tracker", () => {
     const bboxTracker = new BoundingBoxTracker(trackerConfig);
     expect(bboxTracker instanceof BoundingBoxTracker).toBe(true);
   });
 
-  it('Compute IoU', () => {
+  it("Compute IoU", () => {
     const bboxTracker = new BoundingBoxTracker(trackerConfig);
     const pose: Pose = {
       keypoints: [],
@@ -42,8 +26,8 @@ describe('Bounding box tracker', () => {
         yMax: 1.0,
         xMax: 2 / 3,
         width: 2 / 3,
-        height: 1.0
-      }
+        height: 1.0,
+      },
     };
     const track: Track = {
       id: 0,
@@ -55,46 +39,74 @@ describe('Bounding box tracker', () => {
         yMax: 1.0,
         xMax: 1.0,
         width: 2 / 3,
-        height: 1.0
-      }
+        height: 1.0,
+      },
     };
-    const computedIoU = bboxTracker['iou'](pose, track);
+    const computedIoU = bboxTracker["iou"](pose, track);
     expect(computedIoU).toBeCloseTo(1 / 3, 6);
   });
 
-  it('Compute IoU with full overlap', () => {
+  it("Compute IoU with full overlap", () => {
     const bboxTracker = new BoundingBoxTracker(trackerConfig);
     const pose: Pose = {
       keypoints: [],
-      box: {yMin: 0.0, xMin: 0.0, yMax: 1.0, xMax: 1.0, width: 1.0, height: 1.0}
+      box: {
+        yMin: 0.0,
+        xMin: 0.0,
+        yMax: 1.0,
+        xMax: 1.0,
+        width: 1.0,
+        height: 1.0,
+      },
     };
     const track: Track = {
       id: 0,
       lastTimestamp: 1000000,
       keypoints: [],
-      box: {yMin: 0.0, xMin: 0.0, yMax: 1.0, xMax: 1.0, width: 1.0, height: 1.0}
+      box: {
+        yMin: 0.0,
+        xMin: 0.0,
+        yMax: 1.0,
+        xMax: 1.0,
+        width: 1.0,
+        height: 1.0,
+      },
     };
-    const computedIoU = bboxTracker['iou'](pose, track);
+    const computedIoU = bboxTracker["iou"](pose, track);
     expect(computedIoU).toBeCloseTo(1.0, 6);
   });
 
-  it('Compute IoU with no intersection', () => {
+  it("Compute IoU with no intersection", () => {
     const bboxTracker = new BoundingBoxTracker(trackerConfig);
     const pose: Pose = {
       keypoints: [],
-      box: {yMin: 0.0, xMin: 0.0, yMax: 0.5, xMax: 0.5, width: 0.5, height: 0.5}
+      box: {
+        yMin: 0.0,
+        xMin: 0.0,
+        yMax: 0.5,
+        xMax: 0.5,
+        width: 0.5,
+        height: 0.5,
+      },
     };
     const track: Track = {
       id: 0,
       lastTimestamp: 1000000,
       keypoints: [],
-      box: {yMin: 0.5, xMin: 0.5, yMax: 1.0, xMax: 1.0, width: 0.5, height: 0.5}
+      box: {
+        yMin: 0.5,
+        xMin: 0.5,
+        yMax: 1.0,
+        xMax: 1.0,
+        width: 0.5,
+        height: 0.5,
+      },
     };
-    const computedIoU = bboxTracker['iou'](pose, track);
+    const computedIoU = bboxTracker["iou"](pose, track);
     expect(computedIoU).toBeCloseTo(0.0, 6);
   });
 
-  it('Apply bounding box tracker', () => {
+  it("Apply bounding box tracker", () => {
     // Timestamp: 0. Poses becomes the first two tracks.
     const bboxTracker = new BoundingBoxTracker(trackerConfig);
     let tracks: Track[];
@@ -108,8 +120,8 @@ describe('Bounding box tracker', () => {
           yMax: 0.5,
           xMax: 0.5,
           width: 0.5,
-          height: 0.5
-        }
+          height: 0.5,
+        },
       },
       {
         // Becomes track 2.
@@ -120,9 +132,9 @@ describe('Bounding box tracker', () => {
           yMax: 1.0,
           xMax: 1.0,
           width: 1.0,
-          height: 1.0
-        }
-      }
+          height: 1.0,
+        },
+      },
     ];
     poses = bboxTracker.apply(poses, 0);
     tracks = bboxTracker.getTracks();
@@ -147,8 +159,8 @@ describe('Bounding box tracker', () => {
           yMax: 0.5,
           xMax: 0.5,
           width: 0.4,
-          height: 0.4
-        }
+          height: 0.4,
+        },
       },
       {
         // Becomes track 3.
@@ -159,9 +171,9 @@ describe('Bounding box tracker', () => {
           yMax: 0.9,
           xMax: 0.9,
           width: 0.7,
-          height: 0.6
-        }
-      }
+          height: 0.6,
+        },
+      },
     ];
     poses = bboxTracker.apply(poses, 100000);
     tracks = bboxTracker.getTracks();
@@ -189,8 +201,8 @@ describe('Bounding box tracker', () => {
           yMax: 0.5,
           xMax: 0.55,
           width: 0.4,
-          height: 0.45
-        }
+          height: 0.45,
+        },
       },
       {
         // Becomes track 4.
@@ -201,9 +213,9 @@ describe('Bounding box tracker', () => {
           yMax: 1.0,
           xMax: 1.0,
           width: 1.0,
-          height: 1.0
-        }
-      }
+          height: 1.0,
+        },
+      },
     ];
     poses = bboxTracker.apply(poses, 1050000);
     tracks = bboxTracker.getTracks();

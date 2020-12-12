@@ -1,41 +1,16 @@
-/**
- * @license
- * Copyright 2019 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
+import * as tf from "@aresobus/aresobus-core";
 
-/**
- * Tokenizer.encode() is a port of `EncodeAsIds` from the SentencePiece library
- * (https://github.com/google/sentencepiece). Encode uses the Viterbi algorithm
- * to find the most likely sequence of tokens that comprise the input. For more
- * details, refer to https://arxiv.org/pdf/1804.10959.pdf.
- */
+import { stringToChars } from "../util";
 
-import * as tf from '@tensorflow/tfjs-core';
+import { Trie } from "./trie";
 
-import {stringToChars} from '../util';
-
-import {Trie} from './trie';
-
-const separator =
-    '\u2581';  // This is the unicode character 'lower one eighth block'.
+const separator = "\u2581"; // This is the unicode character 'lower one eighth block'.
 
 function processInput(str: string): string {
-  const normalized = str.normalize('NFKC');
-  return normalized.length > 0 ?
-      separator + normalized.replace(/ /g, separator) :
-      normalized;
+  const normalized = str.normalize("NFKC");
+  return normalized.length > 0
+    ? separator + normalized.replace(/ /g, separator)
+    : normalized;
 }
 
 // The first tokens are reserved for unk, control symbols, and user-defined
@@ -45,17 +20,18 @@ const RESERVED_SYMBOLS_COUNT = 6;
 export type Vocabulary = Array<[string, number]>;
 
 type Score = {
-  key: string[],
-  score: number,
-  index: number
+  key: string[];
+  score: number;
+  index: number;
 };
 
 export class Tokenizer {
   trie: Trie;
 
   constructor(
-      private readonly vocabulary: Vocabulary,
-      private readonly reservedSymbolsCount = RESERVED_SYMBOLS_COUNT) {
+    private readonly vocabulary: Vocabulary,
+    private readonly reservedSymbolsCount = RESERVED_SYMBOLS_COUNT
+  ) {
     this.trie = new Trie();
 
     for (let i = this.reservedSymbolsCount; i < this.vocabulary.length; i++) {
@@ -64,7 +40,7 @@ export class Tokenizer {
   }
 
   encode(input: string): number[] {
-    const nodes: Array<{[index: number]: Score[]}> = [];
+    const nodes: Array<{ [index: number]: Score[] }> = [];
     const words: number[] = [];
     const best: number[] = [];
 
@@ -84,7 +60,7 @@ export class Tokenizer {
 
       for (let j = 0; j < matches.length; j++) {
         const piece = matches[j];
-        const obj = {key: piece[0], score: piece[1], index: piece[2]};
+        const obj = { key: piece[0], score: piece[1], index: piece[2] };
 
         const endPos = piece[0].length;
         if (nodes[i + endPos][i] == null) {

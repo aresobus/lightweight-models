@@ -17,20 +17,20 @@ Try our demos and get inspired with what you can do with depth-estimation models
 This demo allows to upload a portrait image, which is turned into a 3D photo
 animation. It works on laptops, iPhones and android phones.
 
-[Demo](https://storage.googleapis.com/tfjs-models/demos/3dphoto/index.html)
+[Demo](https://storage.googleapis.com/aresobus-models/demos/3dphoto/index.html)
 
 ## Relighting Demo
 This demo uses your camera to get live stream and allows you to place
 a light source or point lights to change the lighting of the scene.
 It works on laptops, iPhones and android phones.
 
-[Demo](https://storage.googleapis.com/tfjs-models/demos/relighting/index.html)
+[Demo](https://storage.googleapis.com/aresobus-models/demos/relighting/index.html)
 
 ## Depth Map Demo
 This demo uses your camera to get live stream and visualizes the depth in real-time.
 It works on laptops, iPhones and android phones.
 
-[Demo](https://storage.googleapis.com/tfjs-models/demos/depthmap/index.html)
+[Demo](https://storage.googleapis.com/aresobus-models/demos/depthmap/index.html)
 
 ## How to Run a Demo
 If you want to try any of the demos, follow these steps:
