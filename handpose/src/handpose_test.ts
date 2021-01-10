@@ -15,21 +15,24 @@
  * =============================================================================
  */
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 // tslint:disable-next-line: no-imports-from-dist
-import {ALL_ENVS, describeWithFlags} from '@tensorflow/tfjs-core/dist/jasmine_util';
+import {
+  ALL_ENVS,
+  describeWithFlags,
+} from "@tensorflow/tfjs-core/dist/jasmine_util";
 
-import * as handpose from './index';
-import {stubbedImageVals} from './test_util';
+import * as handpose from "./index";
+import { stubbedImageVals } from "./test_util";
 
-describeWithFlags('Handpose', ALL_ENVS, () => {
+describeWithFlags("Handpose", ALL_ENVS, () => {
   let model: handpose.HandPose;
   beforeAll(async () => {
     // Note: this makes a network request for model assets.
-    model = await handpose.load({detectionConfidence: 0});
+    model = await handpose.load({ detectionConfidence: 0 });
   });
 
-  it('estimateHands does not leak memory', async () => {
+  it("estimateHands does not leak memory", async () => {
     const input: tf.Tensor3D = tf.zeros([128, 128, 3]);
     // Do not count tensors involved in setup.
     await model.estimateHands(input);
@@ -45,7 +48,7 @@ describeWithFlags('Handpose', ALL_ENVS, () => {
     expect(tf.memory().numTensors).toEqual(beforeTensors);
   });
 
-  it('estimateHands returns objects with expected properties', async () => {
+  it("estimateHands returns objects with expected properties", async () => {
     // Stubbed image contains a single hand.
     const input: tf.Tensor3D = tf.tensor3d(stubbedImageVals, [128, 128, 3]);
     await model.estimateHands(input);
