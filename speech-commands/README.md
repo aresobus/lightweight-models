@@ -1,4 +1,3 @@
-Here's a revised and polished version of your README for the Speech Command Recognizer, enhancing clarity and readability:
 
 ---
 

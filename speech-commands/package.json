@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/speech-commands",
+  "name": "@aresobus/tensorflow-models-speech-commands",
   "version": "0.5.4",
-  "description": "Speech-command recognizer in TensorFlow.js",
+  "description": "Speech-command recognizer in TensorFlow.js maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/speech-commands.min.js",
   "jsdelivr": "dist/speech-commands.min.js",
@@ -10,8 +10,10 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "@tensorflow/tfjs-core": "^4.13.0",
     "@tensorflow/tfjs-data": "^4.13.0",
@@ -51,6 +53,5 @@
     "publish-local": "yarn build && rollup -c && yalc push",
     "build-npm": "yarn build && rollup -c",
     "test": "ts-node --skip-ignore --project tsconfig.test.json run_tests.ts"
-  },
-  "license": "Apache-2.0"
+  }
 }

@@ -8,7 +8,6 @@
     "link-local": "yalc link",
     "presubmit": "ts-node presubmit.ts"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/aresobus/lightweight-models"
@@ -17,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/aresobus/lightweight-models/issues"
   },
-  "author": "Oleksandr Lebedyev",
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.0.1",
