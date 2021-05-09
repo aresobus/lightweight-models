@@ -14,10 +14,10 @@
  * limitations under the License.
  * =============================================================================
  */
-import {GPGPUProgram, MathBackendWebGL} from '@tensorflow/tfjs-backend-webgl';
-import * as tf from '@tensorflow/tfjs-core';
+import { GPGPUProgram, MathBackendWebGL } from "@tensorflow/tfjs-backend-webgl";
+import * as tf from "@tensorflow/tfjs-core";
 
-import {SegmentationSmoothingConfig} from './interfaces/config_interfaces';
+import { SegmentationSmoothingConfig } from "./interfaces/config_interfaces";
 
 /**
  * A calculator for mixing two segmentation masks together, based on an
@@ -32,9 +32,11 @@ import {SegmentationSmoothingConfig} from './interfaces/config_interfaces';
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/image/segmentation_smoothing_calculator.cc
 export function smoothSegmentation(
-    prevMask: tf.Tensor2D, newMask: tf.Tensor2D,
-    config: SegmentationSmoothingConfig): tf.Tensor2D {
-  if (tf.getBackend() === 'webgl') {
+  prevMask: tf.Tensor2D,
+  newMask: tf.Tensor2D,
+  config: SegmentationSmoothingConfig
+): tf.Tensor2D {
+  if (tf.getBackend() === "webgl") {
     // Same as implementation in the else case but reduces number of shader
     // calls to 1 instead of 17.
     return smoothSegmentationWebGL(prevMask, newMask, config);
@@ -62,40 +64,45 @@ export function smoothSegmentation(
     // * (c3 + x * (c4 + x * c5))))).
 
     const uncertainty = tf.sub(
+      1,
+      tf.minimum(
         1,
-        tf.minimum(
-            1,
+        tf.mul(
+          x,
+          tf.add(
+            c1,
             tf.mul(
-                x,
-                tf.add(
-                    c1,
-                    tf.mul(
-                        x,
-                        tf.add(
-                            c2,
-                            tf.mul(
-                                x,
-                                tf.add(
-                                    c3,
-                                    tf.mul(
-                                        x, tf.add(c4, tf.mul(x, c5)))))))))));
+              x,
+              tf.add(
+                c2,
+                tf.mul(x, tf.add(c3, tf.mul(x, tf.add(c4, tf.mul(x, c5)))))
+              )
+            )
+          )
+        )
+      )
+    );
 
     // Per element calculation is: newMaskValue + (prevMaskValue -
     // newMaskValue) * (uncertainty * combineWithPreviousRatio).
     return tf.add(
-        newMask,
-        tf.mul(
-            tf.sub(prevMask, newMask),
-            tf.mul(uncertainty, config.combineWithPreviousRatio)));
+      newMask,
+      tf.mul(
+        tf.sub(prevMask, newMask),
+        tf.mul(uncertainty, config.combineWithPreviousRatio)
+      )
+    );
   });
 }
 
 function smoothSegmentationWebGL(
-    prevMask: tf.Tensor2D, newMask: tf.Tensor2D,
-    config: SegmentationSmoothingConfig): tf.Tensor2D {
+  prevMask: tf.Tensor2D,
+  newMask: tf.Tensor2D,
+  config: SegmentationSmoothingConfig
+): tf.Tensor2D {
   const ratio = config.combineWithPreviousRatio.toFixed(2);
   const program: GPGPUProgram = {
-    variableNames: ['prevMask', 'newMask'],
+    variableNames: ["prevMask", "newMask"],
     outputShape: prevMask.shape,
     userCode: `
   void main() {
@@ -132,15 +139,21 @@ function smoothSegmentationWebGL(
 
       setOutput(outputValue);
     }
-`
+`,
   };
   const webglBackend = tf.backend() as MathBackendWebGL;
 
   return tf.tidy(() => {
-    const outputTensorInfo =
-        webglBackend.compileAndRun(program, [prevMask, newMask]);
-    return tf.engine().makeTensorFromDataId(
-               outputTensorInfo.dataId, outputTensorInfo.shape,
-               outputTensorInfo.dtype) as tf.Tensor2D;
+    const outputTensorInfo = webglBackend.compileAndRun(program, [
+      prevMask,
+      newMask,
+    ]);
+    return tf
+      .engine()
+      .makeTensorFromDataId(
+        outputTensorInfo.dataId,
+        outputTensorInfo.shape,
+        outputTensorInfo.dtype
+      ) as tf.Tensor2D;
   });
 }

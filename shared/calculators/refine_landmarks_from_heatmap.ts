@@ -14,11 +14,11 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-import {Keypoint} from './interfaces/common_interfaces';
+import { Keypoint } from "./interfaces/common_interfaces";
 
-import {RefineLandmarksFromHeatmapConfig} from './interfaces/config_interfaces';
+import { RefineLandmarksFromHeatmapConfig } from "./interfaces/config_interfaces";
 
 /**
  * A calculator that refines landmarks using corresponding heatmap area.
@@ -40,16 +40,19 @@ import {RefineLandmarksFromHeatmapConfig} from './interfaces/config_interfaces';
  * @returns Normalized landmarks.
  */
 export async function refineLandmarksFromHeatmap(
-    landmarks: Keypoint[], heatmapTensor: tf.Tensor4D,
-    config: RefineLandmarksFromHeatmapConfig): Promise<Keypoint[]> {
+  landmarks: Keypoint[],
+  heatmapTensor: tf.Tensor4D,
+  config: RefineLandmarksFromHeatmapConfig
+): Promise<Keypoint[]> {
   // tslint:disable-next-line: no-unnecessary-type-assertion
   const $heatmapTensor = tf.squeeze(heatmapTensor, [0]) as tf.Tensor3D;
   const [hmHeight, hmWidth, hmChannels] = $heatmapTensor.shape;
   if (landmarks.length !== hmChannels) {
     throw new Error(
-        'Expected heatmap to have same number of channels ' +
-        'as the number of landmarks. But got landmarks length: ' +
-        `${landmarks.length}, heatmap length: ${hmChannels}`);
+      "Expected heatmap to have same number of channels " +
+        "as the number of landmarks. But got landmarks length: " +
+        `${landmarks.length}, heatmap length: ${hmChannels}`
+    );
   }
 
   const outLandmarks = [];
@@ -57,14 +60,18 @@ export async function refineLandmarksFromHeatmap(
 
   for (let i = 0; i < landmarks.length; i++) {
     const landmark = landmarks[i];
-    const outLandmark = {...landmark};
+    const outLandmark = { ...landmark };
     outLandmarks.push(outLandmark);
 
     const centerCol = Math.trunc(outLandmark.x * hmWidth);
     const centerRow = Math.trunc(outLandmark.y * hmHeight);
     // Point is outside of the image let's keep it intact.
-    if (centerCol < 0 || centerCol >= hmWidth || centerRow < 0 ||
-        centerCol >= hmHeight) {
+    if (
+      centerCol < 0 ||
+      centerCol >= hmWidth ||
+      centerRow < 0 ||
+      centerCol >= hmHeight
+    ) {
       continue;
     }
 

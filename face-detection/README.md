@@ -1,84 +1,86 @@
+
+
+---
+
 # Face Detection
 
-This package provides models for running real-time face detection.
+This package enables real-time face detection in web applications using TensorFlow.js. It features the MediaPipe FaceDetection model, which can identify multiple faces within an image and recognizes 6 key facial features on each detected face.
 
-Currently, we provide 1 model option:
+Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/face-detection/index.html?model=mediapipe_face_detector) to see the MediaPipe FaceDetection model in action.
 
-#### MediaPipe FaceDetection:
-[Demo](https://storage.googleapis.com/tfjs-models/demos/face-detection/index.html?model=mediapipe_face_detector)
+## Overview
 
-MediaPipe FaceDetection can detect multiple faces, each face contains 6 keypoints.
+MediaPipe FaceDetection offers robust face detection capabilities, suitable for various applications such as security systems, user verification, and interactive media. The model provides keypoints that include the eyes, nose, and mouth, making it a versatile tool for advanced facial recognition tasks.
 
-More background information about the package, as well as its performance characteristics on different datasets, can be found here: [Short Range Model Card](https://drive.google.com/file/d/1d4-xJP9PVzOvMBDgIjz6NhvpnlG9_i0S/preview), [Sparse Full Range Model Card](https://drive.google.com/file/d/1aZtpSwsBhA1Epd-ZDfwoQYSTQwEfLm5Z/preview).
-
--------------------------------------------------------------------------------
 ## Table of Contents
-1. [How to Run It](#how-to-run-it)
-2. [Example Code and Demos](#example-code-and-demos)
+1. [Installation](#installation)
+2. [How to Run It](#how-to-run-it)
+3. [Example Code and Demos](#example-code-and-demos)
 
--------------------------------------------------------------------------------
+## Installation
+
+You can integrate Face Detection into your web application either through direct script tags or via npm.
+
+### Via Script Tags
+
+Embed the following scripts in your HTML to get started:
+
+```html
+<!-- Load TensorFlow.js -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<!-- Load the Face Detection model -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection"></script>
+```
+
+### Via NPM
+
+Install the required packages using npm or yarn:
+
+```bash
+npm install @tensorflow-models/face-detection
+yarn add @tensorflow/tfjs-core
+yarn add @tensorflow/tfjs-converter
+```
+
 ## How to Run It
-In general there are two steps:
 
-You first create a detector by choosing one of the models from `SupportedModels`, including `MediaPipeFaceDetector`.
-
-For example:
+To use the model in your project, you'll first need to create a detector:
 
 ```javascript
 const model = faceDetection.SupportedModels.MediaPipeFaceDetector;
 const detectorConfig = {
-  runtime: 'mediapipe', // or 'tfjs'
-}
+  runtime: 'mediapipe' // or 'tfjs'
+};
 const detector = await faceDetection.createDetector(model, detectorConfig);
 ```
 
-Then you can use the detector to detect faces.
+Then, you can detect faces in an image:
 
+```javascript
+const faces = await detector.estimateFaces(imageElement);
 ```
-const faces = await detector.estimateFaces(image);
-```
 
-The returned face list contains detected faces for each face in the image.
-If the model cannot detect any faces, the list will be empty.
+The output will include the bounding box and keypoints for each detected face:
 
-For each face, it contains a bounding box of the detected face, as well as an array of keypoints. `MediaPipeFaceDetector` returns 6 keypoints.
-Each keypoint contains x and y, as well as a name.
-
-Example output:
-```
+```json
 [
   {
-    box: {
-      xMin: 304.6476503248806,
-      xMax: 502.5079975897382,
-      yMin: 102.16298762367356,
-      yMax: 349.035215984403,
-      width: 197.86034726485758,
-      height: 246.87222836072945
+    "box": {
+      "xMin": 304.65,
+      "xMax": 502.51,
+      "yMin": 102.16,
+      "yMax": 349.04,
+      "width": 197.86,
+      "height": 246.87
     },
-    keypoints: [
-      {x: 446.544237446397, y: 256.8054528661723, name: "rightEye"},
-      {x: 406.53152857172876, y: 255.8, "leftEye },
-      ...
-    ],
+    "keypoints": [
+      {"x": 446.54, "y": 256.81, "name": "rightEye"},
+      {"x": 406.53, "y": 255.8, "name": "leftEye"}
+    ]
   }
 ]
 ```
 
-The `box` represents the bounding box of the face in the image pixel space, with `xMin`, `xMax` denoting the x-bounds, `yMin`, `yMax` denoting the y-bounds, and `width`, `height` are the dimensions of the bounding box.
-
-For the `keypoints`, x and y represent the actual keypoint position in the image pixel space.
-
-The name provides a label for the keypoint, which are 'rightEye', 'leftEye', 'noseTip', 'mouthCenter', 'rightEarTragion', and 'leftEarTragion' respectively.
-
-Refer to each model's documentation for specific configurations for the model
-and their performance.
-
-[MediaPipeFaceDetector MediaPipe Documentation](https://github.com/tensorflow/tfjs-models/tree/master/face-detection/src/mediapipe)
-
-[MediaPipeFaceDetector TFJS Documentation](https://github.com/tensorflow/tfjs-models/tree/master/face-detection/src/tfjs)
-
 ## Example Code and Demos
-You may reference the demos for code examples. Details for how to run the demos
-are included in the `demos/`
-[folder](https://github.com/tensorflow/tfjs-models/tree/master/face-detection/demos).
+
+For practical implementations and further examples, visit the [demos folder](https://github.com/tensorflow/tfjs-models/tree/master/face-detection/demos).

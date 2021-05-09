@@ -14,29 +14,46 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 // tslint:disable-next-line: no-imports-from-dist
-import {BROWSER_ENVS, describeWithFlags} from '@tensorflow/tfjs-core/dist/jasmine_util';
+import {
+  BROWSER_ENVS,
+  describeWithFlags,
+} from "@tensorflow/tfjs-core/dist/jasmine_util";
 // tslint:disable-next-line: no-imports-from-dist
-import {expectNumbersClose} from '@tensorflow/tfjs-core/dist/test_util';
+import { expectNumbersClose } from "@tensorflow/tfjs-core/dist/test_util";
 
-import {arrayToMatrix4x4} from './calculate_inverse_matrix';
-import {smoothSegmentation} from './segmentation_smoothing';
+import { arrayToMatrix4x4 } from "./calculate_inverse_matrix";
+import { smoothSegmentation } from "./segmentation_smoothing";
 
 function runTest(useWebGL: boolean, mixRatio: number) {
   const prevMask = arrayToMatrix4x4(new Array(16).fill(111 / 255));
   const curMask = arrayToMatrix4x4([
-    0.00, 0.00, 0.00, 0.00,  //
-    0.00, 0.98, 0.98, 0.00,  //
-    0.00, 0.98, 0.98, 0.00,  //
-    0.00, 0.00, 0.00, 0.00
+    0.0,
+    0.0,
+    0.0,
+    0.0, //
+    0.0,
+    0.98,
+    0.98,
+    0.0, //
+    0.0,
+    0.98,
+    0.98,
+    0.0, //
+    0.0,
+    0.0,
+    0.0,
+    0.0,
   ]);
 
-  tf.setBackend(useWebGL ? 'webgl' : 'cpu');
+  tf.setBackend(useWebGL ? "webgl" : "cpu");
 
   const resultMask = smoothSegmentation(
-      tf.tensor2d(prevMask), tf.tensor2d(curMask),
-      {combineWithPreviousRatio: mixRatio});
+    tf.tensor2d(prevMask),
+    tf.tensor2d(curMask),
+    { combineWithPreviousRatio: mixRatio }
+  );
 
   expect(resultMask.shape[0]).toBe(curMask.length);
   expect(resultMask.shape[1]).toBe(curMask[0].length);
@@ -62,8 +79,7 @@ function runTest(useWebGL: boolean, mixRatio: number) {
       for (let j = 0; j < 4; ++j) {
         const input = curMask[i][j];
         const output = result[i][j];
-        expectNumbersClose(
-            input, output, 1e-7);  // Output should match current.
+        expectNumbersClose(input, output, 1e-7); // Output should match current.
       }
     }
   } else {
@@ -72,8 +88,8 @@ function runTest(useWebGL: boolean, mixRatio: number) {
 
   return result;
 }
-describeWithFlags('smoothSegmentation ', BROWSER_ENVS, () => {
-  it('test smoothing.', async () => {
+describeWithFlags("smoothSegmentation ", BROWSER_ENVS, () => {
+  it("test smoothing.", async () => {
     runTest(false, 0.0);
     const cpuResult = runTest(false, 1.0);
     const glResult = runTest(true, 1.0);

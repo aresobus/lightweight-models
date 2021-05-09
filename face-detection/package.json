@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/face-detection",
+  "name": "@aresobus/tensorflow-models-face-detection",
   "version": "1.0.2",
-  "description": "Pretrained face detection model",
+  "description": "Pretrained face detection model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/face-detection.esm.js",
   "module": "dist/face-detection.esm.js",
@@ -10,8 +10,10 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "@mediapipe/face_detection": "~0.4.0",
     "@tensorflow/tfjs-backend-webgl": "^4.18.0",
@@ -52,15 +54,14 @@
   "scripts": {
     "bundle": "rollup -c",
     "build": "rimraf dist && tsc && yarn bundle",
-    "publish-local": "yarn build && rollup -c && yalc publish",
+    "publish-local": "yarn build && rollup -c and yalc publish",
     "run-browserstack": "karma start --browserstack",
     "test-node": "NODE_PRESERVE_SYMLINKS=1 ts-node --skip-ignore --project tsconfig.test.json run_tests.ts",
-    "test": "yarn && karma start",
+    "test": "yarn and karma start",
     "test-ci": "yarn run-browserstack --browsers=bs_chrome_mac",
-    "build-npm": "yarn build && yarn bundle",
+    "build-npm": "yarn build and yarn bundle",
     "lint": "tslint -p . -t verbose"
   },
-  "license": "Apache-2.0",
   "dependencies": {
     "rimraf": "^3.0.2",
     "tslib": "2.4.0"
