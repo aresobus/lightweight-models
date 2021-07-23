@@ -15,14 +15,14 @@
  * =============================================================================
  */
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-import {PART_NAMES} from '../keypoints';
-import {BodyPixOutputStride} from '../types';
-import {Keypoint, Pose} from '../types';
+import { PART_NAMES } from "../keypoints";
+import { BodyPixOutputStride } from "../types";
+import { Keypoint, Pose } from "../types";
 
-import {argmax2d} from './argmax2d';
-import {getOffsetPoints, getPointsConfidence} from './util';
+import { argmax2d } from "./argmax2d";
+import { getOffsetPoints, getPointsConfidence } from "./util";
 
 /**
  * Detects a single pose and finds its parts from part scores and offset
@@ -37,7 +37,7 @@ import {getOffsetPoints, getPointsConfidence} from './util';
  * row being the offset vector for the corresponding keypoint.
  * To get the keypoint, each part’s heatmap y and x are multiplied
  * by the output stride then added to their corresponding offset vector,
- * which is in the same scale as the original image. 
+ * which is in the same scale as the original image.
  *
  * @param heatmapScores 3-D tensor with shape `[height, width, numParts]`.
  * The value of heatmapScores[y, x, k]` is the score of placing the `k`-th
@@ -56,36 +56,45 @@ import {getOffsetPoints, getPointsConfidence} from './util';
  * and position.
  */
 export async function decodeSinglePose(
-    heatmapScores: tf.Tensor3D, offsets: tf.Tensor3D,
-    outputStride: BodyPixOutputStride): Promise<Pose> {
+  heatmapScores: tf.Tensor3D,
+  offsets: tf.Tensor3D,
+  outputStride: BodyPixOutputStride
+): Promise<Pose> {
   let totalScore = 0.0;
 
   const heatmapValues = argmax2d(heatmapScores);
 
-  const [scoresBuffer, offsetsBuffer, heatmapValuesBuffer] = await Promise.all(
-      [heatmapScores.buffer(), offsets.buffer(), heatmapValues.buffer()]);
+  const [scoresBuffer, offsetsBuffer, heatmapValuesBuffer] = await Promise.all([
+    heatmapScores.buffer(),
+    offsets.buffer(),
+    heatmapValues.buffer(),
+  ]);
 
-  const offsetPoints =
-      getOffsetPoints(heatmapValuesBuffer, outputStride, offsetsBuffer);
+  const offsetPoints = getOffsetPoints(
+    heatmapValuesBuffer,
+    outputStride,
+    offsetsBuffer
+  );
   const offsetPointsBuffer = await offsetPoints.buffer();
 
-  const keypointConfidence =
-      Array.from(getPointsConfidence(scoresBuffer, heatmapValuesBuffer));
+  const keypointConfidence = Array.from(
+    getPointsConfidence(scoresBuffer, heatmapValuesBuffer)
+  );
 
   const keypoints = keypointConfidence.map((score, keypointId): Keypoint => {
     totalScore += score;
     return {
       position: {
         y: offsetPointsBuffer.get(keypointId, 0),
-        x: offsetPointsBuffer.get(keypointId, 1)
+        x: offsetPointsBuffer.get(keypointId, 1),
       },
       part: PART_NAMES[keypointId],
-      score
+      score,
     };
   });
 
   heatmapValues.dispose();
   offsetPoints.dispose();
 
-  return {keypoints, score: totalScore / keypoints.length};
+  return { keypoints, score: totalScore / keypoints.length };
 }

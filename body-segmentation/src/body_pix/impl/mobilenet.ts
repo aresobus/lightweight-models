@@ -15,9 +15,9 @@
  * =============================================================================
  */
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-import {BaseModel} from './base_model';
+import { BaseModel } from "./base_model";
 
 export class MobileNet extends BaseModel {
   preprocessInput(input: tf.Tensor3D): tf.Tensor3D {
@@ -35,7 +35,7 @@ export class MobileNet extends BaseModel {
       displacementFwd,
       displacementBwd,
       partOffsets,
-  ] = results;
+    ] = results;
     return {
       offsets,
       segmentation,
@@ -44,7 +44,7 @@ export class MobileNet extends BaseModel {
       heatmap,
       displacementFwd,
       displacementBwd,
-      partOffsets
+      partOffsets,
     };
   }
 }
