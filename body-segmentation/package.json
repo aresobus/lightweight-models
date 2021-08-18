@@ -1,5 +1,5 @@
 {
-  "name": "@tensorflow-models/body-segmentation",
+  "name": "@aresobus/tensorflow-models-body-segmentation",
   "version": "1.0.2",
   "description": "Pretrained body segmentation model",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models.git"
   },
   "peerDependencies": {
     "@mediapipe/selfie_segmentation": "~0.1.0",

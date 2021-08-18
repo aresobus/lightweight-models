@@ -14,12 +14,16 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-import {refineLandmarksFromHeatmap} from './refine_landmarks_from_heatmap';
+import { refineLandmarksFromHeatmap } from "./refine_landmarks_from_heatmap";
 
 function chwToHWC(
-    chw: number[], height: number, width: number, depth: number): number[] {
+  chw: number[],
+  height: number,
+  width: number,
+  depth: number
+): number[] {
   let idx = 0;
   const hwc = [];
   for (let c = 0; c < depth; ++c) {
@@ -34,32 +38,72 @@ function chwToHWC(
   return hwc;
 }
 
-describe('refineLandmarksFromHeatmap ', () => {
+describe("refineLandmarksFromHeatmap ", () => {
   const z = -10000000000000000;
 
-  it('smoke.', async () => {
-    const landmarks = [{x: 0.5, y: 0.5}];
-    const heatmapTensor =
-        tf.sigmoid(tf.tensor4d([z, z, z, 1, z, z, z, z, z], [1, 3, 3, 1]));
+  it("smoke.", async () => {
+    const landmarks = [{ x: 0.5, y: 0.5 }];
+    const heatmapTensor = tf.sigmoid(
+      tf.tensor4d([z, z, z, 1, z, z, z, z, z], [1, 3, 3, 1])
+    );
 
-    const result = await refineLandmarksFromHeatmap(
-        landmarks, heatmapTensor, {kernelSize: 3, minConfidenceToRefine: 0.1});
+    const result = await refineLandmarksFromHeatmap(landmarks, heatmapTensor, {
+      kernelSize: 3,
+      minConfidenceToRefine: 0.1,
+    });
     expect(result[0].x).toBe(0);
     expect(result[0].y).toBe(1 / 3);
   });
 
-  it('multi-layer.', async () => {
-    const landmarks = [{x: 0.5, y: 0.5}, {x: 0.5, y: 0.5}, {x: 0.5, y: 0.5}];
-    const heatmapTensor = tf.sigmoid(tf.tensor4d(
+  it("multi-layer.", async () => {
+    const landmarks = [
+      { x: 0.5, y: 0.5 },
+      { x: 0.5, y: 0.5 },
+      { x: 0.5, y: 0.5 },
+    ];
+    const heatmapTensor = tf.sigmoid(
+      tf.tensor4d(
         chwToHWC(
-            [
-              z, z, z, 1, z, z, z, z, z, z, z, z, 1, z,
-              z, z, z, z, z, z, z, 1, z, z, z, z, z
-            ],
-            3, 3, 3),
-        [1, 3, 3, 3]));
-    const result = await refineLandmarksFromHeatmap(
-        landmarks, heatmapTensor, {kernelSize: 3, minConfidenceToRefine: 0.1});
+          [
+            z,
+            z,
+            z,
+            1,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            1,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            1,
+            z,
+            z,
+            z,
+            z,
+            z,
+          ],
+          3,
+          3,
+          3
+        ),
+        [1, 3, 3, 3]
+      )
+    );
+    const result = await refineLandmarksFromHeatmap(landmarks, heatmapTensor, {
+      kernelSize: 3,
+      minConfidenceToRefine: 0.1,
+    });
 
     for (let i = 0; i < 3; i++) {
       expect(result[i].x).toBe(0);
@@ -67,18 +111,55 @@ describe('refineLandmarksFromHeatmap ', () => {
     }
   });
 
-  it('keep if not sure.', async () => {
-    const landmarks = [{x: 0.5, y: 0.5}, {x: 0.5, y: 0.5}, {x: 0.5, y: 0.5}];
-    const heatmapTensor = tf.sigmoid(tf.tensor4d(
+  it("keep if not sure.", async () => {
+    const landmarks = [
+      { x: 0.5, y: 0.5 },
+      { x: 0.5, y: 0.5 },
+      { x: 0.5, y: 0.5 },
+    ];
+    const heatmapTensor = tf.sigmoid(
+      tf.tensor4d(
         chwToHWC(
-            [
-              z, z, z, 0, z, z, z, z, z, z, z, z, 0, z,
-              z, z, z, z, z, z, z, 0, z, z, z, z, z
-            ],
-            3, 3, 3),
-        [1, 3, 3, 3]));
-    const result = await refineLandmarksFromHeatmap(
-        landmarks, heatmapTensor, {kernelSize: 3, minConfidenceToRefine: 0.6});
+          [
+            z,
+            z,
+            z,
+            0,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            0,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            z,
+            0,
+            z,
+            z,
+            z,
+            z,
+            z,
+          ],
+          3,
+          3,
+          3
+        ),
+        [1, 3, 3, 3]
+      )
+    );
+    const result = await refineLandmarksFromHeatmap(landmarks, heatmapTensor, {
+      kernelSize: 3,
+      minConfidenceToRefine: 0.6,
+    });
 
     for (let i = 0; i < 3; i++) {
       expect(result[i].x).toBe(0.5);
@@ -86,15 +167,27 @@ describe('refineLandmarksFromHeatmap ', () => {
     }
   });
 
-  it('border.', async () => {
-    const landmarks = [{x: 0, y: 0}, {x: 0.9, y: 0.9}];
-    const heatmapTensor = tf.sigmoid(tf.tensor4d(
+  it("border.", async () => {
+    const landmarks = [
+      { x: 0, y: 0 },
+      { x: 0.9, y: 0.9 },
+    ];
+    const heatmapTensor = tf.sigmoid(
+      tf.tensor4d(
         chwToHWC(
-            [z, z, z, 0, z, 0, z, z, z, z, z, z, 0, z, 0, z, z, 0], 3, 3, 2),
-        [1, 3, 3, 2]));
+          [z, z, z, 0, z, 0, z, z, z, z, z, z, 0, z, 0, z, z, 0],
+          3,
+          3,
+          2
+        ),
+        [1, 3, 3, 2]
+      )
+    );
 
-    const result = await refineLandmarksFromHeatmap(
-        landmarks, heatmapTensor, {kernelSize: 3, minConfidenceToRefine: 0.1});
+    const result = await refineLandmarksFromHeatmap(landmarks, heatmapTensor, {
+      kernelSize: 3,
+      minConfidenceToRefine: 0.1,
+    });
 
     expect(result[0].x).toBe(0);
     expect(result[0].y).toBe(1 / 3);
