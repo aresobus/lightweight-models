@@ -14,15 +14,21 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
-import {Matrix4x4} from './calculate_inverse_matrix';
-import {getRotatedSubRectToRectTransformMatrix} from './get_rotated_sub_rect_to_rect_transformation_matrix';
-import {getImageSize, getProjectiveTransformMatrix, getRoi, padRoi, toImageTensor} from './image_utils';
-import {Padding, PixelInput} from './interfaces/common_interfaces';
-import {ImageToTensorConfig} from './interfaces/config_interfaces';
-import {Rect} from './interfaces/shape_interfaces';
-import {shiftImageValue} from './shift_image_value';
+import { Matrix4x4 } from "./calculate_inverse_matrix";
+import { getRotatedSubRectToRectTransformMatrix } from "./get_rotated_sub_rect_to_rect_transformation_matrix";
+import {
+  getImageSize,
+  getProjectiveTransformMatrix,
+  getRoi,
+  padRoi,
+  toImageTensor,
+} from "./image_utils";
+import { Padding, PixelInput } from "./interfaces/common_interfaces";
+import { ImageToTensorConfig } from "./interfaces/config_interfaces";
+import { Rect } from "./interfaces/shape_interfaces";
+import { shiftImageValue } from "./shift_image_value";
 
 /**
  * Convert an image or part of it to an image tensor.
@@ -42,16 +48,19 @@ import {shiftImageValue} from './shift_image_value';
  * input image to transformed image.
  */
 export function convertImageToTensor(
-    image: PixelInput, config: ImageToTensorConfig, normRect?: Rect): {
-  imageTensor: tf.Tensor4D,
-  padding: Padding,
-  transformationMatrix: Matrix4x4
+  image: PixelInput,
+  config: ImageToTensorConfig,
+  normRect?: Rect
+): {
+  imageTensor: tf.Tensor4D;
+  padding: Padding;
+  transformationMatrix: Matrix4x4;
 } {
   const {
     outputTensorSize,
     keepAspectRatio,
     borderMode,
-    outputTensorFloatRange
+    outputTensorFloatRange,
   } = config;
 
   // Ref:
@@ -60,30 +69,43 @@ export function convertImageToTensor(
   const roi = getRoi(imageSize, normRect);
   const padding = padRoi(roi, outputTensorSize, keepAspectRatio);
   const transformationMatrix = getRotatedSubRectToRectTransformMatrix(
-      roi, imageSize.width, imageSize.height, false);
+    roi,
+    imageSize.width,
+    imageSize.height,
+    false
+  );
 
   const imageTensor = tf.tidy(() => {
     const $image = toImageTensor(image);
 
     const transformMatrix = tf.tensor2d(
-        getProjectiveTransformMatrix(
-            transformationMatrix, imageSize, outputTensorSize),
-        [1, 8]);
+      getProjectiveTransformMatrix(
+        transformationMatrix,
+        imageSize,
+        outputTensorSize
+      ),
+      [1, 8]
+    );
 
-    const fillMode = borderMode === 'zero' ? 'constant' : 'nearest';
+    const fillMode = borderMode === "zero" ? "constant" : "nearest";
 
     const imageTransformed = tf.image.transform(
-        // tslint:disable-next-line: no-unnecessary-type-assertion
-        tf.expandDims(tf.cast($image, 'float32')) as tf.Tensor4D,
-        transformMatrix, 'bilinear', fillMode, 0,
-        [outputTensorSize.height, outputTensorSize.width]);
+      // tslint:disable-next-line: no-unnecessary-type-assertion
+      tf.expandDims(tf.cast($image, "float32")) as tf.Tensor4D,
+      transformMatrix,
+      "bilinear",
+      fillMode,
+      0,
+      [outputTensorSize.height, outputTensorSize.width]
+    );
 
-    const imageShifted = outputTensorFloatRange != null ?
-        shiftImageValue(imageTransformed, outputTensorFloatRange) :
-        imageTransformed;
+    const imageShifted =
+      outputTensorFloatRange != null
+        ? shiftImageValue(imageTransformed, outputTensorFloatRange)
+        : imageTransformed;
 
     return imageShifted;
   });
 
-  return {imageTensor, padding, transformationMatrix};
+  return { imageTensor, padding, transformationMatrix };
 }

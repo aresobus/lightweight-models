@@ -15,13 +15,13 @@
  * =============================================================================
  */
 // tslint:disable-next-line: no-imports-from-dist
-import {expectNumbersClose} from '@tensorflow/tfjs-core/dist/test_util';
+import { expectNumbersClose } from "@tensorflow/tfjs-core/dist/test_util";
 
-import {KARMA_SERVER} from '../test_util';
+import { KARMA_SERVER } from "../test_util";
 
-import {createSsdAnchors} from './create_ssd_anchors';
-import {AnchorConfig} from './interfaces/config_interfaces';
-import {Rect} from './interfaces/shape_interfaces';
+import { createSsdAnchors } from "./create_ssd_anchors";
+import { AnchorConfig } from "./interfaces/config_interfaces";
+import { Rect } from "./interfaces/shape_interfaces";
 
 const EPS = 1e-5;
 
@@ -32,7 +32,7 @@ function compareAnchors(actual: Rect[], expected: Rect[]) {
     const actualAnchor = actual[i];
     const expectedAnchor = expected[i];
 
-    for (const key of ['xCenter', 'yCenter', 'width', 'height'] as const ) {
+    for (const key of ["xCenter", "yCenter", "width", "height"] as const) {
       const actualValue = actualAnchor[key];
       const expectedValue = expectedAnchor[key];
 
@@ -42,19 +42,21 @@ function compareAnchors(actual: Rect[], expected: Rect[]) {
 }
 
 function parseAnchors(anchorsValues: number[][]): Rect[] {
-  return anchorsValues.map(anchorValues => ({
-                             xCenter: anchorValues[0],
-                             yCenter: anchorValues[1],
-                             width: anchorValues[2],
-                             height: anchorValues[3]
-                           }));
+  return anchorsValues.map((anchorValues) => ({
+    xCenter: anchorValues[0],
+    yCenter: anchorValues[1],
+    width: anchorValues[2],
+    height: anchorValues[3],
+  }));
 }
 
-describe('createSsdAnchors', () => {
-  it('face detection config.', async () => {
+describe("createSsdAnchors", () => {
+  it("face detection config.", async () => {
     const expectedAnchors = parseAnchors(
-        await fetch(`${KARMA_SERVER}/shared/anchor_golden_file_0.json`)
-            .then(response => response.json()));
+      await fetch(`${KARMA_SERVER}/shared/anchor_golden_file_0.json`).then(
+        (response) => response.json()
+      )
+    );
     const config: AnchorConfig = {
       featureMapHeight: [] as number[],
       featureMapWidth: [] as number[],
@@ -67,17 +69,19 @@ describe('createSsdAnchors', () => {
       anchorOffsetY: 0.5,
       strides: [8, 16, 32, 32, 32],
       aspectRatios: [1.0],
-      fixedAnchorSize: true
+      fixedAnchorSize: true,
     };
     const actualAnchors = createSsdAnchors(config);
 
     compareAnchors(actualAnchors, expectedAnchors);
   });
 
-  it('3 inputs reverse.', async () => {
+  it("3 inputs reverse.", async () => {
     const expectedAnchors = parseAnchors(
-        await fetch(`${KARMA_SERVER}/shared/anchor_golden_file_1.json`)
-            .then(response => response.json()));
+      await fetch(`${KARMA_SERVER}/shared/anchor_golden_file_1.json`).then(
+        (response) => response.json()
+      )
+    );
 
     const config: AnchorConfig = {
       featureMapHeight: [] as number[],
@@ -91,7 +95,7 @@ describe('createSsdAnchors', () => {
       anchorOffsetY: 0.5,
       strides: [16, 32, 64, 128, 256, 512],
       aspectRatios: [1.0, 2.0, 0.5, 3.0, 0.3333],
-      reduceBoxesInLowestLayer: true
+      reduceBoxesInLowestLayer: true,
     };
     const actualAnchors = createSsdAnchors(config);
 

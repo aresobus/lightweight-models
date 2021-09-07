@@ -1,154 +1,104 @@
-# MobileNet
 
-MobileNets are small, low-latency, low-power models parameterized to meet the resource constraints of a variety of use cases. They can be built upon for classification, detection, embeddings and segmentation similar to how other popular large scale models, such as Inception, are used.
 
-MobileNets trade off between latency, size and accuracy while comparing favorably with popular models from the literature.
+---
 
-This TensorFlow.js model does not require you to know about machine learning.
-It can take as input any browser-based image elements (`<img>`, `<video>`, `<canvas>`
-elements, for example) and returns an array of most likely predictions and
-their confidences.
+# MobileNet: Lightweight Models for TensorFlow.js
 
-For more information about MobileNet, check out this readme in
-[tensorflow/models](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md).
+MobileNets are efficient models that stand out for their speed and low computational demand. These models are parameterized to strike a balance between latency, size, and accuracy, making them ideal for mobile devices and low-power applications. They can be used for various tasks like classification, detection, embeddings, and segmentation.
+
+Learn more about the architecture and specifics of MobileNet from the official [MobileNet V1 documentation](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md).
 
 ## Usage
 
-There are two main ways to get this model in your JavaScript project: via script tags or by installing it from NPM and using a build tool like Parcel, WebPack, or Rollup.
+You can integrate MobileNet into your JavaScript project either by using script tags in HTML or by installing it from NPM for use with a build tool like Parcel, WebPack, or Rollup.
 
-### via Script Tag
+### Via Script Tag
+
+Add TensorFlow.js and MobileNet to your HTML file:
 
 ```html
-<!-- Load TensorFlow.js. This is required to use MobileNet. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"> </script>
-<!-- Load the MobileNet model. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"> </script>
+<!-- Load TensorFlow.js -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"></script>
+<!-- Load the MobileNet model -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@1.0.0"></script>
 
-<!-- Replace this with your image. Make sure CORS settings allow reading the image! -->
-<img id="img" src="cat.jpg"></img>
+<!-- Sample Image -->
+<img id="img" src="cat.jpg" alt="Sample Image">
 
-<!-- Place your code in the script tag below. You can also use an external .js file -->
 <script>
-  // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
-  // available on the index-page because of the script tag above.
-
+  // MobileNet is available as 'mobilenet' in the global scope.
   const img = document.getElementById('img');
 
-  // Load the model.
+  // Load the model and make a prediction.
   mobilenet.load().then(model => {
-    // Classify the image.
     model.classify(img).then(predictions => {
-      console.log('Predictions: ');
-      console.log(predictions);
+      console.log('Predictions:', predictions);
     });
   });
 </script>
 ```
 
-### via NPM
+### Via NPM
 
-```js
-// Note: you do not need to import @tensorflow/tfjs here.
+Install MobileNet via NPM and use it in your project:
 
+```bash
+npm install @tensorflow-models/mobilenet
+```
+
+Then, in your JavaScript file:
+
+```javascript
 const mobilenet = require('@tensorflow-models/mobilenet');
-
 const img = document.getElementById('img');
 
-// Load the model.
-const model = await mobilenet.load();
+async function classifyImage() {
+  const model = await mobilenet.load();
+  const predictions = await model.classify(img);
+  console.log('Predictions:', predictions);
+}
 
-// Classify the image.
-const predictions = await model.classify(img);
-
-console.log('Predictions: ');
-console.log(predictions);
+classifyImage();
 ```
 
-## API
+## API Reference
 
-#### Loading the model
-`mobilenet` is the module name, which is automatically included when you use the `<script src>` method. When using ES6 imports, mobilenet is the module.
+### Loading the Model
 
-```ts
+Load the MobileNet model with configurable options:
+
+```javascript
 mobilenet.load({
-    version: 1,
-    alpha?: 0.25 | .50 | .75 | 1.0,
-    modelUrl?: string
-    inputRange?: [number, number]
-  }
-)
-```
-___For users of previous versions (1.0.x), the API is:___
-
-```ts
-mobilenet.load(
-    version?: 1,
-    alpha?: 0.25 | .50 | .75 | 1.0
-)
+  version: 1,
+  alpha: 1.0,
+  modelUrl: 'path/to/model.json',
+  inputRange: [0, 1]
+});
 ```
 
+- **version**: Specifies the MobileNet version (1 or 2). Default is 1.
+- **alpha**: Controls the width of the network. Smaller alpha values offer lower accuracy and higher performance. Options: 0.25, 0.50, 0.75, 1.0. Default is 1.0.
+- **modelUrl**: Custom path to the model if not loading the standard model hosted on a server.
+- **inputRange**: Pixel value range that the model expects. Typically [0, 1] or [-1, 1].
 
+### Classifying an Image
 
-Args:
-- **version:** The MobileNet version number. Use 1 for [MobileNetV1](https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md), and 2 for [MobileNetV2](https://github.com/tensorflow/models/tree/master/research/slim/nets/mobilenet). Defaults to 1.
-- **alpha:** Controls the width of the network, trading accuracy for performance. A smaller alpha decreases accuracy and increases performance. 0.25 is only available for V1. Defaults to 1.0.
-- **modelUrl:** Optional param for specifying the custom model url or `tf.io.IOHandler` object.
-Returns a `model` object.
-- **inputRange:** Optional param specifying the pixel value range expected by the trained model hosted at the modelUrl. This is typically [0, 1] or [-1, 1].
+Classify an image using the loaded MobileNet model:
 
-`mobilenet` is the module name, which is automatically included when you use
-the <script src> method. When using ES6 imports, mobilenet is the module.
-
-
-#### Making a classification
-
-You can make a classification with mobilenet without needing to create a Tensor
-with `MobileNet.classify`, which takes an input image element and returns an
-array with top classes and their probabilities.
-
-If you want to use this for transfer learning, see the `infer` method.
-
-This method exists on the model that is loaded from `mobilenet.load`.
-
-```ts
-model.classify(
-  img: tf.Tensor3D | ImageData | HTMLImageElement |
-      HTMLCanvasElement | HTMLVideoElement,
-  topk?: number
-)
+```javascript
+const predictions = await model.classify(imgElement, topk);
 ```
 
-Args:
-- **img:** A Tensor or an image element to make a classification on.
-- **topk:** How many of the top probabilities to return. Defaults to 3.
+- **imgElement**: Can be a `tf.Tensor3D`, `ImageData`, `HTMLImageElement`, `HTMLCanvasElement`, or `HTMLVideoElement`.
+- **topk**: Optional. Specifies the number of top predictions to return. Default is 3.
 
-Returns a Promise that resolves to an array of classes and probabilities that looks like:
+### Getting Embeddings
 
-```js
-[{
-  className: "Egyptian cat",
-  probability: 0.8380282521247864
-}, {
-  className: "tabby, tabby cat",
-  probability: 0.04644153267145157
-}, {
-  className: "Siamese cat, Siamese",
-  probability: 0.024488523602485657
-}]
+Obtain embeddings for an image, useful for transfer learning scenarios:
+
+```javascript
+const embedding = await model.infer(imgElement, true);
 ```
 
-#### Getting embeddings
-
-You can also get the embedding of an image to do transfer learning. The size
-of the embedding depends on the alpha (width) of the model.
-
-```ts
-model.infer(
-  img: tf.Tensor3D | ImageData | HTMLImageElement |
-      HTMLCanvasElement | HTMLVideoElement,
-  embedding = false
-)
-```
-
-- **img:** A Tensor or an image element to make a classification on.
-- **embedding:** If true, it returns the embedding. Otherwise it returns the 1000-dim unnormalized logits.
+- **imgElement**: The image to process.
+- **embedding**: Set to `true` to get embeddings; otherwise, the method returns logits.
