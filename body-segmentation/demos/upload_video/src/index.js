@@ -15,62 +15,61 @@
  * =============================================================================
  */
 
-import '@tensorflow/tfjs-backend-webgl';
+import "@tensorflow/tfjs-backend-webgl";
 
-import * as mpPose from '@mediapipe/pose';
-import * as mpSelfieSegmentation from '@mediapipe/selfie_segmentation';
-import * as tfjsWasm from '@tensorflow/tfjs-backend-wasm';
+import * as mpPose from "@mediapipe/pose";
+import * as mpSelfieSegmentation from "@mediapipe/selfie_segmentation";
+import * as tfjsWasm from "@tensorflow/tfjs-backend-wasm";
 
 tfjsWasm.setWasmPaths(
-    `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${
-        tfjsWasm.version_wasm}/dist/`);
+  `https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm@${tfjsWasm.version_wasm}/dist/`
+);
 
-import * as bodySegmentation from '@tensorflow-models/body-segmentation';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as bodySegmentation from "@tensorflow-models/body-segmentation";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import * as tf from "@tensorflow/tfjs-core";
 
-import {setupStats} from './shared/stats_panel';
-import {Context} from './camera';
-import {setupDatGui} from './option_panel';
-import {STATE} from './shared/params';
-import {setBackendAndEnvFlags} from './shared/util';
+import { setupStats } from "./shared/stats_panel";
+import { Context } from "./camera";
+import { setupDatGui } from "./option_panel";
+import { STATE } from "./shared/params";
+import { setBackendAndEnvFlags } from "./shared/util";
 
 let segmenter, camera, stats;
-let fpsDisplayMode = 'model';
+let fpsDisplayMode = "model";
 const resetTime = {
   startInferenceTime: 0,
   numInferences: 0,
   inferenceTimeSum: 0,
-  lastPanelUpdate: 0
+  lastPanelUpdate: 0,
 };
-let modelTime = {...resetTime};
-let E2ETime = {...resetTime};
-const MODEL_LABEL = '(Model FPS)      ';
-const E2E_LABEL = '(End2End FPS)';
+let modelTime = { ...resetTime };
+let E2ETime = { ...resetTime };
+const MODEL_LABEL = "(Model FPS)      ";
+const E2E_LABEL = "(End2End FPS)";
 let rafId;
-const statusElement = document.getElementById('status');
-const canvas = document.createElement('canvas');
-const ctx = canvas.getContext('2d');
+const statusElement = document.getElementById("status");
+const canvas = document.createElement("canvas");
+const ctx = canvas.getContext("2d");
 
 async function createSegmenter() {
   switch (STATE.model) {
     case poseDetection.SupportedModels.BlazePose: {
-      const runtime = STATE.backend.split('-')[0];
-      if (runtime === 'mediapipe') {
+      const runtime = STATE.backend.split("-")[0];
+      if (runtime === "mediapipe") {
         return poseDetection.createDetector(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
-          solutionPath:
-              `https://cdn.jsdelivr.net/npm/@mediapipe/pose@${mpPose.VERSION}`,
+          solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/pose@${mpPose.VERSION}`,
           enableSegmentation: true,
-          smoothSegmentation: true
+          smoothSegmentation: true,
         });
-      } else if (runtime === 'tfjs') {
+      } else if (runtime === "tfjs") {
         return poseDetection.createDetector(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
           enableSegmentation: true,
-          smoothSegmentation: true
+          smoothSegmentation: true,
         });
       }
     }
@@ -79,20 +78,18 @@ async function createSegmenter() {
         architecture: STATE.modelConfig.architecture,
         outputStride: parseFloat(STATE.modelConfig.outputStride),
         multiplier: parseFloat(STATE.modelConfig.multiplier),
-        quantBytes: parseFloat(STATE.modelConfig.quantBytes)
+        quantBytes: parseFloat(STATE.modelConfig.quantBytes),
       });
     }
     case bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation: {
-      const runtime = STATE.backend.split('-')[0];
-      if (runtime === 'mediapipe') {
+      const runtime = STATE.backend.split("-")[0];
+      if (runtime === "mediapipe") {
         return bodySegmentation.createSegmenter(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
-          solutionPath:
-              `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@${
-                  mpSelfieSegmentation.VERSION}`
+          solutionPath: `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@${mpSelfieSegmentation.VERSION}`,
         });
-      } else if (runtime === 'tfjs') {
+      } else if (runtime === "tfjs") {
         return bodySegmentation.createSegmenter(STATE.model, {
           runtime,
           modelType: STATE.modelConfig.type,
@@ -103,8 +100,12 @@ async function createSegmenter() {
 }
 
 async function checkGuiUpdate() {
-  if (STATE.isModelChanged || STATE.isFlagChanged || STATE.isBackendChanged ||
-      STATE.isVisChanged) {
+  if (
+    STATE.isModelChanged ||
+    STATE.isFlagChanged ||
+    STATE.isBackendChanged ||
+    STATE.isVisChanged
+  ) {
     STATE.isModelChanged = true;
 
     window.cancelAnimationFrame(rafId);
@@ -146,7 +147,9 @@ function endEstimateSegmentationStats(time) {
     time.inferenceTimeSum = 0;
     time.numInferences = 0;
     stats.customFpsPanel.update(
-        1000.0 / averageInferenceTime, 120 /* maxValue */);
+      1000.0 / averageInferenceTime,
+      120 /* maxValue */
+    );
     time.lastPanelUpdate = endInferenceTime;
   }
 }
@@ -161,19 +164,20 @@ async function renderResult() {
 
     // Change in what FPS should measure.
     if (fpsDisplayMode != newFpsDisplayMode) {
-      if (newFpsDisplayMode === 'model') {
+      if (newFpsDisplayMode === "model") {
         stats = setupStats(MODEL_LABEL);
-        modelTime = {...resetTime};
+        modelTime = { ...resetTime };
       } else {
         stats = setupStats(E2E_LABEL);
-        E2ETime = {...resetTime};
+        E2ETime = { ...resetTime };
       }
       fpsDisplayMode = newFpsDisplayMode;
     }
     // Model FPS only counts the time it takes to finish segmentPeople.
-    if (fpsDisplayMode === 'model') {
+    if (fpsDisplayMode === "model") {
       beginEstimateSegmentationStats(modelTime);
-    } else {  // E2E FPS includes rendering time.
+    } else {
+      // E2E FPS includes rendering time.
       beginEstimateSegmentationStats(E2ETime);
     }
 
@@ -185,13 +189,15 @@ async function renderResult() {
           flipHorizontal: false,
           multiSegmentation: false,
           segmentBodyParts: true,
-          segmentationThreshold: STATE.visualization.foregroundThreshold
+          segmentationThreshold: STATE.visualization.foregroundThreshold,
         });
       } else {
-        segmentation = await segmenter.estimatePoses(
-            camera.video, {flipHorizontal: false});
+        segmentation = await segmenter.estimatePoses(camera.video, {
+          flipHorizontal: false,
+        });
         segmentation = segmentation.map(
-            singleSegmentation => singleSegmentation.segmentation);
+          (singleSegmentation) => singleSegmentation.segmentation
+        );
       }
     } catch (error) {
       segmenter.dispose();
@@ -199,10 +205,10 @@ async function renderResult() {
       alert(error);
     }
 
-    if (fpsDisplayMode === 'model') {
+    if (fpsDisplayMode === "model") {
       // Ensure GPU is done for timing purposes.
-      const [backend] = STATE.backend.split('-');
-      if (backend === 'tfjs') {
+      const [backend] = STATE.backend.split("-");
+      if (backend === "tfjs") {
         for (const value of segmentation) {
           const mask = value.mask;
           const tensor = await mask.toTensor();
@@ -210,20 +216,30 @@ async function renderResult() {
           const res = tensor.dataToGPU();
 
           const webGLBackend = tf.backend();
-          const buffer =
-              webGLBackend.gpgpu.createBufferFromTexture(res.texture, 1, 1);
+          const buffer = webGLBackend.gpgpu.createBufferFromTexture(
+            res.texture,
+            1,
+            1
+          );
           webGLBackend.gpgpu.downloadFloat32MatrixFromBuffer(buffer, 1);
 
           res.tensorRef.dispose();
         }
-      } else if (backend === 'mediapipe') {
+      } else if (backend === "mediapipe") {
         // Code in
         // node_modules/@mediapipe/selfie_segmentation/selfie_segmentation.js
         // must be modified to expose the webgl context it uses.
         const gl = window.exposedContext;
         if (gl)
           gl.readPixels(
-              0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4));
+            0,
+            0,
+            1,
+            1,
+            gl.RGBA,
+            gl.UNSIGNED_BYTE,
+            new Uint8Array(4)
+          );
       }
 
       endEstimateSegmentationStats(modelTime);
@@ -236,41 +252,77 @@ async function renderResult() {
   if (segmentation && segmentation.length > 0 && !STATE.isModelChanged) {
     const vis = STATE.modelConfig.visualization;
     const options = STATE.visualization;
-    if (vis === 'binaryMask') {
+    if (vis === "binaryMask") {
       const data = await bodySegmentation.toBinaryMask(
-          segmentation, {r: 0, g: 0, b: 0, a: 0}, {r: 0, g: 0, b: 0, a: 255},
-          false, options.foregroundThreshold);
+        segmentation,
+        { r: 0, g: 0, b: 0, a: 0 },
+        { r: 0, g: 0, b: 0, a: 255 },
+        false,
+        options.foregroundThreshold
+      );
       await bodySegmentation.drawMask(
-          canvas, camera.video, data, options.maskOpacity, options.maskBlur);
-    } else if (vis === 'coloredMask') {
+        canvas,
+        camera.video,
+        data,
+        options.maskOpacity,
+        options.maskBlur
+      );
+    } else if (vis === "coloredMask") {
       const data = await bodySegmentation.toColoredMask(
-          segmentation, bodySegmentation.bodyPixMaskValueToRainbowColor,
-          {r: 0, g: 0, b: 0, a: 255}, options.foregroundThreshold);
+        segmentation,
+        bodySegmentation.bodyPixMaskValueToRainbowColor,
+        { r: 0, g: 0, b: 0, a: 255 },
+        options.foregroundThreshold
+      );
       await bodySegmentation.drawMask(
-          canvas, camera.video, data, options.maskOpacity, options.maskBlur);
-    } else if (vis === 'pixelatedMask') {
+        canvas,
+        camera.video,
+        data,
+        options.maskOpacity,
+        options.maskBlur
+      );
+    } else if (vis === "pixelatedMask") {
       const data = await bodySegmentation.toColoredMask(
-          segmentation, bodySegmentation.bodyPixMaskValueToRainbowColor,
-          {r: 0, g: 0, b: 0, a: 255}, options.foregroundThreshold);
+        segmentation,
+        bodySegmentation.bodyPixMaskValueToRainbowColor,
+        { r: 0, g: 0, b: 0, a: 255 },
+        options.foregroundThreshold
+      );
       await bodySegmentation.drawPixelatedMask(
-          canvas, camera.video, data, options.maskOpacity, options.maskBlur,
-          false, options.pixelCellWidth);
-    } else if (vis === 'bokehEffect') {
+        canvas,
+        camera.video,
+        data,
+        options.maskOpacity,
+        options.maskBlur,
+        false,
+        options.pixelCellWidth
+      );
+    } else if (vis === "bokehEffect") {
       await bodySegmentation.drawBokehEffect(
-          canvas, camera.video, segmentation, options.foregroundThreshold,
-          options.backgroundBlur, options.edgeBlur);
-    } else if (vis === 'blurFace') {
+        canvas,
+        camera.video,
+        segmentation,
+        options.foregroundThreshold,
+        options.backgroundBlur,
+        options.edgeBlur
+      );
+    } else if (vis === "blurFace") {
       await bodySegmentation.blurBodyPart(
-          canvas, camera.video, segmentation, [0, 1],
-          options.foregroundThreshold, options.backgroundBlur,
-          options.edgeBlur);
+        canvas,
+        camera.video,
+        segmentation,
+        [0, 1],
+        options.foregroundThreshold,
+        options.backgroundBlur,
+        options.edgeBlur
+      );
     } else {
       camera.drawFromVideo(ctx);
     }
   }
   camera.drawToCanvas(canvas);
 
-  if (fpsDisplayMode === 'e2e') {
+  if (fpsDisplayMode === "e2e") {
     endEstimateSegmentationStats(E2ETime);
   }
 }
@@ -279,7 +331,7 @@ async function checkUpdate() {
   await checkGuiUpdate();
 
   requestAnimationFrame(checkUpdate);
-};
+}
 
 async function updateVideo(event) {
   // Clear reference to any previous uploaded video.
@@ -303,7 +355,7 @@ async function updateVideo(event) {
   camera.canvas.width = videoWidth;
   camera.canvas.height = videoHeight;
 
-  statusElement.innerHTML = 'Video is loaded.';
+  statusElement.innerHTML = "Video is loaded.";
 }
 
 async function runFrame() {
@@ -311,7 +363,7 @@ async function runFrame() {
     // video has finished.
     camera.mediaRecorder.stop();
     camera.clearCtx();
-    camera.video.style.visibility = 'visible';
+    camera.video.style.visibility = "visible";
     return;
   }
   await renderResult();
@@ -319,33 +371,38 @@ async function runFrame() {
 }
 
 async function run() {
-  statusElement.innerHTML = 'Warming up model.';
+  statusElement.innerHTML = "Warming up model.";
 
   // Warming up pipeline.
-  const [runtime, $backend] = STATE.backend.split('-');
+  const [runtime, $backend] = STATE.backend.split("-");
   let segmentation = null;
 
-  if (runtime === 'tfjs') {
-    const warmUpTensor =
-        tf.fill([camera.video.height, camera.video.width, 3], 0, 'float32');
+  if (runtime === "tfjs") {
+    const warmUpTensor = tf.fill(
+      [camera.video.height, camera.video.width, 3],
+      0,
+      "float32"
+    );
     if (segmenter.segmentPeople != null) {
       segmentation = await segmenter.segmentPeople(warmUpTensor, {
         flipHorizontal: false,
         multiSegmentation: false,
         segmentBodyParts: true,
-        segmentationThreshold: STATE.visualization.foregroundThreshold
+        segmentationThreshold: STATE.visualization.foregroundThreshold,
       });
     } else {
-      segmentation =
-          await segmenter.estimatePoses(warmUpTensor, {flipHorizontal: false});
+      segmentation = await segmenter.estimatePoses(warmUpTensor, {
+        flipHorizontal: false,
+      });
       segmentation = segmentation.map(
-          singleSegmentation => singleSegmentation.segmentation);
+        (singleSegmentation) => singleSegmentation.segmentation
+      );
     }
     warmUpTensor.dispose();
-    statusElement.innerHTML = 'Model is warmed up.';
+    statusElement.innerHTML = "Model is warmed up.";
   }
 
-  camera.video.style.visibility = 'hidden';
+  camera.video.style.visibility = "hidden";
   video.pause();
   video.currentTime = 0;
   video.play();
@@ -363,8 +420,8 @@ async function run() {
 async function app() {
   // Gui content will change depending on which model is in the query string.
   const urlParams = new URLSearchParams(window.location.search);
-  if (!urlParams.has('model')) {
-    alert('Cannot find model in the query string.');
+  if (!urlParams.has("model")) {
+    alert("Cannot find model in the query string.");
     return;
   }
 
@@ -375,13 +432,13 @@ async function app() {
 
   await setBackendAndEnvFlags(STATE.flags, STATE.backend);
 
-  const runButton = document.getElementById('submit');
+  const runButton = document.getElementById("submit");
   runButton.onclick = run;
 
-  const uploadButton = document.getElementById('videofile');
+  const uploadButton = document.getElementById("videofile");
   uploadButton.onchange = updateVideo;
 
   checkUpdate();
-};
+}
 
 app();

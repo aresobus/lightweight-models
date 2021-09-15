@@ -16,20 +16,20 @@
  */
 export function setupStats(label) {
   const stats = new Stats();
-  stats.customFpsPanel = stats.addPanel(new Stats.Panel(label, '#0ff', '#002'));
+  stats.customFpsPanel = stats.addPanel(new Stats.Panel(label, "#0ff", "#002"));
   stats.showPanel(stats.domElement.children.length - 1);
 
-  const parent = document.getElementById('stats');
+  const parent = document.getElementById("stats");
   if (parent.hasChildNodes()) {
     parent.removeChild(parent.lastChild);
   }
   parent.appendChild(stats.domElement);
 
-  const statsPanes = parent.querySelectorAll('canvas');
+  const statsPanes = parent.querySelectorAll("canvas");
 
   for (let i = 0; i < statsPanes.length; ++i) {
-    statsPanes[i].style.width = '140px';
-    statsPanes[i].style.height = '80px';
+    statsPanes[i].style.width = "140px";
+    statsPanes[i].style.height = "80px";
   }
   return stats;
 }
