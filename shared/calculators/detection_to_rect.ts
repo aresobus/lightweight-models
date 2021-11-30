@@ -15,15 +15,23 @@
  * =============================================================================
  */
 
-import {normalizeRadians} from './image_utils';
-import {ImageSize} from './interfaces/common_interfaces';
-import {DetectionToRectConfig} from './interfaces/config_interfaces';
-import {BoundingBox, Detection, LocationData, Rect} from './interfaces/shape_interfaces';
+import { normalizeRadians } from "./image_utils";
+import { ImageSize } from "./interfaces/common_interfaces";
+import { DetectionToRectConfig } from "./interfaces/config_interfaces";
+import {
+  BoundingBox,
+  Detection,
+  LocationData,
+  Rect,
+} from "./interfaces/shape_interfaces";
 
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/detections_to_rects_calculator.cc
 export function computeRotation(
-    detection: Detection, imageSize: ImageSize, config: DetectionToRectConfig) {
+  detection: Detection,
+  imageSize: ImageSize,
+  config: DetectionToRectConfig
+) {
   const locationData = detection.locationData;
   const startKeypoint = config.rotationVectorStartKeypointIndex;
   const endKeypoint = config.rotationVectorEndKeypointIndex;
@@ -33,7 +41,7 @@ export function computeRotation(
   if (config.rotationVectorTargetAngle) {
     targetAngle = config.rotationVectorTargetAngle;
   } else {
-    targetAngle = Math.PI * config.rotationVectorTargetAngleDegree / 180;
+    targetAngle = (Math.PI * config.rotationVectorTargetAngleDegree) / 180;
   }
 
   const x0 = locationData.relativeKeypoints[startKeypoint].x * imageSize.width;
@@ -41,8 +49,9 @@ export function computeRotation(
   const x1 = locationData.relativeKeypoints[endKeypoint].x * imageSize.width;
   const y1 = locationData.relativeKeypoints[endKeypoint].y * imageSize.height;
 
-  const rotation =
-      normalizeRadians(targetAngle - Math.atan2(-(y1 - y0), x1 - x0));
+  const rotation = normalizeRadians(
+    targetAngle - Math.atan2(-(y1 - y0), x1 - x0)
+  );
 
   return rotation;
 }
@@ -59,12 +68,14 @@ function rectFromBox(box: BoundingBox) {
 function normRectFromKeypoints(locationData: LocationData) {
   const keypoints = locationData.relativeKeypoints;
   if (keypoints.length <= 1) {
-    throw new Error('2 or more keypoints required to calculate a rect.');
+    throw new Error("2 or more keypoints required to calculate a rect.");
   }
-  let xMin = Number.MAX_VALUE, yMin = Number.MAX_VALUE, xMax = Number.MIN_VALUE,
-      yMax = Number.MIN_VALUE;
+  let xMin = Number.MAX_VALUE,
+    yMin = Number.MAX_VALUE,
+    xMax = Number.MIN_VALUE,
+    yMax = Number.MIN_VALUE;
 
-  keypoints.forEach(keypoint => {
+  keypoints.forEach((keypoint) => {
     xMin = Math.min(xMin, keypoint.x);
     xMax = Math.max(xMax, keypoint.x);
     yMin = Math.min(yMin, keypoint.y);
@@ -75,31 +86,33 @@ function normRectFromKeypoints(locationData: LocationData) {
     xCenter: (xMin + xMax) / 2,
     yCenter: (yMin + yMax) / 2,
     width: xMax - xMin,
-    height: yMax - yMin
+    height: yMax - yMin,
   };
 }
 
 function detectionToNormalizedRect(
-    detection: Detection, conversionMode: 'boundingbox'|'keypoints') {
+  detection: Detection,
+  conversionMode: "boundingbox" | "keypoints"
+) {
   const locationData = detection.locationData;
-  return conversionMode === 'boundingbox' ?
-      rectFromBox(locationData.relativeBoundingBox) :
-      normRectFromKeypoints(locationData);
+  return conversionMode === "boundingbox"
+    ? rectFromBox(locationData.relativeBoundingBox)
+    : normRectFromKeypoints(locationData);
 }
 
 function detectionToRect(
-    detection: Detection,
-    conversionMode: 'boundingbox'|'keypoints',
-    imageSize?: ImageSize,
-    ): Rect {
+  detection: Detection,
+  conversionMode: "boundingbox" | "keypoints",
+  imageSize?: ImageSize
+): Rect {
   const locationData = detection.locationData;
 
   let rect: Rect;
-  if (conversionMode === 'boundingbox') {
+  if (conversionMode === "boundingbox") {
     rect = rectFromBox(locationData.boundingBox);
   } else {
     rect = normRectFromKeypoints(locationData);
-    const {width, height} = imageSize;
+    const { width, height } = imageSize;
 
     rect.xCenter = Math.round(rect.xCenter * width);
     rect.yCenter = Math.round(rect.yCenter * height);
@@ -113,12 +126,16 @@ function detectionToRect(
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/detections_to_rects_calculator.cc
 export function calculateDetectionsToRects(
-    detection: Detection, conversionMode: 'boundingbox'|'keypoints',
-    outputType: 'rect'|'normRect', imageSize?: ImageSize,
-    rotationConfig?: DetectionToRectConfig): Rect {
-  const rect: Rect = outputType === 'rect' ?
-      detectionToRect(detection, conversionMode, imageSize) :
-      detectionToNormalizedRect(detection, conversionMode);
+  detection: Detection,
+  conversionMode: "boundingbox" | "keypoints",
+  outputType: "rect" | "normRect",
+  imageSize?: ImageSize,
+  rotationConfig?: DetectionToRectConfig
+): Rect {
+  const rect: Rect =
+    outputType === "rect"
+      ? detectionToRect(detection, conversionMode, imageSize)
+      : detectionToNormalizedRect(detection, conversionMode);
 
   if (rotationConfig) {
     rect.rotation = computeRotation(detection, imageSize, rotationConfig);

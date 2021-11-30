@@ -1,7 +1,7 @@
 {
-  "name": "@tfjs-models/gpt2",
+  "name": "@aresobus/tensorflow-models-gpt2",
   "version": "0.0.1",
-  "description": "Run GPT2 in the browser with TensorFlow.js",
+  "description": "Run GPT2 in the browser with TensorFlow.js, maintained by Oleksandr Lebedyev",
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "jsnext:main": "dist/gpt2.esm.js",
@@ -11,8 +11,9 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "peerDependencies": {
     "@tensorflow/tfjs-converter": "^4.18.0",
     "@tensorflow/tfjs-core": "^4.18.0"
@@ -36,7 +37,7 @@
     "typescript": "^5.1.6"
   },
   "scripts": {
-    "build": "rimraf dist && tsc",
+    "build": "rimraf dist && tsc && rollup -c",
     "test": "yarn && karma start",
     "build-npm": "yarn build && rollup -c",
     "test-node": "NODE_PRESERVE_SYMLINKS=1 ts-node --skip-ignore --project tsconfig.test.json run_tests.ts"
