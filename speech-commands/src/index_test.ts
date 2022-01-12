@@ -16,53 +16,63 @@
  */
 
 // tslint:disable-next-line:no-require-imports
-const packageJSON = require('../package.json');
-import * as tf from '@tensorflow/tfjs-core';
-import * as tfl from '@tensorflow/tfjs-layers';
-import * as speechCommands from './index';
+const packageJSON = require("../package.json");
+import * as tf from "@tensorflow/tfjs-core";
+import * as tfl from "@tensorflow/tfjs-layers";
+import * as speechCommands from "./index";
 
-describe('Public API', () => {
-  it('version matches package.json', () => {
-    expect(typeof speechCommands.version).toEqual('string');
+describe("Public API", () => {
+  it("version matches package.json", () => {
+    expect(typeof speechCommands.version).toEqual("string");
     expect(speechCommands.version).toEqual(packageJSON.version);
   });
 });
 
-describe('Creating recognizer', () => {
+describe("Creating recognizer", () => {
   async function makeModelArtifacts(): Promise<tf.io.ModelArtifacts> {
     const model = tfl.sequential();
-    model.add(tfl.layers.conv2d({
-      filters: 8,
-      kernelSize: 3,
-      activation: 'relu',
-      inputShape: [86, 500, 1]
-    }));
+    model.add(
+      tfl.layers.conv2d({
+        filters: 8,
+        kernelSize: 3,
+        activation: "relu",
+        inputShape: [86, 500, 1],
+      })
+    );
     model.add(tfl.layers.flatten());
-    model.add(tfl.layers.dense({units: 3, activation: 'softmax'}));
+    model.add(tfl.layers.dense({ units: 3, activation: "softmax" }));
     let modelArtifacts: tf.io.ModelArtifacts;
-    await model.save(tf.io.withSaveHandler(artifacts => {
-      modelArtifacts = artifacts;
-      return null;
-    }));
+    await model.save(
+      tf.io.withSaveHandler((artifacts) => {
+        modelArtifacts = artifacts;
+        return null;
+      })
+    );
     return modelArtifacts;
   }
 
   function makeMetadata(): speechCommands.SpeechCommandRecognizerMetadata {
     return {
-      wordLabels: [speechCommands.BACKGROUND_NOISE_TAG, 'foo', 'bar'],
-      tfjsSpeechCommandsVersion: speechCommands.version
+      wordLabels: [speechCommands.BACKGROUND_NOISE_TAG, "foo", "bar"],
+      tfjsSpeechCommandsVersion: speechCommands.version,
     };
   }
 
-  it('Create recognizer from aritfacts and metadata objects', async () => {
+  it("Create recognizer from aritfacts and metadata objects", async () => {
     const modelArtifacts = await makeModelArtifacts();
     const metadata = makeMetadata();
-    const recognizer =
-        speechCommands.create('BROWSER_FFT', null, modelArtifacts, metadata);
+    const recognizer = speechCommands.create(
+      "BROWSER_FFT",
+      null,
+      modelArtifacts,
+      metadata
+    );
     await recognizer.ensureModelLoaded();
 
     expect(recognizer.wordLabels()).toEqual([
-      speechCommands.BACKGROUND_NOISE_TAG, 'foo', 'bar'
+      speechCommands.BACKGROUND_NOISE_TAG,
+      "foo",
+      "bar",
     ]);
     expect(recognizer.modelInputShape()).toEqual([null, 86, 500, 1]);
   });
