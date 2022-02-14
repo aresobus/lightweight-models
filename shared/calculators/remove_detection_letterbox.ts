@@ -15,8 +15,8 @@
  * =============================================================================
  */
 
-import {Padding} from './interfaces/common_interfaces';
-import {Detection} from './interfaces/shape_interfaces';
+import { Padding } from "./interfaces/common_interfaces";
+import { Detection } from "./interfaces/shape_interfaces";
 
 /**
  * Adjusts detection locations on the letterboxed image to the corresponding
@@ -33,7 +33,9 @@ import {Detection} from './interfaces/shape_interfaces';
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/detection_letterbox_removal_calculator.cc
 export function removeDetectionLetterbox(
-    detections: Detection[] = [], letterboxPadding: Padding): Detection[] {
+  detections: Detection[] = [],
+  letterboxPadding: Padding
+): Detection[] {
   const left = letterboxPadding.left;
   const top = letterboxPadding.top;
   const leftAndRight = letterboxPadding.left + letterboxPadding.right;
@@ -56,7 +58,7 @@ export function removeDetectionLetterbox(
     const relativeKeypoints = detection.locationData.relativeKeypoints;
 
     if (relativeKeypoints) {
-      relativeKeypoints.forEach(keypoint => {
+      relativeKeypoints.forEach((keypoint) => {
         const newX = (keypoint.x - left) / (1 - leftAndRight);
         const newY = (keypoint.y - top) / (1 - topAndBottom);
         keypoint.x = newX;
