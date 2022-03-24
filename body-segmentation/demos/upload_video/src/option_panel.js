@@ -14,11 +14,11 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as bodySegmentation from '@tensorflow-models/body-segmentation';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
+import * as bodySegmentation from "@tensorflow-models/body-segmentation";
+import * as poseDetection from "@tensorflow-models/pose-detection";
+import * as tf from "@tensorflow/tfjs-core";
 
-import * as params from './shared/params';
+import * as params from "./shared/params";
 
 /**
  * Records each flag's default value under the runtime environment and is a
@@ -29,73 +29,75 @@ let TUNABLE_FLAG_DEFAULT_VALUE_MAP;
 const stringValueMap = {};
 
 export async function setupDatGui(urlParams) {
-  const gui = new dat.GUI({width: 300});
-  gui.domElement.id = 'gui';
+  const gui = new dat.GUI({ width: 300 });
+  gui.domElement.id = "gui";
 
   // The fps display folder contains options for video settings.
-  const fpsDisplayFolder = gui.addFolder('FPS Display');
-  fpsDisplayFolder.add(params.STATE.fpsDisplay, 'mode', ['model', 'e2e']);
+  const fpsDisplayFolder = gui.addFolder("FPS Display");
+  fpsDisplayFolder.add(params.STATE.fpsDisplay, "mode", ["model", "e2e"]);
   fpsDisplayFolder.open();
 
   // The model folder contains options for model selection.
-  const modelFolder = gui.addFolder('Model');
+  const modelFolder = gui.addFolder("Model");
 
-  const model = urlParams.get('model');
-  let type = urlParams.get('type');
+  const model = urlParams.get("model");
+  let type = urlParams.get("type");
 
   switch (model) {
-    case 'blaze_pose':
+    case "blaze_pose":
       params.STATE.model = poseDetection.SupportedModels.BlazePose;
       break;
-    case 'body_pix':
+    case "body_pix":
       params.STATE.model = bodySegmentation.SupportedModels.BodyPix;
       break;
-    case 'selfie_segmentation':
+    case "selfie_segmentation":
       params.STATE.model =
-          bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
-      if (type !== 'general' && type !== 'landscape') {
+        bodySegmentation.SupportedModels.MediaPipeSelfieSegmentation;
+      if (type !== "general" && type !== "landscape") {
         // Nulify invalid value.
         type = null;
       }
       break;
     default:
-      alert(`${urlParams.get('model')}`);
+      alert(`${urlParams.get("model")}`);
       break;
   }
 
   const modelNames = Object.values(bodySegmentation.SupportedModels);
   modelNames.push(poseDetection.SupportedModels.BlazePose);
-  const modelController = modelFolder.add(params.STATE, 'model', modelNames);
+  const modelController = modelFolder.add(params.STATE, "model", modelNames);
 
-  modelController.onChange(_ => {
+  modelController.onChange((_) => {
     params.STATE.isModelChanged = true;
     const visSelector = showModelConfigs(modelFolder);
     showBackendConfigs(backendFolder);
-    visSelector.onChange(async mode => {
+    visSelector.onChange(async (mode) => {
       params.STATE.isVisChanged = true;
       showVisualizationSettings(visFolder, mode);
     });
     showVisualizationSettings(
-        visFolder, params.STATE.modelConfig.visualization);
+      visFolder,
+      params.STATE.modelConfig.visualization
+    );
   });
 
   const visSelector = showModelConfigs(modelFolder, type);
 
   modelFolder.open();
 
-  const backendFolder = gui.addFolder('Backend');
+  const backendFolder = gui.addFolder("Backend");
 
   showBackendConfigs(backendFolder);
 
   backendFolder.open();
 
-  const visFolder = gui.addFolder('Visualization');
+  const visFolder = gui.addFolder("Visualization");
 
-  showVisualizationSettings(visFolder, 'binaryMask');
+  showVisualizationSettings(visFolder, "binaryMask");
 
   visFolder.open();
 
-  visSelector.onChange(async mode => {
+  visSelector.onChange(async (mode) => {
     params.STATE.isVisChanged = true;
     showVisualizationSettings(visFolder, mode);
   });
@@ -108,16 +110,19 @@ async function showBackendConfigs(folderController) {
   const fixedSelectionCount = 0;
   while (folderController.__controllers.length > fixedSelectionCount) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
   const backends = params.MODEL_BACKEND_MAP[params.STATE.model];
   // The first element of the array is the default backend for the model.
   params.STATE.backend = backends[0];
-  const backendController =
-      folderController.add(params.STATE, 'backend', backends);
-  backendController.name('runtime-backend');
-  backendController.onChange(async backend => {
+  const backendController = folderController.add(
+    params.STATE,
+    "backend",
+    backends
+  );
+  backendController.name("runtime-backend");
+  backendController.onChange(async (backend) => {
     params.STATE.isBackendChanged = true;
     await showFlagSettings(folderController, backend);
   });
@@ -131,8 +136,8 @@ function showModelConfigs(folderController, type) {
   const fixedSelectionCount = 1;
   while (folderController.__controllers.length > fixedSelectionCount) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
 
   switch (params.STATE.model) {
@@ -151,121 +156,157 @@ function showVisualizationSettings(folderController, vis) {
   // Clean up visualization configs for the previous mode.
   while (folderController.__controllers.length > 0) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
 
   folderController.add(
-      params.STATE.visualization, 'foregroundThreshold', 0.0, 1.0);
+    params.STATE.visualization,
+    "foregroundThreshold",
+    0.0,
+    1.0
+  );
 
-  if (vis === 'binaryMask') {
-    folderController.add(params.STATE.visualization, 'maskOpacity', 0.0, 1.0);
-    folderController.add(params.STATE.visualization, 'maskBlur')
-        .min(1)
-        .max(20)
-        .step(1);
-  } else if (vis === 'coloredMask') {
-    folderController.add(params.STATE.visualization, 'maskOpacity', 0.0, 1.0);
-    folderController.add(params.STATE.visualization, 'maskBlur')
-        .min(1)
-        .max(20)
-        .step(1);
-  } else if (vis === 'pixelatedMask') {
-    folderController.add(params.STATE.visualization, 'maskOpacity', 0.0, 1.0);
-    folderController.add(params.STATE.visualization, 'maskBlur')
-        .min(0)
-        .max(20)
-        .step(1);
-    folderController.add(params.STATE.visualization, 'pixelCellWidth')
-        .min(1)
-        .max(50)
-        .step(1);
-  } else if (vis === 'bokehEffect') {
-    folderController.add(params.STATE.visualization, 'backgroundBlur')
-        .min(1)
-        .max(20)
-        .step(1);
-    folderController.add(params.STATE.visualization, 'edgeBlur')
-        .min(0)
-        .max(20)
-        .step(1);
-  } else if (vis === 'blurFace') {
-    folderController.add(params.STATE.visualization, 'backgroundBlur')
-        .min(1)
-        .max(20)
-        .step(1);
-    folderController.add(params.STATE.visualization, 'edgeBlur')
-        .min(0)
-        .max(20)
-        .step(1);
+  if (vis === "binaryMask") {
+    folderController.add(params.STATE.visualization, "maskOpacity", 0.0, 1.0);
+    folderController
+      .add(params.STATE.visualization, "maskBlur")
+      .min(1)
+      .max(20)
+      .step(1);
+  } else if (vis === "coloredMask") {
+    folderController.add(params.STATE.visualization, "maskOpacity", 0.0, 1.0);
+    folderController
+      .add(params.STATE.visualization, "maskBlur")
+      .min(1)
+      .max(20)
+      .step(1);
+  } else if (vis === "pixelatedMask") {
+    folderController.add(params.STATE.visualization, "maskOpacity", 0.0, 1.0);
+    folderController
+      .add(params.STATE.visualization, "maskBlur")
+      .min(0)
+      .max(20)
+      .step(1);
+    folderController
+      .add(params.STATE.visualization, "pixelCellWidth")
+      .min(1)
+      .max(50)
+      .step(1);
+  } else if (vis === "bokehEffect") {
+    folderController
+      .add(params.STATE.visualization, "backgroundBlur")
+      .min(1)
+      .max(20)
+      .step(1);
+    folderController
+      .add(params.STATE.visualization, "edgeBlur")
+      .min(0)
+      .max(20)
+      .step(1);
+  } else if (vis === "blurFace") {
+    folderController
+      .add(params.STATE.visualization, "backgroundBlur")
+      .min(1)
+      .max(20)
+      .step(1);
+    folderController
+      .add(params.STATE.visualization, "edgeBlur")
+      .min(0)
+      .max(20)
+      .step(1);
   }
 }
 
 // The MediaPipeHands model config folder contains options for MediaPipeHands
 // config settings.
 function addSelfieSegmentationControllers(modelConfigFolder, type) {
-  params.STATE.modelConfig = {...params.SELFIE_SEGMENTATION_CONFIG};
-  params.STATE.modelConfig.type = type != null ? type : 'general';
+  params.STATE.modelConfig = { ...params.SELFIE_SEGMENTATION_CONFIG };
+  params.STATE.modelConfig.type = type != null ? type : "general";
 
   const typeController = modelConfigFolder.add(
-      params.STATE.modelConfig, 'type', ['general', 'landscape']);
-  typeController.onChange(_ => {
+    params.STATE.modelConfig,
+    "type",
+    ["general", "landscape"]
+  );
+  typeController.onChange((_) => {
     // Set isModelChanged to true, so that we don't render any result during
     // changing models.
     params.STATE.isModelChanged = true;
   });
 
   const visSelector = modelConfigFolder.add(
-      params.STATE.modelConfig, 'visualization', ['binaryMask', 'bokehEffect']);
+    params.STATE.modelConfig,
+    "visualization",
+    ["binaryMask", "bokehEffect"]
+  );
   return visSelector;
 }
 
 // The BodyPix model config folder contains options for BodyPix config
 // settings.
 function addBodyPixControllers(modelConfigFolder) {
-  params.STATE.modelConfig = {...params.BODY_PIX_CONFIG};
+  params.STATE.modelConfig = { ...params.BODY_PIX_CONFIG };
 
   const controllers = [];
-  controllers.push(modelConfigFolder.add(
-      params.STATE.modelConfig, 'architecture', ['ResNet50', 'MobileNetV1']));
   controllers.push(
-      modelConfigFolder.add(params.STATE.modelConfig, 'outputStride', [8, 16]));
-  controllers.push(modelConfigFolder.add(
-      params.STATE.modelConfig, 'multiplier', [0.50, 0.75, 1.0]));
+    modelConfigFolder.add(params.STATE.modelConfig, "architecture", [
+      "ResNet50",
+      "MobileNetV1",
+    ])
+  );
   controllers.push(
-      modelConfigFolder.add(params.STATE.modelConfig, 'quantBytes', [1, 2, 4]));
+    modelConfigFolder.add(params.STATE.modelConfig, "outputStride", [8, 16])
+  );
+  controllers.push(
+    modelConfigFolder.add(
+      params.STATE.modelConfig,
+      "multiplier",
+      [0.5, 0.75, 1.0]
+    )
+  );
+  controllers.push(
+    modelConfigFolder.add(params.STATE.modelConfig, "quantBytes", [1, 2, 4])
+  );
 
   for (const controller of controllers) {
-    controller.onChange(_ => {
+    controller.onChange((_) => {
       // Set isModelChanged to true, so that we don't render any result during
       // changing models.
       params.STATE.isModelChanged = true;
     });
   }
 
-  const visSelector =
-      modelConfigFolder.add(params.STATE.modelConfig, 'visualization', [
-        'binaryMask', 'coloredMask', 'pixelatedMask', 'bokehEffect', 'blurFace'
-      ]);
+  const visSelector = modelConfigFolder.add(
+    params.STATE.modelConfig,
+    "visualization",
+    ["binaryMask", "coloredMask", "pixelatedMask", "bokehEffect", "blurFace"]
+  );
   return visSelector;
 }
 
 // The BlazePose model config folder contains options for BlazePose config
 // settings.
 function addBlazePoseControllers(modelConfigFolder, type) {
-  params.STATE.modelConfig = {...params.BLAZE_POSE_CONFIG};
-  params.STATE.modelConfig.type = type != null ? type : 'full';
+  params.STATE.modelConfig = { ...params.BLAZE_POSE_CONFIG };
+  params.STATE.modelConfig.type = type != null ? type : "full";
 
   const typeController = modelConfigFolder.add(
-      params.STATE.modelConfig, 'type', ['lite', 'full', 'heavy']);
-  typeController.onChange(_ => {
+    params.STATE.modelConfig,
+    "type",
+    ["lite", "full", "heavy"]
+  );
+  typeController.onChange((_) => {
     // Set isModelChanged to true, so that we don't render any result during
     // changing models.
     params.STATE.isModelChanged = true;
   });
 
   const visSelector = modelConfigFolder.add(
-      params.STATE.modelConfig, 'visualization', ['binaryMask', 'bokehEffect']);
+    params.STATE.modelConfig,
+    "visualization",
+    ["binaryMask", "bokehEffect"]
+  );
   return visSelector;
 }
 
@@ -277,8 +318,11 @@ async function initDefaultValueMap() {
   TUNABLE_FLAG_DEFAULT_VALUE_MAP = {};
   params.STATE.flags = {};
   for (const backend in params.BACKEND_FLAGS_MAP) {
-    for (let index = 0; index < params.BACKEND_FLAGS_MAP[backend].length;
-         index++) {
+    for (
+      let index = 0;
+      index < params.BACKEND_FLAGS_MAP[backend].length;
+      index++
+    ) {
       const flag = params.BACKEND_FLAGS_MAP[backend][index];
       TUNABLE_FLAG_DEFAULT_VALUE_MAP[flag] = await tf.env().getAsync(flag);
     }
@@ -305,21 +349,21 @@ async function initDefaultValueMap() {
  */
 function getTunableRange(flag) {
   const defaultValue = TUNABLE_FLAG_DEFAULT_VALUE_MAP[flag];
-  if (flag === 'WEBGL_FORCE_F16_TEXTURES') {
+  if (flag === "WEBGL_FORCE_F16_TEXTURES") {
     return [false, true];
-  } else if (flag === 'WEBGL_VERSION') {
+  } else if (flag === "WEBGL_VERSION") {
     const tunableRange = [];
     for (let value = 1; value <= defaultValue; value++) {
       tunableRange.push(value);
     }
     return tunableRange;
-  } else if (flag === 'WEBGL_FLUSH_THRESHOLD') {
+  } else if (flag === "WEBGL_FLUSH_THRESHOLD") {
     const tunableRange = [-1];
     for (let value = 0; value <= 2; value += 0.25) {
       tunableRange.push(value);
     }
     return tunableRange;
-  } else if (typeof defaultValue === 'boolean') {
+  } else if (typeof defaultValue === "boolean") {
     return defaultValue ? [false, true] : [false];
   } else if (params.TUNABLE_FLAG_VALUE_RANGE_MAP[flag] != null) {
     return params.TUNABLE_FLAG_VALUE_RANGE_MAP[flag];
@@ -347,19 +391,23 @@ function showBackendFlagSettings(folderController, backendName) {
     // Heuristically consider a flag with at least two options as tunable.
     if (flagValueRange.length < 2) {
       console.warn(
-          `The ${flag} is considered as untunable, ` +
-          `because its value range is [${flagValueRange}].`);
+        `The ${flag} is considered as untunable, ` +
+          `because its value range is [${flagValueRange}].`
+      );
       continue;
     }
 
     let flagController;
-    if (typeof flagValueRange[0] === 'boolean') {
+    if (typeof flagValueRange[0] === "boolean") {
       // Show checkbox for boolean flags.
       flagController = folderController.add(params.STATE.flags, flag);
     } else {
       // Show dropdown for other types of flags.
-      flagController =
-          folderController.add(params.STATE.flags, flag, flagValueRange);
+      flagController = folderController.add(
+        params.STATE.flags,
+        flag,
+        flagValueRange
+      );
 
       // Because dat.gui always casts dropdown option values to string, we need
       // `stringValueMap` and `onFinishChange()` to recover the value type.
@@ -371,7 +419,7 @@ function showBackendFlagSettings(folderController, backendName) {
           stringValueMap[flag][stringValue] = realValue;
         }
       }
-      flagController.onFinishChange(stringValue => {
+      flagController.onFinishChange((stringValue) => {
         params.STATE.flags[flag] = stringValueMap[flag][stringValue];
       });
     }
@@ -400,8 +448,8 @@ async function showFlagSettings(folderController, backendName) {
   const fixedSelectionCount = 1;
   while (folderController.__controllers.length > fixedSelectionCount) {
     folderController.remove(
-        folderController
-            .__controllers[folderController.__controllers.length - 1]);
+      folderController.__controllers[folderController.__controllers.length - 1]
+    );
   }
 
   // Show flag settings for the new backend.
