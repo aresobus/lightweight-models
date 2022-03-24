@@ -15,14 +15,22 @@
  * =============================================================================
  */
 
-import {ModelConfig as BodySegmentationModelConfig, SegmentationConfig} from '../types';
-import {ModelConfig as BodyPixBaseModelConfig, MultiPersonInstanceInferenceConfig, PersonInferenceConfig} from './impl/body_pix_model';
+import {
+  ModelConfig as BodySegmentationModelConfig,
+  SegmentationConfig,
+} from "../types";
+import {
+  ModelConfig as BodyPixBaseModelConfig,
+  MultiPersonInstanceInferenceConfig,
+  PersonInferenceConfig,
+} from "./impl/body_pix_model";
 
 /**
  * BodyPix model config.
  */
-export interface BodyPixModelConfig extends BodyPixBaseModelConfig,
-                                            BodySegmentationModelConfig {}
+export interface BodyPixModelConfig
+  extends BodyPixBaseModelConfig,
+    BodySegmentationModelConfig {}
 
 /**
  * Segmentation parameters for BodyPix.
@@ -35,8 +43,9 @@ export interface BodyPixModelConfig extends BodyPixBaseModelConfig,
  * the output, otherwise only foreground / background binary segmentation is
  * performed.
  */
-export interface BodyPixSegmentationConfig extends
-    SegmentationConfig, MultiPersonInstanceInferenceConfig,
+export interface BodyPixSegmentationConfig
+  extends SegmentationConfig,
+    MultiPersonInstanceInferenceConfig,
     PersonInferenceConfig {
   multiSegmentation: boolean;
   segmentBodyParts: boolean;
