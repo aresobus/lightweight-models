@@ -29,33 +29,24 @@ The depicted scores evaluate how well each answer corresponds to the posed quest
 Installation
 Using Yarn:
 
-bash
-Copy code
 yarn add @tensorflow/tfjs @tensorflow-models/universal-sentence-encoder
 Using npm:
 
-bash
-Copy code
 npm install @tensorflow/tfjs @tensorflow-models/universal-sentence-encoder
 Find this package on npm here.
 
 Usage
 In Node.js:
 
-javascript
-Copy code
 require('@tensorflow/tfjs');
 const use = require('@tensorflow-models/universal-sentence-encoder');
 In a Browser:
 
 html
-Copy code
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
 Example:
 
-javascript
-Copy code
 // Load the model
 use.load().then(model => {
   // Embed an array of sentences
@@ -67,22 +58,16 @@ use.load().then(model => {
 });
 Using the Tokenizer:
 
-javascript
-Copy code
 use.loadTokenizer().then(tokenizer => {
   tokenizer.encode('Hello, how are you?'); // Outputs token indices
 });
 To specify a different vocabulary path:
 
-javascript
-Copy code
 use.loadTokenizer('https://storage.googleapis.com/learnjs-data/bert_vocab/vocab.json').then(tokenizer => {
   tokenizer.encode('Hello, how are you?'); // Outputs token indices
 });
 For QnA Applications:
 
-javascript
-Copy code
 // Load the QnA model
 use.loadQnA().then(model => {
   // Embed questions and responses
