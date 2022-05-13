@@ -14,6 +14,7 @@
 # limitations under the License.
 # ==============================================================================
 
+
 # Run all Python tests in this tfjs-models repository.
 
 set -e

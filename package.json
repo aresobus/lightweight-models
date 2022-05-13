@@ -8,6 +8,7 @@
     "link-local": "yalc link",
     "presubmit": "ts-node presubmit.ts"
   },
+
   "repository": {
     "type": "git",
     "url": "https://github.com/aresobus/lightweight-models"
