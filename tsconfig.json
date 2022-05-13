@@ -1,4 +1,5 @@
 {
+
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
@@ -9,6 +10,7 @@
     "preserveConstEnums": true,
     "declaration": true,
     "target": "es5",
+
     "lib": [
       "esnext",
       "dom"
