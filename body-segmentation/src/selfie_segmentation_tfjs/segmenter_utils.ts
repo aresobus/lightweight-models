@@ -15,35 +15,44 @@
  * =============================================================================
  */
 
-import {DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_CONFIG, DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_URL_GENERAL, DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_URL_LANDSCAPE, DEFAULT_TFJS_SELFIE_SEGMENTATION_SEGMENTATION_CONFIG} from './constants';
-import {MediaPipeSelfieSegmentationTfjsModelConfig, MediaPipeSelfieSegmentationTfjsSegmentationConfig} from './types';
+import {
+  DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_CONFIG,
+  DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_URL_GENERAL,
+  DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_URL_LANDSCAPE,
+  DEFAULT_TFJS_SELFIE_SEGMENTATION_SEGMENTATION_CONFIG,
+} from "./constants";
+import {
+  MediaPipeSelfieSegmentationTfjsModelConfig,
+  MediaPipeSelfieSegmentationTfjsSegmentationConfig,
+} from "./types";
 
 export function validateModelConfig(
-    modelConfig: MediaPipeSelfieSegmentationTfjsModelConfig):
-    MediaPipeSelfieSegmentationTfjsModelConfig {
+  modelConfig: MediaPipeSelfieSegmentationTfjsModelConfig
+): MediaPipeSelfieSegmentationTfjsModelConfig {
   if (modelConfig == null) {
-    return {...DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_CONFIG};
+    return { ...DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_CONFIG };
   }
 
-  const config: MediaPipeSelfieSegmentationTfjsModelConfig = {...modelConfig};
+  const config: MediaPipeSelfieSegmentationTfjsModelConfig = { ...modelConfig };
 
-  config.runtime = 'tfjs';
+  config.runtime = "tfjs";
 
   if (config.modelType == null) {
     config.modelType = DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_CONFIG.modelType;
   }
 
-  if (config.modelType !== 'general' && config.modelType !== 'landscape') {
-    throw new Error(`Model type must be one of general or landscape, but got ${
-        config.modelType}`);
+  if (config.modelType !== "general" && config.modelType !== "landscape") {
+    throw new Error(
+      `Model type must be one of general or landscape, but got ${config.modelType}`
+    );
   }
 
   if (config.modelUrl == null) {
     switch (config.modelType) {
-      case 'general':
+      case "general":
         config.modelUrl = DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_URL_GENERAL;
         break;
-      case 'landscape':
+      case "landscape":
       default:
         config.modelUrl = DEFAULT_TFJS_SELFIE_SEGMENTATION_MODEL_URL_LANDSCAPE;
         break;
@@ -54,17 +63,17 @@ export function validateModelConfig(
 }
 
 export function validateSegmentationConfig(
-    segmentationConfig: MediaPipeSelfieSegmentationTfjsSegmentationConfig):
-    MediaPipeSelfieSegmentationTfjsSegmentationConfig {
+  segmentationConfig: MediaPipeSelfieSegmentationTfjsSegmentationConfig
+): MediaPipeSelfieSegmentationTfjsSegmentationConfig {
   if (segmentationConfig == null) {
-    return {...DEFAULT_TFJS_SELFIE_SEGMENTATION_SEGMENTATION_CONFIG};
+    return { ...DEFAULT_TFJS_SELFIE_SEGMENTATION_SEGMENTATION_CONFIG };
   }
 
-  const config = {...segmentationConfig};
+  const config = { ...segmentationConfig };
 
   if (config.flipHorizontal == null) {
     config.flipHorizontal =
-        DEFAULT_TFJS_SELFIE_SEGMENTATION_SEGMENTATION_CONFIG.flipHorizontal;
+      DEFAULT_TFJS_SELFIE_SEGMENTATION_SEGMENTATION_CONFIG.flipHorizontal;
   }
 
   return config;
