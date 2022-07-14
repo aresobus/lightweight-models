@@ -15,8 +15,11 @@
  * =============================================================================
  */
 
-import {io} from '@tensorflow/tfjs-core';
-import {MediaPipeSelfieSegmentationModelConfig, MediaPipeSelfieSegmentationSegmentationConfig} from '../selfie_segmentation_mediapipe/types';
+import { io } from "@tensorflow/tfjs-core";
+import {
+  MediaPipeSelfieSegmentationModelConfig,
+  MediaPipeSelfieSegmentationSegmentationConfig,
+} from "../selfie_segmentation_mediapipe/types";
 
 /**
  * Model parameters for MediaPipeSelfieSegmentation TFJS runtime.
@@ -33,14 +36,14 @@ import {MediaPipeSelfieSegmentationModelConfig, MediaPipeSelfieSegmentationSegme
  * access to the model hosted on tf.hub.
  *
  */
-export interface MediaPipeSelfieSegmentationTfjsModelConfig extends
-    MediaPipeSelfieSegmentationModelConfig {
-  runtime: 'tfjs';
-  modelUrl?: string|io.IOHandler;
+export interface MediaPipeSelfieSegmentationTfjsModelConfig
+  extends MediaPipeSelfieSegmentationModelConfig {
+  runtime: "tfjs";
+  modelUrl?: string | io.IOHandler;
 }
 
 /**
  * Body segmentation parameters for MediaPipeSelfieSegmentation TFJS runtime.
  */
-export interface MediaPipeSelfieSegmentationTfjsSegmentationConfig extends
-    MediaPipeSelfieSegmentationSegmentationConfig {}
+export interface MediaPipeSelfieSegmentationTfjsSegmentationConfig
+  extends MediaPipeSelfieSegmentationSegmentationConfig {}
