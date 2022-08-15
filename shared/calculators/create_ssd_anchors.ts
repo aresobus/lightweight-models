@@ -15,8 +15,8 @@
  * =============================================================================
  */
 
-import {AnchorConfig} from './interfaces/config_interfaces';
-import {Rect} from './interfaces/shape_interfaces';
+import { AnchorConfig } from "./interfaces/config_interfaces";
+import { Rect } from "./interfaces/shape_interfaces";
 
 // ref:
 // https://github.com/google/mediapipe/blob/350fbb2100ad531bc110b93aaea23d96af5a5064/mediapipe/calculators/tflite/ssd_anchors_calculator.cc
@@ -42,11 +42,16 @@ export function createSsdAnchors(config: AnchorConfig): Rect[] {
 
     // For same strides, we merge the anchors in the same order.
     let lastSameStrideLayer = layerId;
-    while (lastSameStrideLayer < config.strides.length &&
-           config.strides[lastSameStrideLayer] === config.strides[layerId]) {
+    while (
+      lastSameStrideLayer < config.strides.length &&
+      config.strides[lastSameStrideLayer] === config.strides[layerId]
+    ) {
       const scale = calculateScale(
-          config.minScale, config.maxScale, lastSameStrideLayer,
-          config.strides.length);
+        config.minScale,
+        config.maxScale,
+        lastSameStrideLayer,
+        config.strides.length
+      );
       if (lastSameStrideLayer === 0 && config.reduceBoxesInLowestLayer) {
         // For first layer, it can be specified to use predefined anchors.
         aspectRatios.push(1);
@@ -56,17 +61,24 @@ export function createSsdAnchors(config: AnchorConfig): Rect[] {
         scales.push(scale);
         scales.push(scale);
       } else {
-        for (let aspectRatioId = 0; aspectRatioId < config.aspectRatios.length;
-             ++aspectRatioId) {
+        for (
+          let aspectRatioId = 0;
+          aspectRatioId < config.aspectRatios.length;
+          ++aspectRatioId
+        ) {
           aspectRatios.push(config.aspectRatios[aspectRatioId]);
           scales.push(scale);
         }
         if (config.interpolatedScaleAspectRatio > 0.0) {
-          const scaleNext = lastSameStrideLayer === config.strides.length - 1 ?
-              1.0 :
-              calculateScale(
-                  config.minScale, config.maxScale, lastSameStrideLayer + 1,
-                  config.strides.length);
+          const scaleNext =
+            lastSameStrideLayer === config.strides.length - 1
+              ? 1.0
+              : calculateScale(
+                  config.minScale,
+                  config.maxScale,
+                  lastSameStrideLayer + 1,
+                  config.strides.length
+                );
           scales.push(Math.sqrt(scale * scaleNext));
           aspectRatios.push(config.interpolatedScaleAspectRatio);
         }
@@ -97,7 +109,7 @@ export function createSsdAnchors(config: AnchorConfig): Rect[] {
           const xCenter = (x + config.anchorOffsetX) / featureMapWidth;
           const yCenter = (y + config.anchorOffsetY) / featureMapHeight;
 
-          const newAnchor: Rect = {xCenter, yCenter, width: 0, height: 0};
+          const newAnchor: Rect = { xCenter, yCenter, width: 0, height: 0 };
 
           if (config.fixedAnchorSize) {
             newAnchor.width = 1.0;
@@ -117,11 +129,14 @@ export function createSsdAnchors(config: AnchorConfig): Rect[] {
 }
 
 function calculateScale(
-    minScale: number, maxScale: number, strideIndex: number,
-    numStrides: number) {
+  minScale: number,
+  maxScale: number,
+  strideIndex: number,
+  numStrides: number
+) {
   if (numStrides === 1) {
     return (minScale + maxScale) * 0.5;
   } else {
-    return minScale + (maxScale - minScale) * strideIndex / (numStrides - 1);
+    return minScale + ((maxScale - minScale) * strideIndex) / (numStrides - 1);
   }
 }

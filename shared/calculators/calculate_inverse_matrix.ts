@@ -16,8 +16,12 @@
  */
 
 export type Matrix4x4Row = [number, number, number, number];
-export type Matrix4x4 =
-    [Matrix4x4Row, Matrix4x4Row, Matrix4x4Row, Matrix4x4Row];
+export type Matrix4x4 = [
+  Matrix4x4Row,
+  Matrix4x4Row,
+  Matrix4x4Row,
+  Matrix4x4Row
+];
 
 export function matrix4x4ToArray(matrix: Matrix4x4): number[] {
   return [].concat.apply([], matrix);
@@ -36,18 +40,32 @@ export function arrayToMatrix4x4(array: ArrayLike<number>): Matrix4x4 {
 }
 
 function generalDet3Helper(
-    matrix: Matrix4x4, i1: number, i2: number, i3: number, j1: number,
-    j2: number, j3: number) {
-  return matrix[i1][j1] *
-      (matrix[i2][j2] * matrix[i3][j3] - matrix[i2][j3] * matrix[i3][j2]);
+  matrix: Matrix4x4,
+  i1: number,
+  i2: number,
+  i3: number,
+  j1: number,
+  j2: number,
+  j3: number
+) {
+  return (
+    matrix[i1][j1] *
+    (matrix[i2][j2] * matrix[i3][j3] - matrix[i2][j3] * matrix[i3][j2])
+  );
 }
 
 function cofactor4x4(matrix: Matrix4x4, i: number, j: number) {
-  const i1 = (i + 1) % 4, i2 = (i + 2) % 4, i3 = (i + 3) % 4, j1 = (j + 1) % 4,
-        j2 = (j + 2) % 4, j3 = (j + 3) % 4;
-  return generalDet3Helper(matrix, i1, i2, i3, j1, j2, j3) +
-      generalDet3Helper(matrix, i2, i3, i1, j1, j2, j3) +
-      generalDet3Helper(matrix, i3, i1, i2, j1, j2, j3);
+  const i1 = (i + 1) % 4,
+    i2 = (i + 2) % 4,
+    i3 = (i + 3) % 4,
+    j1 = (j + 1) % 4,
+    j2 = (j + 2) % 4,
+    j3 = (j + 3) % 4;
+  return (
+    generalDet3Helper(matrix, i1, i2, i3, j1, j2, j3) +
+    generalDet3Helper(matrix, i2, i3, i1, j1, j2, j3) +
+    generalDet3Helper(matrix, i3, i1, i2, j1, j2, j3)
+  );
 }
 /**
  * Calculates inverse of an invertible 4x4 matrix.
@@ -76,8 +94,11 @@ export function calculateInverseMatrix(matrix: Matrix4x4): Matrix4x4 {
   inverse[2][3] = -cofactor4x4(matrix, 3, 2);
   inverse[3][3] = cofactor4x4(matrix, 3, 3);
 
-  const scale = matrix[0][0] * inverse[0][0] + matrix[1][0] * inverse[0][1] +
-      matrix[2][0] * inverse[0][2] + matrix[3][0] * inverse[0][3];
+  const scale =
+    matrix[0][0] * inverse[0][0] +
+    matrix[1][0] * inverse[0][1] +
+    matrix[2][0] * inverse[0][2] +
+    matrix[3][0] * inverse[0][3];
 
   for (let i = 0; i < inverse.length; i++) {
     for (let j = 0; j < inverse.length; j++) {
