@@ -1,11 +1,11 @@
+```markdown
 # Object Detection (coco-ssd)
 
 Object detection model that aims to localize and identify multiple objects in a single image.
 
-This model is a TensorFlow.js port of the COCO-SSD model. For more information about Tensorflow object detection API, check out this readme in
-[tensorflow/object_detection](https://github.com/tensorflow/models/blob/master/research/object_detection/README.md).
+This model is a TensorFlow.js port of the COCO-SSD model. For more information about Tensorflow object detection API, check out this readme in [aresobus/lightweight-models](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/README.md).
 
-This model detects objects defined in the COCO dataset, which is a large-scale object detection, segmentation, and captioning dataset. You can find more information [here](http://cocodataset.org/#home). The model is capable of detecting [80 classes of objects](https://github.com/tensorflow/tfjs-models/blob/master/coco-ssd/src/classes.ts). (SSD stands for Single Shot MultiBox Detection).
+This model detects objects defined in the COCO dataset, which is a large-scale object detection, segmentation, and captioning dataset. You can find more information [here](http://cocodataset.org/#home). The model is capable of detecting [80 classes of objects](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/classes.ts). (SSD stands for Single Shot MultiBox Detection).
 
 This TensorFlow.js model does not require you to know about machine learning.
 It can take input as any browser-based image elements (`<img>`, `<video>`, `<canvas>`
@@ -21,7 +21,7 @@ There are two main ways to get this model in your JavaScript project: via script
 <!-- Load TensorFlow.js. This is required to use coco-ssd model. -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>
 <!-- Load the coco-ssd model. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/tensorflow-models-coco-ssd"> </script>
 
 <!-- Replace this with your image. Make sure CORS settings allow reading the image! -->
 <img id="img" src="cat.jpg"/>
@@ -51,7 +51,7 @@ deployment, not an example on how to use coco-ssd in the node env.
 // Note: Require the cpu and webgl backend and add them to package.json as peer dependencies.
 require('@tensorflow/tfjs-backend-cpu');
 require('@tensorflow/tfjs-backend-webgl');
-const cocoSsd = require('@tensorflow-models/coco-ssd');
+const cocoSsd = require('@aresobus/tensorflow-models-coco-ssd');
 
 (async () => {
   const img = document.getElementById('img');
@@ -113,7 +113,9 @@ Args:
 - **maxNumBoxes:** The maximum number of bounding boxes of detected objects. There can be multiple objects of the same class, but at different locations. Defaults to 20.
 - **minScore:** The minimum score of the returned bounding boxes of detected objects. Value between 0 and 1. Defaults to 0.5.
 
-Returns an array of classes and probabilities that looks like:
+Returns an array of classes and probabilities that
+
+ looks like:
 
 ```js
 [{
@@ -129,7 +131,7 @@ Returns an array of classes and probabilities that looks like:
 
 ### Technical details for advanced users
 
-This model is based on the TensorFlow object detection API. You can download the original models from [here](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md). We applied the following optimizations to improve the performance for browser execution:
+This model is based on the TensorFlow object detection API. You can download the original models from [here](https://github.com/aresobus/lightweight-models/blob/main/src/object-detection/g3doc/tf2_detection_zoo.md). We applied the following optimizations to improve the performance for browser execution:
 
   1. Removed the post process graph from the original model.
   2. Used single class NonMaxSuppression instead of original multiple classes NonMaxSuppression for faster speed with similar accuracy.
@@ -144,3 +146,5 @@ tensorflowjs_converter --input_format=tf_frozen_model \
                        ./frozen_inference_graph.pb \
                        ./web_model
 ```
+```
+
