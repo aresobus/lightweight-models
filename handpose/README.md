@@ -1,12 +1,9 @@
 
-
----
-
 # MediaPipe Handpose
 
 The MediaPipe Handpose model is a state-of-the-art machine learning model that allows for the detection of hand landmarks in real-time on the browser using . This model utilizes a two-stage pipeline, which includes a palm detection model that returns a hand bounding box and a hand-skeleton finger tracking model that predicts 21 3D hand keypoints.
 
-[![MediaPipe Handpose Demo](demo/demo.gif)](https://storage.googleapis.com/aresobus-models/demos/handtrack/index.html)
+[![MediaPipe Handpose Demo](demo/demo.gif)](https://storage.googleapis.com/tfjs-models/demos/handtrack/index.html)
 
 For an in-depth discussion of how the hand tracking pipeline works, refer to the Google AI [blog post](https://ai.googleblog.com/2019/08/on-device-real-time-hand-tracking-with.html).
 

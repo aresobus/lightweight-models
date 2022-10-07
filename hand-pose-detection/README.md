@@ -1,14 +1,11 @@
 
-
----
-
 # Hand Pose Detection
 
 This package offers real-time hand pose detection using . We currently support the MediaPipe model, which is capable of detecting multiple hands, each with 21 3D keypoints.
 
 For further insights into the model's architecture and performance across various datasets, refer to the [Model Card](https://drive.google.com/file/d/1-rmIgTfuCbBPW_IFHkh3f0-U_lnGrWpg/view).
 
-Explore our [demo](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands) showcasing hand landmark detection in a live video stream.
+Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/hand-pose-detection/index.html?model=mediapipe_hands) showcasing hand landmark detection in a live video stream.
 
 ## Table of Contents
 1. [Installation](#installation)
@@ -84,6 +81,4 @@ Refer to the diagram to understand the keypoint indices and their corresponding 
 
 ## Example Code and Demos
 
-For practical implementations and further examples, visit the [demos folder](https://github.com//aresobus-models/tree/master/hand-pose-detection/demos).
-
-This README offers a comprehensive guide on how to integrate and utilize the hand pose detection model effectively in web applications, facilitating advanced interactions such as gesture recognition or augmented reality experiences.
+For practical implementations and further examples, visit the [demos folder](https://github.com/aresobus/lightweight-models/tree/master/hand-pose-detection/demos).

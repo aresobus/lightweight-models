@@ -1,6 +1,6 @@
 {
-  "name": "@aresobus/-models-hand-pose-detection",
-  "version": "2.0.1",
+  "name": "@aresobus/hand-pose-detection",
+  "version": "2.0.2",
   "description": "Pretrained hand pose detection model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/hand-pose-detection.esm.js",
