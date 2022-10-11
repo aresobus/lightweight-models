@@ -15,13 +15,13 @@
  * =============================================================================
  */
 
-import node from 'rollup-plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
-import uglify from 'rollup-plugin-uglify';
+import node from "rollup-plugin-node-resolve";
+import typescript from "@rollup/plugin-typescript";
+import uglify from "rollup-plugin-uglify";
 
 const PREAMBLE = `/**
     * @license
-    * Copyright ${(new Date).getFullYear()} Google LLC. All Rights Reserved.
+    * Copyright ${new Date().getFullYear()} Google LLC. All Rights Reserved.
     * Licensed under the Apache License, Version 2.0 (the "License");
     * you may not use this file except in compliance with the License.
     * You may obtain a copy of the License at
@@ -42,35 +42,36 @@ function minify() {
 
 function config({ plugins = [], output = {} }) {
   return {
-    input: 'src/index.ts',
+    input: "src/index.ts",
     plugins: [
-      typescript({ tsconfigOverride: { compilerOptions: { module: 'ES2015' } } }),
-      node(), ...plugins
+      typescript({
+        tsconfigOverride: { compilerOptions: { module: "ES2015" } },
+      }),
+      node(),
+      ...plugins,
     ],
     output: {
       banner: PREAMBLE,
       globals: {
-        '@tensorflow/tfjs-core': 'tf',
-        '@tensorflow/tfjs-converter': 'tf',
+        "@tensorflow/tfjs-core": "tf",
+        "@tensorflow/tfjs-converter": "tf",
       },
       ...output,
     },
-    external: [
-      '@tensorflow/tfjs-core',
-      '@tensorflow/tfjs-converter',
-    ]
+    external: ["@tensorflow/tfjs-core", "@tensorflow/tfjs-converter"],
   };
 }
 
 export default [
-  config(
-    { output: { format: 'umd', name: 'mobilenet', file: 'dist/mobilenet.js' } }),
   config({
-    plugins: [minify()],
-    output: { format: 'umd', name: 'mobilenet', file: 'dist/mobilenet.min.js' }
+    output: { format: "umd", name: "mobilenet", file: "dist/mobilenet.js" },
   }),
   config({
     plugins: [minify()],
-    output: { format: 'es', file: 'dist/mobilenet.esm.js' }
-  })
+    output: { format: "umd", name: "mobilenet", file: "dist/mobilenet.min.js" },
+  }),
+  config({
+    plugins: [minify()],
+    output: { format: "es", file: "dist/mobilenet.esm.js" },
+  }),
 ];

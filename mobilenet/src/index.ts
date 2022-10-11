@@ -15,18 +15,18 @@
  * =============================================================================
  */
 
-import * as tfconv from '@tensorflow/tfjs-converter';
-import * as tf from '@tensorflow/tfjs-core';
+import * as tfconv from "@tensorflow/tfjs-converter";
+import * as tf from "@tensorflow/tfjs-core";
 
-import {IMAGENET_CLASSES} from './imagenet_classes';
-export {version} from './version';
+import { IMAGENET_CLASSES } from "./imagenet_classes";
+export { version } from "./version";
 
 const IMAGE_SIZE = 224;
 
 /** @docinline */
-export type MobileNetVersion = 1|2;
+export type MobileNetVersion = 1 | 2;
 /** @docinline */
-export type MobileNetAlpha = 0.25|0.50|0.75|1.0;
+export type MobileNetAlpha = 0.25 | 0.5 | 0.75 | 1.0;
 
 /**
  * Mobilenet model loading configuration
@@ -49,7 +49,7 @@ export interface ModelConfig {
    * Optional param for specifying the custom model url or an `tf.io.IOHandler`
    * object.
    */
-  modelUrl?: string|tf.io.IOHandler;
+  modelUrl?: string | tf.io.IOHandler;
   /**
    * The input range expected by the trained model hosted at the modelUrl. This
    * is typically [0, 1] or [-1, 1].
@@ -57,9 +57,9 @@ export interface ModelConfig {
   inputRange?: [number, number];
 }
 
-const EMBEDDING_NODES: {[version: string]: string} = {
-  '1.00': 'module_apply_default/MobilenetV1/Logits/global_pool',
-  '2.00': 'module_apply_default/MobilenetV2/Logits/AvgPool'
+const EMBEDDING_NODES: { [version: string]: string } = {
+  "1.00": "module_apply_default/MobilenetV1/Logits/global_pool",
+  "2.00": "module_apply_default/MobilenetV2/Logits/AvgPool",
 };
 
 export interface MobileNetInfo {
@@ -69,75 +69,72 @@ export interface MobileNetInfo {
   inputRange: [number, number];
 }
 
-const MODEL_INFO: {[version: string]: {[alpha: string]: MobileNetInfo}} = {
-  '1.00': {
-    '0.25': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v1_025_224/classification/1',
-      inputRange: [0, 1]
+const MODEL_INFO: { [version: string]: { [alpha: string]: MobileNetInfo } } = {
+  "1.00": {
+    "0.25": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v1_025_224/classification/1",
+      inputRange: [0, 1],
     },
-    '0.50': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v1_050_224/classification/1',
-      inputRange: [0, 1]
+    "0.50": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v1_050_224/classification/1",
+      inputRange: [0, 1],
     },
-    '0.75': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v1_075_224/classification/1',
-      inputRange: [0, 1]
+    "0.75": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v1_075_224/classification/1",
+      inputRange: [0, 1],
     },
-    '1.00': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1',
-      inputRange: [0, 1]
-    }
+    "1.00": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/1",
+      inputRange: [0, 1],
+    },
   },
-  '2.00': {
-    '0.50': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v2_050_224/classification/2',
-      inputRange: [0, 1]
+  "2.00": {
+    "0.50": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v2_050_224/classification/2",
+      inputRange: [0, 1],
     },
-    '0.75': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v2_075_224/classification/2',
-      inputRange: [0, 1]
+    "0.75": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v2_075_224/classification/2",
+      inputRange: [0, 1],
     },
-    '1.00': {
-      url:
-          'https://tfhub.dev/google/imagenet/mobilenet_v2_100_224/classification/2',
-      inputRange: [0, 1]
-    }
-  }
+    "1.00": {
+      url: "https://tfhub.dev/google/imagenet/mobilenet_v2_100_224/classification/2",
+      inputRange: [0, 1],
+    },
+  },
 };
 
 // See ModelConfig documentation for expectations of provided fields.
-export async function load(modelConfig: ModelConfig = {
-  version: 1,
-  alpha: 1.0
-}): Promise<MobileNet> {
+export async function load(
+  modelConfig: ModelConfig = {
+    version: 1,
+    alpha: 1.0,
+  }
+): Promise<MobileNet> {
   if (tf == null) {
     throw new Error(
-        `Cannot find TensorFlow.js. If you are using a <script> tag, please ` +
-        `also include @tensorflow/tfjs on the page before using this model.`);
+      `Cannot find TensorFlow.js. If you are using a <script> tag, please ` +
+        `also include @tensorflow/tfjs on the page before using this model.`
+    );
   }
   const versionStr = modelConfig.version.toFixed(2);
-  const alphaStr = modelConfig.alpha ? modelConfig.alpha.toFixed(2) : '';
+  const alphaStr = modelConfig.alpha ? modelConfig.alpha.toFixed(2) : "";
   let inputMin = -1;
   let inputMax = 1;
   // User provides versionStr / alphaStr.
   if (modelConfig.modelUrl == null) {
     if (!(versionStr in MODEL_INFO)) {
       throw new Error(
-          `Invalid version of MobileNet. Valid versions are: ` +
-          `${Object.keys(MODEL_INFO)}`);
+        `Invalid version of MobileNet. Valid versions are: ` +
+          `${Object.keys(MODEL_INFO)}`
+      );
     }
     if (!(alphaStr in MODEL_INFO[versionStr])) {
       throw new Error(
-          `MobileNet constructed with invalid alpha ${
-              modelConfig.alpha}. Valid ` +
+        `MobileNet constructed with invalid alpha ${modelConfig.alpha}. Valid ` +
           `multipliers for this version are: ` +
-          `${Object.keys(MODEL_INFO[versionStr])}.`);
+          `${Object.keys(MODEL_INFO[versionStr])}.`
+      );
     }
     [inputMin, inputMax] = MODEL_INFO[versionStr][alphaStr].inputRange;
   }
@@ -146,7 +143,12 @@ export async function load(modelConfig: ModelConfig = {
     [inputMin, inputMax] = modelConfig.inputRange;
   }
   const mobilenet = new MobileNetImpl(
-      versionStr, alphaStr, modelConfig.modelUrl, inputMin, inputMax);
+    versionStr,
+    alphaStr,
+    modelConfig.modelUrl,
+    inputMin,
+    inputMax
+  );
   await mobilenet.load();
   return mobilenet;
 }
@@ -154,13 +156,23 @@ export async function load(modelConfig: ModelConfig = {
 export interface MobileNet {
   load(): Promise<void>;
   infer(
-      img: tf.Tensor|ImageData|HTMLImageElement|HTMLCanvasElement|
-      HTMLVideoElement,
-      embedding?: boolean): tf.Tensor;
+    img:
+      | tf.Tensor
+      | ImageData
+      | HTMLImageElement
+      | HTMLCanvasElement
+      | HTMLVideoElement,
+    embedding?: boolean
+  ): tf.Tensor;
   classify(
-      img: tf.Tensor3D|ImageData|HTMLImageElement|HTMLCanvasElement|
-      HTMLVideoElement,
-      topk?: number): Promise<Array<{className: string, probability: number}>>;
+    img:
+      | tf.Tensor3D
+      | ImageData
+      | HTMLImageElement
+      | HTMLCanvasElement
+      | HTMLVideoElement,
+    topk?: number
+  ): Promise<Array<{ className: string; probability: number }>>;
 }
 
 class MobileNetImpl implements MobileNet {
@@ -175,9 +187,12 @@ class MobileNetImpl implements MobileNet {
   private normalizationConstant: number;
 
   constructor(
-      public version: string, public alpha: string,
-      public modelUrl: string|tf.io.IOHandler, public inputMin = -1,
-      public inputMax = 1) {
+    public version: string,
+    public alpha: string,
+    public modelUrl: string | tf.io.IOHandler,
+    public inputMin = -1,
+    public inputMax = 1
+  ) {
     this.normalizationConstant = (inputMax - inputMin) / 255.0;
   }
 
@@ -187,13 +202,13 @@ class MobileNetImpl implements MobileNet {
       // Expect that models loaded by URL should be normalized to [-1, 1]
     } else {
       const url = MODEL_INFO[this.version][this.alpha].url;
-      this.model = await tfconv.loadGraphModel(url, {fromTFHub: true});
+      this.model = await tfconv.loadGraphModel(url, { fromTFHub: true });
     }
 
     // Warmup the model.
-    const result = tf.tidy(
-                       () => this.model.predict(tf.zeros(
-                           [1, IMAGE_SIZE, IMAGE_SIZE, 3]))) as tf.Tensor;
+    const result = tf.tidy(() =>
+      this.model.predict(tf.zeros([1, IMAGE_SIZE, IMAGE_SIZE, 3]))
+    ) as tf.Tensor;
     await result.data();
     result.dispose();
   }
@@ -207,9 +222,14 @@ class MobileNetImpl implements MobileNet {
    *     the 1000-dim logits.
    */
   infer(
-      img: tf.Tensor|ImageData|HTMLImageElement|HTMLCanvasElement|
-      HTMLVideoElement,
-      embedding = false): tf.Tensor {
+    img:
+      | tf.Tensor
+      | ImageData
+      | HTMLImageElement
+      | HTMLCanvasElement
+      | HTMLVideoElement,
+    embedding = false
+  ): tf.Tensor {
     return tf.tidy(() => {
       if (!(img instanceof tf.Tensor)) {
         img = tf.browser.fromPixels(img);
@@ -217,15 +237,19 @@ class MobileNetImpl implements MobileNet {
 
       // Normalize the image from [0, 255] to [inputMin, inputMax].
       const normalized: tf.Tensor3D = tf.add(
-          tf.mul(tf.cast(img, 'float32'), this.normalizationConstant),
-          this.inputMin);
+        tf.mul(tf.cast(img, "float32"), this.normalizationConstant),
+        this.inputMin
+      );
 
       // Resize the image to
       let resized = normalized;
       if (img.shape[0] !== IMAGE_SIZE || img.shape[1] !== IMAGE_SIZE) {
         const alignCorners = true;
         resized = tf.image.resizeBilinear(
-            normalized, [IMAGE_SIZE, IMAGE_SIZE], alignCorners);
+          normalized,
+          [IMAGE_SIZE, IMAGE_SIZE],
+          alignCorners
+        );
       }
 
       // Reshape so we can pass it to predict.
@@ -235,8 +259,10 @@ class MobileNetImpl implements MobileNet {
 
       if (embedding) {
         const embeddingName = EMBEDDING_NODES[this.version];
-        const internal =
-            this.model.execute(batched, embeddingName) as tf.Tensor4D;
+        const internal = this.model.execute(
+          batched,
+          embeddingName
+        ) as tf.Tensor4D;
         result = tf.squeeze(internal, [1, 2]);
       } else {
         const logits1001 = this.model.predict(batched) as tf.Tensor2D;
@@ -257,9 +283,14 @@ class MobileNetImpl implements MobileNet {
    * @param topk How many top values to use. Defaults to 3.
    */
   async classify(
-      img: tf.Tensor3D|ImageData|HTMLImageElement|HTMLCanvasElement|
-      HTMLVideoElement,
-      topk = 3): Promise<Array<{className: string, probability: number}>> {
+    img:
+      | tf.Tensor3D
+      | ImageData
+      | HTMLImageElement
+      | HTMLCanvasElement
+      | HTMLVideoElement,
+    topk = 3
+  ): Promise<Array<{ className: string; probability: number }>> {
     const logits = this.infer(img) as tf.Tensor2D;
 
     const classes = await getTopKClasses(logits, topk);
@@ -270,15 +301,17 @@ class MobileNetImpl implements MobileNet {
   }
 }
 
-async function getTopKClasses(logits: tf.Tensor2D, topK: number):
-    Promise<Array<{className: string, probability: number}>> {
+async function getTopKClasses(
+  logits: tf.Tensor2D,
+  topK: number
+): Promise<Array<{ className: string; probability: number }>> {
   const softmax = tf.softmax(logits);
   const values = await softmax.data();
   softmax.dispose();
 
   const valuesAndIndices = [];
   for (let i = 0; i < values.length; i++) {
-    valuesAndIndices.push({value: values[i], index: i});
+    valuesAndIndices.push({ value: values[i], index: i });
   }
   valuesAndIndices.sort((a, b) => {
     return b.value - a.value;
@@ -294,7 +327,7 @@ async function getTopKClasses(logits: tf.Tensor2D, topK: number):
   for (let i = 0; i < topkIndices.length; i++) {
     topClassesAndProbs.push({
       className: IMAGENET_CLASSES[topkIndices[i]],
-      probability: topkValues[i]
+      probability: topkValues[i],
     });
   }
   return topClassesAndProbs;
