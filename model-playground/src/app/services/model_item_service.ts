@@ -14,34 +14,30 @@
  * limitations under the License.
  * =============================================================================
  */
-import {Injectable} from '@angular/core';
-import {Store} from '@ngrx/store';
+import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
 
-import {MobileNetTfjs} from '../models/image_classification/mobilenet_tfjs';
-import {MobileNetTfLite} from '../models/image_classification/mobilenet_tflite';
-import {CocoSsdTfjs} from '../models/object_detection/cocossd_tfjs';
-import {addModelItemsFromInit} from '../store/actions';
-import {AppState} from '../store/state';
+import { MobileNetTfjs } from "../models/image_classification/mobilenet_tfjs";
+import { MobileNetTfLite } from "../models/image_classification/mobilenet_tflite";
+import { CocoSsdTfjs } from "../models/object_detection/cocossd_tfjs";
+import { addModelItemsFromInit } from "../store/actions";
+import { AppState } from "../store/state";
 
 /**
  * Service for model item related tasks.
  */
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ModelItemService {
-  constructor(
-      private readonly store: Store<AppState>,
-  ) {}
+  constructor(private readonly store: Store<AppState>) {}
 
   /** Registers all model items. */
   registerAllModelItems() {
-    this.store.dispatch(addModelItemsFromInit({
-      items: [
-        new MobileNetTfjs(),
-        new MobileNetTfLite(),
-        new CocoSsdTfjs(),
-      ]
-    }));
+    this.store.dispatch(
+      addModelItemsFromInit({
+        items: [new MobileNetTfjs(), new MobileNetTfLite(), new CocoSsdTfjs()],
+      })
+    );
   }
 }

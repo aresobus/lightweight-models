@@ -15,11 +15,11 @@
  * =============================================================================
  */
 
-import {ModelItem} from '../model_item';
+import { ModelItem } from "../model_item";
 
 /** Coco-ssd TFJS task model. */
 export class CocoSsdTfjs extends ModelItem {
   constructor() {
-    super('cocossd_tfjs');
+    super("cocossd_tfjs");
   }
 }

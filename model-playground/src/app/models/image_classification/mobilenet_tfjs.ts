@@ -15,11 +15,11 @@
  * =============================================================================
  */
 
-import {ModelItem} from '../model_item';
+import { ModelItem } from "../model_item";
 
 /** MobileNet TFJS task model. */
 export class MobileNetTfjs extends ModelItem {
   constructor() {
-    super('mobilenet_tfjs');
+    super("mobilenet_tfjs");
   }
 }

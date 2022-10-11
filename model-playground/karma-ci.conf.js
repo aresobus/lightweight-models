@@ -18,52 +18,52 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-    basePath: '',
+    basePath: "",
     singleRun: true,
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ["jasmine", "@angular-devkit/build-angular"],
     plugins: [
-      require('karma-jasmine'),
-      require('karma-chrome-launcher'),
-      require('karma-browserstack-launcher'),
-      require('karma-jasmine-html-reporter'),
-      require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma'),
+      require("karma-jasmine"),
+      require("karma-chrome-launcher"),
+      require("karma-browserstack-launcher"),
+      require("karma-jasmine-html-reporter"),
+      require("karma-coverage"),
+      require("@angular-devkit/build-angular/plugins/karma"),
     ],
     client: {
       jasmine: {
-          // you can add configuration options for Jasmine here
-          // the possible options are listed at
-          // https://jasmine.github.io/api/edge/Configuration.html
-          // for example, you can disable the random execution with `random:
-          // false`
-          // or set a specific seed with `seed: 4321`
+        // you can add configuration options for Jasmine here
+        // the possible options are listed at
+        // https://jasmine.github.io/api/edge/Configuration.html
+        // for example, you can disable the random execution with `random:
+        // false`
+        // or set a specific seed with `seed: 4321`
       },
-      clearContext:
-          false  // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
     jasmineHtmlReporter: {
-      suppressAll: true  // removes the duplicated traces
+      suppressAll: true, // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/model-playground'),
-      subdir: '.',
-      reporters: [{type: 'html'}, {type: 'text-summary'}]
+      dir: require("path").join(__dirname, "./coverage/model-playground"),
+      subdir: ".",
+      reporters: [{ type: "html" }, { type: "text-summary" }],
     },
-    reporters: ['progress', 'kjhtml'],
-    hostname: 'bs-local.com',
+    reporters: ["progress", "kjhtml"],
+    hostname: "bs-local.com",
     port: 9886,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['bs_chrome_mac'],
+    browsers: ["bs_chrome_mac"],
     restartOnFileChange: true,
     browserStack: {
       username: process.env.BROWSERSTACK_USERNAME,
       accessKey: process.env.BROWSERSTACK_KEY,
       timeout: 1800,
-      tunnelIdentifier:
-          `model_playground_${Date.now()}_${Math.floor(Math.random() * 1000)}`
+      tunnelIdentifier: `model_playground_${Date.now()}_${Math.floor(
+        Math.random() * 1000
+      )}`,
     },
     captureTimeout: 3e5,
     reportSlowerThan: 500,
@@ -75,48 +75,48 @@ module.exports = function(config) {
       // For browserstack configs see:
       // https://www.browserstack.com/automate/node
       bs_chrome_mac: {
-        base: 'BrowserStack',
-        browser: 'chrome',
-        browser_version: 'latest',
-        os: 'OS X',
-        os_version: 'High Sierra'
+        base: "BrowserStack",
+        browser: "chrome",
+        browser_version: "latest",
+        os: "OS X",
+        os_version: "High Sierra",
       },
       bs_firefox_mac: {
-        base: 'BrowserStack',
-        browser: 'firefox',
-        browser_version: 'latest',
-        os: 'OS X',
-        os_version: 'High Sierra'
+        base: "BrowserStack",
+        browser: "firefox",
+        browser_version: "latest",
+        os: "OS X",
+        os_version: "High Sierra",
       },
       bs_safari_mac: {
-        base: 'BrowserStack',
-        browser: 'safari',
-        browser_version: 'latest',
-        os: 'OS X',
-        os_version: 'High Sierra'
+        base: "BrowserStack",
+        browser: "safari",
+        browser_version: "latest",
+        os: "OS X",
+        os_version: "High Sierra",
       },
       bs_ios_11: {
-        base: 'BrowserStack',
-        device: 'iPhone X',
-        os: 'iOS',
-        os_version: '11.0',
-        real_mobile: true
+        base: "BrowserStack",
+        device: "iPhone X",
+        os: "iOS",
+        os_version: "11.0",
+        real_mobile: true,
       },
       bs_android_9: {
-        base: 'BrowserStack',
-        device: 'Google Pixel 3 XL',
-        os: 'android',
-        os_version: '9.0',
-        real_mobile: true
+        base: "BrowserStack",
+        device: "Google Pixel 3 XL",
+        os: "android",
+        os_version: "9.0",
+        real_mobile: true,
       },
       win_10_chrome: {
-        base: 'BrowserStack',
-        browser: 'chrome',
+        base: "BrowserStack",
+        browser: "chrome",
         // Latest Chrome on Windows has WebGL problems:
         // https://github.com/tensorflow/tfjs/issues/2272
-        browser_version: '77.0',
-        os: 'Windows',
-        os_version: '10'
+        browser_version: "77.0",
+        os: "Windows",
+        os_version: "10",
       },
     },
   });
