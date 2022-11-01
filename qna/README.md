@@ -1,4 +1,3 @@
-Here's a refined and structured version of your README for the Question and Answer application using a pre-trained model:
 
 ---
 

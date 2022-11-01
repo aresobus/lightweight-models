@@ -15,23 +15,26 @@
  * =============================================================================
  */
 
-import {Keypoint} from './interfaces/common_interfaces';
-import {LandmarksRefinementConfig} from './interfaces/config_interfaces';
+import { Keypoint } from "./interfaces/common_interfaces";
+import { LandmarksRefinementConfig } from "./interfaces/config_interfaces";
 
 function getNumberOfRefinedLandmarks(refinements: LandmarksRefinementConfig[]) {
   // Gather all used indexes.
   const indices: number[] = [].concat.apply(
-      [], refinements.map(refinement => refinement.indexesMapping));
+    [],
+    refinements.map((refinement) => refinement.indexesMapping)
+  );
 
   if (indices.length === 0) {
-    throw new Error('There should be at least one landmark in indexes mapping');
+    throw new Error("There should be at least one landmark in indexes mapping");
   }
 
-  let minIndex = indices[0], maxIndex = indices[0];
+  let minIndex = indices[0],
+    maxIndex = indices[0];
 
   const uniqueIndices = new Set(indices);
 
-  uniqueIndices.forEach(index => {
+  uniqueIndices.forEach((index) => {
     minIndex = Math.min(minIndex, index);
     maxIndex = Math.max(maxIndex, index);
   });
@@ -42,20 +45,26 @@ function getNumberOfRefinedLandmarks(refinements: LandmarksRefinementConfig[]) {
 
   if (minIndex !== 0) {
     throw new Error(
-        `Indexes are expected to start with 0 instead of ${minIndex}`);
+      `Indexes are expected to start with 0 instead of ${minIndex}`
+    );
   }
 
   if (maxIndex + 1 !== numIndices) {
-    throw new Error(`Indexes should have no gaps but ${
-        maxIndex - numIndices + 1} indexes are missing`);
+    throw new Error(
+      `Indexes should have no gaps but ${
+        maxIndex - numIndices + 1
+      } indexes are missing`
+    );
   }
 
   return numIndices;
 }
 
 function refineXY(
-    indexesMapping: number[], landmarks: Keypoint[],
-    refinedLandmarks: Keypoint[]) {
+  indexesMapping: number[],
+  landmarks: Keypoint[],
+  refinedLandmarks: Keypoint[]
+) {
   for (let i = 0; i < landmarks.length; ++i) {
     const landmark = landmarks[i];
     const refinedLandmark = refinedLandmarks[indexesMapping[i]];
@@ -73,19 +82,21 @@ function getZAverage(landmarks: Keypoint[], indexes: number[]) {
 }
 
 function refineZ(
-    indexesMapping: number[],
-    zRefinement: LandmarksRefinementConfig['zRefinement'],
-    landmarks: Keypoint[], refinedLandmarks: Keypoint[]) {
-  if (typeof zRefinement === 'string') {
+  indexesMapping: number[],
+  zRefinement: LandmarksRefinementConfig["zRefinement"],
+  landmarks: Keypoint[],
+  refinedLandmarks: Keypoint[]
+) {
+  if (typeof zRefinement === "string") {
     switch (zRefinement) {
-      case 'copy': {
+      case "copy": {
         for (let i = 0; i < landmarks.length; ++i) {
           refinedLandmarks[indexesMapping[i]].z = landmarks[i].z;
         }
 
         break;
       }
-      case 'none':
+      case "none":
       default: {
         // Do nothing and keep Z that is already in refined landmarks.
         break;
@@ -112,12 +123,14 @@ function refineZ(
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/landmarks_refinement_calculator.cc
 export function landmarksRefinement(
-    allLandmarks: Keypoint[][],
-    refinements: LandmarksRefinementConfig[]): Keypoint[] {
+  allLandmarks: Keypoint[][],
+  refinements: LandmarksRefinementConfig[]
+): Keypoint[] {
   // Initialize refined landmarks list.
   const numRefinedLandmarks = getNumberOfRefinedLandmarks(refinements);
-  const refinedLandmarks: Keypoint[] =
-      new Array(numRefinedLandmarks).fill(null).map(Object);
+  const refinedLandmarks: Keypoint[] = new Array(numRefinedLandmarks)
+    .fill(null)
+    .map(Object);
   // Apply input landmarks to output refined landmarks in provided order.
   for (let i = 0; i < allLandmarks.length; ++i) {
     const landmarks = allLandmarks[i];
@@ -125,9 +138,9 @@ export function landmarksRefinement(
 
     if (landmarks.length !== refinement.indexesMapping.length) {
       // Check number of landmarks in mapping and stream are the same.
-      throw new Error(`There are ${
-          landmarks.length} refinement landmarks while mapping has ${
-          refinement.indexesMapping.length}`);
+      throw new Error(
+        `There are ${landmarks.length} refinement landmarks while mapping has ${refinement.indexesMapping.length}`
+      );
     }
 
     // Refine X and Y.
@@ -135,8 +148,11 @@ export function landmarksRefinement(
 
     // Refine Z.
     refineZ(
-        refinement.indexesMapping, refinement.zRefinement, landmarks,
-        refinedLandmarks);
+      refinement.indexesMapping,
+      refinement.zRefinement,
+      landmarks,
+      refinedLandmarks
+    );
     // Visibility and presence are not currently refined and are left as `0`.
   }
 
