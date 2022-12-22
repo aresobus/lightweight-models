@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/toxicity",
-  "version": "1.2.2",
-  "description": "Toxicity model in TensorFlow.js",
+  "name": "@aresobus/toxicity",
+  "version": "1.0.2",
+  "description": "Toxicity model in TensorFlow.js by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/toxicity.esm.js",
   "module": "dist/toxicity.esm.js",
@@ -10,14 +10,14 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
   "peerDependencies": {
     "@tensorflow/tfjs-converter": "^4.13.0",
     "@tensorflow/tfjs-core": "^4.13.0"
   },
   "dependencies": {
-    "@tensorflow-models/universal-sentence-encoder": "~1.2.2"
+    "@aresobus/universal-sentence-encoder": "~1.2.2"
   },
   "devDependencies": {
     "@tensorflow/tfjs-converter": "^4.13.0",
