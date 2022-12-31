@@ -1,7 +1,7 @@
 {
   "name": "@aresobus/universal-sentence-encoder",
-  "version": "1.4.0",
-  "description": "Universal Sentence Encoder lite created by Oleksandr Lebedyev",
+  "version": "1.5.0",
+  "description": "Universal Sentence Encoder Lite created by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/universal-sentence-encoder.esm.js",
   "module": "dist/universal-sentence-encoder.esm.js",
