@@ -14,14 +14,19 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as posedetection from '@tensorflow-models/pose-detection';
-import * as scatter from 'scatter-gl';
+import * as posedetection from "@tensorflow-models/pose-detection";
+import * as scatter from "scatter-gl";
 
-import * as params from './params';
+import * as params from "./params";
 
 // These anchor points allow the pose pointcloud to resize according to its
 // position in the input.
-const ANCHOR_POINTS = [[0, 0, 0], [0, 1, 0], [-1, 0, 0], [-1, -1, 0]];
+const ANCHOR_POINTS = [
+  [0, 0, 0],
+  [0, 1, 0],
+  [-1, 0, 0],
+  [-1, -1, 0],
+];
 
 // #ffffff - White
 // #800000 - Maroon
@@ -44,18 +49,35 @@ const ANCHOR_POINTS = [[0, 0, 0], [0, 1, 0], [-1, 0, 0], [-1, -1, 0]];
 // #3cb44b - Chateau Green
 // #a9a9a9 - Silver Chalice
 const COLOR_PALETTE = [
-  '#ffffff', '#800000', '#469990', '#e6194b', '#42d4f4', '#fabed4', '#aaffc3',
-  '#9a6324', '#000075', '#f58231', '#4363d8', '#ffd8b1', '#dcbeff', '#808000',
-  '#ffe119', '#911eb4', '#bfef45', '#f032e6', '#3cb44b', '#a9a9a9'
+  "#ffffff",
+  "#800000",
+  "#469990",
+  "#e6194b",
+  "#42d4f4",
+  "#fabed4",
+  "#aaffc3",
+  "#9a6324",
+  "#000075",
+  "#f58231",
+  "#4363d8",
+  "#ffd8b1",
+  "#dcbeff",
+  "#808000",
+  "#ffe119",
+  "#911eb4",
+  "#bfef45",
+  "#f032e6",
+  "#3cb44b",
+  "#a9a9a9",
 ];
 export class RendererCanvas2d {
   constructor(canvas) {
-    this.ctx = canvas.getContext('2d');
-    this.scatterGLEl = document.querySelector('#scatter-gl-container');
+    this.ctx = canvas.getContext("2d");
+    this.scatterGLEl = document.querySelector("#scatter-gl-container");
     this.scatterGL = new scatter.ScatterGL(this.scatterGLEl, {
-      'rotateOnStart': true,
-      'selectEnabled': false,
-      'styles': {polyline: {defaultOpacity: 1, deselectedOpacity: 1}}
+      rotateOnStart: true,
+      selectEnabled: false,
+      styles: { polyline: { defaultOpacity: 1, deselectedOpacity: 1 } },
     });
     this.scatterGLHasInitialized = false;
     this.videoWidth = canvas.width;
@@ -68,12 +90,12 @@ export class RendererCanvas2d {
     this.ctx.translate(videoWidth, 0);
     this.ctx.scale(-1, 1);
 
-    this.scatterGLEl.style =
-        `width: ${videoWidth}px; height: ${videoHeight}px;`;
+    this.scatterGLEl.style = `width: ${videoWidth}px; height: ${videoHeight}px;`;
     this.scatterGL.resize();
 
-    this.scatterGLEl.style.display =
-        params.STATE.modelConfig.render3D ? 'inline-block' : 'none';
+    this.scatterGLEl.style.display = params.STATE.modelConfig.render3D
+      ? "inline-block"
+      : "none";
   }
 
   draw(rendererParams) {
@@ -125,22 +147,23 @@ export class RendererCanvas2d {
    * @param keypoints A list of keypoints.
    */
   drawKeypoints(keypoints) {
-    const keypointInd =
-        posedetection.util.getKeypointIndexBySide(params.STATE.model);
-    this.ctx.fillStyle = 'Red';
-    this.ctx.strokeStyle = 'White';
+    const keypointInd = posedetection.util.getKeypointIndexBySide(
+      params.STATE.model
+    );
+    this.ctx.fillStyle = "Red";
+    this.ctx.strokeStyle = "White";
     this.ctx.lineWidth = params.DEFAULT_LINE_WIDTH;
 
     for (const i of keypointInd.middle) {
       this.drawKeypoint(keypoints[i]);
     }
 
-    this.ctx.fillStyle = 'Green';
+    this.ctx.fillStyle = "Green";
     for (const i of keypointInd.left) {
       this.drawKeypoint(keypoints[i]);
     }
 
-    this.ctx.fillStyle = 'Orange';
+    this.ctx.fillStyle = "Orange";
     for (const i of keypointInd.right) {
       this.drawKeypoint(keypoints[i]);
     }
@@ -165,56 +188,63 @@ export class RendererCanvas2d {
    */
   drawSkeleton(keypoints, poseId) {
     // Each poseId is mapped to a color in the color palette.
-    const color = params.STATE.modelConfig.enableTracking && poseId != null ?
-        COLOR_PALETTE[poseId % 20] :
-        'White';
+    const color =
+      params.STATE.modelConfig.enableTracking && poseId != null
+        ? COLOR_PALETTE[poseId % 20]
+        : "White";
     this.ctx.fillStyle = color;
     this.ctx.strokeStyle = color;
     this.ctx.lineWidth = params.DEFAULT_LINE_WIDTH;
 
-    posedetection.util.getAdjacentPairs(params.STATE.model).forEach(([
-                                                                      i, j
-                                                                    ]) => {
-      const kp1 = keypoints[i];
-      const kp2 = keypoints[j];
+    posedetection.util
+      .getAdjacentPairs(params.STATE.model)
+      .forEach(([i, j]) => {
+        const kp1 = keypoints[i];
+        const kp2 = keypoints[j];
 
-      // If score is null, just show the keypoint.
-      const score1 = kp1.score != null ? kp1.score : 1;
-      const score2 = kp2.score != null ? kp2.score : 1;
-      const scoreThreshold = params.STATE.modelConfig.scoreThreshold || 0;
+        // If score is null, just show the keypoint.
+        const score1 = kp1.score != null ? kp1.score : 1;
+        const score2 = kp2.score != null ? kp2.score : 1;
+        const scoreThreshold = params.STATE.modelConfig.scoreThreshold || 0;
 
-      if (score1 >= scoreThreshold && score2 >= scoreThreshold) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(kp1.x, kp1.y);
-        this.ctx.lineTo(kp2.x, kp2.y);
-        this.ctx.stroke();
-      }
-    });
+        if (score1 >= scoreThreshold && score2 >= scoreThreshold) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(kp1.x, kp1.y);
+          this.ctx.lineTo(kp2.x, kp2.y);
+          this.ctx.stroke();
+        }
+      });
   }
 
   drawKeypoints3D(keypoints) {
     const scoreThreshold = params.STATE.modelConfig.scoreThreshold || 0;
-    const pointsData =
-        keypoints.map(keypoint => ([-keypoint.x, -keypoint.y, -keypoint.z]));
+    const pointsData = keypoints.map((keypoint) => [
+      -keypoint.x,
+      -keypoint.y,
+      -keypoint.z,
+    ]);
 
-    const dataset =
-        new scatter.ScatterGL.Dataset([...pointsData, ...ANCHOR_POINTS]);
+    const dataset = new scatter.ScatterGL.Dataset([
+      ...pointsData,
+      ...ANCHOR_POINTS,
+    ]);
 
-    const keypointInd =
-        posedetection.util.getKeypointIndexBySide(params.STATE.model);
+    const keypointInd = posedetection.util.getKeypointIndexBySide(
+      params.STATE.model
+    );
     this.scatterGL.setPointColorer((i) => {
       if (keypoints[i] == null || keypoints[i].score < scoreThreshold) {
         // hide anchor points and low-confident points.
-        return '#ffffff';
+        return "#ffffff";
       }
       if (i === 0) {
-        return '#ff0000' /* Red */;
+        return "#ff0000" /* Red */;
       }
       if (keypointInd.left.indexOf(i) > -1) {
-        return '#00ff00' /* Green */;
+        return "#00ff00" /* Green */;
       }
       if (keypointInd.right.indexOf(i) > -1) {
-        return '#ffa500' /* Orange */;
+        return "#ffa500" /* Orange */;
       }
     });
 
@@ -224,7 +254,7 @@ export class RendererCanvas2d {
       this.scatterGL.updateDataset(dataset);
     }
     const connections = posedetection.util.getAdjacentPairs(params.STATE.model);
-    const sequences = connections.map(pair => ({indices: pair}));
+    const sequences = connections.map((pair) => ({ indices: pair }));
     this.scatterGL.setSequences(sequences);
     this.scatterGLHasInitialized = true;
   }
