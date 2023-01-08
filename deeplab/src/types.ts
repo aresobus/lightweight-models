@@ -15,7 +15,7 @@
  * =============================================================================
  */
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
 /*
   Each pixel is assigned a label in the segmentation map that DeepLab outputs.
@@ -40,7 +40,7 @@ export interface Legend {
  *
  * @docinline
  */
-export type QuantizationBytes = 1|2|4;
+export type QuantizationBytes = 1 | 2 | 4;
 /**
  * Three types of pre-trained weights are available, trained on Pascal,
  * Cityscapes and ADE20K datasets. Each dataset has its own colormap and
@@ -48,10 +48,14 @@ export type QuantizationBytes = 1|2|4;
  *
  * @docinline
  */
-export type ModelArchitecture = 'pascal'|'cityscapes'|'ade20k';
+export type ModelArchitecture = "pascal" | "cityscapes" | "ade20k";
 
 export type DeepLabInput =
-    |ImageData|HTMLImageElement|HTMLCanvasElement|HTMLVideoElement|tf.Tensor3D;
+  | ImageData
+  | HTMLImageElement
+  | HTMLCanvasElement
+  | HTMLVideoElement
+  | tf.Tensor3D;
 
 /*
  * The model can be configured with any of the following attributes:

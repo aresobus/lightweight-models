@@ -14,12 +14,12 @@
  * limitations under the License.
  * =============================================================================
  */
-import {Tensor2D} from '@tensorflow/tfjs-core';
+import { Tensor2D } from "@tensorflow/tfjs-core";
 
-import {PixelInput} from './shared/calculators/interfaces/common_interfaces';
+import { PixelInput } from "./shared/calculators/interfaces/common_interfaces";
 
 export enum SupportedModels {
-  ARPortraitDepth = 'ARPortraitDepth',
+  ARPortraitDepth = "ARPortraitDepth",
 }
 
 /**
@@ -58,7 +58,9 @@ export interface DepthMap {
 
   toTensor(): Promise<Tensor2D>;
 
-  getUnderlyingType(): 'canvasimagesource'|'array'|
-      'tensor'; /* determines which type the map currently stores in its
-                   implementation so that conversion can be avoided */
+  getUnderlyingType():
+    | "canvasimagesource"
+    | "array"
+    | "tensor" /* determines which type the map currently stores in its
+                   implementation so that conversion can be avoided */;
 }

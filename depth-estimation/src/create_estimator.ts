@@ -15,10 +15,10 @@
  * =============================================================================
  */
 
-import {load as loadARPortraitDepth} from './ar_portrait_depth/estimator';
-import {ARPortraitDepthModelConfig} from './ar_portrait_depth/types';
-import {DepthEstimator} from './depth_estimator';
-import {SupportedModels} from './types';
+import { load as loadARPortraitDepth } from "./ar_portrait_depth/estimator";
+import { ARPortraitDepthModelConfig } from "./ar_portrait_depth/types";
+import { DepthEstimator } from "./depth_estimator";
+import { SupportedModels } from "./types";
 
 /**
  * Create a depth estimator instance.
@@ -27,8 +27,9 @@ import {SupportedModels} from './types';
  * @param modelConfig The configuration for the pipeline to load.
  */
 export async function createEstimator(
-    model: SupportedModels,
-    modelConfig?: ARPortraitDepthModelConfig): Promise<DepthEstimator> {
+  model: SupportedModels,
+  modelConfig?: ARPortraitDepthModelConfig
+): Promise<DepthEstimator> {
   switch (model) {
     case SupportedModels.ARPortraitDepth:
       return loadARPortraitDepth(modelConfig);
