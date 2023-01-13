@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/depth-estimation",
+  "name": "@aresobus/tensorflow-models-depth-estimation",
   "version": "0.0.3",
-  "description": "Pretrained depth model",
+  "description": "Pretrained depth estimation model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/depth-estimation.esm.js",
   "module": "dist/depth-estimation.esm.js",
@@ -10,8 +10,10 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "@tensorflow/tfjs-backend-webgl": "^4.18.0",
     "@tensorflow/tfjs-converter": "^4.18.0",
@@ -60,7 +62,6 @@
     "build-npm": "yarn build && yarn bundle",
     "lint": "tslint -p . -t verbose"
   },
-  "license": "Apache-2.0",
   "dependencies": {
     "rimraf": "^3.0.2"
   }

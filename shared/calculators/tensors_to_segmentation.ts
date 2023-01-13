@@ -14,10 +14,10 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
-import {ImageSize} from './interfaces/common_interfaces';
+import * as tf from "@tensorflow/tfjs-core";
+import { ImageSize } from "./interfaces/common_interfaces";
 
-import {TensorsToSegmentationConfig} from './interfaces/config_interfaces';
+import { TensorsToSegmentationConfig } from "./interfaces/config_interfaces";
 
 /**
  * Converts a tensor from a segmentation model to an image mask.
@@ -29,13 +29,15 @@ import {TensorsToSegmentationConfig} from './interfaces/config_interfaces';
  * @returns Image mask.
  */
 export function tensorsToSegmentation(
-    segmentationTensor: tf.Tensor4D, config: TensorsToSegmentationConfig,
-    outputSize?: ImageSize): tf.Tensor2D {
+  segmentationTensor: tf.Tensor4D,
+  config: TensorsToSegmentationConfig,
+  outputSize?: ImageSize
+): tf.Tensor2D {
   return tf.tidy(() => {
     // Remove batch dimension.
     const $segmentationTensor =
-        // tslint:disable-next-line: no-unnecessary-type-assertion
-        tf.squeeze(segmentationTensor, [0]) as tf.Tensor3D;
+      // tslint:disable-next-line: no-unnecessary-type-assertion
+      tf.squeeze(segmentationTensor, [0]) as tf.Tensor3D;
 
     const tensorChannels = $segmentationTensor.shape[2];
     // Process mask tensor and apply activation function.
@@ -43,27 +45,30 @@ export function tensorsToSegmentation(
       // Create initial working mask.
       let smallMaskMat = $segmentationTensor;
       switch (config.activation) {
-        case 'none':
+        case "none":
           break;
-        case 'sigmoid':
+        case "sigmoid":
           smallMaskMat = tf.sigmoid(smallMaskMat);
           break;
-        case 'softmax':
-          throw new Error('Softmax activation requires two channels.');
+        case "softmax":
+          throw new Error("Softmax activation requires two channels.");
         default:
           throw new Error(`Activation not supported (${config.activation})`);
       }
 
-      const outputMat = outputSize ?
-          tf.image.resizeBilinear(
-              smallMaskMat, [outputSize.height, outputSize.width]) :
-          smallMaskMat;
+      const outputMat = outputSize
+        ? tf.image.resizeBilinear(smallMaskMat, [
+            outputSize.height,
+            outputSize.width,
+          ])
+        : smallMaskMat;
 
       // Remove channel dimension.
       return tf.squeeze(outputMat, [2]);
     } else {
       throw new Error(
-          `Unsupported number of tensor channels ${tensorChannels}`);
+        `Unsupported number of tensor channels ${tensorChannels}`
+      );
     }
   });
 }
