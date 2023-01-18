@@ -1,12 +1,9 @@
 
-
----
-
 # Face Landmarks Detection
 
 This package provides advanced models for real-time face detection and landmark tracking in the browser using . Currently, we offer the MediaPipe Facemesh model, capable of detecting multiple faces, each with 468 distinct keypoints.
 
-Explore our [demo](https://storage.googleapis.com/aresobus-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh) to see face detection in action using the MediaPipe Facemesh model.
+Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh) to see face detection in action using the MediaPipe Facemesh model.
 
 ## Overview
 
@@ -72,5 +69,5 @@ Here’s a visual representation of the 468 keypoints detected by the MediaPipe 
 
 ## Example Code and Demos
 
-For practical implementations and further examples, visit the [demos folder](https://github.com//aresobus-models/tree/master/face-landmarks-detection/demos).
+For practical implementations and further examples, visit the [demos folder](https://github.com/aresobus/lightweight-models/tree/master/face-landmarks-detection/demos).
 

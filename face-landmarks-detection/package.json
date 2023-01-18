@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-face-landmarks-detection",
-  "version": "1.0.3",
-  "description": "Pretrained face landmarks detection model maintained by Oleksandr Lebedyev",
+  "name": "@aresobus/face-landmarks-detection",
+  "version": "2.0.3",
+  "description": "Pretrained face landmarks detection model by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/face-landmarks-detection.esm.js",
   "module": "dist/face-landmarks-detection.esm.js",
