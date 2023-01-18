@@ -1,6 +1,6 @@
 {
   "name": "nbc-lightweight-models",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Pre-trained TensorFlow.js models maintained by Oleksandr Lebedyev",
   "main": "index.js",
   "scripts": {

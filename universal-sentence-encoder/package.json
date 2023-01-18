@@ -1,5 +1,5 @@
 {
-  "name": "@aresobus/tensorflow-models-universal-sentence-encoder",
+  "name": "@aresobus/universal-sentence-encoder",
   "version": "1.3.3",
   "description": "Universal Sentence Encoder lite in TensorFlow.js maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
