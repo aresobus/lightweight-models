@@ -15,15 +15,15 @@
  * =============================================================================
  */
 
-import typescript from '@rollup/plugin-typescript';
-import resolve from '@rollup/plugin-node-resolve';
-import {terser} from 'rollup-plugin-terser';
-import {visualizer} from 'rollup-plugin-visualizer';
-import * as path from 'path';
+import typescript from "@rollup/plugin-typescript";
+import resolve from "@rollup/plugin-node-resolve";
+import { terser } from "rollup-plugin-terser";
+import { visualizer } from "rollup-plugin-visualizer";
+import * as path from "path";
 
 const PREAMBLE = `/**
  * @license
- * Copyright ${(new Date).getFullYear()} Google LLC.
+ * Copyright ${new Date().getFullYear()} Google LLC.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -40,29 +40,27 @@ const PREAMBLE = `/**
 `;
 
 const TS_OPTIONS = {
-  include: ['src/**/*.ts'],
-  module: 'ES2015',
+  include: ["src/**/*.ts"],
+  module: "ES2015",
 };
 
 export function makeRollupConfig({
   name,
-  input = './src/index.ts',
+  input = "./src/index.ts",
   globals,
-  outputDirectory = 'dist/',
+  outputDirectory = "dist/",
 }) {
-
   const allGlobals = {
-    '@tensorflow/tfjs-core': 'tf',
-    '@tensorflow/tfjs-converter': 'tf',
-    ...globals
+    "@tensorflow/tfjs-core": "tf",
+    "@tensorflow/tfjs-converter": "tf",
+    ...globals,
   };
 
   const configs = [];
-  for (const format of ['umd', 'esm']) {
+  for (const format of ["umd", "esm"]) {
     for (const minify of [true, false]) {
-      const dotMin = minify ? '.min' : '';
-      const file = path.join(outputDirectory,
-                             `${name}${dotMin}.${format}.js`);
+      const dotMin = minify ? ".min" : "";
+      const file = path.join(outputDirectory, `${name}${dotMin}.${format}.js`);
       configs.push({
         input,
         plugins: [
