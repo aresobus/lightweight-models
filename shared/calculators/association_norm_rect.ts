@@ -15,7 +15,7 @@
  * =============================================================================
  */
 
-import {BoundingBox, Rect} from './interfaces/shape_interfaces';
+import { BoundingBox, Rect } from "./interfaces/shape_interfaces";
 
 function area(rect: BoundingBox) {
   return rect.width * rect.height;
@@ -23,8 +23,11 @@ function area(rect: BoundingBox) {
 
 function intersects(rect1: BoundingBox, rect2: BoundingBox) {
   return !(
-      rect1.xMax < rect2.xMin || rect2.xMax < rect1.xMin ||
-      rect1.yMax < rect2.yMin || rect2.yMax < rect1.yMin);
+    rect1.xMax < rect2.xMin ||
+    rect2.xMax < rect1.xMin ||
+    rect1.yMax < rect2.yMin ||
+    rect2.yMax < rect1.yMin
+  );
 }
 
 function intersect(rect1: BoundingBox, rect2: BoundingBox) {
@@ -35,7 +38,7 @@ function intersect(rect1: BoundingBox, rect2: BoundingBox) {
   const width = Math.max(xMax - xMin, 0);
   const height = Math.max(yMax - yMin, 0);
 
-  return {xMin, xMax, yMin, yMax, width, height};
+  return { xMin, xMax, yMin, yMax, width, height };
 }
 
 export function getBoundingBox(rect: Rect): BoundingBox {
@@ -43,7 +46,7 @@ export function getBoundingBox(rect: Rect): BoundingBox {
   const xMax = xMin + rect.width;
   const yMin = rect.yCenter - rect.height / 2;
   const yMax = yMin + rect.height;
-  return {xMin, xMax, yMin, yMax, width: rect.width, height: rect.height};
+  return { xMin, xMax, yMin, yMax, width: rect.width, height: rect.height };
 }
 
 function overlapSimilarity(rect1: Rect, rect2: Rect): number {
@@ -61,19 +64,24 @@ function overlapSimilarity(rect1: Rect, rect2: Rect): number {
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/association_norm_rect_calculator.cc
 // Propgating ids from previous to current is not performed by this code.
 export function calculateAssociationNormRect(
-    rectsArray: Rect[][], minSimilarityThreshold: number): Rect[] {
+  rectsArray: Rect[][],
+  minSimilarityThreshold: number
+): Rect[] {
   let result: Rect[] = [];
 
   // rectsArray elements are interpreted to be sorted in reverse priority order,
   // so later elements are higher in priority. This means that if there's a
   // large overlap, the later rect will be added and the older rect will be
   // removed.
-  rectsArray.forEach(rects => rects.forEach(curRect => {
-    result = result.filter(
-        prevRect =>
-            overlapSimilarity(curRect, prevRect) <= minSimilarityThreshold);
-    result.push(curRect);
-  }));
+  rectsArray.forEach((rects) =>
+    rects.forEach((curRect) => {
+      result = result.filter(
+        (prevRect) =>
+          overlapSimilarity(curRect, prevRect) <= minSimilarityThreshold
+      );
+      result.push(curRect);
+    })
+  );
 
   return result;
 }
