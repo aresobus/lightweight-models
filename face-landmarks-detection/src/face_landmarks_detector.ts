@@ -14,9 +14,9 @@
  * limitations under the License.
  * =============================================================================
  */
-import {MediaPipeFaceMeshMediaPipeEstimationConfig} from './mediapipe/types';
-import {MediaPipeFaceMeshTfjsEstimationConfig} from './tfjs/types';
-import {Face, FaceLandmarksDetectorInput} from './types';
+import { MediaPipeFaceMeshMediaPipeEstimationConfig } from "./mediapipe/types";
+import { MediaPipeFaceMeshTfjsEstimationConfig } from "./tfjs/types";
+import { Face, FaceLandmarksDetectorInput } from "./types";
 
 /**
  * User-facing interface for all face pose detectors.
@@ -30,9 +30,11 @@ export interface FaceLandmarksDetector {
    * @param estimationConfig common config for `estimateFaces`.
    */
   estimateFaces(
-      input: FaceLandmarksDetectorInput,
-      estimationConfig?: MediaPipeFaceMeshMediaPipeEstimationConfig|
-      MediaPipeFaceMeshTfjsEstimationConfig): Promise<Face[]>;
+    input: FaceLandmarksDetectorInput,
+    estimationConfig?:
+      | MediaPipeFaceMeshMediaPipeEstimationConfig
+      | MediaPipeFaceMeshTfjsEstimationConfig
+  ): Promise<Face[]>;
 
   /**
    * Dispose the underlying models from memory.

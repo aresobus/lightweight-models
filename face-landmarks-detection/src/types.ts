@@ -14,13 +14,16 @@
  * limitations under the License.
  * =============================================================================
  */
-import {Keypoint, PixelInput} from './shared/calculators/interfaces/common_interfaces';
-import {BoundingBox} from './shared/calculators/interfaces/shape_interfaces';
+import {
+  Keypoint,
+  PixelInput,
+} from "./shared/calculators/interfaces/common_interfaces";
+import { BoundingBox } from "./shared/calculators/interfaces/shape_interfaces";
 
-export {Keypoint};
+export { Keypoint };
 
 export enum SupportedModels {
-  MediaPipeFaceMesh = 'MediaPipeFaceMesh',
+  MediaPipeFaceMesh = "MediaPipeFaceMesh",
 }
 
 /**
@@ -58,7 +61,7 @@ export interface EstimationConfig {
 export type FaceLandmarksDetectorInput = PixelInput;
 
 export interface Face {
-  keypoints: Keypoint[];  // Points of mesh in the detected face.
-                          // MediaPipeFaceMesh has 468 keypoints.
-  box: BoundingBox;       // A bounding box around the detected face.
+  keypoints: Keypoint[]; // Points of mesh in the detected face.
+  // MediaPipeFaceMesh has 468 keypoints.
+  box: BoundingBox; // A bounding box around the detected face.
 }

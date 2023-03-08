@@ -15,17 +15,19 @@
  * =============================================================================
  */
 
-import {Keypoint} from './calculators/interfaces/common_interfaces';
+import { Keypoint } from "./calculators/interfaces/common_interfaces";
 
 /** Karma server directory serving local files. */
-export const KARMA_SERVER = './base/test_data';
+export const KARMA_SERVER = "./base/test_data";
 
 export async function loadImage(
-    imagePath: string, width: number,
-    height: number): Promise<HTMLImageElement> {
+  imagePath: string,
+  width: number,
+  height: number
+): Promise<HTMLImageElement> {
   const img = new Image(width, height);
   const promise = new Promise<HTMLImageElement>((resolve, reject) => {
-    img.crossOrigin = '';
+    img.crossOrigin = "";
     img.onload = () => {
       resolve(img);
     };
@@ -49,7 +51,11 @@ export async function loadImage(
  * @return A boolean array of size number of pixels.
  */
 export function imageToBooleanMask(
-    rgbaData: Uint8ClampedArray, r: number, g: number, b: number) {
+  rgbaData: Uint8ClampedArray,
+  r: number,
+  g: number,
+  b: number
+) {
   const mask: boolean[] = [];
   for (let i = 0; i < rgbaData.length; i += 4) {
     mask.push(rgbaData[i] >= r && rgbaData[i + 1] >= g && rgbaData[i + 2] >= b);
@@ -68,26 +74,34 @@ export function imageToBooleanMask(
  * @return A number denoting the IOU.
  */
 export function segmentationIOU(
-    expectedMask: boolean[], actualMask: boolean[]) {
+  expectedMask: boolean[],
+  actualMask: boolean[]
+) {
   expect(expectedMask.length === actualMask.length);
 
   const sum = (mask: boolean[]) => mask.reduce((a, b) => a + +b, 0);
 
-  const intersectionMask =
-      expectedMask.map((value, index) => value && actualMask[index]);
-  const iou = sum(intersectionMask) /
-      (sum(expectedMask) + sum(actualMask) - sum(intersectionMask) +
-       Number.EPSILON);
+  const intersectionMask = expectedMask.map(
+    (value, index) => value && actualMask[index]
+  );
+  const iou =
+    sum(intersectionMask) /
+    (sum(expectedMask) +
+      sum(actualMask) -
+      sum(intersectionMask) +
+      Number.EPSILON);
 
   return iou;
 }
 
 export async function loadVideo(
-    videoPath: string, videoFPS: number,
-    callback: (video: HTMLVideoElement, timestamp: number) =>
-        Promise<Keypoint[]>,
-    expected: number[][][], skeletonAdjacentPairs: number[][],
-    simulatedInterval: number): Promise<HTMLVideoElement> {
+  videoPath: string,
+  videoFPS: number,
+  callback: (video: HTMLVideoElement, timestamp: number) => Promise<Keypoint[]>,
+  expected: number[][][],
+  skeletonAdjacentPairs: number[][],
+  simulatedInterval: number
+): Promise<HTMLVideoElement> {
   // We override video's timestamp with a fake timestamp.
   let simulatedTimestamp: number;
   // We keep a pointer for the expected array.
@@ -96,34 +110,34 @@ export async function loadVideo(
   const actualInterval = 1 / videoFPS;
 
   // Create a video element on the html page and serve the content through karma
-  const video = document.createElement('video');
+  const video = document.createElement("video");
   // Hide video, and use canvas to render the video, so that we can also
   // overlay keypoints.
-  video.style.visibility = 'hidden';
-  const source = document.createElement('source');
+  video.style.visibility = "hidden";
+  const source = document.createElement("source");
   source.src = `${KARMA_SERVER}/${videoPath}`;
-  source.type = 'video/mp4';
+  source.type = "video/mp4";
   video.appendChild(source);
   document.body.appendChild(video);
-  const canvas = document.createElement('canvas');
-  canvas.style.position = 'absolute';
-  canvas.style.left = '0';
-  canvas.style.top = '0';
+  const canvas = document.createElement("canvas");
+  canvas.style.position = "absolute";
+  canvas.style.left = "0";
+  canvas.style.top = "0";
   document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext("2d");
 
   const promise = new Promise<HTMLVideoElement>((resolve, reject) => {
     video.onseeked = async () => {
       const keypoints = await callback(video, simulatedTimestamp);
 
       const expectedKeypoints = expected[idx].map(([x, y]) => {
-        return {x, y};
+        return { x, y };
       });
 
       ctx.drawImage(video, 0, 0);
-      draw(expectedKeypoints, ctx, skeletonAdjacentPairs, 'Green');
+      draw(expectedKeypoints, ctx, skeletonAdjacentPairs, "Green");
 
-      draw(keypoints, ctx, skeletonAdjacentPairs, 'Red');
+      draw(keypoints, ctx, skeletonAdjacentPairs, "Red");
 
       const nextTime = video.currentTime + actualInterval;
       if (nextTime < video.duration) {
@@ -154,22 +168,30 @@ export async function loadVideo(
 }
 
 export function getXYPerFrame(result: number[][][]): number[][][] {
-  return result.map(frameResult => {
-    return frameResult.map(keypoint => [keypoint[0], keypoint[1]]);
+  return result.map((frameResult) => {
+    return frameResult.map((keypoint) => [keypoint[0], keypoint[1]]);
   });
 }
 
 function drawKeypoint(keypoint: Keypoint, ctx: CanvasRenderingContext2D): void {
   const circle = new Path2D();
   circle.arc(
-      keypoint.x, keypoint.y, 4 /* radius */, 0 /* startAngle */, 2 * Math.PI);
+    keypoint.x,
+    keypoint.y,
+    4 /* radius */,
+    0 /* startAngle */,
+    2 * Math.PI
+  );
   ctx.fill(circle);
   ctx.stroke(circle);
 }
 
 function drawSkeleton(
-    keypoints: Keypoint[], skeletonAdjacentPairs: number[][],
-    ctx: CanvasRenderingContext2D, color: string) {
+  keypoints: Keypoint[],
+  skeletonAdjacentPairs: number[][],
+  ctx: CanvasRenderingContext2D,
+  color: string
+) {
   ctx.fillStyle = color;
   ctx.strokeStyle = color;
   ctx.lineWidth = 2;
@@ -187,8 +209,11 @@ function drawSkeleton(
 }
 
 function draw(
-    keypoints: Keypoint[], ctx: CanvasRenderingContext2D,
-    skeletonAdjacentPairs: number[][], color: string) {
+  keypoints: Keypoint[],
+  ctx: CanvasRenderingContext2D,
+  skeletonAdjacentPairs: number[][],
+  color: string
+) {
   ctx.fillStyle = color;
   ctx.strokeStyle = color;
 
