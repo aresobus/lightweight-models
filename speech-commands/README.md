@@ -1,6 +1,4 @@
 
----
-
 # Speech Command Recognizer
 
 The Speech Command Recognizer is a JavaScript-based tool that enables the recognition of spoken commands composed of simple, isolated English words from a predefined small vocabulary. This vocabulary includes digits from "zero" to "nine", directional commands like "up", "down", "left", "right", common words such as "go", "stop", "yes", "no", and categories for "unknown word" and "background noise".
@@ -36,7 +34,7 @@ setTimeout(() => recognizer.stopListening(), 10000);
 
 ### Offline Recognition
 
-For offline recognition, provide a pre-constructed  [Tensor](https://js..org/api/latest/#tensor) or a `Float32Array` representing the audio's spectrogram:
+For offline recognition, provide a pre-constructed  or a `Float32Array` representing the audio's spectrogram:
 
 ```javascript
 const x = tf.tensor4d(mySpectrogramData, [1].concat(recognizer.modelInputShape().slice(1)));
@@ -65,10 +63,6 @@ const transferRecognizer = baseRecognizer.createTransfer('newVocabulary');
 await transferRecognizer.collectExample('newWord');
 await transferRecognizer.train({ epochs: 25 });
 ```
-
-### Live Demo
-
-Experience our live demo [here](https://storage.googleapis.com/aresobus-speech-model-test/2019-01-03a/dist/index.html), showcasing the recognizer's capabilities in real-time.
 
 ## Running the Demo from Source
 

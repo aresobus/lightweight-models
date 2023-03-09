@@ -1,6 +1,6 @@
 {
-  "name": "@aresobus/-models-tasks",
-  "version": "1.0.1",
+  "name": "@aresobus/tasks",
+  "version": "1.0.2",
   "description": " tasks API",
   "main": "dist/aresobus-tasks.min.js",
   "jsnext:main": "dist/aresobus-tasks.esm.js",

@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-speech-commands",
-  "version": "0.5.4",
-  "description": "Speech-command recognizer in  maintained by Oleksandr Lebedyev",
+  "name": "@aresobus/speech-commands",
+  "version": "1.5.5",
+  "description": "Speech-command recognize model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/speech-commands.min.js",
   "jsdelivr": "dist/speech-commands.min.js",
