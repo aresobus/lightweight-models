@@ -14,17 +14,23 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
-import {Matrix4x4} from './calculate_inverse_matrix';
+import * as tf from "@tensorflow/tfjs-core";
+import { Matrix4x4 } from "./calculate_inverse_matrix";
 
-import {ImageSize, InputResolution, Padding, PixelInput, ValueTransform} from './interfaces/common_interfaces';
-import {Rect} from './interfaces/shape_interfaces';
+import {
+  ImageSize,
+  InputResolution,
+  Padding,
+  PixelInput,
+  ValueTransform,
+} from "./interfaces/common_interfaces";
+import { Rect } from "./interfaces/shape_interfaces";
 
 export function getImageSize(input: PixelInput): ImageSize {
   if (input instanceof tf.Tensor) {
-    return {height: input.shape[0], width: input.shape[1]};
+    return { height: input.shape[0], width: input.shape[1] };
   } else {
-    return {height: input.height, width: input.width};
+    return { height: input.height, width: input.width };
   }
 }
 
@@ -44,19 +50,23 @@ export function normalizeRadians(angle: number): number {
  * @param toMax New max of transformed value range.
  */
 export function transformValueRange(
-    fromMin: number, fromMax: number, toMin: number,
-    toMax: number): ValueTransform {
+  fromMin: number,
+  fromMax: number,
+  toMin: number,
+  toMax: number
+): ValueTransform {
   const fromRange = fromMax - fromMin;
   const toRange = toMax - toMin;
 
   if (fromRange === 0) {
     throw new Error(
-        `Original min and max are both ${fromMin}, range cannot be 0.`);
+      `Original min and max are both ${fromMin}, range cannot be 0.`
+    );
   }
 
   const scale = toRange / fromRange;
   const offset = toMin - fromMin * scale;
-  return {scale, offset};
+  return { scale, offset };
 }
 
 /**
@@ -85,16 +95,19 @@ export function toImageTensor(input: PixelInput) {
  * @param keepAspectRatio Whether keep aspect ratio. Default to false.
  */
 export function padRoi(
-    roi: Rect, targetSize: InputResolution, keepAspectRatio = false): Padding {
+  roi: Rect,
+  targetSize: InputResolution,
+  keepAspectRatio = false
+): Padding {
   if (!keepAspectRatio) {
-    return {top: 0, left: 0, right: 0, bottom: 0};
+    return { top: 0, left: 0, right: 0, bottom: 0 };
   }
 
   const targetH = targetSize.height;
   const targetW = targetSize.width;
 
-  validateSize(targetSize, 'targetSize');
-  validateSize(roi, 'roi');
+  validateSize(targetSize, "targetSize");
+  validateSize(roi, "roi");
 
   const tensorAspectRatio = targetH / targetW;
   const roiAspectRatio = roi.height / roi.width;
@@ -121,7 +134,7 @@ export function padRoi(
     top: verticalPadding,
     left: horizontalPadding,
     right: horizontalPadding,
-    bottom: verticalPadding
+    bottom: verticalPadding,
   };
 }
 
@@ -141,7 +154,7 @@ export function getRoi(imageSize: ImageSize, normRect?: Rect): Rect {
       yCenter: normRect.yCenter * imageSize.height,
       width: normRect.width * imageSize.width,
       height: normRect.height * imageSize.height,
-      rotation: normRect.rotation
+      rotation: normRect.rotation,
     };
   } else {
     return {
@@ -149,7 +162,7 @@ export function getRoi(imageSize: ImageSize, normRect?: Rect): Rect {
       yCenter: 0.5 * imageSize.height,
       width: imageSize.width,
       height: imageSize.height,
-      rotation: 0
+      rotation: 0,
     };
   }
 }
@@ -165,9 +178,11 @@ export function getRoi(imageSize: ImageSize, normRect?: Rect): Rect {
  * @param inputResolution The target height and width.
  */
 export function getProjectiveTransformMatrix(
-    matrix: Matrix4x4, imageSize: ImageSize, inputResolution: InputResolution):
-    [number, number, number, number, number, number, number, number] {
-  validateSize(inputResolution, 'inputResolution');
+  matrix: Matrix4x4,
+  imageSize: ImageSize,
+  inputResolution: InputResolution
+): [number, number, number, number, number, number, number, number] {
+  validateSize(inputResolution, "inputResolution");
 
   // To use M with regular x, y coordinates, we need to normalize them first.
   // Because x' = a0 * x + a1 * y + a2, y' = b0 * x + b1 * y + b2,
@@ -187,7 +202,7 @@ export function getProjectiveTransformMatrix(
   return [a0, a1, a2, b0, b1, b2, 0, 0];
 }
 
-function validateSize(size: {width: number, height: number}, name: string) {
+function validateSize(size: { width: number; height: number }, name: string) {
   tf.util.assert(size.width !== 0, () => `${name} width cannot be 0.`);
   tf.util.assert(size.height !== 0, () => `${name} height cannot be 0.`);
 }

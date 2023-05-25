@@ -1,7 +1,7 @@
 {
-  "name": "@tensorflow-models/handpose",
+  "name": "@aresobus/tensorflow-models-handpose",
   "version": "0.0.7",
-  "description": "Pretrained hand detection model",
+  "description": "Pretrained hand detection model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/handpose.esm.js",
   "module": "dist/handpose.esm.js",
@@ -10,8 +10,10 @@
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/lightweight-models"
   },
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
+  "license": "Apache-2.0",
   "peerDependencies": {
     "@tensorflow/tfjs-backend-webgl": "^4.18.0",
     "@tensorflow/tfjs-converter": "^4.18.0",
@@ -40,13 +42,12 @@
   "scripts": {
     "bundle": "rollup -c",
     "build": "rimraf dist && tsc && yarn bundle",
-    "publish-local": "yarn build && rollup -c && yalc publish",
+    "publish-local": "yarn build && rollup -c and yalc publish",
     "test": "ts-node --skip-ignore --project tsconfig.test.json run_tests.ts",
-    "build-npm": "yarn build && yarn bundle",
+    "build-npm": "yarn build and yarn bundle",
     "lint": "tslint -p . -t verbose",
     "publish-demo": "./scripts/publish-demo.sh"
   },
-  "license": "Apache-2.0",
   "dependencies": {
     "rimraf": "^3.0.2",
     "tslib": "^2.6.1"

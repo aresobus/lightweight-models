@@ -1,123 +1,88 @@
+
+
+---
+
 # MediaPipe Handpose
-Note: this model can only detect a maximum of one hand in the input - multi-hand detection is coming in a future release.
 
-MediaPipe Handpose is a lightweight ML pipeline consisting of two models: A palm detector and a hand-skeleton finger tracking model. It predicts 21 3D hand keypoints per detected hand. For more details, please read our Google AI [blogpost](https://ai.googleblog.com/2019/08/on-device-real-time-hand-tracking-with.html).
+The MediaPipe Handpose model is a state-of-the-art machine learning model that allows for the detection of hand landmarks in real-time on the browser using TensorFlow.js. This model utilizes a two-stage pipeline, which includes a palm detection model that returns a hand bounding box and a hand-skeleton finger tracking model that predicts 21 3D hand keypoints.
 
-<img src="demo/demo.gif" alt="demo" style="width:640px" />
+[![MediaPipe Handpose Demo](demo/demo.gif)](https://storage.googleapis.com/tfjs-models/demos/handtrack/index.html)
 
-Given an input, the model predicts whether it contains a hand. If so, the model returns coordinates for the bounding box around the hand, as well as 21 keypoints within the hand, outlining the location of each finger joint and the palm.
+For an in-depth discussion of how the hand tracking pipeline works, refer to the Google AI [blog post](https://ai.googleblog.com/2019/08/on-device-real-time-hand-tracking-with.html).
 
-More background information about the model, as well as its performance characteristics on different datasets, can be found here: [https://drive.google.com/file/d/1sv4sSb9BSNVZhLzxXJ0jBv9DqD-4jnAz/view](https://drive.google.com/file/d/1sv4sSb9BSNVZhLzxXJ0jBv9DqD-4jnAz/view)
+**Note:** Currently, this model can detect only one hand in the input frame. Multi-hand detection capabilities are planned for a future release.
 
-Check out our [demo](https://storage.googleapis.com/tfjs-models/demos/handtrack/index.html), which uses the model to detect hand landmarks in a live video stream.
+## Model Details
 
-This model is also available as part of [MediaPipe](https://hand.mediapipe.dev/), a framework for building multimodal applied ML pipelines.
+The MediaPipe Handpose model consists of approximately 12MB of model weights and operates at real-time speeds across multiple platforms (40 FPS on a 2018 MacBook Pro, 35 FPS on an iPhone11, and 6 FPS on a Pixel3).
 
-# Performance
-
-MediaPipe Handpose consists of ~12MB of weights, and is well-suited for real time inference across a variety of devices (40 FPS on a 2018 MacBook Pro, 35 FPS on an iPhone11, 6 FPS on a Pixel3).
+Learn more about the model's performance and architecture [here](https://drive.google.com/file/d/1sv4sSb9BSNVZhLzxXJ0jBv9DqD-4jnAz/view).
 
 ## Installation
 
-Via script tags:
+Install MediaPipe Handpose using either script tags or npm:
+
+### Via Script Tags
 
 ```html
-<!-- Require the peer dependencies of handpose. -->
-<script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0/dist/tf-core.js"></script>
-<script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0/dist/tf-converter.js"></script>
-
-<!-- You must explicitly require a TF.js backend if you're not using the tfs union bundle. -->
-<script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0/dist/tf-backend-webgl.js"></script>
-<!-- Alternatively you can use the WASM backend: <script src="https://unpkg.com/@tensorflow/tfjs-backend-wasm@2.1.0/dist/tf-backend-wasm.js"></script> -->
-
-<script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6/dist/handpose.js"></script>
+<!-- Load the required libraries -->
+<script src="https://unpkg.com/@tensorflow/tfjs-core@2.1.0"></script>
+<script src="https://unpkg.com/@tensorflow/tfjs-converter@2.1.0"></script>
+<script src="https://unpkg.com/@tensorflow/tfjs-backend-webgl@2.1.0"></script>
+<script src="https://unpkg.com/@tensorflow-models/handpose@0.0.6"></script>
 ```
 
-Via npm:
+### Via NPM
 
-Using `yarn`:
+```sh
+# Install TensorFlow.js dependencies
+yarn add @tensorflow/tfjs-core @tensorflow/tfjs-converter @tensorflow/tfjs-backend-webgl
 
-    $ yarn add @tensorflow-models/handpose
-    $ yarn add @tensorflow/tfjs-core, @tensorflow/tfjs-converter
-    $ yarn add @tensorflow/tfjs-backend-webgl # or @tensorflow/tfjs-backend-wasm
+# Install the handpose model
+yarn add @tensorflow-models/handpose
+```
 
 ## Usage
 
-If you are using npm, first add:
+### Loading the Model
 
-```js
+You can load the model using:
+
+```javascript
 const handpose = require('@tensorflow-models/handpose');
-
-require('@tensorflow/tfjs-backend-webgl'); // handpose does not itself require a backend, so you must explicitly install one.
-
-// If you are using the WASM backend:
-// require('@tensorflow/tfjs-backend-wasm');
+await handpose.load();
 ```
 
-Then:
+### Running the Model
 
-```js
+Pass in a video or image element to the model to detect hands:
+
+```javascript
 async function main() {
-  // Load the MediaPipe handpose model.
+  const video = document.querySelector("video");
   const model = await handpose.load();
-  // Pass in a video stream (or an image, canvas, or 3D tensor) to obtain a
-  // hand prediction from the MediaPipe graph.
-  const predictions = await model.estimateHands(document.querySelector("video"));
+  const predictions = await model.estimateHands(video);
+
   if (predictions.length > 0) {
-    /*
-    `predictions` is an array of objects describing each detected hand, for example:
-    [
-      {
-        handInViewConfidence: 1, // The probability of a hand being present.
-        boundingBox: { // The bounding box surrounding the hand.
-          topLeft: [162.91, -17.42],
-          bottomRight: [548.56, 368.23],
-        },
-        landmarks: [ // The 3D coordinates of each hand landmark.
-          [472.52, 298.59, 0.00],
-          [412.80, 315.64, -6.18],
-          ...
-        ],
-        annotations: { // Semantic groupings of the `landmarks` coordinates.
-          thumb: [
-            [412.80, 315.64, -6.18]
-            [350.02, 298.38, -7.14],
-            ...
-          ],
-          ...
-        }
-      }
-    ]
-    */
-
-    for (let i = 0; i < predictions.length; i++) {
-      const keypoints = predictions[i].landmarks;
-
-      // Log hand keypoints.
-      for (let i = 0; i < keypoints.length; i++) {
-        const [x, y, z] = keypoints[i];
-        console.log(`Keypoint ${i}: [${x}, ${y}, ${z}]`);
-      }
-    }
+    console.log(predictions);
   }
 }
+
 main();
 ```
 
-#### Parameters for handpose.load()
+Each prediction object within the predictions array includes:
+- `handInViewConfidence`: Probability of a hand being present.
+- `boundingBox`: Coordinates of the box surrounding the hand.
+- `landmarks`: 3D coordinates for each keypoint in the hand.
+- `annotations`: Semantic groupings of landmarks such as "thumb" or "indexFinger".
 
-`handpose.load()` takes a configuration object with the following properties:
+### Configuration Options
 
-* **maxContinuousChecks** - How many frames to go without running the bounding box detector. Defaults to infinity. Set to a lower value if you want a safety net in case the mesh detector produces consistently flawed predictions.
+Configure the model with optional parameters:
 
-* **detectionConfidence** - Threshold for discarding a prediction. Defaults to 0.8.
+- `maxContinuousChecks`: Frames to go without running the bounding box detector.
+- `detectionConfidence`: Threshold for discarding a prediction.
+- `iouThreshold` and `scoreThreshold`: Parameters for non-maximum suppression during detection.
 
-* **iouThreshold** - A float representing the threshold for deciding whether boxes overlap too much in non-maximum suppression. Must be between [0, 1]. Defaults to 0.3.
-
-* **scoreThreshold** - A threshold for deciding when to remove boxes based on score in non-maximum suppression. Defaults to 0.75.
-
-#### Parameters for handpose.estimateHands()
-
-* **input** - The image to classify. Can be a tensor, DOM element image, video, or canvas.
-
-* **flipHorizontal** - Whether to flip/mirror the hand keypoints horizontally. Should be true for videos that are flipped by default (e.g. webcams).
+This model is suitable for integration into web applications that require hand tracking capabilities, such as gesture recognition or virtual reality interfaces.

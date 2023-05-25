@@ -15,8 +15,8 @@
  * =============================================================================
  */
 
-import {Keypoint} from './interfaces/common_interfaces';
-import {Detection} from './interfaces/shape_interfaces';
+import { Keypoint } from "./interfaces/common_interfaces";
+import { Detection } from "./interfaces/shape_interfaces";
 
 /**
  * Converts normalized Landmark to `Detection`. A relative bounding box will
@@ -28,8 +28,9 @@ import {Detection} from './interfaces/shape_interfaces';
 // ref:
 // https://github.com/google/mediapipe/blob/master/mediapipe/calculators/util/landmarks_to_detection_calculator.cc
 export function landmarksToDetection(landmarks: Keypoint[]): Detection {
-  const detection:
-      Detection = {locationData: {relativeKeypoints: [] as Keypoint[]}};
+  const detection: Detection = {
+    locationData: { relativeKeypoints: [] as Keypoint[] },
+  };
 
   let xMin = Number.MAX_SAFE_INTEGER;
   let xMax = Number.MIN_SAFE_INTEGER;
@@ -43,12 +44,20 @@ export function landmarksToDetection(landmarks: Keypoint[]): Detection {
     yMin = Math.min(yMin, landmark.y);
     yMax = Math.max(yMax, landmark.y);
 
-    detection.locationData.relativeKeypoints.push(
-        {x: landmark.x, y: landmark.y} as Keypoint);
+    detection.locationData.relativeKeypoints.push({
+      x: landmark.x,
+      y: landmark.y,
+    } as Keypoint);
   }
 
-  detection.locationData.relativeBoundingBox =
-      {xMin, yMin, xMax, yMax, width: (xMax - xMin), height: (yMax - yMin)};
+  detection.locationData.relativeBoundingBox = {
+    xMin,
+    yMin,
+    xMax,
+    yMax,
+    width: xMax - xMin,
+    height: yMax - yMin,
+  };
 
   return detection;
 }
