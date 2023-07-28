@@ -25,6 +25,6 @@ export class GPT2 {
     });
 
     console.log(`got input '${input}'`);
-    return ' the park';
+    return " the park";
   }
 }
