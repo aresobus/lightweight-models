@@ -1,33 +1,40 @@
+Here's a cleaned-up and streamlined version of the README section describing how to set up and run the QnA demo:
+
+---
+
 ## QnA Demo
 
-This demo allows you to find answers of a question from the given context.
-To use the demo, you can update the text area with your own text, type your
-question into the input box, and click the search button. You will see the
-answers displayed in the Answers section.
+Experience the functionality of the Question and Answer model with our interactive demo. This demo allows you to input your own text and question to see how the model identifies and extracts answers.
 
-## Setup
+### How to Use the Demo
 
-`cd` into the demo/ folder:
+1. **Update the Context**: Enter or paste the text from which you want to extract answers into the provided text area.
+2. **Ask a Question**: Type your question into the input box.
+3. **Get Answers**: Click the search button to process your input, and the answers will be displayed in the "Answers" section below.
 
-```sh
-cd qna/demo
-```
+### Setup and Run the Demo Locally
 
-Install dependencies:
+Follow these steps to get the demo running on your local machine:
 
-```sh
-yarn
-```
+1. **Navigate to the Demo Directory**:
+   ```sh
+   cd qna/demo
+   ```
 
-Build linked dependencies:
+2. **Install Dependencies**:
+   ```sh
+   yarn
+   ```
 
-```sh
-yarn build-deps
-```
+3. **Build Linked Dependencies**:
+   ```sh
+   yarn build-deps
+   ```
 
-Launch a development server, and watch files for changes. This command will also automatically open
-the demo app in your browser.
+4. **Launch the Development Server**:
+   ```sh
+   yarn watch
+   ```
+   This command compiles the application, watches for any file changes, and automatically opens the demo in your default web browser.
 
-```sh
-yarn watch
-```
+The demo provides a hands-on way to see how the pre-trained model performs with real-world data and queries. Adjust the context and questions as needed to test different scenarios or explore the model's capabilities.

@@ -15,10 +15,10 @@
  * =============================================================================
  */
 
-import * as qna from '@tensorflow-models/qna';
-import '@tensorflow/tfjs-core';
-import '@tensorflow/tfjs-backend-cpu';
-import '@tensorflow/tfjs-backend-webgl';
+import * as qna from "@tensorflow-models/qna";
+import "@tensorflow/tfjs-core";
+import "@tensorflow/tfjs-backend-cpu";
+import "@tensorflow/tfjs-backend-webgl";
 
 let modelPromise = {};
 let search;
@@ -30,21 +30,21 @@ const process = async () => {
   const model = await modelPromise;
   const answers = await model.findAnswers(input.value, contextDiv.value);
   console.log(answers);
-  answerDiv.innerHTML =
-      answers.map(answer => answer.text + ' (score =' + answer.score + ')')
-          .join('<br>');
+  answerDiv.innerHTML = answers
+    .map((answer) => answer.text + " (score =" + answer.score + ")")
+    .join("<br>");
 };
 
 window.onload = () => {
   modelPromise = qna.load();
-  input = document.getElementById('question');
-  search = document.getElementById('search');
-  contextDiv = document.getElementById('context');
-  answerDiv = document.getElementById('answer');
+  input = document.getElementById("question");
+  search = document.getElementById("search");
+  contextDiv = document.getElementById("context");
+  answerDiv = document.getElementById("answer");
   search.onclick = process;
 
-  input.addEventListener('keyup', async (event) => {
-    if (event.key === 'Enter') {
+  input.addEventListener("keyup", async (event) => {
+    if (event.key === "Enter") {
       process();
     }
   });

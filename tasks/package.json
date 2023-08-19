@@ -1,5 +1,5 @@
 {
-  "name": "@tensorflow-models/tasks",
+  "name": "@aresobus/tensorflow-models-tasks",
   "version": "0.0.1-alpha.8",
   "description": "Tensorflow.js tasks API",
   "main": "dist/tfjs-tasks.min.js",
@@ -7,9 +7,10 @@
   "jsdelivr": "dist/tfjs-tasks.min.js",
   "unpkg": "dist/tfjs-tasks.min.js",
   "types": "dist/index.d.ts",
+  "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tensorflow/tfjs-models.git"
+    "url": "https://github.com/aresobus/tensorflow-models"
   },
   "license": "Apache-2.0",
   "engines": {
@@ -27,11 +28,11 @@
     "@tensorflow/tfjs-converter": "^4.13.0",
     "@tensorflow/tfjs-core": "^4.13.0",
     "@tensorflow/tfjs-tflite": "0.0.1-alpha.3",
-    "@tensorflow-models/mobilenet": "link:../mobilenet",
-    "@tensorflow-models/coco-ssd": "link:../coco-ssd",
-    "@tensorflow-models/deeplab": "link:../deeplab",
-    "@tensorflow-models/toxicity": "link:../toxicity",
-    "@tensorflow-models/qna": "link:../qna",
+    "@aresobus/mobilenet": "link:../mobilenet",
+    "@aresobus/coco-ssd": "link:../coco-ssd",
+    "@aresobus/deeplab": "link:../deeplab",
+    "@aresobus/toxicity": "link:../toxicity",
+    "@aresobus/qna": "link:../qna",
     "@types/jasmine": "~3.6.9",
     "clang-format": "~1.5.0",
     "jasmine": "~3.7.0",
