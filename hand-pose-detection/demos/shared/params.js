@@ -1,4 +1,4 @@
-import * as handdetection from "@aresobus-models/hand-pose-detection";
+import * as handdetection from "@lightweight-models/hand-pose-detection";
 
 export const DEFAULT_LINE_WIDTH = 2;
 export const DEFAULT_RADIUS = 4;

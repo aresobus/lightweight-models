@@ -9,7 +9,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/deeplab": "file:../dist",
+    "@lightweight-models/deeplab": "file:../dist",
     "@aresobus/lightweight-models-converter": "^4.9.0",
     "@aresobus/lightweight-models-core": "^4.9.0",
     "@aresobus/lightweight-models-backend-webgl": "^4.9.0",
@@ -19,7 +19,7 @@
     "watch": "cross-env NODE_ENV=development parcel src/index.html --no-hmr --open",
     "build": "cross-env NODE_ENV=production parcel build src/index.html --no-minify --public-url ./",
     "lint": "eslint .",
-    "link-local": "yalc add --link @aresobus-models/deeplab"
+    "link-local": "yalc add --link @lightweight-models/deeplab"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

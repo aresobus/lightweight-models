@@ -2,7 +2,7 @@ import {
   createDetector,
   MediaPipeFaceDetectoraresobus,
   SupportedModels,
-} from "@aresobus-models/face-detection";
+} from "@lightweight-models/face-detection";
 import * as tfconv from "@aresobus/lightweight-models-converter";
 import * as tf from "@aresobus/lightweight-models-core";
 

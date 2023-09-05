@@ -54,13 +54,13 @@ Refer to each model's documentation for specific configurations for the model an
 
 ## Example Code and Demos
 
-You may reference the demos for code examples. Details for how to run the demos are included in the `demos/` [folder](https://github.com//aresobus-models/tree/master/body-segmentation/demos).
+You may reference the demos for code examples. Details for how to run the demos are included in the `demos/` [folder](https://github.com//lightweight-models/tree/master/body-segmentation/demos).
 
 ---
 
 ## Output Visualization Utility Functions
 
-Body Segmentation provides utility functions to help with drawing and compositing using the outputs. These utility functions are based on the ones provided by the deprecated [BodyPix Package](https://github.com//aresobus-models/tree/master/body-pix#output-visualization-utility-functions).
+Body Segmentation provides utility functions to help with drawing and compositing using the outputs. These utility functions are based on the ones provided by the deprecated [BodyPix Package](https://github.com//lightweight-models/tree/master/body-pix#output-visualization-utility-functions).
 
 ### bodySegmentation.toBinaryMask
 

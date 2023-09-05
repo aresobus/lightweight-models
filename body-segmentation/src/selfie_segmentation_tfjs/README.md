@@ -19,7 +19,7 @@ Two variants of the model are offered.
 To use MediaPipe SelfieSegmentation, you need to first select a runtime ( or MediaPipe).
 This guide is for
 runtime. The guide for MediaPipe runtime can be found
-[here](https://github.com//aresobus-models/tree/master/body-segmentation/src/selfie_segmentation_mediapipe).
+[here](https://github.com//lightweight-models/tree/master/body-segmentation/src/selfie_segmentation_mediapipe).
 
 Via script tags:
 
@@ -31,13 +31,13 @@ Via script tags:
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/body-segmentation"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @aresobus-models/body-segmentation
+yarn add @lightweight-models/body-segmentation
 yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
 yarn add @aresobus/lightweight-models-backend-webgl
 ```
@@ -50,7 +50,7 @@ If you are using the Body Segmentation API via npm, you need to import the libra
 ### Import the libraries
 
 ```javascript
-import * as bodySegmentation from '@aresobus-models/body-segmentation';
+import * as bodySegmentation from '@lightweight-models/body-segmentation';
 import * as tf from '@aresobus/lightweight-models-core';
 // Register WebGL backend.
 import '@aresobus/lightweight-models-backend-webgl';
@@ -105,5 +105,5 @@ The returned `people` array contains a single element only, where all the people
 The only label returned by the maskValueToLabel function by the model is 'person'.
 
 Please refer to the Body Segmentation API
-[README](https://github.com//aresobus-models/blob/master/body-segmentation/README.md#how-to-run-it)
+[README](https://github.com//lightweight-models/blob/master/body-segmentation/README.md#how-to-run-it)
 about the structure of the returned `people` array.

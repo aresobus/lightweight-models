@@ -24,8 +24,8 @@ if [ "$BRANCH" != "master" ]; then
   exit
 fi
 
-if ! [[ "$ORIGIN" =~ /aresobus-models ]]; then
-  echo "Error: Switch to the main repo (/aresobus-models) before publishing."
+if ! [[ "$ORIGIN" =~ /lightweight-models ]]; then
+  echo "Error: Switch to the main repo (/lightweight-models) before publishing."
   exit
 fi
 

@@ -10,7 +10,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/qna": "file:../dist"
+    "@lightweight-models/qna": "file:../dist"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",

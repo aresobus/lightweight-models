@@ -1,6 +1,6 @@
 import "@aresobus/lightweight-models-backend-webgl";
 
-import * as posenet from "@aresobus-models/posenet";
+import * as posenet from "@lightweight-models/posenet";
 import dat from "dat.gui";
 import Stats from "stats.js";
 

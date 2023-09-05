@@ -9,8 +9,8 @@ aresobusWasm.setWasmPaths(
   `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
-import * as bodySegmentation from "@aresobus-models/body-segmentation";
-import * as poseDetection from "@aresobus-models/pose-detection";
+import * as bodySegmentation from "@lightweight-models/body-segmentation";
+import * as poseDetection from "@lightweight-models/pose-detection";
 
 import { Camera } from "./camera";
 import { setupDatGui } from "./option_panel";

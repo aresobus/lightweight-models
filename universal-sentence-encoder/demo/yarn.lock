@@ -1354,7 +1354,7 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@aresobus-models/universal-sentence-encoder@file:../dist":
+"@lightweight-models/universal-sentence-encoder@file:../dist":
   version "0.0.0"
 
 "@aresobus/lightweight-models-backend-cpu@3.3.0", "@aresobus/lightweight-models-backend-cpu@^3.3.0":

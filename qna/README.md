@@ -17,7 +17,7 @@ The model takes a passage and a question as input and returns a segment of the p
 
 ### Demo and Usage
 
-Try the [live demo here](https://storage.googleapis.com/aresobus-models/demos/mobilebert-qna/index.html)! You can also view the source code of the [demo app](./demo) to understand its implementation.
+Try the [live demo here](https://storage.googleapis.com/lightweight-models/demos/mobilebert-qna/index.html)! You can also view the source code of the [demo app](./demo) to understand its implementation.
 
 #### Via Script Tag
 
@@ -26,7 +26,7 @@ Include  and the QnA model in your HTML to get started without any build tools:
 ```html
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/qna"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/qna"></script>
 
 <script>
   qna.load().then(model => {
@@ -42,7 +42,7 @@ Include  and the QnA model in your HTML to get started without any build tools:
 For projects using build tools like Parcel or Webpack:
 
 ```javascript
-import * as qna from '@aresobus-models/qna';
+import * as qna from '@lightweight-models/qna';
 
 async function runModel(question, passage) {
   const model = await qna.load();

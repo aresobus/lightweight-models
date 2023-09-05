@@ -2,7 +2,7 @@
 
 This portrait depth model estimates per-pixel depth (the distance to the camera center) for a single portrait image, which can be further used for creative applications. (See [DepthLab](https://augmentedperception.github.io/depthlab/) for potential applications). Note that the model runs locally on the user’s device and no data is uploaded to the server.
 
-For example, the following demo transforms a single 2D RGB image into a 3D Portrait: [3D Photo Demo](https://storage.googleapis.com/aresobus-models/demos/3dphoto).
+For example, the following demo transforms a single 2D RGB image into a 3D Portrait: [3D Photo Demo](https://storage.googleapis.com/tfjs-models/demos/3dphoto).
 
 --------------------------------------------------------------------------------
 
@@ -26,16 +26,16 @@ Via script tags:
 <!-- WebGL is the recommended backend. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/depth-estimation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/body-segmentation"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/depth-estimation"></script>
 ```
 
 Via npm:
 ```sh
 yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
 yarn add @aresobus/lightweight-models-backend-webgl
-yarn add @aresobus-models/body-segmentation
-yarn add @aresobus-models/depth-estimation
+yarn add @lightweight-models/body-segmentation
+yarn add @lightweight-models/depth-estimation
 ```
 
 -----------------------------------------------------------------------
@@ -50,8 +50,8 @@ import '@aresobus/lightweight-models-core';
 import '@aresobus/lightweight-models-converter';
 // Register WebGL backend.
 import '@aresobus/lightweight-models-backend-webgl';
-import '@aresobus-models/body-segmentation';
-import * as depthEstimation from '@aresobus-models/depth-estimation';
+import '@lightweight-models/body-segmentation';
+import * as depthEstimation from '@lightweight-models/depth-estimation';
 ```
 
 ### Create an estimator
@@ -63,16 +63,7 @@ Pass in `depthEstimation.SupportedModels.ARPortraitDepth` from the
 `estimatorConfig` is an object that defines ARPortraitDepth specific configurations for `ARPortraitDepthModelConfig`:
 
 *   *segmentationModelUrl*: An optional string that specifies custom url of
-the segmenter model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
-to load model from app bundle directory using
-[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/
-
-*   *depthModelUrl*: An optional string that specifies custom url of
-the estimator model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used with
-[aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native)
-to load model from app bundle directory using
-[bundleResourceIO](https://github.com//aresobus/blob/master/aresobus-react-native/
+the segmenter model. This is useful for area/countries that don't have access to the model hosted on tf.hub. It also accepts `io.IOHandler` which can be used
 
 ```javascript
 const model = depthEstimation.SupportedModels.ARPortraitDepth;
@@ -107,5 +98,5 @@ const depthMap = await estimator.estimateDepth(image, estimationConfig);
 ```
 
 Please refer to the Depth Estimation API
-[README](https://github.com//aresobus-models/blob/master/depth-estimation/README.md#how-to-run-it)
+[README](https://github.com/aresobus/lightweight-models/blob/master/depth-estimation/README.md#how-to-run-it)
 about the structure of the returned `depthMap`.

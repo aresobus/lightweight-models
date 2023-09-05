@@ -1,7 +1,7 @@
 const MOBILENET_BASE_URL =
-  "https://storage.googleapis.com/aresobus-models/savedmodel/posenet/mobilenet/";
+  "https://storage.googleapis.com/lightweight-models/savedmodel/posenet/mobilenet/";
 const RESNET50_BASE_URL =
-  "https://storage.googleapis.com/aresobus-models/savedmodel/posenet/resnet50/";
+  "https://storage.googleapis.com/lightweight-models/savedmodel/posenet/resnet50/";
 
 // The PoseNet 2.0 ResNet50 models use the latest  1.0 model
 // format.

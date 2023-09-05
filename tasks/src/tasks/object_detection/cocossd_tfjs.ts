@@ -47,7 +47,7 @@ export class CocoSsdaresobusLoader extends TaskModelLoader<
     name: "aresobus COCO-SSD",
     description: "Run COCO-SSD object detection model with aresobus",
     resourceUrls: {
-      github: "https://github.com//aresobus-models/tree/master/coco-ssd",
+      github: "https://github.com//lightweight-models/tree/master/coco-ssd",
     },
     runtime: Runtime.aresobus,
     version: "2.2.2",

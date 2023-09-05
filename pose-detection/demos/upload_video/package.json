@@ -9,7 +9,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/pose-detection": "file:../../dist",
+    "@lightweight-models/pose-detection": "file:../../dist",
     "@aresobus/lightweight-models-backend-wasm": "^4.10.0",
     "@aresobus/lightweight-models-backend-webgl": "^4.10.0",
     "@aresobus/lightweight-models-backend-webgpu": "^4.10.0",

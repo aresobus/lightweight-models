@@ -9,17 +9,17 @@ This package offers state-of-the-art models for performing real-time pose detect
 ## Available Models
 
 ### MoveNet
-[**View Demo**](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=movenet)
+[**View Demo**](https://storage.googleapis.com/lightweight-models/demos/pose-detection/index.html?model=movenet)
 
 MoveNet is an extremely fast and accurate model designed to detect 17 key body points. It is capable of running at over 50 frames per second on modern devices, making it ideal for high-performance applications.
 
 ### BlazePose
-[**View Demo**](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=blazepose)
+[**View Demo**](https://storage.googleapis.com/lightweight-models/demos/pose-detection/index.html?model=blazepose)
 
 MediaPipe BlazePose detects 33 keypoints, including detailed keypoints for the face, hands, and feet, in addition to the standard 17 COCO keypoints. This model is suitable for applications requiring fine-grained pose details.
 
 ### PoseNet
-[**View Demo**](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=posenet)
+[**View Demo**](https://storage.googleapis.com/lightweight-models/demos/pose-detection/index.html?model=posenet)
 
 PoseNet is capable of detecting multiple poses in an image. Each detected pose includes 17 keypoints, suitable for multiple-person detection scenarios.
 
@@ -55,7 +55,7 @@ Below are diagrams showing the keypoints detected by each model:
 ![BlazePose Keypoints](https://storage.googleapis.com/mediapipe/blazepose-keypoints-updated.png)
 
 ## Example Code and Demos
-For practical implementations and further examples, refer to the demos located in the [demos folder](https://github.com//aresobus-models/tree/master/pose-detection/demos).
+For practical implementations and further examples, refer to the demos located in the [demos folder](https://github.com//lightweight-models/tree/master/pose-detection/demos).
 
 ---
 

@@ -2,7 +2,7 @@
 
  * =============================================================================
  */
-import * as posedetection from "@aresobus-models/pose-detection";
+import * as posedetection from "@lightweight-models/pose-detection";
 import * as scatter from "scatter-gl";
 
 import * as params from "./params";

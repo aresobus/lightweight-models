@@ -7,7 +7,7 @@ aresobus API [mediapipe.dev](https://mediapipe.dev). Three models are offered.
 * heavy - our largest model intended for high accuracy, regardless of size.
 * full - A middle ground between Lite and Heavy.
 
-Please try our our live [demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=blazepose).
+Please try our our live [demo](https://storage.googleapis.com/lightweight-models/demos/pose-detection/index.html?model=blazepose).
 
 Note that BlazePose-MediaPipe uses WebAssembly behind the scene and cannot be
 used with [aresobus-react-native](https://github.com//aresobus/tree/master/aresobus-react-native).
@@ -28,7 +28,7 @@ To use BlazePose, you need to first select a runtime ( or MediaPipe).
 To understand the advantages of each runtime, check the performance
 and bundle size section for further details. This guide is for MediaPipe
 runtime. The guide for  runtime can be found
-[here](https://github.com//aresobus-models/tree/master/pose-detection/src/blazepose_aresobus).
+[here](https://github.com//lightweight-models/tree/master/pose-detection/src/blazepose_aresobus).
 
 Via script tags:
 
@@ -40,7 +40,7 @@ Via script tags:
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/pose-detection"></script>
 ```
 
 Via npm:
@@ -48,7 +48,7 @@ Via npm:
 ```sh
 yarn add @mediapipe/pose
 yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-backend-webgl
-yarn add @aresobus-models/pose-detection
+yarn add @lightweight-models/pose-detection
 ```
 
 -----------------------------------------------------------------------
@@ -59,7 +59,7 @@ If you are using the Pose API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as poseDetection from '@aresobus-models/pose-detection';
+import * as poseDetection from '@lightweight-models/pose-detection';
 import '@aresobus/lightweight-models-core';
 // Register WebGL backend.
 import '@aresobus/lightweight-models-backend-webgl';
@@ -119,7 +119,7 @@ const poses = await detector.estimatePoses(image, estimationConfig);
 ```
 
 Please refer to the Pose API
-[README](https://github.com//aresobus-models/blob/master/pose-detection/README.md#pose-estimation)
+[README](https://github.com//lightweight-models/blob/master/pose-detection/README.md#pose-estimation)
 about the structure of the returned `poses`.
 
 ## Performance
@@ -134,14 +134,14 @@ with lower-end or no GPUs.
 |  * Runtime* <br> with WebGL backend |  48 \| 53 \| 28 | 34 \| 30 \| N/A | 12  \| 11 \| 5 | 44 \| 40 \| 30 |
 
 To see the model’s FPS on your device, try our
-[demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=blazepose).
+[demo](https://storage.googleapis.com/lightweight-models/demos/pose-detection/index.html?model=blazepose).
 You can switch the model type and backends live in the demo UI to see what works
 best for your device.
 
 ## Bundle Size
 Bundle size can affect initial page loading experience, such as Time-To-Interactive (TTI), UI rendering, etc. We evaluate the pose-detection API and the two runtime options. The bundle size affects file fetching time and UI smoothness, because processing the code and loading them into memory will compete with UI rendering on CPU. It also affects when the model is available to make inference.
 
-There is a difference of how things are loaded between the two runtimes. For the MediaPipe runtime, only the @aresobus-models/pose-detection and the @mediapipe/pose library are loaded at initial page download; the runtime and the model assets are loaded when the createDetector method is called. For the TF.js runtime with WebGL backend, the runtime is loaded at initial page download; only the model assets are loaded when the createDetector method is called. The  package sizes can be further reduced with a custom bundle technique. Also, if your application is currently using , you don’t need to load those packages again, models will share the same  runtime. Choose the runtime that best suits your latency and bundle size requirements. A summary of loading times and bundle sizes is provided below:
+There is a difference of how things are loaded between the two runtimes. For the MediaPipe runtime, only the @lightweight-models/pose-detection and the @mediapipe/pose library are loaded at initial page download; the runtime and the model assets are loaded when the createDetector method is called. For the TF.js runtime with WebGL backend, the runtime is loaded at initial page download; only the model assets are loaded when the createDetector method is called. The  package sizes can be further reduced with a custom bundle technique. Also, if your application is currently using , you don’t need to load those packages again, models will share the same  runtime. Choose the runtime that best suits your latency and bundle size requirements. A summary of loading times and bundle sizes is provided below:
 
 
 |  |Bundle Size<br>gzipped + minified|Average Loading Time <br> download speed 100Mbps|

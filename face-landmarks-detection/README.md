@@ -27,7 +27,7 @@ Embed the following scripts in your HTML to get started:
 <!-- Load  -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"></script>
 <!-- Load the Face Landmarks Detection model -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-landmarks-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/face-landmarks-detection"></script>
 ```
 
 ### Via NPM
@@ -35,7 +35,7 @@ Embed the following scripts in your HTML to get started:
 Install the required packages using npm or yarn:
 
 ```bash
-npm install @aresobus-models/face-landmarks-detection
+npm install @lightweight-models/face-landmarks-detection
 yarn add @aresobus/lightweight-models-core
 yarn add @aresobus/lightweight-models-converter
 ```

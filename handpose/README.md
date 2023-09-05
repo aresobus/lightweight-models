@@ -26,7 +26,7 @@ Install MediaPipe Handpose using either script tags or npm:
 <script src="https://unpkg.com/@aresobus/lightweight-models-core@2.1.0"></script>
 <script src="https://unpkg.com/@aresobus/lightweight-models-converter@2.1.0"></script>
 <script src="https://unpkg.com/@aresobus/lightweight-models-backend-webgl@2.1.0"></script>
-<script src="https://unpkg.com/@aresobus-models/handpose@0.0.6"></script>
+<script src="https://unpkg.com/@lightweight-models/handpose@0.0.6"></script>
 ```
 
 ### Via NPM
@@ -36,7 +36,7 @@ Install MediaPipe Handpose using either script tags or npm:
 yarn add @aresobus/lightweight-models-core @aresobus/lightweight-models-converter @aresobus/lightweight-models-backend-webgl
 
 # Install the handpose model
-yarn add @aresobus-models/handpose
+yarn add @lightweight-models/handpose
 ```
 
 ## Usage
@@ -46,7 +46,7 @@ yarn add @aresobus-models/handpose
 You can load the model using:
 
 ```javascript
-const handpose = require('@aresobus-models/handpose');
+const handpose = require('@lightweight-models/handpose');
 await handpose.load();
 ```
 

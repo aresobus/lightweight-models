@@ -2,7 +2,7 @@
 
  * =============================================================================
  */
-import * as bodySegmentation from "@aresobus-models/body-segmentation";
+import * as bodySegmentation from "@lightweight-models/body-segmentation";
 import * as tfconv from "@aresobus/lightweight-models-converter";
 import * as tf from "@aresobus/lightweight-models-core";
 

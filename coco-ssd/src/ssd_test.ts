@@ -57,7 +57,7 @@ describeWithFlags("ObjectDetection", NODE_ENVS, () => {
     await load({ base: "mobilenet_v1" });
 
     expect(tfconv.loadGraphModel).toHaveBeenCalledWith(
-      "https://storage.googleapis.com/aresobus-models/" +
+      "https://storage.googleapis.com/lightweight-models/" +
         "savedmodel/ssd_mobilenet_v1/model.json"
     );
   });

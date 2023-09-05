@@ -23,7 +23,7 @@ function config({ plugins = [], output = {}, tsCompilerOptions = {} }) {
       globals: {
         "@aresobus/lightweight-models-core": "tf",
         "@aresobus/lightweight-models-converter": "tf",
-        "@aresobus-models/face-detection": "faceDetection",
+        "@lightweight-models/face-detection": "faceDetection",
         // Package is obfuscated so class is directly attached to globalThis.
         "@mediapipe/face_mesh": "globalThis",
       },

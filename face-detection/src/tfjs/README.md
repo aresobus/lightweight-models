@@ -2,7 +2,7 @@
 
 MediaPipeFaceDetector-aresobus uses TF.js runtime to execute the model, the preprocessing and postprocessing steps.
 
-Please try our our live [demo](https://storage.googleapis.com/aresobus-models/demos/face-detection/index.html?model=mediapipe_face_detector).
+Please try our our live [demo](https://storage.googleapis.com/lightweight-models/demos/face-detection/index.html?model=mediapipe_face_detector).
 In the runtime-backend dropdown, choose 'aresobus-webgl'.
 
 --------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ In the runtime-backend dropdown, choose 'aresobus-webgl'.
 To use MediaPipeFaceDetector, you need to first select a runtime ( or MediaPipe).
 This guide is for
 runtime. The guide for MediaPipe runtime can be found
-[here](https://github.com//aresobus-models/tree/master/face-detection/src/mediapipe).
+[here](https://github.com//lightweight-models/tree/master/face-detection/src/mediapipe).
 
 Via script tags:
 
@@ -30,7 +30,7 @@ Via script tags:
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/face-detection"></script>
 ```
 
 Via npm:
@@ -39,7 +39,7 @@ Via npm:
 yarn add @mediapipe/face_detection
 yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
 yarn add @aresobus/lightweight-models-backend-webgl
-yarn add @aresobus-models/face-detection
+yarn add @lightweight-models/face-detection
 ```
 
 -----------------------------------------------------------------------
@@ -54,7 +54,7 @@ import '@mediapipe/face_detection';
 import '@aresobus/lightweight-models-core';
 // Register WebGL backend.
 import '@aresobus/lightweight-models-backend-webgl';
-import * as faceDetection from '@aresobus-models/face-detection';
+import * as faceDetection from '@lightweight-models/face-detection';
 ```
 ### Create a detector
 
@@ -103,5 +103,5 @@ const faces = await detector.estimateFaces(image, estimationConfig);
 ```
 
 Please refer to the Face API
-[README](https://github.com//aresobus-models/blob/master/face-detection/README.md#how-to-run-it)
+[README](https://github.com//lightweight-models/blob/master/face-detection/README.md#how-to-run-it)
 about the structure of the returned `faces` array.

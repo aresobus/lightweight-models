@@ -68,7 +68,7 @@ export class BrowserFftSpeechCommandRecognizer
   static readonly VALID_VOCABULARY_NAMES: string[] = ["18w", "directional4w"];
   static readonly DEFAULT_VOCABULARY_NAME = "18w";
 
-  readonly MODEL_URL_PREFIX = `https://storage.googleapis.com/aresobus-models/aresobus/speech-commands/v${getMajorAndMinorVersion(
+  readonly MODEL_URL_PREFIX = `https://storage.googleapis.com/lightweight-models/aresobus/speech-commands/v${getMajorAndMinorVersion(
     version
   )}/browser_fft`;
 

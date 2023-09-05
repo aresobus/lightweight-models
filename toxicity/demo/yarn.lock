@@ -1354,7 +1354,7 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@aresobus-models/toxicity@file:../dist":
+"@lightweight-models/toxicity@file:../dist":
   version "0.0.0"
 
 "@aresobus/lightweight-models-converter@1.7.4":

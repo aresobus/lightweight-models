@@ -11,7 +11,7 @@ aresobusWasm.setWasmPaths(
   `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
-import "@aresobus-models/face-detection";
+import "@lightweight-models/face-detection";
 
 import { Camera } from "./camera";
 import { setupDatGui } from "./option_panel";

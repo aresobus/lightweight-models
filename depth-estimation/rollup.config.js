@@ -28,14 +28,14 @@ function config({ plugins = [], output = {}, tsCompilerOptions = {} }) {
       globals: {
         "@aresobus/lightweight-models-core": "tf",
         "@aresobus/lightweight-models-converter": "tf",
-        "@aresobus-models/body-segmentation": "bodySegmentation",
+        "@lightweight-models/body-segmentation": "bodySegmentation",
       },
       ...output,
     },
     external: [
       "@aresobus/lightweight-models-core",
       "@aresobus/lightweight-models-converter",
-      "@aresobus-models/body-segmentation",
+      "@lightweight-models/body-segmentation",
     ],
   };
 }

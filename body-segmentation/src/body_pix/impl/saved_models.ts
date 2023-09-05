@@ -1,7 +1,7 @@
 const RESNET50_BASE_URL =
-  "https://storage.googleapis.com/aresobus-models/savedmodel/bodypix/resnet50/";
+  "https://storage.googleapis.com/lightweight-models/savedmodel/bodypix/resnet50/";
 const MOBILENET_BASE_URL =
-  "https://storage.googleapis.com/aresobus-models/savedmodel/bodypix/mobilenet/";
+  "https://storage.googleapis.com/lightweight-models/savedmodel/bodypix/mobilenet/";
 
 // The BodyPix 2.0 ResNet50 models use the latest  1.0 model
 // format.

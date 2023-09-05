@@ -9,7 +9,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/mobilenet": "file:../dist",
+    "@lightweight-models/mobilenet": "file:../dist",
     "@aresobus/lightweight-models-backend-cpu": "^4.18.0",
     "@aresobus/lightweight-models-backend-webgl": "^4.18.0",
     "@aresobus/lightweight-models-converter": "^4.18.0",

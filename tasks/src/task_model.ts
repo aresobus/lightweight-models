@@ -218,7 +218,7 @@ export abstract class TaskModelLoader<N, LO, M> {
    * subclass should *NOT* use the namespace from the import statement to
    * implement this method (e.g. the "mobilenet" variable in `import * as
    * mobilenet from
-   * '@aresobus-models/mobilenet`). Instead, only `sourceModelGlobalNamespace`
+   * '@lightweight-models/mobilenet`). Instead, only `sourceModelGlobalNamespace`
    * should be used, which should have the same type as the imported namespace.
    * The imported namespace can only be used to reference types. This makes sure
    * that the code from the source model is NOT bundled in the final binary.

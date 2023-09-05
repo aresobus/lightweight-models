@@ -8,7 +8,7 @@ import {
 /**
  * This render_util implementation is based on the body-pix output_rending_util
  * code found here:
- * https://github.com//aresobus-models/blob/master/body-pix/src/output_rendering_util.ts
+ * https://github.com//lightweight-models/blob/master/body-pix/src/output_rendering_util.ts
  * It is adapted to account for the generic segmentation interface.
  */
 

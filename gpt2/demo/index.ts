@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import { GPT2, load } from "@aresobus-models/gpt2";
+import { GPT2, load } from "@lightweight-models/gpt2";
 import * as lil from "lil-gui";
 import * as tf from "@aresobus/lightweight-models-core";
 import { setWasmPaths } from "@aresobus/lightweight-models-backend-wasm";

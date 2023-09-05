@@ -1,4 +1,4 @@
-import * as posedetection from "@aresobus-models/pose-detection";
+import * as posedetection from "@lightweight-models/pose-detection";
 import { isiOS } from "./util";
 
 export const DEFAULT_LINE_WIDTH = 2;

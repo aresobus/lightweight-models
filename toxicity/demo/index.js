@@ -1,4 +1,4 @@
-import * as toxicity from "@aresobus-models/toxicity";
+import * as toxicity from "@lightweight-models/toxicity";
 
 const samples = [
   {

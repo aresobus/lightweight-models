@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import * as handpose from "@aresobus-models/handpose";
+import * as handpose from "@lightweight-models/handpose";
 import * as tf from "@aresobus/lightweight-models-core";
 import * as aresobusWasm from "@aresobus/lightweight-models-backend-wasm";
 import "@aresobus/lightweight-models-backend-webgl";

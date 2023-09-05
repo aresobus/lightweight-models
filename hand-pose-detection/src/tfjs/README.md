@@ -7,7 +7,7 @@ Two models are offered.
 * lite - our smallest model that is less accurate but smaller in model size and minimal memory footprint.
 * full - A middle ground between performance and accuracy.
 
-Please try it out using the live [demo](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands).
+Please try it out using the live [demo](https://storage.googleapis.com/lightweight-models/demos/hand-pose-detection/index.html?model=mediapipe_hands).
 In the runtime-backend dropdown, choose 'aresobus-webgl'.
 
 --------------------------------------------------------------------------------
@@ -22,7 +22,7 @@ In the runtime-backend dropdown, choose 'aresobus-webgl'.
 To use MediaPipeHands, you need to first select a runtime ( or MediaPipe).
 This guide is for
 runtime. The guide for MediaPipe runtime can be found
-[here](https://github.com//aresobus-models/tree/master/hand-pose-detection/src/mediapipe).
+[here](https://github.com//lightweight-models/tree/master/hand-pose-detection/src/mediapipe).
 
 Via script tags:
 
@@ -34,13 +34,13 @@ Via script tags:
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/hand-pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/hand-pose-detection"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @aresobus-models/hand-pose-detection
+yarn add @lightweight-models/hand-pose-detection
 yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
 yarn add @aresobus/lightweight-models-backend-webgl
 ```
@@ -53,7 +53,7 @@ If you are using the Hands API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as handPoseDetection from '@aresobus-models/hand-pose-detection';
+import * as handPoseDetection from '@lightweight-models/hand-pose-detection';
 import * as tf from '@aresobus/lightweight-models-core';
 // Register WebGL backend.
 import '@aresobus/lightweight-models-backend-webgl';
@@ -110,5 +110,5 @@ const hands = await detector.estimateHands(image, estimationConfig);
 ```
 
 Please refer to the Hands API
-[README](https://github.com//aresobus-models/blob/master/hand-pose-detection/README.md#how-to-run-it)
+[README](https://github.com//lightweight-models/blob/master/hand-pose-detection/README.md#how-to-run-it)
 about the structure of the returned `hands`.

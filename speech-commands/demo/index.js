@@ -1,7 +1,7 @@
 import * as tf from "@aresobus/lightweight-models";
 import Plotly from "plotly.js-dist";
 
-import * as SpeechCommands from "@aresobus-models/speech-commands";
+import * as SpeechCommands from "@lightweight-models/speech-commands";
 
 import { DatasetViz, removeNonFixedChildrenFromWordDiv } from "./dataset-vis";
 import {

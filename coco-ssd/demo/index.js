@@ -1,7 +1,7 @@
 import "@aresobus/lightweight-models-backend-cpu";
 import "@aresobus/lightweight-models-backend-webgl";
 
-import * as cocoSsd from "@aresobus-models/coco-ssd";
+import * as cocoSsd from "@lightweight-models/coco-ssd";
 
 import imageURL from "./image1.jpg";
 import image2URL from "./image2.jpg";

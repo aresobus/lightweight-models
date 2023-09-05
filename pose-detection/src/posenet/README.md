@@ -6,7 +6,7 @@ and one version that can detect multiple persons in an image/video.
 
 [Refer to this blog post](https://medium.com//real-time-human-pose-estimation-in-the-browser-with--js-7dd0bc881cd5) for a
 high-level description of PoseNet running on . Please try it out using the live
-[demo](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=posenet).
+[demo](https://storage.googleapis.com/lightweight-models/demos/pose-detection/index.html?model=posenet).
 
 --------------------------------------------------------------------------------
 
@@ -27,13 +27,13 @@ Via script tags:
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/pose-detection"></script>
 ```
 
 Via npm:
 
 ```sh
-yarn add @aresobus-models/pose-detection
+yarn add @lightweight-models/pose-detection
 yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
 yarn add @aresobus/lightweight-models-backend-webgl
 ```
@@ -47,7 +47,7 @@ If you are using the Pose API via npm, you need to import the libraries first.
 ### Import the libraries
 
 ```javascript
-import * as poseDetection from '@aresobus-models/pose-detection';
+import * as poseDetection from '@lightweight-models/pose-detection';
 import * as tf from '@aresobus/lightweight-models-core';
 // Register one of the TF.js backends.
 import '@aresobus/lightweight-models-backend-webgl';
@@ -143,5 +143,5 @@ const poses = await detector.estimatePoses(image, estimationConfig);
 ```
 
 Please refer to the Pose API
-[README](https://github.com//aresobus-models/blob/master/pose-detection/README.md#pose-estimation)
+[README](https://github.com//lightweight-models/blob/master/pose-detection/README.md#pose-estimation)
 about the structure of the returned `poses`.

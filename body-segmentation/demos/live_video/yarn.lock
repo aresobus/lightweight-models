@@ -990,10 +990,10 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
-"@aresobus-models/body-segmentation@file:../../dist":
+"@lightweight-models/body-segmentation@file:../../dist":
   version "0.0.0"
 
-"@aresobus-models/pose-detection@file:../../../pose-detection/dist":
+"@lightweight-models/pose-detection@file:../../../pose-detection/dist":
   version "0.0.0"
 
 "@aresobus/lightweight-models-backend-cpu@4.9.0":

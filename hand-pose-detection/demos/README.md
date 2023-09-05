@@ -16,13 +16,13 @@ This demo uses your camera to get live stream and tracks your hands in real-time
 You can try out different runtimes to see the difference. It
 works on laptops, iPhones and android phones.
 
-[MediaPipeHands model entry](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection/index.html?model=mediapipe_hands)
+[MediaPipeHands model entry](https://storage.googleapis.com/lightweight-models/demos/hand-pose-detection/index.html?model=mediapipe_hands)
 
 ## Upload a Video Demo
 This demo allows you to upload a video (in .mp4 format) to run with the model.
 Once the video is processed, it automatically downloads the video with hands keypoints.
 
-[MediaPipeHands model entry](https://storage.googleapis.com/aresobus-models/demos/hand-pose-detection-upload-video/index.html?model=mediapipe_hands)
+[MediaPipeHands model entry](https://storage.googleapis.com/lightweight-models/demos/hand-pose-detection-upload-video/index.html?model=mediapipe_hands)
 
 ## How to Run a Demo
 If you want to run any of the demos locally, follow these steps:

@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import * as qna from "@aresobus-models/qna";
+import * as qna from "@lightweight-models/qna";
 import "@aresobus/lightweight-models-core";
 import "@aresobus/lightweight-models-backend-cpu";
 import "@aresobus/lightweight-models-backend-webgl";

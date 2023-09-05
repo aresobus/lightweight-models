@@ -3,7 +3,7 @@
  * =============================================================================
  */
 import * as mpFaceDetection from "@mediapipe/face_detection";
-import * as faceDetection from "@aresobus-models/face-detection";
+import * as faceDetection from "@lightweight-models/face-detection";
 
 export const NUM_KEYPOINTS = 6;
 export const GREEN = "#32EEDB";

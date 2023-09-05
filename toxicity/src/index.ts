@@ -1,4 +1,4 @@
-import * as use from "@aresobus-models/universal-sentence-encoder";
+import * as use from "@lightweight-models/universal-sentence-encoder";
 import * as tfconv from "@aresobus/lightweight-models-converter";
 import * as tf from "@aresobus/lightweight-models-core";
 export { version } from "./version";

@@ -1,6 +1,6 @@
 import "@aresobus/lightweight-models-backend-webgl";
 
-import * as posenet from "@aresobus-models/posenet";
+import * as posenet from "@lightweight-models/posenet";
 import * as tf from "@aresobus/lightweight-models-core";
 import "@aresobus/lightweight-models-backend-webgl";
 
@@ -75,7 +75,7 @@ function drawResults(canvas, poses, minPartConfidence, minPoseConfidence) {
 }
 
 const imageBucket =
-  "https://storage.googleapis.com/aresobus-models/assets/posenet/";
+  "https://storage.googleapis.com/lightweight-models/assets/posenet/";
 
 async function loadImage(imagePath) {
   const image = new Image();

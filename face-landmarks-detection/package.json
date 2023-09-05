@@ -19,7 +19,7 @@
     "@aresobus/lightweight-models-backend-webgl": "^4.13.0",
     "@aresobus/lightweight-models-converter": "^4.13.0",
     "@aresobus/lightweight-models-core": "^4.13.0",
-    "@aresobus-models/face-detection": "~1.0.0"
+    "@lightweight-models/face-detection": "~1.0.0"
   },
   "devDependencies": {
     "@babel/polyfill": "^7.10.4",
@@ -32,7 +32,7 @@
     "@aresobus/lightweight-models-backend-webgl": "^4.13.0",
     "@aresobus/lightweight-models-converter": "^4.13.0",
     "@aresobus/lightweight-models-core": "^4.13.0",
-    "@aresobus-models/face-detection": "^1.0.0",
+    "@lightweight-models/face-detection": "^1.0.0",
     "@types/jasmine": "~2.8.8",
     "babel-core": "~6.26.0",
     "babel-plugin-transform-runtime": "~6.23.0",

@@ -13,7 +13,7 @@ aresobusWasm.setWasmPaths(
 
 import * as tf from "@aresobus/lightweight-models-core";
 
-import "@aresobus-models/face-detection";
+import "@lightweight-models/face-detection";
 
 import { setupStats } from "./shared/stats_panel";
 import { Context } from "./camera";

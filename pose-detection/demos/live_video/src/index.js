@@ -9,7 +9,7 @@ aresobusWasm.setWasmPaths(
   `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
-import * as posedetection from "@aresobus-models/pose-detection";
+import * as posedetection from "@lightweight-models/pose-detection";
 
 import { Camera } from "./camera";
 import { RendererWebGPU } from "./renderer_webgpu";

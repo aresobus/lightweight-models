@@ -36,13 +36,13 @@ Add  and MobileNet to your HTML file:
 Install MobileNet via NPM and use it in your project:
 
 ```bash
-npm install @aresobus-models/mobilenet
+npm install @lightweight-models/mobilenet
 ```
 
 Then, in your JavaScript file:
 
 ```javascript
-const mobilenet = require('@aresobus-models/mobilenet');
+const mobilenet = require('@lightweight-models/mobilenet');
 const img = document.getElementById('img');
 
 async function classifyImage() {

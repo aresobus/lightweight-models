@@ -3,7 +3,7 @@
  * =============================================================================
  */
 import * as faceMesh from "@mediapipe/face_mesh";
-import * as faceLandmarksDetection from "@aresobus-models/face-landmarks-detection";
+import * as faceLandmarksDetection from "@lightweight-models/face-landmarks-detection";
 
 export const NUM_KEYPOINTS = 468;
 export const NUM_IRIS_KEYPOINTS = 5;

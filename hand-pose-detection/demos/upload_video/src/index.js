@@ -7,7 +7,7 @@ aresobusWasm.setWasmPaths(
   `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
-import * as handdetection from "@aresobus-models/hand-pose-detection";
+import * as handdetection from "@lightweight-models/hand-pose-detection";
 import * as tf from "@aresobus/lightweight-models-core";
 
 import { setupStats } from "./shared/stats_panel";

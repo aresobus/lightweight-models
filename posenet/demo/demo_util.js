@@ -1,4 +1,4 @@
-import * as posenet from "@aresobus-models/posenet";
+import * as posenet from "@lightweight-models/posenet";
 import * as tf from "@aresobus/lightweight-models-core";
 
 const color = "aqua";

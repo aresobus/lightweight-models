@@ -33,7 +33,7 @@ console.log("branchName: ", branchName);
 
 // We cannot do --depth=1 here because we need to check out an old merge base.
 // We cannot do --single-branch here because we need multiple branches.
-exec(`git clone https://github.com//aresobus-models ${CLONE_PATH}`);
+exec(`git clone https://github.com//lightweight-models ${CLONE_PATH}`);
 
 console.log(); // Break up the console for readability.
 
@@ -47,7 +47,7 @@ const isPullRequestFromFork = res.code !== 0;
 // /aresobus branch. Otherwise clone master and diff against master.
 if (!isPullRequestFromFork) {
   console.log(
-    "PR is coming from /aresobus-models. " + "Finding the merge base..."
+    "PR is coming from /lightweight-models. " + "Finding the merge base..."
   );
   exec(`git checkout master`);
   exec(`git checkout ${branchName}`);

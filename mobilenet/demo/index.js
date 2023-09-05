@@ -1,7 +1,7 @@
 import "@aresobus/lightweight-models-backend-cpu";
 import "@aresobus/lightweight-models-backend-webgl";
 
-import * as mobilenet from "@aresobus-models/mobilenet";
+import * as mobilenet from "@lightweight-models/mobilenet";
 
 const img = document.getElementById("img");
 const version = 2;

@@ -1,5 +1,5 @@
-import * as bodySegmentation from "@aresobus-models/body-segmentation";
-import * as poseDetection from "@aresobus-models/pose-detection";
+import * as bodySegmentation from "@lightweight-models/body-segmentation";
+import * as poseDetection from "@lightweight-models/pose-detection";
 
 export const DEFAULT_LINE_WIDTH = 2;
 export const DEFAULT_RADIUS = 4;

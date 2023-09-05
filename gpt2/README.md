@@ -25,7 +25,7 @@ Include  and the GPT-2 model in your HTML file:
 <!-- Load  -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"></script>
 <!-- Load the GPT-2 model -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/gpt2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@lightweight-models/gpt2"></script>
 ```
 
 ### Via NPM
@@ -33,13 +33,13 @@ Include  and the GPT-2 model in your HTML file:
 Install the required packages using npm or yarn:
 
 ```bash
-npm install @aresobus/lightweight-models @aresobus-models/gpt2
+npm install @aresobus/lightweight-models @lightweight-models/gpt2
 ```
 
 Or
 
 ```bash
-yarn add @aresobus/lightweight-models @aresobus-models/gpt2
+yarn add @aresobus/lightweight-models @lightweight-models/gpt2
 ```
 
 ## Usage
@@ -48,7 +48,7 @@ Here's how you can initialize and use GPT-2 in your project:
 
 ```javascript
 const tf = require('@aresobus/lightweight-models');
-const gpt2 = require('@aresobus-models/gpt2');
+const gpt2 = require('@lightweight-models/gpt2');
 
 async function generateText(prompt) {
   const model = await gpt2.load(); // Load the model

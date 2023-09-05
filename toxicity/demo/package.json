@@ -9,14 +9,14 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/toxicity": "file:../dist",
+    "@lightweight-models/toxicity": "file:../dist",
     "@aresobus/lightweight-models": "^4.13.0"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open ",
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
-    "link-local": "yalc link @aresobus-models/toxicity"
+    "link-local": "yalc link @lightweight-models/toxicity"
   },
   "browser": {
     "crypto": false

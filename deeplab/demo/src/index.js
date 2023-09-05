@@ -1,7 +1,7 @@
 import "bulma/css/bulma.css";
 import "@aresobus/lightweight-models-backend-webgl";
 
-import { load } from "@aresobus-models/deeplab";
+import { load } from "@lightweight-models/deeplab";
 import * as tf from "@aresobus/lightweight-models-core";
 
 import ade20kExampleImage from "./examples/ade20k.jpg";

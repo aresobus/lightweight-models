@@ -1,5 +1,5 @@
 {
-  "name": "aresobus-models-speech-commands-demo",
+  "name": "lightweight-models-speech-commands-demo",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/speech-commands": "file:../dist",
+    "@lightweight-models/speech-commands": "file:../dist",
     "stats.js": "^0.17.0"
   },
   "scripts": {
@@ -17,7 +17,7 @@
     "watch": "yarn build-model && cross-env NODE_OPTIONS=--max_old_space_size=4096 NODE_ENV=development parcel index.html --no-hmr --open",
     "build": "yarn build-model && cross-env NODE_OPTIONS=--max_old_space_size=4096 NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
-    "link-local": "yalc link @aresobus-models/speech-commands"
+    "link-local": "yalc link @lightweight-models/speech-commands"
   },
   "browser": {
     "crypto": false

@@ -9,7 +9,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/coco-ssd": "file:../dist",
+    "@lightweight-models/coco-ssd": "file:../dist",
     "@aresobus/lightweight-models-backend-cpu": "^4.18.0",
     "@aresobus/lightweight-models-backend-webgl": "^4.18.0",
     "@aresobus/lightweight-models-core": "^4.18.0",
@@ -22,7 +22,7 @@
     "build-deps": "yarn build-model && yarn build",
     "build-model": "cd .. && yarn && yarn build-npm",
     "lint": "eslint .",
-    "link-local": "yalc link @aresobus-models/coco-ssd"
+    "link-local": "yalc link @lightweight-models/coco-ssd"
   },
   "browser": {
     "crypto": false

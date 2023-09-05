@@ -1,4 +1,4 @@
-import * as handdetection from "@aresobus-models/hand-pose-detection";
+import * as handdetection from "@lightweight-models/hand-pose-detection";
 import * as tf from "@aresobus/lightweight-models-core";
 
 import * as params from "./shared/params";

@@ -3,7 +3,7 @@ import * as tf from "@aresobus/lightweight-models-core";
 
 import { CLASSES } from "./classes";
 
-const BASE_PATH = "https://storage.googleapis.com/aresobus-models/savedmodel/";
+const BASE_PATH = "https://storage.googleapis.com/lightweight-models/savedmodel/";
 
 export { version } from "./version";
 

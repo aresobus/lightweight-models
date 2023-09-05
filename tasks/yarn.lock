@@ -898,26 +898,26 @@
     estree-walker "^1.0.1"
     picomatch "^2.2.2"
 
-"@aresobus-models/coco-ssd@link:../coco-ssd":
+"@lightweight-models/coco-ssd@link:../coco-ssd":
   version "2.2.2"
 
-"@aresobus-models/deeplab@link:../deeplab":
+"@lightweight-models/deeplab@link:../deeplab":
   version "0.2.1"
 
-"@aresobus-models/mobilenet@link:../mobilenet":
+"@lightweight-models/mobilenet@link:../mobilenet":
   version "2.1.0"
 
-"@aresobus-models/qna@link:../qna":
+"@lightweight-models/qna@link:../qna":
   version "1.0.1"
 
-"@aresobus-models/toxicity@link:../toxicity":
+"@lightweight-models/toxicity@link:../toxicity":
   version "1.2.2"
   dependencies:
-    "@aresobus-models/universal-sentence-encoder" "~1.2.2"
+    "@lightweight-models/universal-sentence-encoder" "~1.2.2"
 
-"@aresobus-models/universal-sentence-encoder@~1.2.2":
+"@lightweight-models/universal-sentence-encoder@~1.2.2":
   version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@aresobus-models/universal-sentence-encoder/-/universal-sentence-encoder-1.2.2.tgz#27a38c39424b5e85389ac461be177c9f44ba19bd"
+  resolved "https://registry.yarnpkg.com/@lightweight-models/universal-sentence-encoder/-/universal-sentence-encoder-1.2.2.tgz#27a38c39424b5e85389ac461be177c9f44ba19bd"
   integrity sha512-fGCl/gwB7jmKCRI2FhgIBeIa/LCSUcjlEcckH2Bc2dIjhJ+2nspp+22lubxcseN6jjrmP42kkXt/reAPe+KJkQ==
 
 "@aresobus/lightweight-models-converter@^3.5.0":

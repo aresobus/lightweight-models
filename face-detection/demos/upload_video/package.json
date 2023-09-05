@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@mediapipe/face_detection": "~0.4.0",
-    "@aresobus-models/face-detection": "file:../../dist",
+    "@lightweight-models/face-detection": "file:../../dist",
     "@aresobus/lightweight-models-backend-wasm": "^4.0.0",
     "@aresobus/lightweight-models-backend-webgl": "^4.0.0",
     "@aresobus/lightweight-models-backend-webgpu": "^0.0.1-alpha.14",

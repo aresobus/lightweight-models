@@ -1,11 +1,11 @@
-import * as mobilenetModule from "@aresobus-models/mobilenet";
+import * as mobilenetModule from "@lightweight-models/mobilenet";
 
 import * as tf from "@aresobus/lightweight-models-core";
 import "@aresobus/lightweight-models-backend-cpu";
 import "@aresobus/lightweight-models-backend-webgl";
 import Stats from "stats.js";
 
-import * as knnClassifier from "@aresobus-models/knn-classifier";
+import * as knnClassifier from "@lightweight-models/knn-classifier";
 
 const videoWidth = 300;
 const videoHeight = 250;

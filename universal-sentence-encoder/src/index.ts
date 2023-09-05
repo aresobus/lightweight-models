@@ -11,7 +11,7 @@ import { loadQnA } from "./use_qna";
 export { version } from "./version";
 
 const BASE_PATH =
-  "https://storage.googleapis.com/aresobus-models/savedmodel/universal_sentence_encoder";
+  "https://storage.googleapis.com/lightweight-models/savedmodel/universal_sentence_encoder";
 
 declare interface ModelInputs extends tf.NamedTensorMap {
   indices: tf.Tensor;

@@ -1,4 +1,4 @@
-import * as posedetection from "@aresobus-models/pose-detection";
+import * as posedetection from "@lightweight-models/pose-detection";
 export const DEFAULT_LINE_WIDTH = 2;
 export const DEFAULT_RADIUS = 2;
 

@@ -9,7 +9,7 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "@aresobus-models/universal-sentence-encoder": "file:../dist",
+    "@lightweight-models/universal-sentence-encoder": "file:../dist",
     "@aresobus/lightweight-models-backend-cpu": "^3.3.0",
     "@aresobus/lightweight-models-backend-webgl": "^3.3.0",
     "@aresobus/lightweight-models-converter": "^3.3.0",
@@ -22,7 +22,7 @@
     "build-deps": "yarn build-model && yarn build",
     "build-model": "cd .. && yarn && yarn build-npm",
     "lint": "eslint .",
-    "link-local": "yalc link @aresobus-models/universal-sentence-encoder"
+    "link-local": "yalc link @lightweight-models/universal-sentence-encoder"
   },
   "browser": {
     "crypto": false
