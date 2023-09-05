@@ -1,5 +1,5 @@
 {
-  "name": "model-playground",
+  "name": "@aresobus/model-playground",
   "version": "0.0.1",
   "description": "A development environment for exploring and testing machine learning models in Angular.",
   "main": "index.js",

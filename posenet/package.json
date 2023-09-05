@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-posenet",
+  "name": "@aresobus/posenet",
   "version": "2.2.2",
-  "description": "Pretrained PoseNet model in  maintained by Oleksandr Lebedyev",
+  "description": "Pretrained PoseNet model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/posenet.esm.js",
   "module": "dist/posenet.esm.js",

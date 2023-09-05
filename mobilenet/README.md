@@ -1,7 +1,4 @@
 
-
----
-
 # MobileNet: Lightweight Models for
 
 MobileNets are efficient models that stand out for their speed and low computational demand. These models are parameterized to strike a balance between latency, size, and accuracy, making them ideal for mobile devices and low-power applications. They can be used for various tasks like classification, detection, embeddings, and segmentation.
@@ -17,10 +14,6 @@ You can integrate MobileNet into your JavaScript project either by using script 
 Add  and MobileNet to your HTML file:
 
 ```html
-<!-- Load  -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus@1.0.1"></script>
-<!-- Load the MobileNet model -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus-models/mobilenet@1.0.0"></script>
 
 <!-- Sample Image -->
 <img id="img" src="cat.jpg" alt="Sample Image">

@@ -1,9 +1,6 @@
 
----
 
 # Model Playground
-
-**TODO:** *Add a detailed project description here. Explain what the Model Playground is, its purpose, and how it can be used.*
 
 ## Development
 
@@ -45,4 +42,3 @@ This command will initiate the test runner in the interactive watch mode. Ensure
   yarn e2e
   ```
 
----

@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-mobilenet",
+  "name": "@aresobus/mobilenet",
   "version": "2.1.0",
-  "description": "Pretrained MobileNet in  maintained by Oleksandr Lebedyev",
+  "description": "Pretrained MobileNet maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/mobilenet.min.js",
   "jsdelivr": "dist/mobilenet.min.js",

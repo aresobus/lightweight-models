@@ -1,6 +1,6 @@
 {
-  "name": "@aresobus/-models-pose-detection",
-  "version": "2.1.0",
+  "name": "@aresobus/pose-detection",
+  "version": "3.1.0",
   "description": "Pretrained pose detection model maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/pose-detection.esm.js",

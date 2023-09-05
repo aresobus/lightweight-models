@@ -16,22 +16,22 @@ This demo uses your camera to get live stream and tracks your poses in real-time
 You can try out different models, runtimes and backends to see the difference. It
 works on laptops, iPhones and android phones.
 
-[MoveNet model entry](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=movenet)
+[MoveNet model entry](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=movenet)
 
-[BlazePose model entry](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=blazepose)
+[BlazePose model entry](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=blazepose)
 
-[PoseNet model entry](https://storage.googleapis.com/aresobus-models/demos/pose-detection/index.html?model=posenet)
+[PoseNet model entry](https://storage.googleapis.com/tfjs-models/demos/pose-detection/index.html?model=posenet)
 
 
 ## Upload a Video Demo
 This demo allows you to upload a video (in .mp4 format) to run with the model.
 Once the video is processed, it automatically downloads the video with pose keypoints.
 
-[MoveNet model entry](https://storage.googleapis.com/aresobus-models/demos/pose-detection-upload-video/index.html?model=movenet)
+[MoveNet model entry](https://storage.googleapis.com/tfjs-models/demos/pose-detection-upload-video/index.html?model=movenet)
 
-[BlazePose model entry](https://storage.googleapis.com/aresobus-models/demos/pose-detection-upload-video/index.html?model=blazepose)
+[BlazePose model entry](https://storage.googleapis.com/tfjs-models/demos/pose-detection-upload-video/index.html?model=blazepose)
 
-[PoseNet model entry](https://storage.googleapis.com/aresobus-models/demos/pose-detection-upload-video/index.html?model=posenet)
+[PoseNet model entry](https://storage.googleapis.com/tfjs-models/demos/pose-detection-upload-video/index.html?model=posenet)
 
 
 ## How to Run a Demo

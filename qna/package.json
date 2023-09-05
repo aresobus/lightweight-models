@@ -1,5 +1,5 @@
 {
-  "name": "@aresobus/-models-qna",
+  "name": "@aresobus/qna",
   "version": "1.0.1",
   "description": "Question and Answer model (Mobile BERT) maintained by Oleksandr Lebedyev",
   "main": "dist/index.js",
