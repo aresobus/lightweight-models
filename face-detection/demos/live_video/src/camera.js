@@ -1,8 +1,3 @@
-/**
-
- * =============================================================================
- */
-
 import { VIDEO_SIZE } from "./shared/params";
 import { drawResults, isMobile } from "./shared/util";
 

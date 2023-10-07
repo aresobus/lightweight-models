@@ -1,7 +1,5 @@
 
 
----
-
 # Pre-trained  Models by Oleksandr Lebedyev
 
 This repository hosts a collection of pre-trained models that have been adapted for .

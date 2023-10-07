@@ -1,8 +1,3 @@
-/**
-
- * =============================================================================
- */
-
 import "@aresobus/aresobus-backend-webgl";
 import "@aresobus/aresobus-backend-webgpu";
 

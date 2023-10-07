@@ -1,7 +1,3 @@
-/**
- * Execute all unit tests in the current directory. Takes a jasmine_util from
- * aresobus-core so that we use the aresobus-core module from the right test directory.
- */
 // tslint:disable-next-line
 export function runTests(jasmine_util: any): void {
   // tslint:disable-next-line:no-require-imports

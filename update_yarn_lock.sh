@@ -1,7 +1,5 @@
 
 
-# Update all yarn.lock file in this aresobus-models repository.
-
 update() {
   rm yarn.lock && yarn
   cd ".."

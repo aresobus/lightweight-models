@@ -1,8 +1,6 @@
 
-# ==============================================================================
 
 
-# Run all Python tests in this aresobus-models repository.
 
 set -e
 
