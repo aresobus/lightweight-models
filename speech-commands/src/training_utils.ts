@@ -3,7 +3,7 @@
  * model.
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 /**
  * Split feature and target tensors into train and validation (val) splits.

@@ -1,9 +1,9 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   describeWithFlags,
   NODE_ENVS,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 import * as knnClassifier from "./index";
 
 describeWithFlags("KNNClassifier", NODE_ENVS, () => {

@@ -1,6 +1,6 @@
 import * as bodySegmentation from "@aresobus-models/body-segmentation";
 import * as poseDetection from "@aresobus-models/pose-detection";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import * as params from "./shared/params";
 

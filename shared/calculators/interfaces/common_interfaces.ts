@@ -1,4 +1,4 @@
-import { Tensor3D } from "@aresobus/aresobus-core";
+import { Tensor3D } from "@aresobus/lightweight-models-core";
 
 export type PixelInput =
   | Tensor3D

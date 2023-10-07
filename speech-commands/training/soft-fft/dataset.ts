@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 /**
  * A dataset for webcam controls which allows the user to add example Tensors

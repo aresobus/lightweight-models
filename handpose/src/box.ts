@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 // The hand bounding box.
 export type Box = {

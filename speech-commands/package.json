@@ -15,15 +15,15 @@
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
 
   "peerDependencies": {
-    "@aresobus/aresobus-core": "^4.13.0",
-    "@aresobus/aresobus-data": "^4.13.0",
-    "@aresobus/aresobus-layers": "^4.13.0"
+    "@aresobus/lightweight-models-core": "^4.13.0",
+    "@aresobus/lightweight-models-data": "^4.13.0",
+    "@aresobus/lightweight-models-layers": "^4.13.0"
   },
   "devDependencies": {
-    "@aresobus/aresobus-core": "^4.13.0",
-    "@aresobus/aresobus-data": "^4.13.0",
-    "@aresobus/aresobus-layers": "^4.13.0",
-    "@aresobus/aresobus-node": "^4.13.0",
+    "@aresobus/lightweight-models-core": "^4.13.0",
+    "@aresobus/lightweight-models-data": "^4.13.0",
+    "@aresobus/lightweight-models-layers": "^4.13.0",
+    "@aresobus/lightweight-models-node": "^4.13.0",
     "@types/jasmine": "~2.8.8",
     "@types/rimraf": "^2.0.2",
     "@types/tempfile": "^2.0.0",

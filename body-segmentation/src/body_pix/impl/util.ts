@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { BodyPixInput, BodyPixOutputStride, Padding } from "./types";
 import { Pose, TensorBuffer3D } from "./types";

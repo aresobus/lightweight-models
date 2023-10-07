@@ -1,5 +1,5 @@
 import * as faceDetection from "@mediapipe/face_detection";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { MEDIAPIPE_FACE_DETECTOR_KEYPOINTS } from "../constants";
 import { FaceDetector } from "../face_detector";

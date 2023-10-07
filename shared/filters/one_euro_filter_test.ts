@@ -2,7 +2,7 @@
 import {
   ALL_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 import { OneEuroFilter } from "./one_euro_filter";
 

@@ -5,8 +5,8 @@
 import {
   GPGPUProgram,
   MathBackendWebGL,
-} from "@aresobus/aresobus-backend-webgl";
-import * as tf from "@aresobus/aresobus-core";
+} from "@aresobus/lightweight-models-backend-webgl";
+import * as tf from "@aresobus/lightweight-models-core";
 
 /**
  * A calculator for changing the background of an image to black based on

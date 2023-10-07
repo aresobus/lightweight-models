@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { GPT2 } from "./gpt2";
 export { GPT2 } from "./gpt2";
 

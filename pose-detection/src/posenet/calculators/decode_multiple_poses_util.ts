@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { COCO_KEYPOINTS } from "../../constants";
 import { Keypoint } from "../../shared/calculators/interfaces/common_interfaces";

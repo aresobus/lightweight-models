@@ -3,10 +3,10 @@
  * =============================================================================
  */
 
-import "@aresobus/aresobus-backend-webgl";
-import * as tfwebgpu from "@aresobus/aresobus-backend-webgpu";
+import "@aresobus/lightweight-models-backend-webgl";
+import * as tfwebgpu from "@aresobus/lightweight-models-backend-webgpu";
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 function getDevice(canvas) {
   const device = tf.backend().device;

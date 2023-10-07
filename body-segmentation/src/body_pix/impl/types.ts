@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 export type BodyPixInternalResolution =
   | number

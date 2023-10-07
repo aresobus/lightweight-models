@@ -3,12 +3,12 @@
  * =============================================================================
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   ALL_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 import * as handpose from "./index";
 import { stubbedImageVals } from "./test_util";

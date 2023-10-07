@@ -1,6 +1,6 @@
-import { tensor3d } from "@aresobus/aresobus-core";
+import { tensor3d } from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
-import { expectArraysEqual } from "@aresobus/aresobus-core/dist/test_util";
+import { expectArraysEqual } from "@aresobus/lightweight-models-core/dist/test_util";
 
 import * as maskUtil from "./mask_util";
 

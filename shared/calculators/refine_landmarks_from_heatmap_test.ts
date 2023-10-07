@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { refineLandmarksFromHeatmap } from "./refine_landmarks_from_heatmap";
 

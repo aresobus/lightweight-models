@@ -1,5 +1,5 @@
-import * as tf from "@aresobus/aresobus-core";
-import * as tfd from "@aresobus/aresobus-data";
+import * as tf from "@aresobus/lightweight-models-core";
+import * as tfd from "@aresobus/lightweight-models-data";
 import { normalize } from "./browser_fft_utils";
 import {
   arrayBuffer2String,

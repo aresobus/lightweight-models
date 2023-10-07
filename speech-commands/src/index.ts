@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { BrowserFftSpeechCommandRecognizer } from "./browser_fft_recognizer";
 import { playRawAudio } from "./browser_fft_utils";

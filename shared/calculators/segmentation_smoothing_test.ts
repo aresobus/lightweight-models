@@ -1,11 +1,11 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   BROWSER_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 // tslint:disable-next-line: no-imports-from-dist
-import { expectNumbersClose } from "@aresobus/aresobus-core/dist/test_util";
+import { expectNumbersClose } from "@aresobus/lightweight-models-core/dist/test_util";
 
 import { arrayToMatrix4x4 } from "./calculate_inverse_matrix";
 import { smoothSegmentation } from "./segmentation_smoothing";

@@ -1,5 +1,5 @@
-import * as tfc from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfc from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { BoundingBoxTracker } from "../calculators/bounding_box_tracker";
 import { KeypointTracker } from "../calculators/keypoint_tracker";

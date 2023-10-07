@@ -1,6 +1,6 @@
 import * as use from "@aresobus-models/universal-sentence-encoder";
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 export { version } from "./version";
 
 declare interface ModelInputs extends tf.NamedTensorMap {

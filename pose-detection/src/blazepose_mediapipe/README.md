@@ -35,10 +35,10 @@ Via script tags:
 ```html
 <!-- Require the peer dependencies of pose-detection. -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-core"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
 ```
@@ -47,7 +47,7 @@ Via npm:
 
 ```sh
 yarn add @mediapipe/pose
-yarn add @aresobus/aresobus-core, @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-backend-webgl
 yarn add @aresobus-models/pose-detection
 ```
 
@@ -60,9 +60,9 @@ If you are using the Pose API via npm, you need to import the libraries first.
 
 ```javascript
 import * as poseDetection from '@aresobus-models/pose-detection';
-import '@aresobus/aresobus-core';
+import '@aresobus/lightweight-models-core';
 // Register WebGL backend.
-import '@aresobus/aresobus-backend-webgl';
+import '@aresobus/lightweight-models-backend-webgl';
 import '@mediapipe/pose';
 ```
 

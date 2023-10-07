@@ -3,8 +3,8 @@
  * =============================================================================
  */
 
-import * as tfwebgpu from "@aresobus/aresobus-backend-webgpu";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfwebgpu from "@aresobus/lightweight-models-backend-webgpu";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { getOffsetVectorsWebGPU } from "./get_offset_vectors_webgpu";
 

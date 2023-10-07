@@ -4,9 +4,9 @@
  */
 
 import * as qna from "@aresobus-models/qna";
-import "@aresobus/aresobus-core";
-import "@aresobus/aresobus-backend-cpu";
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-core";
+import "@aresobus/lightweight-models-backend-cpu";
+import "@aresobus/lightweight-models-backend-webgl";
 
 let modelPromise = {};
 let search;

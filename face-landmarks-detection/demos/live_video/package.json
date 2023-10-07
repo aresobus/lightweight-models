@@ -12,10 +12,10 @@
     "@mediapipe/face_mesh": "~0.4.0",
     "@aresobus-models/face-detection": "~1.0.0",
     "@aresobus-models/face-landmarks-detection": "file:../../dist",
-    "@aresobus/aresobus-backend-wasm": "^4.13.0",
-    "@aresobus/aresobus-backend-webgl": "^4.13.0",
-    "@aresobus/aresobus-converter": "^4.13.0",
-    "@aresobus/aresobus-core": "^4.13.0",
+    "@aresobus/lightweight-models-backend-wasm": "^4.13.0",
+    "@aresobus/lightweight-models-backend-webgl": "^4.13.0",
+    "@aresobus/lightweight-models-converter": "^4.13.0",
+    "@aresobus/lightweight-models-core": "^4.13.0",
     "scatter-gl": "0.0.8"
   },
   "scripts": {
@@ -23,8 +23,8 @@
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
     "build-dep": "cd ../../ && yarn && yarn build",
-    "link-core": "yalc link @aresobus/aresobus-core",
-    "link-webgl": "yalc link @aresobus/aresobus-backend-webgl"
+    "link-core": "yalc link @aresobus/lightweight-models-core",
+    "link-webgl": "yalc link @aresobus/lightweight-models-backend-webgl"
   },
   "browser": {
     "crypto": false

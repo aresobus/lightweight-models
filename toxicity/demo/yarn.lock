@@ -1357,14 +1357,14 @@
 "@aresobus-models/toxicity@file:../dist":
   version "0.0.0"
 
-"@aresobus/aresobus-converter@1.7.4":
+"@aresobus/lightweight-models-converter@1.7.4":
   version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-converter/-/aresobus-converter-1.7.4.tgz#90838fe9ca2d540f22a65fdcbe2311a01e786380"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-converter/-/aresobus-converter-1.7.4.tgz#90838fe9ca2d540f22a65fdcbe2311a01e786380"
   integrity sha512-B/Ux9I3osI0CXoESGR0Xe5C6BsEfC04+g2xn5zVaW9KEuVEnGEgnuBQxgijRFzkqTwoyLv4ptAmjyIghVARX0Q==
 
-"@aresobus/aresobus-core@1.7.4":
+"@aresobus/lightweight-models-core@1.7.4":
   version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-core/-/aresobus-core-1.7.4.tgz#43a44bc01d46de98ee9f15c0b2a4d9af4723e7ea"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-core/-/aresobus-core-1.7.4.tgz#43a44bc01d46de98ee9f15c0b2a4d9af4723e7ea"
   integrity sha512-3G4VKJ6nPs7iCt6gs3bjRj8chihKrYWenf63R0pm7D9MhlrVoX/tpN4LYVMGgBL7jHPxMLKdOkoAZJrn/J88HQ==
   dependencies:
     "@types/offscreencanvas" "~2019.3.0"
@@ -1374,28 +1374,28 @@
     node-fetch "~2.1.2"
     seedrandom "2.4.3"
 
-"@aresobus/aresobus-data@1.7.4":
+"@aresobus/lightweight-models-data@1.7.4":
   version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-data/-/aresobus-data-1.7.4.tgz#3aa1cb14ac48a0354acd21d08f177c8a262fbb32"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-data/-/aresobus-data-1.7.4.tgz#3aa1cb14ac48a0354acd21d08f177c8a262fbb32"
   integrity sha512-WFYG9wWjNDi62x6o3O20Q0XJxToCw2J4/fBEXiK/Gr0hIqVhl2oLQ1OjTWq7O08NUxM6BRzuG+ra3gWYdQUzOw==
   dependencies:
     "@types/node-fetch" "^2.1.2"
     node-fetch "~2.1.2"
 
-"@aresobus/aresobus-layers@1.7.4":
+"@aresobus/lightweight-models-layers@1.7.4":
   version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-layers/-/aresobus-layers-1.7.4.tgz#93cdef70a4f414edb4ee470c49415d216f54ba20"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-layers/-/aresobus-layers-1.7.4.tgz#93cdef70a4f414edb4ee470c49415d216f54ba20"
   integrity sha512-5/K8Z8RBfXsucL6EaSeb3/8jB/I8oPaaXkxwKVsBPQ+u6lB6LEtSKzeiFc57nDr5OMtVaUZV+pKDNEzP0RUQlg==
 
-"@aresobus/aresobus@^1.3.3":
+"@aresobus/lightweight-models@^1.3.3":
   version "1.7.4"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus/-/aresobus-1.7.4.tgz#ea5483bc4b34f5a4c66d600e456c25b6071ea75e"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models/-/aresobus-1.7.4.tgz#ea5483bc4b34f5a4c66d600e456c25b6071ea75e"
   integrity sha512-XWGwRQ/ECEoQacd74JY/dmbLdnMpwtq3H8tls45dQ+GJ553Advir1FDo/aQt0Yr6fTimQDeiOIG4Mcb5KduP/w==
   dependencies:
-    "@aresobus/aresobus-converter" "1.7.4"
-    "@aresobus/aresobus-core" "1.7.4"
-    "@aresobus/aresobus-data" "1.7.4"
-    "@aresobus/aresobus-layers" "1.7.4"
+    "@aresobus/lightweight-models-converter" "1.7.4"
+    "@aresobus/lightweight-models-core" "1.7.4"
+    "@aresobus/lightweight-models-data" "1.7.4"
+    "@aresobus/lightweight-models-layers" "1.7.4"
 
 "@types/node-fetch@^2.1.2":
   version "2.5.10"

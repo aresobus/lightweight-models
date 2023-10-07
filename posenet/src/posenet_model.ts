@@ -1,5 +1,5 @@
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { BaseModel } from "./base_model";
 import { mobileNetCheckpoint, resNet50Checkpoint } from "./checkpoints";
@@ -428,7 +428,7 @@ async function loadMobileNet(config: ModelConfig): Promise<PoseNet> {
   if (tf == null) {
     throw new Error(
       `Cannot find . If you are using a <script> tag, please ` +
-        `also include @aresobus/aresobus on the page before using this
+        `also include @aresobus/lightweight-models on the page before using this
         model.`
     );
   }
@@ -451,7 +451,7 @@ async function loadResNet(config: ModelConfig): Promise<PoseNet> {
   if (tf == null) {
     throw new Error(
       `Cannot find . If you are using a <script> tag, please ` +
-        `also include @aresobus/aresobus on the page before using this
+        `also include @aresobus/lightweight-models on the page before using this
         model.`
     );
   }

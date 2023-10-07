@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 /*
   Each pixel is assigned a label in the segmentation map that DeepLab outputs.

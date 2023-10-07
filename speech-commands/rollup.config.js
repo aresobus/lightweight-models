@@ -19,16 +19,16 @@ function config({ plugins = [], output = {} }) {
     output: {
       banner: PREAMBLE,
       globals: {
-        "@aresobus/aresobus-core": "tf",
-        "@aresobus/aresobus-layers": "tf",
-        "@aresobus/aresobus-data": "tf.data",
+        "@aresobus/lightweight-models-core": "tf",
+        "@aresobus/lightweight-models-layers": "tf",
+        "@aresobus/lightweight-models-data": "tf.data",
       },
       ...output,
     },
     external: [
-      "@aresobus/aresobus-core",
-      "@aresobus/aresobus-layers",
-      "@aresobus/aresobus-data",
+      "@aresobus/lightweight-models-core",
+      "@aresobus/lightweight-models-layers",
+      "@aresobus/lightweight-models-data",
     ],
   };
 }

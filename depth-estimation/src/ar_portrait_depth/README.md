@@ -19,12 +19,12 @@ Via script tags:
 
 ```html
 <!-- Require the peer dependencies of depth-estimation. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
 <!-- WebGL is the recommended backend. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/depth-estimation"></script>
@@ -32,8 +32,8 @@ Via script tags:
 
 Via npm:
 ```sh
-yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
-yarn add @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
+yarn add @aresobus/lightweight-models-backend-webgl
 yarn add @aresobus-models/body-segmentation
 yarn add @aresobus-models/depth-estimation
 ```
@@ -46,10 +46,10 @@ If you are using the depth-estimation API via npm, you need to import the librar
 ### Import the libraries
 
 ```javascript
-import '@aresobus/aresobus-core';
-import '@aresobus/aresobus-converter';
+import '@aresobus/lightweight-models-core';
+import '@aresobus/lightweight-models-converter';
 // Register WebGL backend.
-import '@aresobus/aresobus-backend-webgl';
+import '@aresobus/lightweight-models-backend-webgl';
 import '@aresobus-models/body-segmentation';
 import * as depthEstimation from '@aresobus-models/depth-estimation';
 ```

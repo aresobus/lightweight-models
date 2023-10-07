@@ -62,20 +62,40 @@ dirs.forEach((dir) => {
   const peerDeps = pkg.peerDependencies;
   const devDeps = pkg.devDependencies;
 
-  assertCaretDep(peerDeps, "@aresobus/aresobus", dir, "peerDep");
-  assertCaretDep(peerDeps, "@aresobus/aresobus-core", dir, "peerDep");
-  assertCaretDep(peerDeps, "@aresobus/aresobus-converter", dir, "peerDep");
+  assertCaretDep(peerDeps, "@aresobus/lightweight-models", dir, "peerDep");
+  assertCaretDep(peerDeps, "@aresobus/lightweight-models-core", dir, "peerDep");
+  assertCaretDep(
+    peerDeps,
+    "@aresobus/lightweight-models-converter",
+    dir,
+    "peerDep"
+  );
 
-  assertCaretDep(devDeps, "@aresobus/aresobus", dir, "devDep");
-  assertCaretDep(devDeps, "@aresobus/aresobus-core", dir, "devDep");
-  assertCaretDep(devDeps, "@aresobus/aresobus-converter", dir, "devDep");
+  assertCaretDep(devDeps, "@aresobus/lightweight-models", dir, "devDep");
+  assertCaretDep(devDeps, "@aresobus/lightweight-models-core", dir, "devDep");
+  assertCaretDep(
+    devDeps,
+    "@aresobus/lightweight-models-converter",
+    dir,
+    "devDep"
+  );
 
-  assertPeerDepSatisfied(peerDeps, devDeps, "@aresobus/aresobus", dir);
-  assertPeerDepSatisfied(peerDeps, devDeps, "@aresobus/aresobus-core", dir);
   assertPeerDepSatisfied(
     peerDeps,
     devDeps,
-    "@aresobus/aresobus-converter",
+    "@aresobus/lightweight-models",
+    dir
+  );
+  assertPeerDepSatisfied(
+    peerDeps,
+    devDeps,
+    "@aresobus/lightweight-models-core",
+    dir
+  );
+  assertPeerDepSatisfied(
+    peerDeps,
+    devDeps,
+    "@aresobus/lightweight-models-converter",
     dir
   );
 

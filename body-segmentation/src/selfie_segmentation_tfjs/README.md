@@ -25,11 +25,11 @@ Via script tags:
 
 ```html
 <!-- Require the peer dependencies of body-segmentation. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
 ```
@@ -38,8 +38,8 @@ Via npm:
 
 ```sh
 yarn add @aresobus-models/body-segmentation
-yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
-yarn add @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
+yarn add @aresobus/lightweight-models-backend-webgl
 ```
 
 -----------------------------------------------------------------------
@@ -51,9 +51,9 @@ If you are using the Body Segmentation API via npm, you need to import the libra
 
 ```javascript
 import * as bodySegmentation from '@aresobus-models/body-segmentation';
-import * as tf from '@aresobus/aresobus-core';
+import * as tf from '@aresobus/lightweight-models-core';
 // Register WebGL backend.
-import '@aresobus/aresobus-backend-webgl';
+import '@aresobus/lightweight-models-backend-webgl';
 ```
 ### Create a detector
 

@@ -1,6 +1,6 @@
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
-import { Tensor3D } from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
+import { Tensor3D } from "@aresobus/lightweight-models-core";
 
 import { BodySegmenter } from "../body_segmenter";
 import { MediaPipeSelfieSegmentationModelType } from "../selfie_segmentation_mediapipe/types";

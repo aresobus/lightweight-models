@@ -3,9 +3,9 @@
  * executing tests.
  */
 
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgl";
 // tslint:disable-next-line: no-imports-from-dist
-import { setTestEnvs } from "@aresobus/aresobus-core/dist/jasmine_util";
+import { setTestEnvs } from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 // Increase test timeout since we are fetching the model files from GCS.
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;

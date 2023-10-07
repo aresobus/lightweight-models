@@ -1,5 +1,5 @@
 import * as hands from "@mediapipe/hands";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { MEDIAPIPE_KEYPOINTS } from "../constants";
 import { HandDetector } from "../hand_detector";

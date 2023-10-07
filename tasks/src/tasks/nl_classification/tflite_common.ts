@@ -1,4 +1,4 @@
-import * as tflite from "@aresobus/aresobus-tflite";
+import * as tflite from "@aresobus/lightweight-models-tflite";
 import { Class } from "../common";
 import { NLClassificationResult, NLClassifier } from "./common";
 

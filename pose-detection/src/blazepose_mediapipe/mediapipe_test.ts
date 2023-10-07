@@ -2,9 +2,9 @@
 import {
   BROWSER_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 // tslint:disable-next-line: no-imports-from-dist
-import { expectArraysClose } from "@aresobus/aresobus-core/dist/test_util";
+import { expectArraysClose } from "@aresobus/lightweight-models-core/dist/test_util";
 
 import * as poseDetection from "../index";
 import { toImageDataLossy } from "../shared/calculators/mask_util";

@@ -1,14 +1,14 @@
 // Import core for side effects (e.g. flag registration)
-import "@aresobus/aresobus-core";
+import "@aresobus/lightweight-models-core";
 // Import webgl for side effects (e.g. backend registration)
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgl";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   parseTestEnvFromKarmaFlags,
   registerTestEnv,
   setTestEnvs,
   TEST_ENVS,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 registerTestEnv({
   name: "webgl",

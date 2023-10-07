@@ -24,10 +24,10 @@ Via script tags:
 ```html
 <!-- Require the peer dependencies. -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-core"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/body-segmentation"></script>
 ```
@@ -35,7 +35,7 @@ Via script tags:
 Via npm:
 ```sh
 yarn add @mediapipe/selfie_segmentation
-yarn add @aresobus/aresobus-core, @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-backend-webgl
 yarn add @aresobus-models/body-segmentation
 ```
 
@@ -48,9 +48,9 @@ If you are using the Body Segmentation API via npm, you need to import the libra
 
 ```javascript
 import * as bodySegmentation from '@aresobus-models/body-segmentation';
-import '@aresobus/aresobus-core';
+import '@aresobus/lightweight-models-core';
 // Register WebGL backend.
-import '@aresobus/aresobus-backend-webgl';
+import '@aresobus/lightweight-models-backend-webgl';
 import '@mediapipe/selfie_segmentation';
 ```
 

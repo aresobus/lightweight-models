@@ -2,13 +2,13 @@
 
  * =============================================================================
  */
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
-import "@aresobus/aresobus-backend-cpu";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
+import "@aresobus/lightweight-models-backend-cpu";
 import {
   describeWithFlags,
   NODE_ENVS,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 import "jasmine";
 
 import { load } from "./index";

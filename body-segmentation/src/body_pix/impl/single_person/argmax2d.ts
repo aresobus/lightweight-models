@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 function mod(a: tf.Tensor1D, b: number): tf.Tensor1D {
   return tf.tidy(() => {

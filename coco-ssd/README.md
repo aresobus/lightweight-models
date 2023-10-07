@@ -19,7 +19,7 @@ There are two main ways to get this model in your JavaScript project: via script
 
 ```html
 <!-- Load . This is required to use coco-ssd model. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"> </script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"> </script>
 <!-- Load the coco-ssd model. -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus/-models-coco-ssd"> </script>
 
@@ -49,8 +49,8 @@ deployment, not an example on how to use coco-ssd in the node env.
 
 ```js
 // Note: Require the cpu and webgl backend and add them to package.json as peer dependencies.
-require('@aresobus/aresobus-backend-cpu');
-require('@aresobus/aresobus-backend-webgl');
+require('@aresobus/lightweight-models-backend-cpu');
+require('@aresobus/lightweight-models-backend-webgl');
 const cocoSsd = require('@aresobus/-models-coco-ssd');
 
 (async () => {

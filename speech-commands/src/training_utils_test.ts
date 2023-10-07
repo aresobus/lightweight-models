@@ -1,11 +1,11 @@
-import "@aresobus/aresobus-node";
+import "@aresobus/lightweight-models-node";
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   describeWithFlags,
   NODE_ENVS,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 import { expectTensorsClose } from "./test_utils";
 import { balancedTrainValSplit } from "./training_utils";

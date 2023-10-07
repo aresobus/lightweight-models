@@ -1,10 +1,10 @@
-import "@aresobus/aresobus-backend-webgl";
-import "@aresobus/aresobus-backend-webgpu";
+import "@aresobus/lightweight-models-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgpu";
 
-import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
+import * as aresobusWasm from "@aresobus/lightweight-models-backend-wasm";
 
 aresobusWasm.setWasmPaths(
-  `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/`
+  `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
 import * as faceDetection from "@aresobus-models/face-detection";

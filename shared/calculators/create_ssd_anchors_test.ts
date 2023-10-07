@@ -1,5 +1,5 @@
 // tslint:disable-next-line: no-imports-from-dist
-import { expectNumbersClose } from "@aresobus/aresobus-core/dist/test_util";
+import { expectNumbersClose } from "@aresobus/lightweight-models-core/dist/test_util";
 
 import { KARMA_SERVER } from "../test_util";
 

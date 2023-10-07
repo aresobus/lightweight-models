@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { PART_NAMES } from "../keypoints";
 import { BodyPixOutputStride } from "../types";

@@ -1,5 +1,5 @@
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { BlazePoseModelType } from "../blazepose_mediapipe/types";
 import { BLAZEPOSE_KEYPOINTS } from "../constants";

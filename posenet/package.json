@@ -15,13 +15,13 @@
   "author": "Oleksandr Lebedyev <aresobus@gmail.com>",
 
   "peerDependencies": {
-    "@aresobus/aresobus-converter": "^4.18.0",
-    "@aresobus/aresobus-core": "^4.18.0"
+    "@aresobus/lightweight-models-converter": "^4.18.0",
+    "@aresobus/lightweight-models-core": "^4.18.0"
   },
   "devDependencies": {
-    "@aresobus/aresobus-converter": "^4.18.0",
-    "@aresobus/aresobus-core": "^4.18.0",
-    "@aresobus/aresobus-backend-cpu": "^4.18.0",
+    "@aresobus/lightweight-models-converter": "^4.18.0",
+    "@aresobus/lightweight-models-core": "^4.18.0",
+    "@aresobus/lightweight-models-backend-cpu": "^4.18.0",
     "@types/jasmine": "~3.3.15",
     "babel-core": "^6.26.0",
     "babel-plugin-transform-runtime": "~6.23.0",

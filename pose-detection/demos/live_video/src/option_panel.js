@@ -1,5 +1,5 @@
 import * as posedetection from "@aresobus-models/pose-detection";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import * as params from "./params";
 

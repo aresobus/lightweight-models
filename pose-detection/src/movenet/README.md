@@ -24,12 +24,12 @@ Via script tags:
 
 ```html
 <!-- Require the peer dependencies of pose-detection. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-converter"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-converter"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
-<!-- Alternatively you can use the WASM backend: <script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm/dist/tf-backend-wasm.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
+<!-- Alternatively you can use the WASM backend: <script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm/dist/tf-backend-wasm.js"></script> -->
 
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/pose-detection"></script>
 ```
@@ -38,18 +38,18 @@ Via npm:
 
 ```sh
 yarn add @aresobus-models/pose-detection
-yarn add @aresobus/aresobus-core, @aresobus/aresobus-converter
+yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-converter
 ```
 
 Install one of the backends:
 WebGL:
 ```sh
-yarn add @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-backend-webgl
 ```
 
 WASM:
 ```sh
-yarn add @aresobus/aresobus-backend-wasm
+yarn add @aresobus/lightweight-models-backend-wasm
 ```
 
 -------------------------------------------------------------------------------
@@ -62,10 +62,10 @@ If you are using the Pose API via npm, you need to import the libraries first.
 
 ```javascript
 import * as poseDetection from '@aresobus-models/pose-detection';
-import * as tf from '@aresobus/aresobus-core';
+import * as tf from '@aresobus/lightweight-models-core';
 // Register one of the TF.js backends.
-import '@aresobus/aresobus-backend-webgl';
-// import '@aresobus/aresobus-backend-wasm';
+import '@aresobus/lightweight-models-backend-webgl';
+// import '@aresobus/lightweight-models-backend-wasm';
 ```
 
 ### Create a detector

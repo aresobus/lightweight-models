@@ -1,12 +1,12 @@
-import "@aresobus/aresobus-node";
+import "@aresobus/lightweight-models-node";
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   describeWithFlags,
   NODE_ENVS,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
-import * as tfl from "@aresobus/aresobus-layers";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
+import * as tfl from "@aresobus/lightweight-models-layers";
 import { writeFileSync } from "fs";
 import { join } from "path";
 import * as rimraf from "rimraf";

@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { transformValueRange } from "./image_utils";
 
 export function shiftImageValue(

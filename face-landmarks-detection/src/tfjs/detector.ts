@@ -3,8 +3,8 @@ import {
   MediaPipeFaceDetectoraresobus,
   SupportedModels,
 } from "@aresobus-models/face-detection";
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { MEDIAPIPE_FACE_MESH_KEYPOINTS } from "../constants";
 import { FaceLandmarksDetector } from "../face_landmarks_detector";

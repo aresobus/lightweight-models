@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 /**
  * Takes the sigmoid of the part heatmap output and generates a 2d one-hot

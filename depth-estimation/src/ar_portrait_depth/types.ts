@@ -3,7 +3,7 @@
  * =============================================================================
  */
 
-import { io } from "@aresobus/aresobus-core";
+import { io } from "@aresobus/lightweight-models-core";
 
 import { EstimationConfig, ModelConfig } from "../types";
 

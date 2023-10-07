@@ -1,5 +1,5 @@
-import "@aresobus/aresobus-backend-cpu";
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-cpu";
+import "@aresobus/lightweight-models-backend-webgl";
 
 import * as mobilenet from "@aresobus-models/mobilenet";
 

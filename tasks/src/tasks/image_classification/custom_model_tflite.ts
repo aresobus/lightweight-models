@@ -1,4 +1,4 @@
-import * as tflite from "@aresobus/aresobus-tflite";
+import * as tflite from "@aresobus/lightweight-models-tflite";
 import { TaskModelLoader } from "../../task_model";
 import { Runtime, Task, TFLiteCustomModelCommonLoadingOption } from "../common";
 import { ImageClassifierTFLite } from "./tflite_common";
@@ -45,7 +45,7 @@ export class ImageClassificationCustomModelTFLiteLoader extends TaskModelLoader<
   };
   readonly packageUrls = [
     [
-      `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-tflite@${this.metadata.version}/dist/tf-tflite.min.js`,
+      `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-tflite@${this.metadata.version}/dist/tf-tflite.min.js`,
     ],
   ];
   readonly sourceModelGlobalNamespace = "tflite";

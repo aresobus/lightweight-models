@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { ImageSize } from "./interfaces/common_interfaces";
 
 import { TensorsToSegmentationConfig } from "./interfaces/config_interfaces";

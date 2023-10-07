@@ -10,10 +10,10 @@
   },
   "dependencies": {
     "@aresobus-models/universal-sentence-encoder": "file:../dist",
-    "@aresobus/aresobus-backend-cpu": "^3.3.0",
-    "@aresobus/aresobus-backend-webgl": "^3.3.0",
-    "@aresobus/aresobus-converter": "^3.3.0",
-    "@aresobus/aresobus-core": "^3.3.0",
+    "@aresobus/lightweight-models-backend-cpu": "^3.3.0",
+    "@aresobus/lightweight-models-backend-webgl": "^3.3.0",
+    "@aresobus/lightweight-models-converter": "^3.3.0",
+    "@aresobus/lightweight-models-core": "^3.3.0",
     "d3-scale-chromatic": "^1.3.3"
   },
   "scripts": {

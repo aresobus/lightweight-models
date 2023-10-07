@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-require-imports
 const packageJSON = require("../package.json");
-import * as tf from "@aresobus/aresobus-core";
-import * as tfl from "@aresobus/aresobus-layers";
+import * as tf from "@aresobus/lightweight-models-core";
+import * as tfl from "@aresobus/lightweight-models-layers";
 import * as speechCommands from "./index";
 
 describe("Public API", () => {

@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 function toNumber(value: number | SVGAnimatedLength) {
   return value instanceof SVGAnimatedLength ? value.baseVal.value : value;

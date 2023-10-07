@@ -1,5 +1,5 @@
-import * as tf from "@aresobus/aresobus-core";
-import * as tfl from "@aresobus/aresobus-layers";
+import * as tf from "@aresobus/lightweight-models-core";
+import * as tfl from "@aresobus/lightweight-models-layers";
 import * as fs from "fs";
 /// <reference path="./types/node-wav.d.ts" />
 import * as wav from "node-wav";

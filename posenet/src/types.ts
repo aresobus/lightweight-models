@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 export type PoseNetOutputStride = 32 | 16 | 8;
 export type PoseNetArchitecture = "ResNet50" | "MobileNetV1";

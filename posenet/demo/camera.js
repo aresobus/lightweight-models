@@ -1,4 +1,4 @@
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgl";
 
 import * as posenet from "@aresobus-models/posenet";
 import dat from "dat.gui";

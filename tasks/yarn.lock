@@ -920,14 +920,14 @@
   resolved "https://registry.yarnpkg.com/@aresobus-models/universal-sentence-encoder/-/universal-sentence-encoder-1.2.2.tgz#27a38c39424b5e85389ac461be177c9f44ba19bd"
   integrity sha512-fGCl/gwB7jmKCRI2FhgIBeIa/LCSUcjlEcckH2Bc2dIjhJ+2nspp+22lubxcseN6jjrmP42kkXt/reAPe+KJkQ==
 
-"@aresobus/aresobus-converter@^3.5.0":
+"@aresobus/lightweight-models-converter@^3.5.0":
   version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-converter/-/aresobus-converter-3.5.0.tgz#6625723e347a452c227469a92541930d5b4aa12f"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-converter/-/aresobus-converter-3.5.0.tgz#6625723e347a452c227469a92541930d5b4aa12f"
   integrity sha512-eAx1nEaREzPfcIOnyp1PUvQdjob9MtCJM/syh4v05FBV7UrUNpxNMliA4JgjiFvdnhrM4e06/CeqMA8/AVw2wg==
 
-"@aresobus/aresobus-core@^3.5.0":
+"@aresobus/lightweight-models-core@^3.5.0":
   version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-core/-/aresobus-core-3.5.0.tgz#e1ff14f2121208242a192e935f52e86b19be279e"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-core/-/aresobus-core-3.5.0.tgz#e1ff14f2121208242a192e935f52e86b19be279e"
   integrity sha512-NOs9hY9nj/iPaz2cSrWpq8G07i96/ot+1l1RoBoA1s1cZakb43pLhntm1Mj4vhSxp7dbc/BSs+t6/S+45OZTUA==
   dependencies:
     "@types/offscreencanvas" "~2019.3.0"
@@ -936,9 +936,9 @@
     node-fetch "~2.6.1"
     seedrandom "2.4.3"
 
-"@aresobus/aresobus-tflite@0.0.1-alpha.3":
+"@aresobus/lightweight-models-tflite@0.0.1-alpha.3":
   version "0.0.1-alpha.3"
-  resolved "https://registry.yarnpkg.com/@aresobus/aresobus-tflite/-/aresobus-tflite-0.0.1-alpha.3.tgz#8aacb9d6677e698ee23dd10735efbe6775689a05"
+  resolved "https://registry.yarnpkg.com/@aresobus/lightweight-models-tflite/-/aresobus-tflite-0.0.1-alpha.3.tgz#8aacb9d6677e698ee23dd10735efbe6775689a05"
   integrity sha512-2ZpoWG5yvvp4lGIiOm8TBgp2CZCJCXtLGEcbUyIUDDzGeYrMjlpD2K+VJvQ3JFpMhTPgjzyRfy5WjwcWPrRfUw==
 
 "@types/component-emitter@^1.2.10":

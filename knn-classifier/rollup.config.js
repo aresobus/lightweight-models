@@ -17,11 +17,11 @@ function config({ plugins = [], output = {} }) {
     output: {
       banner: PREAMBLE,
       globals: {
-        "@aresobus/aresobus-core": "tf",
+        "@aresobus/lightweight-models-core": "tf",
       },
       ...output,
     },
-    external: ["@aresobus/aresobus-core"],
+    external: ["@aresobus/lightweight-models-core"],
   };
 }
 

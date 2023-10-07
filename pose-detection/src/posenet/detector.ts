@@ -1,5 +1,5 @@
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { PoseDetector } from "../pose_detector";
 import { convertImageToTensor } from "../shared/calculators/convert_image_to_tensor";

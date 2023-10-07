@@ -1,4 +1,4 @@
-import * as tflite from "@aresobus/aresobus-tflite";
+import * as tflite from "@aresobus/lightweight-models-tflite";
 import { TaskModelLoader } from "../../task_model";
 import { Runtime, Task, TFLiteCustomModelCommonLoadingOption } from "../common";
 import { ImageSegmenterTFLite } from "./tflite_common";

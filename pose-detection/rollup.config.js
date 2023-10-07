@@ -15,18 +15,18 @@ function config({ plugins = [], output = {}, tsCompilerOptions = {} }) {
     output: {
       banner: PREAMBLE,
       globals: {
-        "@aresobus/aresobus-core": "tf",
-        "@aresobus/aresobus-converter": "tf",
+        "@aresobus/lightweight-models-core": "tf",
+        "@aresobus/lightweight-models-converter": "tf",
         // Package is obfuscated so class is directly attached to globalThis.
         "@mediapipe/pose": "globalThis",
       },
       ...output,
     },
     external: [
-      "@aresobus/aresobus-core",
-      "@aresobus/aresobus-converter",
-      "@aresobus/aresobus-backend-webgpu",
-      "@aresobus/aresobus-backend-webgl",
+      "@aresobus/lightweight-models-core",
+      "@aresobus/lightweight-models-converter",
+      "@aresobus/lightweight-models-backend-webgpu",
+      "@aresobus/lightweight-models-backend-webgl",
       "@mediapipe/pose",
     ],
   };

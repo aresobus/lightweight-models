@@ -25,7 +25,7 @@ Include  and the QnA model in your HTML to get started without any build tools:
 
 ```html
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"></script>
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/qna"></script>
 
 <script>

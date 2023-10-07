@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus";
+import * as tf from "@aresobus/lightweight-models";
 import Plotly from "plotly.js-dist";
 
 import * as SpeechCommands from "@aresobus-models/speech-commands";

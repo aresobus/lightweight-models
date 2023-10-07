@@ -23,9 +23,9 @@ Embed the following scripts in your HTML to get started:
 
 ```html
 <!-- Load  dependencies -->
-<script src="https://unpkg.com/@aresobus/aresobus-core@2.1.0"></script>
-<script src="https://unpkg.com/@aresobus/aresobus-converter@2.1.0"></script>
-<script src="https://unpkg.com/@aresobus/aresobus-backend-webgl@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/lightweight-models-core@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/lightweight-models-converter@2.1.0"></script>
+<script src="https://unpkg.com/@aresobus/lightweight-models-backend-webgl@2.1.0"></script>
 
 <!-- Load the handpose model -->
 <script src="https://unpkg.com/@aresobus-models/handpose@0.0.6"></script>
@@ -37,7 +37,7 @@ Using yarn or npm, install the dependencies:
 
 ```bash
 yarn add @aresobus-models/handpose
-yarn add @aresobus/aresobus-core @aresobus/aresobus-converter @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-core @aresobus/lightweight-models-converter @aresobus/lightweight-models-backend-webgl
 ```
 
 ## How to Run It

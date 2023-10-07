@@ -1,6 +1,6 @@
-import * as tf from "@aresobus/aresobus-core";
-import * as tfl from "@aresobus/aresobus-layers";
-import * as tfd from "@aresobus/aresobus-data";
+import * as tf from "@aresobus/lightweight-models-core";
+import * as tfl from "@aresobus/lightweight-models-layers";
+import * as tfd from "@aresobus/lightweight-models-data";
 
 import {
   BrowserFftFeatureExtractor,

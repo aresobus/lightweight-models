@@ -1,5 +1,5 @@
 import * as pose from "@mediapipe/pose";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { BLAZEPOSE_KEYPOINTS } from "../constants";
 import { PoseDetector } from "../pose_detector";
 import { Mask } from "../shared/calculators/interfaces/common_interfaces";

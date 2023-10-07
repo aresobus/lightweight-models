@@ -1,4 +1,4 @@
-import { InferenceModel } from "@aresobus/aresobus";
+import { InferenceModel } from "@aresobus/lightweight-models";
 
 export interface Params {
   inputBufferLength?: number;

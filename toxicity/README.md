@@ -25,7 +25,7 @@ npm install @aresobus/toxicity
 
 ### In Node.js:
 ```javascript
-require('@aresobus/aresobus'); // Ensure  is loaded
+require('@aresobus/lightweight-models'); // Ensure  is loaded
 const toxicity = require('@aresobus/toxicity');
 
 // Load the model with a minimum prediction confidence threshold.

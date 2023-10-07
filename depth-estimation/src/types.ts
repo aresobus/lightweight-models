@@ -2,7 +2,7 @@
 
  * =============================================================================
  */
-import { Tensor2D } from "@aresobus/aresobus-core";
+import { Tensor2D } from "@aresobus/lightweight-models-core";
 
 import { PixelInput } from "./shared/calculators/interfaces/common_interfaces";
 

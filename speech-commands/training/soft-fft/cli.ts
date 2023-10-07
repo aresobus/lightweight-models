@@ -1,5 +1,5 @@
 // Load the binding
-import "@aresobus/aresobus-node";
+import "@aresobus/lightweight-models-node";
 
 import chalk from "chalk";
 import * as ora from "ora";

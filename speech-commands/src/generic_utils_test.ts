@@ -1,5 +1,5 @@
 // tslint:disable-next-line: no-imports-from-dist
-import { expectArraysEqual } from "@aresobus/aresobus-core/dist/test_util";
+import { expectArraysEqual } from "@aresobus/lightweight-models-core/dist/test_util";
 
 import {
   arrayBuffer2String,

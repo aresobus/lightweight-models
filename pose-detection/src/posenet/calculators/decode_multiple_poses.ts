@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { Pose } from "../../types";
 import { K_LOCAL_MAXIMUM_RADIUS } from "../constants";
 import { PoseNetOutputStride } from "../types";

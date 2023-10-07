@@ -1,5 +1,5 @@
-import * as tf from "@aresobus/aresobus-core";
-import { getBackend } from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
+import { getBackend } from "@aresobus/lightweight-models-core";
 
 import { Padding, PartSegmentation, PersonSegmentation, Pose } from "../types";
 

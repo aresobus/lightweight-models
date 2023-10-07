@@ -5,7 +5,7 @@
 import {
   describeWithFlags,
   NODE_ENVS,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 import { loadTokenizer } from "./bert_tokenizer";
 

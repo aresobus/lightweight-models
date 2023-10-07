@@ -15,16 +15,16 @@ function config({ plugins = [], output = {}, tsCompilerOptions = {} }) {
     output: {
       banner: PREAMBLE,
       globals: {
-        "@aresobus/aresobus-core": "tf",
-        "@aresobus/aresobus-converter": "tf",
+        "@aresobus/lightweight-models-core": "tf",
+        "@aresobus/lightweight-models-converter": "tf",
         // Package is obfuscated so class is directly attached to globalThis.
         "@mediapipe/face_detection": "globalThis",
       },
       ...output,
     },
     external: [
-      "@aresobus/aresobus-core",
-      "@aresobus/aresobus-converter",
+      "@aresobus/lightweight-models-core",
+      "@aresobus/lightweight-models-converter",
       "@mediapipe/face_detection",
     ],
   };

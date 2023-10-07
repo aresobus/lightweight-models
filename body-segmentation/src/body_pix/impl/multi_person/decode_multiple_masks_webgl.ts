@@ -1,5 +1,5 @@
-import * as tf from "@aresobus/aresobus-core";
-import * as tf_webgl from "@aresobus/aresobus-backend-webgl";
+import * as tf from "@aresobus/lightweight-models-core";
+import * as tf_webgl from "@aresobus/lightweight-models-backend-webgl";
 
 import { NUM_KEYPOINTS } from "../keypoints";
 import { Padding, Pose } from "../types";

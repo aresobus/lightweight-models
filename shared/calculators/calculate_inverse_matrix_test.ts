@@ -1,6 +1,6 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
-import { expectArraysClose } from "@aresobus/aresobus-core/dist/test_util";
+import { expectArraysClose } from "@aresobus/lightweight-models-core/dist/test_util";
 
 import {
   arrayToMatrix4x4,

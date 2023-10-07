@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { PartWithScore } from "../types";
 
 import { MaxHeap } from "./max_heap";

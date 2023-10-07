@@ -1,5 +1,5 @@
 import * as posenet from "@aresobus-models/posenet";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 const color = "aqua";
 const boundingBoxColor = "red";

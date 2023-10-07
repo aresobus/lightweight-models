@@ -1,5 +1,10 @@
-import * as tf from "@aresobus/aresobus-core";
-import { Tensor, Tensor1D, Tensor2D, util } from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
+import {
+  Tensor,
+  Tensor1D,
+  Tensor2D,
+  util,
+} from "@aresobus/lightweight-models-core";
 import { concatWithNulls, topK } from "./util";
 export { version } from "./version";
 

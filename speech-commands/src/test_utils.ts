@@ -1,4 +1,4 @@
-import { Tensor, test_util, util } from "@aresobus/aresobus-core";
+import { Tensor, test_util, util } from "@aresobus/lightweight-models-core";
 
 export function expectTensorsClose(
   actual: Tensor | number[],

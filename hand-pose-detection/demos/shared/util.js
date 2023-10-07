@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { TUNABLE_FLAG_VALUE_RANGE_MAP } from "./params";
 
 export function isiOS() {

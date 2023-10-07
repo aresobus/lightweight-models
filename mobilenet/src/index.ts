@@ -1,5 +1,5 @@
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { IMAGENET_CLASSES } from "./imagenet_classes";
 export { version } from "./version";
@@ -97,7 +97,7 @@ export async function load(
   if (tf == null) {
     throw new Error(
       `Cannot find . If you are using a <script> tag, please ` +
-        `also include @aresobus/aresobus on the page before using this model.`
+        `also include @aresobus/lightweight-models on the page before using this model.`
     );
   }
   const versionStr = modelConfig.version.toFixed(2);

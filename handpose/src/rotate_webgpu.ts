@@ -2,8 +2,8 @@
  =============================================================================
  */
 
-// import * as tfwebgpu from '@aresobus/aresobus-backend-webgpu';
-// import * as tf from '@aresobus/aresobus-core';
+// import * as tfwebgpu from '@aresobus/lightweight-models-backend-webgpu';
+// import * as tf from '@aresobus/lightweight-models-core';
 
 // export function rotate(
 //     image: tf.Tensor4D, radians: number, fillValue: number[]|number,

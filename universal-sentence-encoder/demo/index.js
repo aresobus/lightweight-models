@@ -1,8 +1,8 @@
-import "@aresobus/aresobus-backend-cpu";
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-cpu";
+import "@aresobus/lightweight-models-backend-webgl";
 
 import * as use from "@aresobus/universal-sentence-encoder";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { interpolateReds } from "d3-scale-chromatic";
 
 const sentences = [

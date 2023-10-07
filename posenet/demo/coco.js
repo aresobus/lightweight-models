@@ -1,8 +1,8 @@
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgl";
 
 import * as posenet from "@aresobus-models/posenet";
-import * as tf from "@aresobus/aresobus-core";
-import "@aresobus/aresobus-backend-webgl";
+import * as tf from "@aresobus/lightweight-models-core";
+import "@aresobus/lightweight-models-backend-webgl";
 
 import dat from "dat.gui";
 

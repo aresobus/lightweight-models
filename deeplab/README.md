@@ -49,7 +49,7 @@ You can set the `base` attribute in the argument to `pascal`, `cityscapes`, or `
 If you require more careful control over the initialization and behavior of the model (e.g. you want to use your labeling scheme and colormap), use the `SemanticSegmentation` class, passing a pre-loaded `GraphModel` in the constructor:
 
 ```typescript
-const tfconv = require('@aresobus/aresobus-converter');
+const tfconv = require('@aresobus/lightweight-models-converter');
 const deeplab = require('@aresobus/-models-deeplab');
 const loadModel = async () => {
   const base = 'pascal';        // set to your preferred model, out of `pascal`,

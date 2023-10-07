@@ -13,7 +13,7 @@ Embed directly in your HTML:
 
 ```html
 <!-- Load  -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"></script>
 <!-- Load KNN Classifier -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/knn-classifier"></script>
 ```
@@ -23,14 +23,14 @@ Embed directly in your HTML:
 Install the package and its peer dependencies:
 
 ```bash
-npm install @aresobus/aresobus @aresobus-models/knn-classifier
+npm install @aresobus/lightweight-models @aresobus-models/knn-classifier
 ```
 
 And then import into your JavaScript project:
 
 ```javascript
 import * as knnClassifier from '@aresobus-models/knn-classifier';
-import * as tf from '@aresobus/aresobus';
+import * as tf from '@aresobus/lightweight-models';
 ```
 
 ## Usage Example

@@ -2,7 +2,7 @@
  * Audio FFT Feature Extractor based on Browser-Native FFT.
  */
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import {
   getAudioContextConstructor,

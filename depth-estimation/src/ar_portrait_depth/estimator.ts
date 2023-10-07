@@ -3,8 +3,8 @@
  * =============================================================================
  */
 import * as bodySegmentation from "@aresobus-models/body-segmentation";
-import * as tfconv from "@aresobus/aresobus-converter";
-import * as tf from "@aresobus/aresobus-core";
+import * as tfconv from "@aresobus/lightweight-models-converter";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { DepthEstimator } from "../depth_estimator";
 import {

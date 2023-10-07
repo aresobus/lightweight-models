@@ -2,12 +2,12 @@
 import {
   BROWSER_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   expectArraysClose,
   expectNumbersClose,
-} from "@aresobus/aresobus-core/dist/test_util";
+} from "@aresobus/lightweight-models-core/dist/test_util";
 
 import * as faceDetection from "../index";
 import { BoundingBox } from "../shared/calculators/interfaces/shape_interfaces";

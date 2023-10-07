@@ -21,10 +21,10 @@ Via script tags:
 ```html
 <!-- Require the peer dependencies of face-detection. -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection"></script>
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-core"></script>
 
 <!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-webgl"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-detection"></script>
 ```
@@ -32,7 +32,7 @@ Via script tags:
 Via npm:
 ```sh
 yarn add @mediapipe/face_detection
-yarn add @aresobus/aresobus-core, @aresobus/aresobus-backend-webgl
+yarn add @aresobus/lightweight-models-core, @aresobus/lightweight-models-backend-webgl
 yarn add @aresobus-models/face-detection
 ```
 
@@ -45,9 +45,9 @@ If you are using the face-detection API via npm, you need to import the librarie
 
 ```javascript
 import '@mediapipe/face_detection';
-import '@aresobus/aresobus-core';
+import '@aresobus/lightweight-models-core';
 // Register WebGL backend.
-import '@aresobus/aresobus-backend-webgl';
+import '@aresobus/lightweight-models-backend-webgl';
 import * as faceDetection from '@aresobus-models/face-detection';
 ```
 

@@ -2,7 +2,7 @@
 
  * =============================================================================
  */
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 const SEPERATOR = "\u2581";
 export const UNK_INDEX = 100;

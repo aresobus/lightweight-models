@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { Matrix4x4 } from "./calculate_inverse_matrix";
 import { getRotatedSubRectToRectTransformMatrix } from "./get_rotated_sub_rect_to_rect_transformation_matrix";

@@ -1,5 +1,5 @@
-import * as tf from "@aresobus/aresobus-core";
-import { test_util } from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
+import { test_util } from "@aresobus/lightweight-models-core";
 
 import { normalize } from "./browser_fft_utils";
 import {

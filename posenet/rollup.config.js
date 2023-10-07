@@ -20,12 +20,15 @@ function config({ plugins = [], output = {} }) {
       banner: PREAMBLE,
       sourcemap: true,
       globals: {
-        "@aresobus/aresobus-core": "tf",
-        "@aresobus/aresobus-converter": "tf",
+        "@aresobus/lightweight-models-core": "tf",
+        "@aresobus/lightweight-models-converter": "tf",
       },
       ...output,
     },
-    external: ["@aresobus/aresobus-core", "@aresobus/aresobus-converter"],
+    external: [
+      "@aresobus/lightweight-models-core",
+      "@aresobus/lightweight-models-converter",
+    ],
   };
 }
 

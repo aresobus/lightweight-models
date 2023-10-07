@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 export class ModelWeights {
   private variables: { [varName: string]: tf.Tensor };

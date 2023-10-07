@@ -11,18 +11,18 @@
   "dependencies": {
     "@mediapipe/hands": "~0.4.0",
     "@aresobus-models/hand-pose-detection": "file:../../dist",
-    "@aresobus/aresobus-backend-wasm": "^3.8.0",
-    "@aresobus/aresobus-backend-webgl": "^3.8.0",
-    "@aresobus/aresobus-converter": "^3.8.0",
-    "@aresobus/aresobus-core": "^3.8.0"
+    "@aresobus/lightweight-models-backend-wasm": "^3.8.0",
+    "@aresobus/lightweight-models-backend-webgl": "^3.8.0",
+    "@aresobus/lightweight-models-converter": "^3.8.0",
+    "@aresobus/lightweight-models-core": "^3.8.0"
   },
   "scripts": {
     "watch": "cross-env NODE_ENV=development parcel index.html --no-hmr --open",
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
     "build-dep": "cd ../../ && yarn && yarn build",
-    "link-core": "yalc link @aresobus/aresobus-core",
-    "link-webgl": "yalc link @aresobus/aresobus-backend-webgl"
+    "link-core": "yalc link @aresobus/lightweight-models-core",
+    "link-webgl": "yalc link @aresobus/lightweight-models-backend-webgl"
   },
   "browser": {
     "crypto": false

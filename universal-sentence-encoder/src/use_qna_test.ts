@@ -1,4 +1,4 @@
-import { test_util } from "@aresobus/aresobus-core";
+import { test_util } from "@aresobus/lightweight-models-core";
 import { loadQnA, UniversalSentenceEncoderQnA } from "./use_qna";
 
 describe("Universal Sentence Encoder QNA", () => {

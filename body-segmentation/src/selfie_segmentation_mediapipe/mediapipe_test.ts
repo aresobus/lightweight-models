@@ -2,7 +2,7 @@
 import {
   BROWSER_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 
 import * as bodySegmentation from "../index";
 import { toImageDataLossy } from "../shared/calculators/mask_util";

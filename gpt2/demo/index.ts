@@ -5,13 +5,15 @@
 
 import { GPT2, load } from "@aresobus-models/gpt2";
 import * as lil from "lil-gui";
-import * as tf from "@aresobus/aresobus-core";
-import { setWasmPaths } from "@aresobus/aresobus-backend-wasm";
-import "@aresobus/aresobus-backend-webgl";
-import "@aresobus/aresobus-backend-webgpu";
-import "@aresobus/aresobus-backend-cpu";
+import * as tf from "@aresobus/lightweight-models-core";
+import { setWasmPaths } from "@aresobus/lightweight-models-backend-wasm";
+import "@aresobus/lightweight-models-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgpu";
+import "@aresobus/lightweight-models-backend-cpu";
 
-setWasmPaths("node_modules/@aresobus/aresobus-backend-wasm/wasm-out/");
+setWasmPaths(
+  "node_modules/@aresobus/lightweight-models-backend-wasm/wasm-out/"
+);
 
 (window as any).tf = tf;
 

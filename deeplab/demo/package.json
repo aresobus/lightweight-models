@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@aresobus-models/deeplab": "file:../dist",
-    "@aresobus/aresobus-converter": "^4.9.0",
-    "@aresobus/aresobus-core": "^4.9.0",
-    "@aresobus/aresobus-backend-webgl": "^4.9.0",
+    "@aresobus/lightweight-models-converter": "^4.9.0",
+    "@aresobus/lightweight-models-core": "^4.9.0",
+    "@aresobus/lightweight-models-backend-webgl": "^4.9.0",
     "bulma": "^0.7.5"
   },
   "scripts": {

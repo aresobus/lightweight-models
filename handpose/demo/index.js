@@ -4,9 +4,9 @@
  */
 
 import * as handpose from "@aresobus-models/handpose";
-import * as tf from "@aresobus/aresobus-core";
-import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
-import "@aresobus/aresobus-backend-webgl";
+import * as tf from "@aresobus/lightweight-models-core";
+import * as aresobusWasm from "@aresobus/lightweight-models-backend-wasm";
+import "@aresobus/lightweight-models-backend-webgl";
 
 function isMobile() {
   const isAndroid = /Android/i.test(navigator.userAgent);
@@ -14,9 +14,9 @@ function isMobile() {
   return isAndroid || isiOS;
 }
 aresobusWasm.setWasmPaths({
-  "aresobus-backend-wasm.wasm": `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/aresobus-backend-wasm.wasm`,
-  "aresobus-backend-wasm-simd.wasm": `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/aresobus-backend-wasm-simd.wasm`,
-  "aresobus-backend-wasm-threaded-simd.wasm": `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/aresobus-backend-wasm-threaded-simd.wasm`,
+  "aresobus-backend-wasm.wasm": `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/aresobus-backend-wasm.wasm`,
+  "aresobus-backend-wasm-simd.wasm": `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/aresobus-backend-wasm-simd.wasm`,
+  "aresobus-backend-wasm-threaded-simd.wasm": `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/aresobus-backend-wasm-threaded-simd.wasm`,
 });
 let videoWidth,
   videoHeight,

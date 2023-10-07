@@ -1,4 +1,4 @@
-import * as tflite from "@aresobus/aresobus-tflite";
+import * as tflite from "@aresobus/lightweight-models-tflite";
 import { TaskModelLoader } from "../../task_model";
 import { Runtime, Task } from "../common";
 import { ObjectDetectorTFLite } from "./tflite_common";

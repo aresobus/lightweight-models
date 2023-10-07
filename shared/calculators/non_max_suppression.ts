@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { Detection } from "./interfaces/shape_interfaces";
 
 export async function nonMaxSuppression(

@@ -1,14 +1,14 @@
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgl";
 import * as mpHands from "@mediapipe/hands";
 
-import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
+import * as aresobusWasm from "@aresobus/lightweight-models-backend-wasm";
 
 aresobusWasm.setWasmPaths(
-  `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/`
+  `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
 import * as handdetection from "@aresobus-models/hand-pose-detection";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { setupStats } from "./shared/stats_panel";
 import { Context } from "./camera";

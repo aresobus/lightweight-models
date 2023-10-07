@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 import { COCO_KEYPOINTS } from "../../constants";
 import { Vector2D } from "../types";
 import { getOffsetVectorsGPU } from "../ops/get_offset_vectors";

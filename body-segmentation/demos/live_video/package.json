@@ -13,9 +13,9 @@
     "@mediapipe/selfie_segmentation": "~0.1.0",
     "@aresobus-models/body-segmentation": "file:../../dist",
     "@aresobus-models/pose-detection": "file:../../../pose-detection/dist",
-    "@aresobus/aresobus-backend-wasm": "^4.18.0",
-    "@aresobus/aresobus-backend-webgl": "^4.18.0",
-    "@aresobus/aresobus-converter": "^4.18.0",
+    "@aresobus/lightweight-models-backend-wasm": "^4.18.0",
+    "@aresobus/lightweight-models-backend-webgl": "^4.18.0",
+    "@aresobus/lightweight-models-converter": "^4.18.0",
     "scatter-gl": "0.0.8"
   },
   "scripts": {
@@ -23,8 +23,8 @@
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url ./",
     "lint": "eslint .",
     "build-dep": "cd ../../ && yarn && yarn build && cd ../pose-detection && yarn && yarn build",
-    "link-core": "yalc link @aresobus/aresobus-core",
-    "link-webgl": "yalc link @aresobus/aresobus-backend-webgl"
+    "link-core": "yalc link @aresobus/lightweight-models-core",
+    "link-webgl": "yalc link @aresobus/lightweight-models-backend-webgl"
   },
   "browser": {
     "crypto": false

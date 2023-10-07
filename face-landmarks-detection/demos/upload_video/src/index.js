@@ -3,15 +3,15 @@
  * =============================================================================
  */
 
-import "@aresobus/aresobus-backend-webgl";
+import "@aresobus/lightweight-models-backend-webgl";
 
-import * as aresobusWasm from "@aresobus/aresobus-backend-wasm";
+import * as aresobusWasm from "@aresobus/lightweight-models-backend-wasm";
 
 aresobusWasm.setWasmPaths(
-  `https://cdn.jsdelivr.net/npm/@aresobus/aresobus-backend-wasm@${aresobusWasm.version_wasm}/dist/`
+  `https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models-backend-wasm@${aresobusWasm.version_wasm}/dist/`
 );
 
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import "@aresobus-models/face-detection";
 

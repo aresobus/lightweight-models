@@ -4,7 +4,7 @@
  */
 
 import * as faceDetection from "@aresobus-models/face-detection";
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import * as params from "./params";
 

@@ -1,4 +1,4 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 
 export function splitDetectionResult(
   detectionResult: tf.Tensor3D

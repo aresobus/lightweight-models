@@ -27,7 +27,7 @@ Embed the following scripts in your HTML to get started:
 
 ```html
 <!-- Load  -->
-<script src="https://cdn.jsdelivr.net/npm/@aresobus/aresobus"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aresobus/lightweight-models"></script>
 <!-- Load the Face Detection model -->
 <script src="https://cdn.jsdelivr.net/npm/@aresobus-models/face-detection"></script>
 ```
@@ -38,8 +38,8 @@ Install the required packages using npm or yarn:
 
 ```bash
 npm install @aresobus-models/face-detection
-yarn add @aresobus/aresobus-core
-yarn add @aresobus/aresobus-converter
+yarn add @aresobus/lightweight-models-core
+yarn add @aresobus/lightweight-models-converter
 ```
 
 ## How to Run It

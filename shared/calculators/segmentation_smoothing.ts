@@ -1,8 +1,8 @@
 import {
   GPGPUProgram,
   MathBackendWebGL,
-} from "@aresobus/aresobus-backend-webgl";
-import * as tf from "@aresobus/aresobus-core";
+} from "@aresobus/lightweight-models-backend-webgl";
+import * as tf from "@aresobus/lightweight-models-core";
 
 import { SegmentationSmoothingConfig } from "./interfaces/config_interfaces";
 

@@ -1,15 +1,15 @@
-import * as tf from "@aresobus/aresobus-core";
+import * as tf from "@aresobus/lightweight-models-core";
 // tslint:disable-next-line: no-imports-from-dist
 import {
   ALL_ENVS,
   BROWSER_ENVS,
   describeWithFlags,
-} from "@aresobus/aresobus-core/dist/jasmine_util";
+} from "@aresobus/lightweight-models-core/dist/jasmine_util";
 import {
   expectArraysClose,
   expectArraysEqual,
   expectNumbersClose,
-} from "@aresobus/aresobus-core/dist/test_util";
+} from "@aresobus/lightweight-models-core/dist/test_util";
 
 import * as faceLandmarksDetection from "../index";
 import {
