@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-face-detection",
+  "name": "@aresobus/face-detection",
   "version": "1.0.2",
-  "description": "Pretrained face detection model maintained by Oleksandr Lebedyev",
+  "description": "Pretrained face detection model by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/face-detection.esm.js",
   "module": "dist/face-detection.esm.js",

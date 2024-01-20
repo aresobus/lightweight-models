@@ -1,12 +1,9 @@
 
-
----
-
 # Face Detection
 
 This package enables real-time face detection in web applications using . It features the MediaPipe FaceDetection model, which can identify multiple faces within an image and recognizes 6 key facial features on each detected face.
 
-Explore our [demo](https://storage.googleapis.com/aresobus-models/demos/face-detection/index.html?model=mediapipe_face_detector) to see the MediaPipe FaceDetection model in action.
+Explore our [demo](https://storage.googleapis.com/tfjs-models/demos/face-detection/index.html?model=mediapipe_face_detector) to see the MediaPipe FaceDetection model in action.
 
 ## Overview
 
@@ -83,4 +80,4 @@ The output will include the bounding box and keypoints for each detected face:
 
 ## Example Code and Demos
 
-For practical implementations and further examples, visit the [demos folder](https://github.com//aresobus-models/tree/master/face-detection/demos).
+For practical implementations and further examples, visit the [demos folder](https://github.com/aresobus/lightweight-models/tree/master/face-detection/demos).
