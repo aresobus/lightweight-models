@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-coco-ssd",
-  "version": "2.2.2",
-  "description": "Object detection model (coco-ssd) in ",
+  "name": "@aresobus/coco-ssd",
+  "version": "2.2.3",
+  "description": "Object detection model (coco-ssd) by Oleksandr Lebedyev",
   "main": "dist/coco-ssd.node.js",
   "unpkg": "dist/coco-ssd.min.js",
   "jsdelivr": "dist/coco-ssd.min.js",
@@ -42,6 +42,5 @@
     "publish-local": "yarn build && rollup -c && yalc push",
     "build-npm": "yarn build && rollup -c --visualize --npm",
     "test": "ts-node --skip-ignore --project tsconfig.test.json run_tests.ts"
-  },
-
+  }
 }

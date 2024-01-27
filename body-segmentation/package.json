@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/models-body-segmentation",
+  "name": "@aresobus/body-segmentation",
   "version": "1.0.2",
-  "description": "Pretrained body segmentation model",
+  "description": "Pretrained body segmentation model by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/body-segmentation.esm.js",
   "module": "dist/body-segmentation.esm.js",
