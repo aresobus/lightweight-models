@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-deeplab",
+  "name": "@aresobus/deeplab",
   "version": "0.2.1",
-  "description": "Semantic Segmentation in the Browser: DeepLab v3 Model maintained by Oleksandr Lebedyev",
+  "description": "Semantic Segmentation in the Browser: DeepLab v3 Model by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/deeplab.esm.js",
   "module": "dist/deeplab.esm.js",

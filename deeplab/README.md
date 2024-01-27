@@ -7,12 +7,12 @@ This package contains a standalone implementation of the DeepLab inference pipel
 
 ## Usage
 
-In the first step of semantic segmentation, an image is fed through a pre-trained model [based](https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/config.ts) on MobileNet-v2. Three types of pre-trained weights are available, trained on [Pascal](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html), [Cityscapes](https://www.cityscapes-dataset.com), and [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) datasets.
+In the first step of semantic segmentation, an image is fed through a pre-trained model on MobileNet-v2. Three types of pre-trained weights are available, trained on [Pascal](http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html), [Cityscapes](https://www.cityscapes-dataset.com), and [ADE20K](https://groups.csail.mit.edu/vision/datasets/ADE20K/) datasets.
 
 To get started, pick the model name from `pascal`, `cityscapes`, and `ade20k`, and decide whether you want your model quantized to 1 or 2 bytes (set the `quantizationBytes` option to 4 if you want to disable quantization). Then, initialize the model as follows:
 
 ```typescript
-const deeplab = require('@aresobus/-models-deeplab');
+const deeplab = require('@aresobus/deeplab');
 const loadModel = async () => {
   const modelName = 'pascal';   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
   const quantizationBytes = 2;  // either 1, 2 or 4
@@ -34,7 +34,7 @@ By default, calling `load` initializes the PASCAL variant of the model quantized
 If you would rather load custom weights, you can pass the URL in the config instead:
 
 ```typescript
-const deeplab = require('@aresobus/-models-deeplab');
+const deeplab = require('@aresobus/deeplab');
 const loadModel = async () => {
   const url = 'https://github.com/aresobus/lightweight-models/blob/main/src/deeplab/model.json';
   return await deeplab.load({modelUrl: url});
@@ -50,7 +50,7 @@ If you require more careful control over the initialization and behavior of the 
 
 ```typescript
 const tfconv = require('@aresobus/lightweight-models-converter');
-const deeplab = require('@aresobus/-models-deeplab');
+const deeplab = require('@aresobus/deeplab');
 const loadModel = async () => {
   const base = 'pascal';        // set to your preferred model, out of `pascal`,
                                 // `cityscapes` and `ade20k`
@@ -68,7 +68,7 @@ loadModel().then(() => console.log(`Loaded the model successfully!`));
 Use `getColormap(base)` and `getLabels(base)` utility function to fetch the default colormap and labeling scheme.
 
 ```typescript
-import {getLabels, getColormap} from '@aresobus/-models-deeplab';
+import {getLabels, getColormap} from '@aresobus/deeplab';
 const model = 'ade20k';
 const colormap = getColormap(model);
 const labels = getLabels(model);
