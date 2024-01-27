@@ -1,7 +1,7 @@
 {
   "name": "@aresobus/toxicity",
-  "version": "1.0.2",
-  "description": "Toxicity model in  by Oleksandr Lebedyev",
+  "version": "1.0.3",
+  "description": "Toxicity pre-trained model by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "jsnext:main": "dist/toxicity.esm.js",
   "module": "dist/toxicity.esm.js",

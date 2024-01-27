@@ -1,7 +1,4 @@
 
-
----
-
 # Toxicity Classifier by Oleksandr Lebedyev
 
 This repository hosts the Toxicity Classifier, a powerful tool that leverages the Universal Sentence Encoder (Cer et al., 2018) to detect various forms of toxic content in text. This includes threats, insults, obscenities, identity-based hate, or sexually explicit language. The classifier has been meticulously trained on the Civil Comments dataset, which features approximately 2 million comments labeled for different types of toxicity.
@@ -67,6 +64,4 @@ This example will output an array of objects for each type of toxicity label, co
 
 For more comprehensive examples and usage instructions, please visit our [GitHub repository](https://github.com/aresobus/toxicity).
 
----
 
-This README provides a clear and informative overview of the Toxicity Classifier, ensuring users understand its purpose, how to install it, and how to utilize it effectively in their projects.
