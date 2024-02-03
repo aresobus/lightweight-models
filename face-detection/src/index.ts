@@ -15,13 +15,19 @@
  * =============================================================================
  */
 
-export {createDetector} from './create_detector';
+export { createDetector } from "./create_detector";
 // FaceDetector class.
-export {FaceDetector} from './face_detector';
-export {MediaPipeFaceDetectorMediaPipe} from './mediapipe/detector';
-export {MediaPipeFaceDetectorMediaPipeEstimationConfig, MediaPipeFaceDetectorMediaPipeModelConfig} from './mediapipe/types';
-export {MediaPipeFaceDetectorTfjs} from './tfjs/detector';
-export {MediaPipeFaceDetectorTfjsEstimationConfig, MediaPipeFaceDetectorTfjsModelConfig} from './tfjs/types';
+export { FaceDetector } from "./face_detector";
+export { MediaPipeFaceDetectorMediaPipe } from "./mediapipe/detector";
+export {
+  MediaPipeFaceDetectorMediaPipeEstimationConfig,
+  MediaPipeFaceDetectorMediaPipeModelConfig,
+} from "./mediapipe/types";
+export { MediaPipeFaceDetectorTfjs } from "./tfjs/detector";
+export {
+  MediaPipeFaceDetectorTfjsEstimationConfig,
+  MediaPipeFaceDetectorTfjsModelConfig,
+} from "./tfjs/types";
 
 // Supported models enum.
-export * from './types';
+export * from "./types";
