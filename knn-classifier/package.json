@@ -1,7 +1,7 @@
 {
-  "name": "@aresobus/-models-knn-classifier",
-  "version": "1.2.5",
-  "description": "KNN Classifier for  maintained by Oleksandr Lebedyev",
+  "name": "@aresobus/knn-classifier",
+  "version": "2.2.0",
+  "description": "KNN Classifier by Oleksandr Lebedyev",
   "main": "dist/index.js",
   "unpkg": "dist/knn-classifier.min.js",
   "jsdelivr": "dist/knn-classifier.min.js",

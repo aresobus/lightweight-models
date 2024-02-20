@@ -1,12 +1,7 @@
 
-
----
-
 # KNN Classifier for
 
 The KNN (K-Nearest Neighbors) Classifier package provides a flexible utility for creating a classifier using the K-Nearest Neighbors algorithm, leveraging . Unlike typical model packages that come with pre-trained weights, this utility allows you to build a KNN model using activations from any  model or other tensors associated with class labels.
-
-Explore the example code and live demos [here](https://github.com//aresobus-models/tree/master/knn-classifier/demo).
 
 ## Installation
 
