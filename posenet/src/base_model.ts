@@ -15,9 +15,9 @@
  * =============================================================================
  */
 
-import * as tfconv from '@tensorflow/tfjs-converter';
-import * as tf from '@tensorflow/tfjs-core';
-import {PoseNetOutputStride} from './types';
+import * as tfconv from "@tensorflow/tfjs-converter";
+import * as tf from "@tensorflow/tfjs-core";
+import { PoseNetOutputStride } from "./types";
 
 /**
  * PoseNet supports using various convolution neural network models
@@ -30,14 +30,21 @@ import {PoseNetOutputStride} from './types';
  */
 export abstract class BaseModel {
   constructor(
-      protected readonly model: tfconv.GraphModel,
-      public readonly outputStride: PoseNetOutputStride) {
-    const inputShape =
-        this.model.inputs[0].shape as [number, number, number, number];
+    protected readonly model: tfconv.GraphModel,
+    public readonly outputStride: PoseNetOutputStride
+  ) {
+    const inputShape = this.model.inputs[0].shape as [
+      number,
+      number,
+      number,
+      number
+    ];
     tf.util.assert(
-        (inputShape[1] === -1) && (inputShape[2] === -1),
-        () => `Input shape [${inputShape[1]}, ${inputShape[2]}] ` +
-            `must both be equal to or -1`);
+      inputShape[1] === -1 && inputShape[2] === -1,
+      () =>
+        `Input shape [${inputShape[1]}, ${inputShape[2]}] ` +
+        `must both be equal to or -1`
+    );
   }
 
   abstract preprocessInput(input: tf.Tensor3D): tf.Tensor3D;
@@ -56,16 +63,16 @@ export abstract class BaseModel {
    * displacementBwd: A Tensor3D that represents the backward displacement.
    */
   predict(input: tf.Tensor3D): {
-    heatmapScores: tf.Tensor3D,
-    offsets: tf.Tensor3D,
-    displacementFwd: tf.Tensor3D,
-    displacementBwd: tf.Tensor3D
+    heatmapScores: tf.Tensor3D;
+    offsets: tf.Tensor3D;
+    displacementFwd: tf.Tensor3D;
+    displacementBwd: tf.Tensor3D;
   } {
     return tf.tidy(() => {
-      const asFloat = this.preprocessInput(tf.cast(input, 'float32'));
+      const asFloat = this.preprocessInput(tf.cast(input, "float32"));
       const asBatch = tf.expandDims(asFloat, 0);
       const results = this.model.predict(asBatch) as tf.Tensor4D[];
-      const results3d: tf.Tensor3D[] = results.map(y => tf.squeeze(y, [0]));
+      const results3d: tf.Tensor3D[] = results.map((y) => tf.squeeze(y, [0]));
 
       const namedResults = this.nameOutputResults(results3d);
 
@@ -73,7 +80,7 @@ export abstract class BaseModel {
         heatmapScores: tf.sigmoid(namedResults.heatmap),
         offsets: namedResults.offsets,
         displacementFwd: namedResults.displacementFwd,
-        displacementBwd: namedResults.displacementBwd
+        displacementBwd: namedResults.displacementBwd,
       };
     });
   }
@@ -81,10 +88,10 @@ export abstract class BaseModel {
   // Because MobileNet and ResNet predict() methods output a different order for
   // these values, we have a method that needs to be implemented to order them.
   abstract nameOutputResults(results: tf.Tensor3D[]): {
-    heatmap: tf.Tensor3D,
-    offsets: tf.Tensor3D,
-    displacementFwd: tf.Tensor3D,
-    displacementBwd: tf.Tensor3D
+    heatmap: tf.Tensor3D;
+    offsets: tf.Tensor3D;
+    displacementFwd: tf.Tensor3D;
+    displacementBwd: tf.Tensor3D;
   };
 
   /**

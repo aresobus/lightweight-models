@@ -15,19 +15,22 @@
  * =============================================================================
  */
 
-import * as tfconv from '@tensorflow/tfjs-converter';
-import * as tf from '@tensorflow/tfjs-core';
+import * as tfconv from "@tensorflow/tfjs-converter";
+import * as tf from "@tensorflow/tfjs-core";
 // tslint:disable-next-line: no-imports-from-dist
-import {describeWithFlags, NODE_ENVS} from '@tensorflow/tfjs-core/dist/jasmine_util';
+import {
+  describeWithFlags,
+  NODE_ENVS,
+} from "@tensorflow/tfjs-core/dist/jasmine_util";
 
-import * as mobilenet from './mobilenet';
-import {MobileNet} from './mobilenet';
-import * as posenetModel from './posenet_model';
-import * as resnet from './resnet';
-import {ResNet} from './resnet';
-import {toValidInputResolution} from './util';
+import * as mobilenet from "./mobilenet";
+import { MobileNet } from "./mobilenet";
+import * as posenetModel from "./posenet_model";
+import * as resnet from "./resnet";
+import { ResNet } from "./resnet";
+import { toValidInputResolution } from "./util";
 
-describeWithFlags('PoseNet', NODE_ENVS, () => {
+describeWithFlags("PoseNet", NODE_ENVS, () => {
   let mobileNet: posenetModel.PoseNet;
   let resNet: posenetModel.PoseNet;
   const inputResolution = 513;
@@ -40,59 +43,86 @@ describeWithFlags('PoseNet', NODE_ENVS, () => {
   beforeAll(async () => {
     // Mock out the actual load so we don't make network requests in the unit
     // test.
-    const resNetConfig =
-        {architecture: 'ResNet50', outputStride, inputResolution, quantBytes} as
-        posenetModel.ModelConfig;
+    const resNetConfig = {
+      architecture: "ResNet50",
+      outputStride,
+      inputResolution,
+      quantBytes,
+    } as posenetModel.ModelConfig;
 
     const mobileNetConfig = {
-      architecture: 'MobileNetV1',
+      architecture: "MobileNetV1",
       outputStride,
       inputResolution,
       multiplier,
-      quantBytes
+      quantBytes,
     } as posenetModel.ModelConfig;
 
-    spyOn(tfconv, 'loadGraphModel').and.callFake(() => {
+    spyOn(tfconv, "loadGraphModel").and.callFake(() => {
       return null;
     });
 
-    spyOn(resnet, 'ResNet').and.callFake(() => {
+    spyOn(resnet, "ResNet").and.callFake(() => {
       return {
         outputStride,
         predict: (input: tf.Tensor3D) => {
           return {
             inputResolution,
-            heatmapScores:
-                tf.zeros([outputResolution, outputResolution, numKeypoints]),
-            offsets: tf.zeros(
-                [outputResolution, outputResolution, 2 * numKeypoints]),
-            displacementFwd: tf.zeros(
-                [outputResolution, outputResolution, 2 * (numKeypoints - 1)]),
-            displacementBwd: tf.zeros(
-                [outputResolution, outputResolution, 2 * (numKeypoints - 1)])
+            heatmapScores: tf.zeros([
+              outputResolution,
+              outputResolution,
+              numKeypoints,
+            ]),
+            offsets: tf.zeros([
+              outputResolution,
+              outputResolution,
+              2 * numKeypoints,
+            ]),
+            displacementFwd: tf.zeros([
+              outputResolution,
+              outputResolution,
+              2 * (numKeypoints - 1),
+            ]),
+            displacementBwd: tf.zeros([
+              outputResolution,
+              outputResolution,
+              2 * (numKeypoints - 1),
+            ]),
           };
         },
-        dipose: () => {}
+        dipose: () => {},
       } as {} as ResNet;
     });
 
-    spyOn(mobilenet, 'MobileNet').and.callFake(() => {
+    spyOn(mobilenet, "MobileNet").and.callFake(() => {
       return {
         outputStride,
         predict: (input: tf.Tensor3D) => {
           return {
             inputResolution,
-            heatmapScores:
-                tf.zeros([outputResolution, outputResolution, numKeypoints]),
-            offsets: tf.zeros(
-                [outputResolution, outputResolution, 2 * numKeypoints]),
-            displacementFwd: tf.zeros(
-                [outputResolution, outputResolution, 2 * (numKeypoints - 1)]),
-            displacementBwd: tf.zeros(
-                [outputResolution, outputResolution, 2 * (numKeypoints - 1)])
+            heatmapScores: tf.zeros([
+              outputResolution,
+              outputResolution,
+              numKeypoints,
+            ]),
+            offsets: tf.zeros([
+              outputResolution,
+              outputResolution,
+              2 * numKeypoints,
+            ]),
+            displacementFwd: tf.zeros([
+              outputResolution,
+              outputResolution,
+              2 * (numKeypoints - 1),
+            ]),
+            displacementBwd: tf.zeros([
+              outputResolution,
+              outputResolution,
+              2 * (numKeypoints - 1),
+            ]),
           };
         },
-        dipose: () => {}
+        dipose: () => {},
       } as {} as MobileNet;
     });
 
@@ -100,18 +130,18 @@ describeWithFlags('PoseNet', NODE_ENVS, () => {
     mobileNet = await posenetModel.load(mobileNetConfig);
   });
 
-  it('estimateSinglePose does not leak memory', async () => {
+  it("estimateSinglePose does not leak memory", async () => {
     const input: tf.Tensor3D = tf.zeros([inputResolution, inputResolution, 3]);
 
     const beforeTensors = tf.memory().numTensors;
 
-    await resNet.estimateSinglePose(input, {flipHorizontal: false});
-    await mobileNet.estimateSinglePose(input, {flipHorizontal: false});
+    await resNet.estimateSinglePose(input, { flipHorizontal: false });
+    await mobileNet.estimateSinglePose(input, { flipHorizontal: false });
 
     expect(tf.memory().numTensors).toEqual(beforeTensors);
   });
 
-  it('estimateMultiplePoses does not leak memory', async () => {
+  it("estimateMultiplePoses does not leak memory", async () => {
     const input: tf.Tensor3D = tf.zeros([inputResolution, inputResolution, 3]);
 
     const beforeTensors = tf.memory().numTensors;
@@ -119,66 +149,82 @@ describeWithFlags('PoseNet', NODE_ENVS, () => {
       flipHorizontal: false,
       maxDetections: 5,
       scoreThreshold: 0.5,
-      nmsRadius: 20
+      nmsRadius: 20,
     });
 
     await mobileNet.estimateMultiplePoses(input, {
       flipHorizontal: false,
       maxDetections: 5,
       scoreThreshold: 0.5,
-      nmsRadius: 20
+      nmsRadius: 20,
     });
 
     expect(tf.memory().numTensors).toEqual(beforeTensors);
   });
 
-  it('mobilenet load with resolution numbers passes through ', async () => {
+  it("mobilenet load with resolution numbers passes through ", async () => {
     const inputResolution = 500;
-    const validInputResolution =
-        toValidInputResolution(inputResolution, outputStride);
+    const validInputResolution = toValidInputResolution(
+      inputResolution,
+      outputStride
+    );
 
     const expectedResolution = [validInputResolution, validInputResolution];
 
-    const model = await posenetModel.load(
-        {architecture: 'MobileNetV1', outputStride, inputResolution});
+    const model = await posenetModel.load({
+      architecture: "MobileNetV1",
+      outputStride,
+      inputResolution,
+    });
     expect(model.inputResolution).toEqual(expectedResolution);
   });
 
-  it('resnet load with resolution numbers passes through', async () => {
+  it("resnet load with resolution numbers passes through", async () => {
     const inputResolution = 350;
-    const validInputResolution =
-        toValidInputResolution(inputResolution, outputStride);
+    const validInputResolution = toValidInputResolution(
+      inputResolution,
+      outputStride
+    );
 
     const expectedResolution = [validInputResolution, validInputResolution];
 
-    const model = await posenetModel.load(
-        {architecture: 'ResNet50', outputStride, inputResolution});
+    const model = await posenetModel.load({
+      architecture: "ResNet50",
+      outputStride,
+      inputResolution,
+    });
     expect(model.inputResolution).toEqual(expectedResolution);
   });
 
-  it('mobilenet load with resolution object passes through', async () => {
-    const inputResolution = {width: 600, height: 400};
+  it("mobilenet load with resolution object passes through", async () => {
+    const inputResolution = { width: 600, height: 400 };
 
     const expectedResolution = [
       toValidInputResolution(inputResolution.height, outputStride),
-      toValidInputResolution(inputResolution.width, outputStride)
+      toValidInputResolution(inputResolution.width, outputStride),
     ];
 
-    const model = await posenetModel.load(
-        {architecture: 'MobileNetV1', outputStride, inputResolution});
+    const model = await posenetModel.load({
+      architecture: "MobileNetV1",
+      outputStride,
+      inputResolution,
+    });
     expect(model.inputResolution).toEqual(expectedResolution);
   });
 
-  it('resnet load with resolution object passes through', async () => {
-    const inputResolution = {width: 700, height: 500};
+  it("resnet load with resolution object passes through", async () => {
+    const inputResolution = { width: 700, height: 500 };
 
     const expectedResolution = [
       toValidInputResolution(inputResolution.height, outputStride),
-      toValidInputResolution(inputResolution.width, outputStride)
+      toValidInputResolution(inputResolution.width, outputStride),
     ];
 
-    const model = await posenetModel.load(
-        {architecture: 'ResNet50', outputStride, inputResolution});
+    const model = await posenetModel.load({
+      architecture: "ResNet50",
+      outputStride,
+      inputResolution,
+    });
     expect(model.inputResolution).toEqual(expectedResolution);
   });
 });

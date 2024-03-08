@@ -15,12 +15,12 @@
  * =============================================================================
  */
 
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
 export class ModelWeights {
-  private variables: {[varName: string]: tf.Tensor};
+  private variables: { [varName: string]: tf.Tensor };
 
-  constructor(variables: {[varName: string]: tf.Tensor}) {
+  constructor(variables: { [varName: string]: tf.Tensor }) {
     this.variables = variables;
   }
 
@@ -37,8 +37,9 @@ export class ModelWeights {
   }
 
   depthwiseWeights(layerName: string) {
-    return this.variables[`MobilenetV1/${layerName}/depthwise_weights`] as
-        tf.Tensor4D;
+    return this.variables[
+      `MobilenetV1/${layerName}/depthwise_weights`
+    ] as tf.Tensor4D;
   }
 
   dispose() {
