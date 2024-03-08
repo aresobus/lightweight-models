@@ -14,9 +14,9 @@
  * limitations under the License.
  * =============================================================================
  */
-import {MediaPipeHandsMediaPipeEstimationConfig} from './mediapipe/types';
-import {MediaPipeHandsTfjsEstimationConfig} from './tfjs/types';
-import {Hand, HandDetectorInput} from './types';
+import { MediaPipeHandsMediaPipeEstimationConfig } from "./mediapipe/types";
+import { MediaPipeHandsTfjsEstimationConfig } from "./tfjs/types";
+import { Hand, HandDetectorInput } from "./types";
 
 /**
  * User-facing interface for all hand pose detectors.
@@ -30,9 +30,11 @@ export interface HandDetector {
    * @param estimationConfig common config for `estimateHands`.
    */
   estimateHands(
-      input: HandDetectorInput,
-      estimationConfig?: MediaPipeHandsMediaPipeEstimationConfig|
-      MediaPipeHandsTfjsEstimationConfig): Promise<Hand[]>;
+    input: HandDetectorInput,
+    estimationConfig?:
+      | MediaPipeHandsMediaPipeEstimationConfig
+      | MediaPipeHandsTfjsEstimationConfig
+  ): Promise<Hand[]>;
 
   /**
    * Dispose the underlying models from memory.

@@ -15,12 +15,15 @@
  * =============================================================================
  */
 
-import {HandDetector} from './hand_detector';
-import {load as loadMediaPipeHandsMediaPipeDetector} from './mediapipe/detector';
-import {MediaPipeHandsMediaPipeModelConfig, MediaPipeHandsModelConfig} from './mediapipe/types';
-import {load as loadMediaPipeHandsTfjsDetector} from './tfjs/detector';
-import {MediaPipeHandsTfjsModelConfig} from './tfjs/types';
-import {SupportedModels} from './types';
+import { HandDetector } from "./hand_detector";
+import { load as loadMediaPipeHandsMediaPipeDetector } from "./mediapipe/detector";
+import {
+  MediaPipeHandsMediaPipeModelConfig,
+  MediaPipeHandsModelConfig,
+} from "./mediapipe/types";
+import { load as loadMediaPipeHandsTfjsDetector } from "./tfjs/detector";
+import { MediaPipeHandsTfjsModelConfig } from "./tfjs/types";
+import { SupportedModels } from "./types";
 
 /**
  * Create a hand detector instance.
@@ -29,27 +32,32 @@ import {SupportedModels} from './types';
  * @param modelConfig The configuration for the pipeline to load.
  */
 export async function createDetector(
-    model: SupportedModels,
-    modelConfig?: MediaPipeHandsMediaPipeModelConfig|
-    MediaPipeHandsTfjsModelConfig): Promise<HandDetector> {
+  model: SupportedModels,
+  modelConfig?:
+    | MediaPipeHandsMediaPipeModelConfig
+    | MediaPipeHandsTfjsModelConfig
+): Promise<HandDetector> {
   switch (model) {
     case SupportedModels.MediaPipeHands:
       const config = modelConfig as MediaPipeHandsModelConfig;
       let runtime;
       if (config != null) {
-        if (config.runtime === 'tfjs') {
+        if (config.runtime === "tfjs") {
           return loadMediaPipeHandsTfjsDetector(
-              config as MediaPipeHandsTfjsModelConfig);
+            config as MediaPipeHandsTfjsModelConfig
+          );
         }
-        if (config.runtime === 'mediapipe') {
+        if (config.runtime === "mediapipe") {
           return loadMediaPipeHandsMediaPipeDetector(
-              config as MediaPipeHandsMediaPipeModelConfig);
+            config as MediaPipeHandsMediaPipeModelConfig
+          );
         }
         runtime = config.runtime;
       }
       throw new Error(
-          `Expect modelConfig.runtime to be either 'tfjs' ` +
-          `or 'mediapipe', but got ${runtime}`);
+        `Expect modelConfig.runtime to be either 'tfjs' ` +
+          `or 'mediapipe', but got ${runtime}`
+      );
     default:
       throw new Error(`${model} is not a supported model name.`);
   }

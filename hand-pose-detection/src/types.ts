@@ -14,12 +14,15 @@
  * limitations under the License.
  * =============================================================================
  */
-import {Keypoint, PixelInput} from './shared/calculators/interfaces/common_interfaces';
+import {
+  Keypoint,
+  PixelInput,
+} from "./shared/calculators/interfaces/common_interfaces";
 
-export {Keypoint};
+export { Keypoint };
 
 export enum SupportedModels {
-  MediaPipeHands = 'MediaPipeHands',
+  MediaPipeHands = "MediaPipeHands",
 }
 
 /**
@@ -59,10 +62,9 @@ export type HandDetectorInput = PixelInput;
 export interface Hand {
   keypoints: Keypoint[];
   keypoints3D?: Keypoint[];
-  handedness: 'Left'|
-      'Right';    // Note that handedness is determined assuming the input image
-                  // is mirrored, i.e., taken with a front-facing/selfie camera
-                  // with images flipped horizontally. If it is not the case,
-                  // please swap the handedness output in the application.
-  score: number;  // The probability of the handedness label.
+  handedness: "Left" | "Right"; // Note that handedness is determined assuming the input image
+  // is mirrored, i.e., taken with a front-facing/selfie camera
+  // with images flipped horizontally. If it is not the case,
+  // please swap the handedness output in the application.
+  score: number; // The probability of the handedness label.
 }

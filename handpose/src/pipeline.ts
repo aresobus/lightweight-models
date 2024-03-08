@@ -15,12 +15,27 @@
  * =============================================================================
  */
 
-import * as tfconv from '@tensorflow/tfjs-converter';
-import * as tf from '@tensorflow/tfjs-core';
+import * as tfconv from "@tensorflow/tfjs-converter";
+import * as tf from "@tensorflow/tfjs-core";
 
-import {Box, cutBoxFromImageAndResize, enlargeBox, getBoxCenter, getBoxSize, shiftBox, squarifyBox} from './box';
-import {HandDetector} from './hand';
-import {buildRotationMatrix, computeRotation, dot, invertTransformMatrix, rotatePoint, TransformationMatrix} from './util';
+import {
+  Box,
+  cutBoxFromImageAndResize,
+  enlargeBox,
+  getBoxCenter,
+  getBoxSize,
+  shiftBox,
+  squarifyBox,
+} from "./box";
+import { HandDetector } from "./hand";
+import {
+  buildRotationMatrix,
+  computeRotation,
+  dot,
+  invertTransformMatrix,
+  rotatePoint,
+  TransformationMatrix,
+} from "./util";
 
 const UPDATE_REGION_OF_INTEREST_IOU_THRESHOLD = 0.8;
 
@@ -40,7 +55,7 @@ type Coords2D = Array<[number, number]>;
 export interface Prediction {
   handInViewConfidence: number;
   landmarks: Coords3D;
-  boundingBox: {topLeft: [number, number], bottomRight: [number, number]};
+  boundingBox: { topLeft: [number, number]; bottomRight: [number, number] };
 }
 
 // The Pipeline coordinates between the bounding box and skeleton models.
@@ -52,33 +67,36 @@ export class HandPipeline {
   private runsWithoutHandDetector = 0;
 
   constructor(
-      private readonly boundingBoxDetector: HandDetector
-      /* MediaPipe model for detecting hand bounding box */,
-      private readonly meshDetector: tfconv.GraphModel
-      /* MediaPipe model for detecting hand mesh */,
-      private readonly meshWidth: number, private readonly meshHeight: number,
-      private readonly maxContinuousChecks: number,
-      private readonly detectionConfidence: number) {
-    this.maxHandsNumber = 1;  // TODO(annxingyuan): Add multi-hand support.
+    private readonly boundingBoxDetector: HandDetector,
+    /* MediaPipe model for detecting hand bounding box */ private readonly meshDetector: tfconv.GraphModel,
+    /* MediaPipe model for detecting hand mesh */ private readonly meshWidth: number,
+    private readonly meshHeight: number,
+    private readonly maxContinuousChecks: number,
+    private readonly detectionConfidence: number
+  ) {
+    this.maxHandsNumber = 1; // TODO(annxingyuan): Add multi-hand support.
   }
 
   // Get the bounding box surrounding the hand, given palm landmarks.
   private getBoxForPalmLandmarks(
-      palmLandmarks: Coords2D, rotationMatrix: TransformationMatrix): Box {
-    const rotatedPalmLandmarks: Coords2D =
-        palmLandmarks.map((coord: [number, number]): [number, number] => {
-          const homogeneousCoordinate =
-              [...coord, 1] as [number, number, number];
-          return rotatePoint(homogeneousCoordinate, rotationMatrix);
-        });
+    palmLandmarks: Coords2D,
+    rotationMatrix: TransformationMatrix
+  ): Box {
+    const rotatedPalmLandmarks: Coords2D = palmLandmarks.map(
+      (coord: [number, number]): [number, number] => {
+        const homogeneousCoordinate = [...coord, 1] as [number, number, number];
+        return rotatePoint(homogeneousCoordinate, rotationMatrix);
+      }
+    );
 
     const boxAroundPalm =
-        this.calculateLandmarksBoundingBox(rotatedPalmLandmarks);
+      this.calculateLandmarksBoundingBox(rotatedPalmLandmarks);
     // boxAroundPalm only surrounds the palm - therefore we shift it
     // upwards so it will capture fingers once enlarged + squarified.
     return enlargeBox(
-        squarifyBox(shiftBox(boxAroundPalm, PALM_BOX_SHIFT_VECTOR)),
-        PALM_BOX_ENLARGE_FACTOR);
+      squarifyBox(shiftBox(boxAroundPalm, PALM_BOX_SHIFT_VECTOR)),
+      PALM_BOX_ENLARGE_FACTOR
+    );
   }
 
   // Get the bounding box surrounding the hand, given all hand landmarks.
@@ -88,13 +106,15 @@ export class HandPipeline {
     // though it surrounds the entire hand.
     const boundingBox = this.calculateLandmarksBoundingBox(landmarks);
     const boxAroundHand: Box = enlargeBox(
-        squarifyBox(shiftBox(boundingBox, HAND_BOX_SHIFT_VECTOR)),
-        HAND_BOX_ENLARGE_FACTOR);
+      squarifyBox(shiftBox(boundingBox, HAND_BOX_SHIFT_VECTOR)),
+      HAND_BOX_ENLARGE_FACTOR
+    );
 
     const palmLandmarks: Coords2D = [];
     for (let i = 0; i < PALM_LANDMARK_IDS.length; i++) {
       palmLandmarks.push(
-          landmarks[PALM_LANDMARK_IDS[i]].slice(0, 2) as [number, number]);
+        landmarks[PALM_LANDMARK_IDS[i]].slice(0, 2) as [number, number]
+      );
     }
     boxAroundHand.palmLandmarks = palmLandmarks;
 
@@ -104,48 +124,57 @@ export class HandPipeline {
   // Scale, rotate, and translate raw keypoints from the model so they map to
   // the input coordinates.
   private transformRawCoords(
-      rawCoords: Coords3D, box: Box, angle: number,
-      rotationMatrix: TransformationMatrix): Coords3D {
+    rawCoords: Coords3D,
+    box: Box,
+    angle: number,
+    rotationMatrix: TransformationMatrix
+  ): Coords3D {
     const boxSize = getBoxSize(box);
-    const scaleFactor =
-        [boxSize[0] / this.meshWidth, boxSize[1] / this.meshHeight];
+    const scaleFactor = [
+      boxSize[0] / this.meshWidth,
+      boxSize[1] / this.meshHeight,
+    ];
 
     const coordsScaled = rawCoords.map((coord: [number, number, number]) => {
       return [
         scaleFactor[0] * (coord[0] - this.meshWidth / 2),
-        scaleFactor[1] * (coord[1] - this.meshHeight / 2), coord[2]
+        scaleFactor[1] * (coord[1] - this.meshHeight / 2),
+        coord[2],
       ];
     });
 
     const coordsRotationMatrix = buildRotationMatrix(angle, [0, 0]);
-    const coordsRotated =
-        coordsScaled.map((coord: [number, number, number]) => {
-          const rotated = rotatePoint(coord, coordsRotationMatrix);
-          return [...rotated, coord[2]];
-        });
+    const coordsRotated = coordsScaled.map(
+      (coord: [number, number, number]) => {
+        const rotated = rotatePoint(coord, coordsRotationMatrix);
+        return [...rotated, coord[2]];
+      }
+    );
 
     const inverseRotationMatrix = invertTransformMatrix(rotationMatrix);
     const boxCenter = [...getBoxCenter(box), 1];
 
     const originalBoxCenter = [
       dot(boxCenter, inverseRotationMatrix[0]),
-      dot(boxCenter, inverseRotationMatrix[1])
+      dot(boxCenter, inverseRotationMatrix[1]),
     ];
 
     return coordsRotated.map(
-        (coord: [number, number, number]): [number, number, number] => {
-          return [
-            coord[0] + originalBoxCenter[0], coord[1] + originalBoxCenter[1],
-            coord[2]
-          ];
-        });
+      (coord: [number, number, number]): [number, number, number] => {
+        return [
+          coord[0] + originalBoxCenter[0],
+          coord[1] + originalBoxCenter[1],
+          coord[2],
+        ];
+      }
+    );
   }
 
   async estimateHand(image: tf.Tensor4D): Promise<Prediction> {
     const useFreshBox = this.shouldUpdateRegionsOfInterest();
     if (useFreshBox === true) {
       const boundingBoxPrediction =
-          await this.boundingBoxDetector.estimateHandBounds(image);
+        await this.boundingBoxDetector.estimateHandBounds(image);
       if (boundingBoxPrediction === null) {
         image.dispose();
         this.regionsOfInterest = [];
@@ -153,7 +182,9 @@ export class HandPipeline {
       }
 
       this.updateRegionsOfInterest(
-          boundingBoxPrediction, true /*force update*/);
+        boundingBoxPrediction,
+        true /*force update*/
+      );
       this.runsWithoutHandDetector = 0;
     } else {
       this.runsWithoutHandDetector++;
@@ -162,14 +193,21 @@ export class HandPipeline {
     // Rotate input so the hand is vertically oriented.
     const currentBox = this.regionsOfInterest[0];
     const angle = computeRotation(
-        currentBox.palmLandmarks[PALM_LANDMARKS_INDEX_OF_PALM_BASE],
-        currentBox.palmLandmarks[PALM_LANDMARKS_INDEX_OF_MIDDLE_FINGER_BASE]);
+      currentBox.palmLandmarks[PALM_LANDMARKS_INDEX_OF_PALM_BASE],
+      currentBox.palmLandmarks[PALM_LANDMARKS_INDEX_OF_MIDDLE_FINGER_BASE]
+    );
 
     const palmCenter = getBoxCenter(currentBox);
-    const palmCenterNormalized: [number, number] =
-        [palmCenter[0] / image.shape[2], palmCenter[1] / image.shape[1]];
-    const rotatedImage =
-        tf.image.rotateWithOffset(image, angle, 0, palmCenterNormalized);
+    const palmCenterNormalized: [number, number] = [
+      palmCenter[0] / image.shape[2],
+      palmCenter[1] / image.shape[1],
+    ];
+    const rotatedImage = tf.image.rotateWithOffset(
+      image,
+      angle,
+      0,
+      palmCenterNormalized
+    );
 
     const rotationMatrix = buildRotationMatrix(-angle, palmCenter);
 
@@ -178,33 +216,42 @@ export class HandPipeline {
     // bounding box prediction, we have to construct the hand bounding box from
     // the palm keypoints.
     if (useFreshBox === true) {
-      box =
-          this.getBoxForPalmLandmarks(currentBox.palmLandmarks, rotationMatrix);
+      box = this.getBoxForPalmLandmarks(
+        currentBox.palmLandmarks,
+        rotationMatrix
+      );
     } else {
       box = currentBox;
     }
 
-    const croppedInput = cutBoxFromImageAndResize(
-        box, rotatedImage, [this.meshWidth, this.meshHeight]);
+    const croppedInput = cutBoxFromImageAndResize(box, rotatedImage, [
+      this.meshWidth,
+      this.meshHeight,
+    ]);
     const handImage = tf.div(croppedInput, 255);
     croppedInput.dispose();
     rotatedImage.dispose();
 
     let prediction;
-    if (tf.getBackend() === 'webgl') {
+    if (tf.getBackend() === "webgl") {
       // Currently tfjs-core does not pack depthwiseConv because it fails for
       // very large inputs (https://github.com/tensorflow/tfjs/issues/1652).
       // TODO(annxingyuan): call tf.enablePackedDepthwiseConv when available
       // (https://github.com/tensorflow/tfjs/issues/2821)
-      const savedWebglPackDepthwiseConvFlag =
-          tf.env().get('WEBGL_PACK_DEPTHWISECONV');
-      tf.env().set('WEBGL_PACK_DEPTHWISECONV', true);
-      prediction =
-          this.meshDetector.predict(handImage) as [tf.Tensor, tf.Tensor];
-      tf.env().set('WEBGL_PACK_DEPTHWISECONV', savedWebglPackDepthwiseConvFlag);
+      const savedWebglPackDepthwiseConvFlag = tf
+        .env()
+        .get("WEBGL_PACK_DEPTHWISECONV");
+      tf.env().set("WEBGL_PACK_DEPTHWISECONV", true);
+      prediction = this.meshDetector.predict(handImage) as [
+        tf.Tensor,
+        tf.Tensor
+      ];
+      tf.env().set("WEBGL_PACK_DEPTHWISECONV", savedWebglPackDepthwiseConvFlag);
     } else {
-      prediction =
-          this.meshDetector.predict(handImage) as [tf.Tensor, tf.Tensor];
+      prediction = this.meshDetector.predict(handImage) as [
+        tf.Tensor,
+        tf.Tensor
+      ];
     }
 
     const [flag, keypoints] = prediction;
@@ -227,8 +274,12 @@ export class HandPipeline {
     keypoints.dispose();
     keypointsReshaped.dispose();
 
-    const coords =
-        this.transformRawCoords(rawCoords, box, angle, rotationMatrix);
+    const coords = this.transformRawCoords(
+      rawCoords,
+      box,
+      angle,
+      rotationMatrix
+    );
     const nextBoundingBox = this.getBoxForHandLandmarks(coords);
 
     this.updateRegionsOfInterest(nextBoundingBox, false /* force replace */);
@@ -238,19 +289,19 @@ export class HandPipeline {
       handInViewConfidence: flagValue,
       boundingBox: {
         topLeft: nextBoundingBox.startPoint,
-        bottomRight: nextBoundingBox.endPoint
-      }
+        bottomRight: nextBoundingBox.endPoint,
+      },
     };
 
     return result;
   }
 
   private calculateLandmarksBoundingBox(landmarks: number[][]): Box {
-    const xs = landmarks.map(d => d[0]);
-    const ys = landmarks.map(d => d[1]);
+    const xs = landmarks.map((d) => d[0]);
+    const ys = landmarks.map((d) => d[1]);
     const startPoint: [number, number] = [Math.min(...xs), Math.min(...ys)];
     const endPoint: [number, number] = [Math.max(...xs), Math.max(...ys)];
-    return {startPoint, endPoint};
+    return { startPoint, endPoint };
   }
 
   // Updates regions of interest if the intersection over union between
@@ -275,20 +326,22 @@ export class HandPipeline {
 
         const intersection = (xEndMin - xStartMax) * (yEndMin - yStartMax);
         const boxArea = (boxEndX - boxStartX) * (boxEndY - boxStartY);
-        const previousBoxArea = (previousBoxEndX - previousBoxStartX) *
-            (previousBoxEndY - boxStartY);
+        const previousBoxArea =
+          (previousBoxEndX - previousBoxStartX) * (previousBoxEndY - boxStartY);
         iou = intersection / (boxArea + previousBoxArea - intersection);
       }
 
       this.regionsOfInterest[0] =
-          iou > UPDATE_REGION_OF_INTEREST_IOU_THRESHOLD ? previousBox : box;
+        iou > UPDATE_REGION_OF_INTEREST_IOU_THRESHOLD ? previousBox : box;
     }
   }
 
   private shouldUpdateRegionsOfInterest(): boolean {
     const roisCount = this.regionsOfInterest.length;
 
-    return roisCount !== this.maxHandsNumber ||
-        this.runsWithoutHandDetector >= this.maxContinuousChecks;
+    return (
+      roisCount !== this.maxHandsNumber ||
+      this.runsWithoutHandDetector >= this.maxContinuousChecks
+    );
   }
 }
