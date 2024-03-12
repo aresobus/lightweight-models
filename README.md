@@ -33,17 +33,17 @@ Here's an overview of the models currently provided, along with links to live de
     <td rowspan="2"><code>npm install @aresobus/mobilenet</code></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/aresobus/lightweight-models/tree/main/mobilenet/">Source</a></td>
+    <td><a href="https://github.com/aresobus/lightweight-models/tree/main/mobilenet/demo">Source</a></td>
   </tr>
   <!-- Hand -->
   <tr>
-    <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/face-landmarks-detection">Hand Pose Detection</a></b></td>
+    <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/hand-pose-detection">Hand Pose Detection</a></b></td>
     <td><a href="https://storage.googleapis.com/tfjs-models/demos/hand-pose-detection/index.html?model=mediapipe_hands">Live</a></td>
     <td rowspan="2">Real-time hand pose detection in the browser using TensorFlow.js.</td>
     <td rowspan="2"><code>npm install @aresobus/hand-pose-detection</code></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/aresobus/lightweight-models/hand-pose-detection/">Source</a></td>
+    <td><a href="https://github.com/aresobus/lightweight-models/tree/main/hand-pose-detection/demo">Source</a></td>
   </tr>
   <!-- Pose -->
   <tr>
@@ -53,28 +53,40 @@ Here's an overview of the models currently provided, along with links to live de
     <td rowspan="2"><code>npm install @aresobus/pose-detection</code></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/aresobus/lightweight-models/tree/main/pose-detection/">Source</a></td>
-  </tr>
-  <!-- Coco SSD -->
-  <tr>
-    <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/coco-ssd">Coco SSD</a></b></td>
-    <td><a href="https://github.com/aresobus/lightweight-models/tree/main/coco-ssd">Source</a></td>
-    <td rowspan="2">Object detection model that aims to localize and identify multiple objects in a single image. Based on the TensorFlow object detection API.</td>
-    <td rowspan="2"><code>npm install @aresobus/coco-ssd</code></td>
-  </tr>
-  <tr>
+    <td><a href="https://github.com/aresobus/lightweight-models/tree/main/hand-pose-detection/demos">Source</a></td>
   </tr>
   <!-- Face Landmark Detection -->
   <tr>
-    <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/face-landmarks-detection">Face Landmark Detection</
-
-a></b></td>
+    <td rowspan="2"><b><a href="https://github.com/aresobus/lightweight-models/tree/main/face-landmarks-detection">Face Landmark Detection</a></b></td>
     <td><a href="https://storage.googleapis.com/tfjs-models/demos/face-landmarks-detection/index.html?model=mediapipe_face_mesh">Live</a></td>
     <td rowspan="2">Real-time 3D facial landmarks detection to infer the approximate surface geometry of a human face.</td>
     <td rowspan="2"><code>npm install @aresobus/face-landmarks-detection</code></td>
   </tr>
   <tr>
     <td><a href="https://github.com/aresobus/lightweight-models/tree/main/face-landmarks-detection/demos">Source</a></td>
+  </tr>
+
+
+  <!-- Speech Commands -->
+  <tr>
+    <td><b><a href="https://github.com/aresobus/lightweight-models/tree/main/speech-commands">Speech Commands</a></b></td>
+    <td><a href="https://storage.googleapis.com/tfjs-speech-model-test/2019-01-03a/dist/index.html">Live</a></td>
+    <td>Recognize spoken commands using a pre-trained speech model.</td>
+    <td><code>npm install @aresobus/speech-commands</code></td>
+  </tr>
+  <!-- Text Toxicity -->
+  <tr>
+    <td><b><a href="https://github.com/aresobus/lightweight-models/tree/main/toxicity">Text Toxicity</a></b></td>
+    <td><a href="https://storage.googleapis.com/tfjs-models/demos/toxicity/index.html">Live</a></td>
+    <td>Detect toxic content in text strings.</td>
+    <td><code>npm install @aresobus/toxicity</code></td>
+  </tr>
+  <!-- Portrait Depth -->
+  <tr>
+    <td><b><a href="https://github.com/aresobus/lightweight-models/tree/main/depth-estimation">Portrait Depth</a></b></td>
+    <td><a href="https://storage.googleapis.com/tfjs-models/demos/3dphoto/index.html">Live</a></td>
+    <td>Estimate depth in portrait images for 3D photo effects.</td>
+    <td><code>npm install @aresobus/depth-estimation</code></td>
   </tr>
 </table>
 
