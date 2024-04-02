@@ -14,10 +14,12 @@
  * limitations under the License.
  * =============================================================================
  */
-import * as tf from '@tensorflow/tfjs-core';
+import * as tf from "@tensorflow/tfjs-core";
 
 export function concatWithNulls(
-    ndarray1: tf.Tensor2D, ndarray2: tf.Tensor2D): tf.Tensor2D {
+  ndarray1: tf.Tensor2D,
+  ndarray2: tf.Tensor2D
+): tf.Tensor2D {
   if (ndarray1 == null && ndarray2 == null) {
     return null;
   }
@@ -29,11 +31,13 @@ export function concatWithNulls(
   return tf.concat<tf.Tensor2D>([ndarray1, ndarray2], 0);
 }
 
-export function topK(values: Float32Array, k: number):
-    {values: Float32Array, indices: Int32Array} {
-  const valuesAndIndices: Array<{value: number, index: number}> = [];
+export function topK(
+  values: Float32Array,
+  k: number
+): { values: Float32Array; indices: Int32Array } {
+  const valuesAndIndices: Array<{ value: number; index: number }> = [];
   for (let i = 0; i < values.length; i++) {
-    valuesAndIndices.push({value: values[i], index: i});
+    valuesAndIndices.push({ value: values[i], index: i });
   }
   valuesAndIndices.sort((a, b) => {
     return b.value - a.value;
@@ -44,5 +48,5 @@ export function topK(values: Float32Array, k: number):
     topkValues[i] = valuesAndIndices[i].value;
     topkIndices[i] = valuesAndIndices[i].index;
   }
-  return {values: topkValues, indices: topkIndices};
+  return { values: topkValues, indices: topkIndices };
 }
