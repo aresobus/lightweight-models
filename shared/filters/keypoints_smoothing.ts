@@ -15,15 +15,19 @@
  * =============================================================================
  */
 
-import {getObjectScale} from '../calculators/get_object_scale';
-import {ImageSize, Keypoint, KeypointsFilter} from '../calculators/interfaces/common_interfaces';
-import {KeypointsSmoothingConfig} from '../calculators/interfaces/config_interfaces';
-import {Rect} from '../calculators/interfaces/shape_interfaces';
-import {keypointsToNormalizedKeypoints} from '../calculators/keypoints_to_normalized_keypoints';
-import {normalizedKeypointsToKeypoints} from '../calculators/normalized_keypoints_to_keypoints';
+import { getObjectScale } from "../calculators/get_object_scale";
+import {
+  ImageSize,
+  Keypoint,
+  KeypointsFilter,
+} from "../calculators/interfaces/common_interfaces";
+import { KeypointsSmoothingConfig } from "../calculators/interfaces/config_interfaces";
+import { Rect } from "../calculators/interfaces/shape_interfaces";
+import { keypointsToNormalizedKeypoints } from "../calculators/keypoints_to_normalized_keypoints";
+import { normalizedKeypointsToKeypoints } from "../calculators/normalized_keypoints_to_keypoints";
 
-import {KeypointsOneEuroFilter} from './keypoints_one_euro_filter';
-import {KeypointsVelocityFilter} from './keypoints_velocity_filter';
+import { KeypointsOneEuroFilter } from "./keypoints_one_euro_filter";
+import { KeypointsVelocityFilter } from "./keypoints_velocity_filter";
 
 /**
  * A Calculator to smooth keypoints over time.
@@ -38,8 +42,9 @@ export class KeypointsSmoothingFilter {
       this.keypointsFilter = new KeypointsOneEuroFilter(config.oneEuroFilter);
     } else {
       throw new Error(
-          'Either configure velocityFilter or oneEuroFilter, but got ' +
-          `${config}.`);
+        "Either configure velocityFilter or oneEuroFilter, but got " +
+          `${config}.`
+      );
     }
   }
 
@@ -58,24 +63,31 @@ export class KeypointsSmoothingFilter {
    *     scale. If not set, objectScale defaults to 1.
    */
   apply(
-      keypoints: Keypoint[], timestamp: number, imageSize?: ImageSize,
-      normalized = false, objectScaleROI?: Rect): Keypoint[] {
+    keypoints: Keypoint[],
+    timestamp: number,
+    imageSize?: ImageSize,
+    normalized = false,
+    objectScaleROI?: Rect
+  ): Keypoint[] {
     if (keypoints == null) {
       this.keypointsFilter.reset();
       return null;
     }
 
     const objectScale =
-        objectScaleROI != null ? getObjectScale(objectScaleROI, imageSize) : 1;
+      objectScaleROI != null ? getObjectScale(objectScaleROI, imageSize) : 1;
 
-    const scaledKeypoints = normalized ?
-        normalizedKeypointsToKeypoints(keypoints, imageSize) :
-        keypoints;
-    const scaledKeypointsFiltered =
-        this.keypointsFilter.apply(scaledKeypoints, timestamp, objectScale);
+    const scaledKeypoints = normalized
+      ? normalizedKeypointsToKeypoints(keypoints, imageSize)
+      : keypoints;
+    const scaledKeypointsFiltered = this.keypointsFilter.apply(
+      scaledKeypoints,
+      timestamp,
+      objectScale
+    );
 
-    return normalized ?
-        keypointsToNormalizedKeypoints(scaledKeypointsFiltered, imageSize) :
-        scaledKeypointsFiltered;
+    return normalized
+      ? keypointsToNormalizedKeypoints(scaledKeypointsFiltered, imageSize)
+      : scaledKeypointsFiltered;
   }
 }

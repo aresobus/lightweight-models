@@ -14,9 +14,9 @@
  * limitations under the License.
  * =============================================================================
  */
-import {MICRO_SECONDS_TO_SECOND} from '../calculators/constants';
-import {OneEuroFilterConfig} from '../calculators/interfaces/config_interfaces';
-import {LowPassFilter} from './low_pass_filter';
+import { MICRO_SECONDS_TO_SECOND } from "../calculators/constants";
+import { OneEuroFilterConfig } from "../calculators/interfaces/config_interfaces";
+import { LowPassFilter } from "./low_pass_filter";
 /**
  * OneEuroFilter.
  */
@@ -73,21 +73,24 @@ export class OneEuroFilter {
     // Update the sampling frequency based on timestamps.
     if (this.lastTimestamp !== 0 && $microSeconds !== 0) {
       this.frequency =
-          1 / (($microSeconds - this.lastTimestamp) * MICRO_SECONDS_TO_SECOND);
+        1 / (($microSeconds - this.lastTimestamp) * MICRO_SECONDS_TO_SECOND);
     }
     this.lastTimestamp = $microSeconds;
 
     // Estimate the current variation per second.
-    const dValue = this.x.hasLastRawValue() ?
-        (value - this.x.lastRawValue()) * valueScale * this.frequency :
-        0;
-    const edValue =
-        this.dx.applyWithAlpha(dValue, this.getAlpha(this.derivateCutOff));
+    const dValue = this.x.hasLastRawValue()
+      ? (value - this.x.lastRawValue()) * valueScale * this.frequency
+      : 0;
+    const edValue = this.dx.applyWithAlpha(
+      dValue,
+      this.getAlpha(this.derivateCutOff)
+    );
     const cutOff = this.minCutOff + this.beta * Math.abs(edValue);
 
-    const threshold = this.thresholdCutOff != null ?
-        this.thresholdCutOff + this.thresholdBeta * Math.abs(edValue) :
-        null;
+    const threshold =
+      this.thresholdCutOff != null
+        ? this.thresholdCutOff + this.thresholdBeta * Math.abs(edValue)
+        : null;
 
     // filter the given value.
     return this.x.applyWithAlpha(value, this.getAlpha(cutOff), threshold);
@@ -97,6 +100,6 @@ export class OneEuroFilter {
     // te = 1.0 / this.frequency
     // tau = 1.0 / (2 * Math.PI * cutoff)
     // result = 1 / (1.0 + (tau / te))
-    return 1.0 / (1.0 + (this.frequency / (2 * Math.PI * cutoff)));
+    return 1.0 / (1.0 + this.frequency / (2 * Math.PI * cutoff));
   }
 }

@@ -15,13 +15,13 @@
  * =============================================================================
  */
 
-import { nodeResolve } from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
-import uglify from 'rollup-plugin-uglify';
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import typescript from "@rollup/plugin-typescript";
+import uglify from "rollup-plugin-uglify";
 
 const PREAMBLE = `/**
     * @license
-    * Copyright ${(new Date).getFullYear()} Google LLC. All Rights Reserved.
+    * Copyright ${new Date().getFullYear()} Google LLC. All Rights Reserved.
     * Licensed under the Apache License, Version 2.0 (the "License");
     * you may not use this file except in compliance with the License.
     * You may obtain a copy of the License at
@@ -37,51 +37,49 @@ const PREAMBLE = `/**
     */`;
 
 function minify() {
-  return uglify({output: {preamble: PREAMBLE}});
+  return uglify({ output: { preamble: PREAMBLE } });
 }
 
-function config({plugins = [], output = {}}) {
+function config({ plugins = [], output = {} }) {
   return {
-    input: 'src/index.ts',
+    input: "src/index.ts",
     plugins: [
-      typescript({module: 'ES2015', sourceMap: true}),
+      typescript({ module: "ES2015", sourceMap: true }),
       nodeResolve(),
-      ...plugins
+      ...plugins,
     ],
     output: {
       banner: PREAMBLE,
       globals: {
-	'@tensorflow/tfjs-core': 'tf',
+        "@tensorflow/tfjs-core": "tf",
       },
-      ...output
+      ...output,
     },
-    external: [
-      '@tensorflow/tfjs-core',
-    ],
+    external: ["@tensorflow/tfjs-core"],
   };
 }
 
 export default [
   config({
     output: {
-      format: 'umd',
-      name: 'knnClassifier',
-      file: 'dist/knn-classifier.js'
-    }
+      format: "umd",
+      name: "knnClassifier",
+      file: "dist/knn-classifier.js",
+    },
   }),
   config({
     plugins: [minify()],
     output: {
-      format: 'umd',
-      name: 'knnClassifier',
-      file: 'dist/knn-classifier.min.js'
-    }
+      format: "umd",
+      name: "knnClassifier",
+      file: "dist/knn-classifier.min.js",
+    },
   }),
   config({
     plugins: [minify()],
     output: {
-      format: 'es',
-      file: 'dist/knn-classifier.esm.js',
-    }
-  })
+      format: "es",
+      file: "dist/knn-classifier.esm.js",
+    },
+  }),
 ];
