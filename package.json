@@ -1,6 +1,6 @@
 {
   "name": "nbc-lightweight-models",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Pre-trained models for Browser by Oleksandr Lebedyev",
   "main": "index.js",
   "scripts": {
