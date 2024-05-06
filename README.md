@@ -1,5 +1,5 @@
 
-# Pre-trained Models by Oleksandr Lebedyev
+# Pre-trained Models
 
 This repository hosts a collection of pre-trained models that have been adapted for Browsers.
 
