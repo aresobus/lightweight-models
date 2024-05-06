@@ -1,7 +1,7 @@
 {
   "name": "nbc-lightweight-models",
-  "version": "1.0.0",
-  "description": "Pre-trained models maintained by Oleksandr Lebedyev",
+  "version": "1.0.1",
+  "description": "Pre-trained models for Browser by Oleksandr Lebedyev",
   "main": "index.js",
   "scripts": {
     "diff": "./scripts/diff.js",
